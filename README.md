@@ -71,11 +71,7 @@ Browser (any device)  <-->  claude-relay (your machine)  <-->  Claude Agent SDK
 
 ```bash
 # Run directly (no install needed)
-npx claude-relay
-
-# Or install globally
-npm install -g claude-relay
-claude-relay
+npx claude-relay@latest
 ```
 
 ## Usage
