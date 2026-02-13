@@ -104,8 +104,8 @@ npx claude-relay --debug      # debug panel
 
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated
 - Node.js 18+
-- [mkcert](https://github.com/FiloSottile/mkcert) for HTTPS and push
-- [Tailscale](https://tailscale.com) for remote access
+- [mkcert](https://github.com/FiloSottile/mkcert) for HTTPS and push (optional)
+- [Tailscale](https://tailscale.com) for remote access (optional)
 
 ## Security
 
