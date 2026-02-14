@@ -1252,7 +1252,10 @@ function showSetupGuide(config, ip, goBack) {
 
   function showSetupQR() {
     var tsIP = getTailscaleIP();
-    var setupUrl = protocol + "://" + (tsIP || ip) + ":" + config.port + "/setup";
+    // Always use HTTP onboarding URL for QR/setup when TLS is active
+    var setupUrl = config.tls
+      ? "http://" + (tsIP || ip) + ":" + (config.port + 1) + "/setup"
+      : "http://" + (tsIP || ip) + ":" + config.port + "/setup";
     log(sym.pointer + "  " + a.bold + "Continue on your device" + a.reset);
     log(sym.bar + "  " + a.dim + "Scan the QR code or open:" + a.reset);
     log(sym.bar + "  " + a.bold + setupUrl + a.reset);
@@ -1265,10 +1268,6 @@ function showSetupGuide(config, ip, goBack) {
         log(sym.bar + "  " + a.dim + "Can't connect? Make sure Tailscale is installed on your phone too." + a.reset);
       } else {
         log(sym.bar + "  " + a.dim + "Can't connect? Your phone must be on the same Wi-Fi network." + a.reset);
-      }
-      if (config.tls) {
-        var httpOnboardUrl = "http://" + (tsIP || ip) + ":" + (config.port + 1) + "/setup";
-        log(sym.bar + "  " + a.dim + "Certificate warning? Open " + a.reset + httpOnboardUrl);
       }
       log(sym.bar);
       log(sym.done + "  " + a.dim + "Setup complete." + a.reset);
