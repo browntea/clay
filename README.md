@@ -6,13 +6,14 @@
 
 <h3 align="center">Web UI for Claude Code. Any device. Push notifications.</h3>
 
+[![npm version](https://img.shields.io/npm/v/claude-relay)](https://www.npmjs.com/package/claude-relay) [![npm downloads](https://img.shields.io/npm/dw/claude-relay)](https://www.npmjs.com/package/claude-relay) [![GitHub stars](https://img.shields.io/github/stars/chadbyte/claude-relay)](https://github.com/chadbyte/claude-relay)
+
 Claude Code. Anywhere.  
 Same session. Same files. Same machine.  
 Your files stay on your computer. Nothing leaves for the cloud.
 
 Pick up the same Claude Code session on your phone.  
-Start in the terminal, continue on your phone, switch back anytime.  
-Same session, same files, now in your pocket.
+Start in the terminal, continue on your phone, switch back anytime.
 
 Claude Code is automating more of your editing and execution workflow.
 But when it needs approval or asks a question, it halts in the terminal. If you walk away, it just sits there waiting.
@@ -44,6 +45,10 @@ One tap, and Claude Code gets back to work.
 It works in browser tabs too. When input is awaited, the favicon blinks and the tab title changes to alert you.
 
 ## Side by Side Workflow
+
+<p align="center">
+  <img src="media/split.gif" alt="split-screen workflow" width="700">
+</p>
 
 Keep claude-relay on one side and your localhost on the other.
 Watch the results update live while Claude Code fixes your source files.
@@ -204,6 +209,16 @@ graph LR
 ```
 
 For a detailed sequence diagram, daemon structure, and design decisions, refer to [docs/architecture.md](docs/architecture.md).
+
+## Star History
+
+<a href="https://star-history.com/#chadbyte/claude-relay&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=chadbyte/claude-relay&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=chadbyte/claude-relay&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=chadbyte/claude-relay&type=Date" width="600" />
+ </picture>
+</a>
 
 ---
 
