@@ -6,7 +6,7 @@ var path = require("path");
 var { execSync, execFileSync, spawn } = require("child_process");
 var qrcode = require("qrcode-terminal");
 var net = require("net");
-var { loadConfig, saveConfig, configPath, socketPath, logPath, ensureConfigDir, isDaemonAlive, isDaemonAliveAsync, generateSlug, clearStaleConfig, loadClayrc, saveClayrc } = require("../lib/config");
+var { loadConfig, saveConfig, configPath, socketPath, logPath, ensureConfigDir, isDaemonAlive, isDaemonAliveAsync, generateSlug, clearStaleConfig, loadClayrc, saveClayrc, readCrashInfo } = require("../lib/config");
 var { sendIPCCommand } = require("../lib/ipc");
 var { generateAuthToken } = require("../lib/server");
 
@@ -270,6 +270,10 @@ function stopDaemonWatcher() {
   }
 }
 
+var _restartAttempts = 0;
+var MAX_RESTART_ATTEMPTS = 5;
+var _restartBackoffStart = 0;
+
 function onDaemonDied() {
   stopDaemonWatcher();
   // Clean up stdin in case a prompt is active
@@ -278,11 +282,116 @@ function onDaemonDied() {
     process.stdin.pause();
     process.stdin.removeAllListeners("data");
   } catch (e) {}
+
+  // Check if this was a crash (crash.json exists) vs intentional shutdown
+  var crashInfo = readCrashInfo();
+  if (!crashInfo) {
+    // Intentional shutdown, no restart
+    log("");
+    log(sym.warn + "  " + a.yellow + "Server has been shut down." + a.reset);
+    log(a.dim + "     Run " + a.reset + "npx claude-relay" + a.dim + " to start again." + a.reset);
+    log("");
+    process.exit(0);
+    return;
+  }
+
+  // Reset backoff counter if enough time has passed since last restart burst
+  var now = Date.now();
+  if (_restartBackoffStart && now - _restartBackoffStart > 60000) {
+    _restartAttempts = 0;
+  }
+
+  _restartAttempts++;
+  if (_restartAttempts > MAX_RESTART_ATTEMPTS) {
+    log("");
+    log(sym.warn + "  " + a.red + "Server crashed too many times (" + MAX_RESTART_ATTEMPTS + " attempts). Giving up." + a.reset);
+    if (crashInfo.reason) {
+      log(a.dim + "     " + crashInfo.reason.split("\n")[0] + a.reset);
+    }
+    log(a.dim + "     Check logs: " + a.reset + logPath());
+    log("");
+    process.exit(1);
+    return;
+  }
+
+  if (_restartAttempts === 1) _restartBackoffStart = now;
+
   log("");
-  log(sym.warn + "  " + a.yellow + "Server has been shut down." + a.reset);
-  log(a.dim + "     Run " + a.reset + "npx claude-relay" + a.dim + " to start again." + a.reset);
+  log(sym.warn + "  " + a.yellow + "Server crashed. Restarting... (" + _restartAttempts + "/" + MAX_RESTART_ATTEMPTS + ")" + a.reset);
+  if (crashInfo.reason) {
+    log(a.dim + "     " + crashInfo.reason.split("\n")[0] + a.reset);
+  }
+
+  // Re-fork the daemon from saved config
+  restartDaemonFromConfig();
+}
+
+async function restartDaemonFromConfig() {
+  var lastConfig = loadConfig();
+  if (!lastConfig || !lastConfig.projects) {
+    log(a.red + "     No config found. Cannot restart." + a.reset);
+    process.exit(1);
+    return;
+  }
+
+  clearStaleConfig();
+
+  // Wait for port to be released
+  var targetPort = lastConfig.port || port;
+  var waited = 0;
+  while (waited < 3000) {
+    var free = await isPortFree(targetPort);
+    if (free) break;
+    await new Promise(function (resolve) { setTimeout(resolve, 300); });
+    waited += 300;
+  }
+
+  // Rebuild config (preserve everything except pid)
+  var newConfig = {
+    pid: null,
+    port: targetPort,
+    pinHash: lastConfig.pinHash || null,
+    tls: lastConfig.tls !== undefined ? lastConfig.tls : useHttps,
+    debug: lastConfig.debug || false,
+    keepAwake: lastConfig.keepAwake || false,
+    projects: (lastConfig.projects || []).filter(function (p) {
+      return fs.existsSync(p.path);
+    }),
+  };
+
+  ensureConfigDir();
+  saveConfig(newConfig);
+
+  var daemonScript = path.join(__dirname, "..", "lib", "daemon.js");
+  var logFile = logPath();
+  var logFd = fs.openSync(logFile, "a");
+
+  var child = spawn(process.execPath, [daemonScript], {
+    detached: true,
+    windowsHide: true,
+    stdio: ["ignore", logFd, logFd],
+    env: Object.assign({}, process.env, {
+      CLAUDE_RELAY_CONFIG: configPath(),
+    }),
+  });
+  child.unref();
+  fs.closeSync(logFd);
+
+  newConfig.pid = child.pid;
+  saveConfig(newConfig);
+
+  // Wait and verify
+  await new Promise(function (resolve) { setTimeout(resolve, 1200); });
+  var alive = await isDaemonAliveAsync(newConfig);
+  if (!alive) {
+    log(a.red + "     Restart failed. Check logs: " + a.reset + logFile);
+    process.exit(1);
+    return;
+  }
+  var ip = getLocalIP();
+  log(sym.done + "  " + a.green + "Server restarted successfully." + a.reset);
   log("");
-  process.exit(0);
+  showMainMenu(newConfig, ip);
 }
 
 // --- Network ---
