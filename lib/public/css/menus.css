@@ -459,6 +459,11 @@
   color: var(--text);
 }
 
+.usage-panel-actions {
+  display: flex;
+  gap: 2px;
+}
+
 .usage-panel-header button {
   display: flex;
   align-items: center;
@@ -563,6 +568,42 @@
   font-weight: 600;
   color: var(--text-secondary);
   min-width: 32px;
+  text-align: right;
+}
+
+/* --- Context mini bar (in input area) --- */
+#context-mini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 2px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+#context-mini:hover { opacity: 0.8; }
+#context-mini.hidden { display: none; }
+.context-mini-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.context-mini-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+.context-mini-fill.warn { background: #E5A84B; }
+.context-mini-fill.danger { background: var(--error); }
+.context-mini-label {
+  font-family: "SF Mono", Menlo, Monaco, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dimmer);
+  min-width: 24px;
   text-align: right;
 }
 

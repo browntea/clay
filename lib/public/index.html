@@ -212,7 +212,10 @@
       <div id="context-panel" class="hidden">
         <div class="usage-panel-header">
           <span>Context</span>
-          <button id="context-panel-close" aria-label="Close"><i data-lucide="x"></i></button>
+          <div class="usage-panel-actions">
+            <button id="context-panel-minimize" aria-label="Minimize" title="Minimize to input"><i data-lucide="minus"></i></button>
+            <button id="context-panel-close" aria-label="Close"><i data-lucide="x"></i></button>
+          </div>
         </div>
         <div class="usage-panel-body">
           <div class="usage-section-label">Context Window</div>
@@ -245,6 +248,12 @@
       <div id="input-wrapper">
         <div id="slash-menu"></div>
         <div id="input-row">
+          <div id="context-mini" class="hidden">
+            <div class="context-mini-bar">
+              <div class="context-mini-fill" id="context-mini-fill"></div>
+            </div>
+            <span class="context-mini-label" id="context-mini-label">0%</span>
+          </div>
           <div id="image-preview-bar"></div>
           <textarea id="input" rows="1" placeholder="Message Claude Code..." enterkeyhint="send"></textarea>
           <div id="input-bottom">
