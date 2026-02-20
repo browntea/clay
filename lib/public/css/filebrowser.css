@@ -34,6 +34,8 @@
 
 /* --- File panel header --- */
 #file-panel-header {
+  display: flex;
+  align-items: center;
   padding: 4px 8px;
 }
 
@@ -50,11 +52,32 @@
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
+  flex: 1;
   transition: background 0.15s, color 0.15s;
 }
 
 #file-panel-back .lucide { width: 16px; height: 16px; flex-shrink: 0; }
 #file-panel-back:hover { background: var(--sidebar-hover); color: var(--text); }
+
+#file-panel-refresh {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s, transform 0.3s;
+}
+
+#file-panel-refresh .lucide { width: 14px; height: 14px; }
+#file-panel-refresh:hover { background: var(--sidebar-hover); color: var(--text); }
+#file-panel-refresh.spinning { animation: spin-once 0.5s ease; }
+@keyframes spin-once { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 /* --- File tree --- */
 #file-tree { padding: 4px 8px; }
