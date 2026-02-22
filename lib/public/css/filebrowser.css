@@ -598,6 +598,36 @@
   font-style: italic;
 }
 
+/* --- Terminal context menu --- */
+.term-ctx-menu {
+  position: fixed;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px 0;
+  min-width: 160px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: 500;
+}
+
+.term-ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.term-ctx-item .lucide { width: 14px; height: 14px; flex-shrink: 0; }
+.term-ctx-item:hover { background: rgba(255, 255, 255, 0.05); }
+
 /* --- File Edit History --- */
 
 .file-history-panel {

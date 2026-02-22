@@ -2,6 +2,7 @@
 
 ## WIP
 
+- Add right-click context menu on terminal with Copy Terminal and Clear Terminal actions
 - Add RTL (bidi) text support for prompt field and responses (#114)
 - Fix duplicate approval prompts appearing when browser tab returns from background (#112)
 - Fix excessive "Server Connection Lost" notifications by adding 5-second debounce before showing push notification (#113)
