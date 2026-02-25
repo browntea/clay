@@ -2,6 +2,10 @@
 
 ## WIP
 
+## v2.4.1
+
+- Fix false "Failed to start daemon" error on slow startup by retrying alive check (500ms × 10 attempts instead of single 800ms wait)
+
 ## v2.4.0
 
 - Add `--headless` flag for non-interactive daemon startup (#154)

@@ -406,9 +406,13 @@ async function restartDaemonFromConfig() {
   newConfig.pid = child.pid;
   saveConfig(newConfig);
 
-  // Wait and verify
-  await new Promise(function (resolve) { setTimeout(resolve, 1200); });
-  var alive = await isDaemonAliveAsync(newConfig);
+  // Wait and verify (retry up to 5 seconds)
+  var alive = false;
+  for (var rc = 0; rc < 10; rc++) {
+    await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    alive = await isDaemonAliveAsync(newConfig);
+    if (alive) break;
+  }
   if (!alive) {
     log(a.red + "     Restart failed. Check logs: " + a.reset + logFile);
     process.exit(1);
@@ -1266,11 +1270,13 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
   config.pid = child.pid;
   saveConfig(config);
 
-  // Wait for daemon to start
-  await new Promise(function (resolve) { setTimeout(resolve, 800); });
-
-  // Verify daemon is alive
-  var alive = await isDaemonAliveAsync(config);
+  // Wait for daemon to start (retry up to 5 seconds)
+  var alive = false;
+  for (var attempt = 0; attempt < 10; attempt++) {
+    await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    alive = await isDaemonAliveAsync(config);
+    if (alive) break;
+  }
   if (!alive) {
     log(a.red + "Failed to start daemon. Check logs:" + a.reset);
     log(a.dim + logFile + a.reset);
@@ -1388,11 +1394,15 @@ async function devMode(pin, keepAwake, existingPinHash) {
   spawnDaemon();
 
   // Wait for daemon to be ready, then show CLI menu
-  await new Promise(function (resolve) { setTimeout(resolve, 1000); });
   config.pid = child ? child.pid : null;
   saveConfig(config);
 
-  var daemonReady = await isDaemonAliveAsync(config);
+  var daemonReady = false;
+  for (var da = 0; da < 10; da++) {
+    await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    daemonReady = await isDaemonAliveAsync(config);
+    if (daemonReady) break;
+  }
   if (daemonReady) {
     showServerStarted(config, ip);
   }
@@ -1498,9 +1508,12 @@ async function restartDaemonWithTLS(config, callback) {
   newConfig.pid = child.pid;
   saveConfig(newConfig);
 
-  await new Promise(function (resolve) { setTimeout(resolve, 800); });
-
-  var alive = await isDaemonAliveAsync(newConfig);
+  var alive = false;
+  for (var ra = 0; ra < 10; ra++) {
+    await new Promise(function (resolve) { setTimeout(resolve, 500); });
+    alive = await isDaemonAliveAsync(newConfig);
+    if (alive) break;
+  }
   if (!alive) {
     log(sym.warn + "  " + a.yellow + "Failed to restart with HTTPS, falling back to HTTP..." + a.reset);
     // Re-fork without TLS so the server is at least running
@@ -1519,7 +1532,11 @@ async function restartDaemonWithTLS(config, callback) {
     fs.closeSync(logFd2);
     newConfig.pid = child2.pid;
     saveConfig(newConfig);
-    await new Promise(function (resolve) { setTimeout(resolve, 800); });
+    for (var rb = 0; rb < 10; rb++) {
+      await new Promise(function (resolve) { setTimeout(resolve, 500); });
+      var retryAlive = await isDaemonAliveAsync(newConfig);
+      if (retryAlive) break;
+    }
     startDaemonWatcher();
     callback(newConfig);
     return;
