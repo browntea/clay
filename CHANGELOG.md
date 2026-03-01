@@ -2,6 +2,12 @@
 
 ## WIP
 
+## v2.4.2
+
+- Fix skill discovery: merge global (`~/.claude/skills/`) and project (`.claude/skills/`) skills for slash menu (#160)
+  - SDK's `settingSources` overrides skills instead of merging — now scans filesystem and unions with SDK-reported skills
+  - Deduplicated slash command list (SDK slash_commands + merged skills)
+
 ## v2.4.1
 
 - One-click update from web UI ("Update now" button in update banner)
