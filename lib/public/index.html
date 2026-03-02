@@ -344,13 +344,19 @@
       <div class="server-settings-nav-inner">
         <div class="server-settings-nav-header" id="settings-server-name"></div>
         <div class="server-settings-nav-items">
+          <div class="settings-nav-category">General</div>
           <button class="settings-nav-item active" data-section="overview"><span>Overview</span></button>
           <button class="settings-nav-item" data-section="models"><span>Models</span></button>
+          <div class="settings-nav-separator"></div>
+          <div class="settings-nav-category">Configuration</div>
           <button class="settings-nav-item" data-section="security"><span>Security</span></button>
           <button class="settings-nav-item" data-section="notifications"><span>Notifications</span></button>
           <button class="settings-nav-item" data-section="appearance"><span>Appearance</span></button>
           <div class="settings-nav-separator"></div>
+          <div class="settings-nav-category">System</div>
           <button class="settings-nav-item" data-section="advanced"><span>Advanced</span></button>
+          <div class="settings-nav-separator"></div>
+          <button class="settings-nav-item settings-nav-danger" data-section="shutdown"><span>Shutdown Server</span></button>
         </div>
       </div>
     </div>
@@ -531,6 +537,27 @@
               <input type="checkbox" id="settings-keep-awake">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="shutdown">
+          <h2>Shutdown Server</h2>
+          <div class="settings-danger-zone">
+            <div class="settings-danger-icon"><i data-lucide="alert-triangle"></i></div>
+            <div class="settings-danger-body">
+              <h3 class="settings-danger-title">Danger Zone</h3>
+              <p class="settings-danger-desc">Shutting down the server will terminate all active sessions, disconnect all clients, and stop the Clay daemon process. This action cannot be undone.</p>
+            </div>
+          </div>
+          <div class="settings-card settings-card-danger">
+            <div class="settings-field">
+              <label class="settings-label">Confirm Shutdown</label>
+              <div class="settings-hint">Type <strong>shutdown</strong> below to confirm.</div>
+              <div class="settings-shutdown-input-row">
+                <input type="text" id="settings-shutdown-input" placeholder="Type shutdown to confirm" autocomplete="off" spellcheck="false">
+                <button class="settings-btn-sm settings-btn-shutdown" id="settings-shutdown-btn" disabled>Shutdown</button>
+              </div>
+              <div class="settings-hint settings-shutdown-error hidden" id="settings-shutdown-error"></div>
+            </div>
           </div>
         </div>
       </div>

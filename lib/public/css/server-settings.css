@@ -123,6 +123,15 @@
   color: var(--text);
 }
 
+.settings-nav-category {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dimmer);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 8px 10px 4px;
+}
+
 .settings-nav-separator {
   height: 1px;
   background: var(--border-subtle);
@@ -492,6 +501,125 @@
   color: #3fb950;
 }
 
+/* --- Nav danger item (Shutdown) --- */
+.settings-nav-item.settings-nav-danger {
+  color: var(--error);
+}
+
+.settings-nav-item.settings-nav-danger:hover {
+  background: var(--error-12);
+  color: var(--error);
+}
+
+.settings-nav-item.settings-nav-danger.active {
+  background: var(--error-12);
+  color: var(--error);
+}
+
+/* --- Danger zone banner --- */
+.settings-danger-zone {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: var(--error-12);
+  border: 1px solid color-mix(in srgb, var(--error) 25%, transparent);
+  margin-bottom: 20px;
+}
+
+.settings-danger-icon {
+  flex-shrink: 0;
+  color: var(--error);
+  margin-top: 2px;
+}
+
+.settings-danger-icon .lucide {
+  width: 22px;
+  height: 22px;
+}
+
+.settings-danger-body {
+  min-width: 0;
+}
+
+.settings-danger-title {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: var(--error) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  margin: 0 0 4px !important;
+}
+
+.settings-danger-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --- Danger card variant --- */
+.settings-card.settings-card-danger {
+  border-color: color-mix(in srgb, var(--error) 25%, transparent);
+}
+
+/* --- Shutdown input row --- */
+.settings-shutdown-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#settings-shutdown-input {
+  flex: 1;
+  max-width: 260px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+#settings-shutdown-input:focus {
+  border-color: var(--error);
+}
+
+#settings-shutdown-input::placeholder {
+  color: var(--text-dimmer);
+  font-family: inherit;
+}
+
+/* --- Shutdown button --- */
+.settings-btn-shutdown {
+  padding: 8px 20px !important;
+  border-color: var(--error) !important;
+  background: transparent !important;
+  color: var(--error) !important;
+  font-weight: 600 !important;
+  transition: background 0.15s, color 0.15s, opacity 0.15s !important;
+}
+
+.settings-btn-shutdown:hover:not(:disabled) {
+  background: var(--error) !important;
+  color: #fff !important;
+}
+
+.settings-btn-shutdown:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.settings-shutdown-error {
+  color: var(--error) !important;
+  margin-top: 8px;
+}
+
 /* ==========  RESPONSIVE  ========== */
 @media (max-width: 768px) {
   .server-settings-layout {
@@ -513,21 +641,25 @@
 
   .server-settings-nav-inner {
     width: 100%;
-    padding: 12px 16px 8px;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0;
   }
 
   .server-settings-nav-header {
-    padding: 0 4px 8px;
+    padding: 12px 16px 8px;
   }
 
+  /* Scroll wrapper with fade hints */
   .server-settings-nav-items {
     flex-direction: row;
     overflow-x: auto;
     gap: 2px;
     scrollbar-width: none;
+    padding: 0 16px 10px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 24px), transparent 100%);
   }
 
   .server-settings-nav-items::-webkit-scrollbar { display: none; }
@@ -536,9 +668,23 @@
     flex-shrink: 0;
     font-size: 13px;
     padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(var(--overlay-rgb), 0.04);
+  }
+
+  .settings-nav-item.active {
+    background: rgba(var(--overlay-rgb), 0.12);
+  }
+
+  .settings-nav-item.settings-nav-danger {
+    background: var(--error-12);
   }
 
   .settings-nav-separator {
+    display: none;
+  }
+
+  .settings-nav-category {
     display: none;
   }
 
