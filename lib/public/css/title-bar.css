@@ -10,6 +10,7 @@
   align-items: center;
   justify-content: center;
   padding: calc(var(--safe-top) + 0px) 0 0;
+  position: relative;
 }
 
 .top-bar-title {
@@ -25,6 +26,45 @@
 .top-bar-title:hover {
   color: var(--text);
 }
+
+/* --- Top bar actions (right-aligned group) --- */
+.top-bar-actions {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.top-bar-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  padding: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.top-bar-actions button .lucide { width: 14px; height: 14px; }
+.top-bar-actions button:hover { color: var(--text-secondary); background: rgba(var(--overlay-rgb),0.06); }
+
+#server-settings-btn.active { color: var(--text); }
+
+/* Debug button in top bar */
+.top-bar-actions #debug-menu-wrap { position: relative; }
+.top-bar-actions #debug-menu-wrap.hidden { display: none; }
+.top-bar-actions #debug-btn { color: var(--error); opacity: 0.6; }
+.top-bar-actions #debug-btn:hover { opacity: 1; background: var(--error-8); }
+.top-bar-actions #debug-btn.active { opacity: 1; background: var(--error-12); }
+
+/* QR/Share button in top bar */
+.top-bar-actions #qr-btn.active { color: var(--text); background: rgba(var(--overlay-rgb),0.06); }
 
 /* ==========================================================================
    Title Bar — split into sidebar-column and main-column sections

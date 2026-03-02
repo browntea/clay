@@ -107,18 +107,9 @@
 
 #debug-menu.hidden { display: none; }
 
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--error);
-  transition: background 0.3s;
-  flex-shrink: 0;
-}
-
-/* --- Terminal toggle button --- */
+/* --- Terminal toggle button (mobile only) --- */
 #terminal-toggle-btn {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   background: none;
@@ -380,19 +371,20 @@
 #client-count {
   background: var(--accent);
   color: #fff;
-  font-size: 10px;
-  font-weight: 600;
-  min-width: 18px;
-  height: 18px;
-  border-radius: 9px;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 5px;
+  padding: 0 4px;
+  cursor: pointer;
+  line-height: 1;
 }
 
 #client-count.hidden { display: none; }
-#client-count { cursor: pointer; }
 
 .tooltip {
   position: fixed;
@@ -663,6 +655,8 @@
 }
 
 @media (max-width: 768px) {
+  #terminal-toggle-btn { display: flex; }
+
   #info-panels {
     top: auto;
     bottom: calc(var(--safe-bottom, 0px) + 64px);
@@ -673,7 +667,4 @@
   }
 }
 
-.status-dot.connected { background: var(--success); }
-.status-dot.processing { background: var(--success); }
-.status-dot.io { opacity: 0.15; }
 

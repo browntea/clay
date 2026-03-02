@@ -174,16 +174,46 @@
   color: #fff;
 }
 
-/* --- Processing indicator on icon --- */
-.icon-strip-item .icon-strip-processing {
+/* --- Socket status indicator on icon (bottom-right dot) --- */
+.icon-strip-status {
   position: absolute;
   bottom: 3px;
   right: 3px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--success);
+  background: var(--text-dimmer);
   border: 2px solid var(--sidebar-bg);
+  opacity: 0;
+  transition: opacity 0.2s, background 0.3s;
+}
+
+/* Show dot only on active item or when processing */
+.icon-strip-item.active .icon-strip-status,
+.icon-strip-home.active .icon-strip-status,
+.icon-strip-status.processing {
+  opacity: 1;
+}
+
+/* Connected = green */
+.icon-strip-status.connected {
+  background: var(--success);
+}
+
+/* Processing = green with pulse animation */
+.icon-strip-status.processing {
+  background: var(--success);
+  animation: icon-status-pulse 1.5s ease-in-out infinite;
+}
+
+/* IO blink = brief dim */
+.icon-strip-status.io {
+  opacity: 0.3;
+}
+
+@keyframes icon-status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 /* --- Add project button --- */

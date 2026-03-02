@@ -606,8 +606,7 @@
 }
 
 #layout.sidebar-collapsed #user-island .user-island-info,
-#layout.sidebar-collapsed #user-island .user-island-actions,
-#layout.sidebar-collapsed #user-island #sidebar-footer-menu {
+#layout.sidebar-collapsed #user-island .user-island-actions {
   display: none;
 }
 
@@ -622,40 +621,6 @@
   font-weight: 400;
 }
 
-/* --- Sidebar footer menu --- */
-#sidebar-footer-menu {
-  position: absolute;
-  bottom: calc(100% + 4px);
-  left: 80px;
-  right: 8px;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 4px 0;
-  box-shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.4);
-  z-index: 110;
-}
-
-#sidebar-footer-menu.hidden { display: none; }
-
-.sidebar-menu-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  background: none;
-  border: none;
-  font-family: inherit;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s;
-}
-
-.sidebar-menu-item .lucide { width: 14px; height: 14px; flex-shrink: 0; }
-.sidebar-menu-item:hover { background: rgba(var(--overlay-rgb), 0.05); }
 
 .sidebar-menu-item.has-badge { position: relative; }
 .sidebar-menu-item .menu-badge {
@@ -848,6 +813,10 @@
 
 @media (max-width: 768px) {
   #sidebar-resize-handle {
+    display: none;
+  }
+
+  #user-island {
     display: none;
   }
 }

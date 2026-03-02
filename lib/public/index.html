@@ -22,7 +22,29 @@
 <body>
 <div id="layout">
   <!-- === Top Bar (full width, forms reverse-ㄱ with icon strip) === -->
-  <div id="top-bar"><a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="top-bar-title">Clay</a></div>
+  <div id="top-bar">
+    <a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="top-bar-title">Clay</a>
+    <div class="top-bar-actions">
+      <span id="client-count" class="hidden"></span>
+      <div id="debug-menu-wrap" class="hidden">
+        <button id="debug-btn" title="Debug"><i data-lucide="bug"></i></button>
+        <div id="debug-menu" class="hidden">
+          <label class="notif-option">
+            <span>Update banner</span>
+            <input type="checkbox" id="debug-toggle-update">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
+          <label class="notif-option">
+            <span>Onboarding banner</span>
+            <input type="checkbox" id="debug-toggle-onboarding">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
+        </div>
+      </div>
+      <button id="qr-btn" title="Share"><i data-lucide="share"></i></button>
+      <button id="server-settings-btn" title="Server settings"><i data-lucide="settings"></i></button>
+    </div>
+  </div>
 
   <!-- === Bottom row === -->
   <div id="layout-body">
@@ -32,6 +54,7 @@
     <a href="/" class="icon-strip-home" title="Home">
       <span class="icon-strip-pill"></span>
       <img class="footer-mascot icon-strip-logo" src="favicon.svg" width="38" height="38" alt="Clay">
+      <span class="icon-strip-status"></span>
     </a>
     <div class="icon-strip-separator"></div>
     <div class="icon-strip-projects" id="icon-strip-projects"></div>
@@ -52,7 +75,7 @@
           <div id="session-actions">
             <button id="resume-session-btn" title="Resume a CLI session"><i data-lucide="terminal"></i> <span>Resume CLI</span></button>
             <button id="file-browser-btn"><i data-lucide="folder-tree"></i> <span>File browser</span></button>
-            <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span></button>
+            <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span><span id="terminal-sidebar-count" class="sidebar-badge hidden"></span></button>
           </div>
         </div>
         <div id="sidebar-sessions-header">
@@ -98,52 +121,7 @@
           <button id="header-rename-btn" type="button" title="Rename session"><i data-lucide="pencil"></i></button>
         </div>
         <div class="status">
-          <div id="debug-menu-wrap" class="hidden">
-            <button id="debug-btn" title="Debug"><i data-lucide="bug"></i></button>
-            <div id="debug-menu" class="hidden">
-              <label class="notif-option">
-                <span>Update banner</span>
-                <input type="checkbox" id="debug-toggle-update">
-                <span class="toggle-track"><span class="toggle-thumb"></span></span>
-              </label>
-              <label class="notif-option">
-                <span>Onboarding banner</span>
-                <input type="checkbox" id="debug-toggle-onboarding">
-                <span class="toggle-track"><span class="toggle-thumb"></span></span>
-              </label>
-            </div>
-          </div>
           <button id="terminal-toggle-btn" title="Terminal"><i data-lucide="square-terminal"></i><span id="terminal-count" class="hidden"></span></button>
-          <button id="qr-btn" title="Share"><i data-lucide="share"></i></button>
-          <div id="qr-overlay" class="hidden">
-            <div id="qr-overlay-inner">
-              <div id="qr-canvas"></div>
-              <div id="qr-url"></div>
-            </div>
-          </div>
-          <div id="notif-menu-wrap">
-            <button id="notif-btn" title="Notifications"><i data-lucide="bell"></i></button>
-            <div id="notif-menu" class="hidden">
-              <label class="notif-option" id="notif-push-row">
-                <span><i data-lucide="smartphone" style="width:14px;height:14px"></i> Push notifications</span>
-                <input type="checkbox" id="notif-toggle-push">
-                <span class="toggle-track"><span class="toggle-thumb"></span></span>
-              </label>
-              <label class="notif-option">
-                <span><i data-lucide="bell" style="width:14px;height:14px"></i> Browser alerts</span>
-                <input type="checkbox" id="notif-toggle-alert">
-                <span class="toggle-track"><span class="toggle-thumb"></span></span>
-              </label>
-              <div id="notif-blocked-hint" class="hidden">Blocked by browser. <a href="#" id="notif-learn-more">Learn more</a></div>
-              <label class="notif-option">
-                <span><i data-lucide="volume-2" style="width:14px;height:14px"></i> Sound</span>
-                <input type="checkbox" id="notif-toggle-sound">
-                <span class="toggle-track"><span class="toggle-thumb"></span></span>
-              </label>
-            </div>
-          </div>
-          <span id="client-count" class="hidden"></span>
-          <span class="status-dot" id="status-dot"></span>
         </div>
       </div>
       <div id="main-panels">
@@ -164,9 +142,8 @@
         </div>
 
         <div id="connect-overlay">
-      <div id="pixel-canvas"></div>
-      <div class="connect-verb" id="connect-verb"></div>
-      <div class="connect-status" id="connect-status">Connecting...</div>
+      <img class="connect-logo" src="favicon.svg" width="48" height="48" alt="Clay">
+      <span class="connect-wordmark">Clay</span>
     </div>
     <div id="messages"></div>
 
@@ -322,20 +299,199 @@
     <div class="user-island-actions">
       <button id="footer-theme" title="Theme"><i data-lucide="palette"></i></button>
       <button id="footer-status" title="Status"><i data-lucide="activity"></i></button>
-      <button id="footer-settings" title="Settings"><i data-lucide="settings"></i></button>
-    </div>
-    <div id="sidebar-footer-menu" class="hidden">
-      <a class="sidebar-menu-item" href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener">
-        <i data-lucide="star"></i> <span>Star on GitHub</span>
-      </a>
-      <button class="sidebar-menu-item" id="footer-update-check">
-        <i data-lucide="refresh-cw"></i> <span>Check for updates</span>
-      </button>
+      <button id="footer-update-check" title="Check for updates"><i data-lucide="refresh-cw"></i></button>
     </div>
   </div>
 
   </div><!-- /layout-body -->
 </div><!-- /layout -->
+
+<!-- QR / Share overlay -->
+<div id="qr-overlay" class="hidden">
+  <div id="qr-overlay-inner">
+    <div id="qr-canvas"></div>
+    <div id="qr-url"></div>
+  </div>
+</div>
+
+<!-- Hidden notification toggles (synced by server-settings) -->
+<div id="notif-menu-wrap" style="display:none">
+  <button id="notif-btn"></button>
+  <div id="notif-menu">
+    <label class="notif-option" id="notif-push-row">
+      <span>Push notifications</span>
+      <input type="checkbox" id="notif-toggle-push">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+    <label class="notif-option">
+      <span>Browser alerts</span>
+      <input type="checkbox" id="notif-toggle-alert">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+    <div id="notif-blocked-hint" class="hidden">Blocked by browser. <a href="#" id="notif-learn-more">Learn more</a></div>
+    <label class="notif-option">
+      <span>Sound</span>
+      <input type="checkbox" id="notif-toggle-sound">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+  </div>
+</div>
+
+<!-- === Server Settings (full-screen overlay) === -->
+<div id="server-settings" class="hidden">
+  <div class="server-settings-layout">
+    <div class="server-settings-nav">
+      <div class="server-settings-nav-inner">
+        <div class="server-settings-nav-header" id="settings-server-name"></div>
+        <div class="server-settings-nav-items">
+          <button class="settings-nav-item active" data-section="overview"><span>Overview</span></button>
+          <button class="settings-nav-item" data-section="models"><span>Models</span></button>
+          <button class="settings-nav-item" data-section="permissions"><span>Permissions</span></button>
+          <button class="settings-nav-item" data-section="notifications"><span>Notifications</span></button>
+          <button class="settings-nav-item" data-section="appearance"><span>Appearance</span></button>
+          <div class="settings-nav-separator"></div>
+          <button class="settings-nav-item" data-section="advanced"><span>Advanced</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="server-settings-content">
+      <div class="server-settings-content-inner">
+        <div class="server-settings-section active" data-section="overview">
+          <h2>Server Overview</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">Project Name</label>
+              <div class="settings-value" id="settings-project-name">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Working Directory</label>
+              <div class="settings-value settings-mono" id="settings-project-cwd">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Server Version</label>
+              <div class="settings-value" id="settings-server-version">-</div>
+            </div>
+          </div>
+          <h3>Server Status</h3>
+          <div class="settings-card">
+            <div class="settings-field-row">
+              <label class="settings-label">PID</label>
+              <span class="settings-value settings-mono" id="settings-status-pid">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Uptime</label>
+              <span class="settings-value" id="settings-status-uptime">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Memory (RSS)</label>
+              <span class="settings-value" id="settings-status-rss">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Active Sessions</label>
+              <span class="settings-value" id="settings-status-sessions">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Connected Clients</label>
+              <span class="settings-value" id="settings-status-clients">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="models">
+          <h2>Models</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">Current Model</label>
+              <div class="settings-value" id="settings-current-model">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Available Models</label>
+              <div id="settings-model-list" class="settings-model-list"></div>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="permissions">
+          <h2>Permissions</h2>
+          <div class="settings-card">
+            <div class="settings-field-row">
+              <div>
+                <label class="settings-label">Skip Permissions</label>
+                <div class="settings-hint">When enabled, all tool executions are auto-approved without asking.</div>
+              </div>
+              <span class="settings-value settings-badge" id="settings-skip-perms">Disabled</span>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="notifications">
+          <h2>Notifications</h2>
+          <div class="settings-card">
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Push Notifications</span>
+                <div class="settings-hint">Receive push notifications when tasks complete.</div>
+              </div>
+              <input type="checkbox" id="settings-notif-push">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Browser Alerts</span>
+                <div class="settings-hint">Show browser notification alerts when tasks finish.</div>
+              </div>
+              <input type="checkbox" id="settings-notif-alert">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Sound</span>
+                <div class="settings-hint">Play a sound when tasks are completed.</div>
+              </div>
+              <input type="checkbox" id="settings-notif-sound">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="appearance">
+          <h2>Appearance</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">Theme</label>
+              <div class="settings-hint">Current theme applied to the interface.</div>
+              <div class="settings-value" id="settings-current-theme">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Context Display</label>
+              <div class="settings-hint">How context window usage is displayed.</div>
+              <div class="settings-btn-group" id="settings-context-view">
+                <button class="settings-btn-option" data-view="off">Off</button>
+                <button class="settings-btn-option" data-view="mini">Mini</button>
+                <button class="settings-btn-option" data-view="panel">Panel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="advanced">
+          <h2>Advanced</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">WebSocket Path</label>
+              <div class="settings-value settings-mono" id="settings-ws-path">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Project Slug</label>
+              <div class="settings-value settings-mono" id="settings-project-slug">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="server-settings-close-col">
+      <button id="server-settings-close" class="server-settings-close-btn">
+        <i data-lucide="x"></i>
+        <span>ESC</span>
+      </button>
+    </div>
+  </div>
+</div>
 
 <div id="paste-modal" class="hidden">
   <div class="confirm-backdrop"></div>
