@@ -150,3 +150,95 @@
     padding: 0 12px;
   }
 }
+
+/* ==========================================================================
+   Header Indicators (Context Bar, Rate Limit, Fast Mode)
+   ========================================================================== */
+
+/* --- Context bar --- */
+.header-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: 80px;
+  cursor: default;
+}
+
+.header-context-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.header-context-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.header-context-fill.warn { background: var(--warning); }
+.header-context-fill.danger { background: var(--error); }
+
+.header-context-label {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  color: var(--text-dimmer);
+  white-space: nowrap;
+}
+
+/* --- Shared pill style for rate limit & fast mode --- */
+.header-rate-limit,
+.header-fast-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.header-rate-limit .lucide,
+.header-fast-mode .lucide {
+  width: 12px;
+  height: 12px;
+}
+
+.header-pill-text {
+  line-height: 1;
+}
+
+/* Rate limit states */
+.header-rate-limit.warning {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--warning);
+}
+
+.header-rate-limit.rejected {
+  background: color-mix(in srgb, var(--error) 12%, transparent);
+  color: var(--error);
+}
+
+/* Fast mode states */
+.header-fast-mode.cooldown {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--warning);
+}
+
+.header-fast-mode.active {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+/* Hide pills on very narrow screens */
+@media (max-width: 400px) {
+  .header-pill-text { display: none; }
+  .header-rate-limit,
+  .header-fast-mode { padding: 3px; }
+  .header-context { width: 50px; }
+}
