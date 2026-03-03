@@ -888,6 +888,38 @@ pre.mermaid-error {
   font-size: 11px;
 }
 
+.subagent-progress {
+  margin: 2px 0 2px 24px;
+  padding: 2px 12px;
+  font-size: 11px;
+  font-family: "DM Mono", monospace;
+  color: var(--text-dimmer);
+}
+
+.subagent-stop-btn {
+  margin-left: auto;
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.subagent-stop-btn:hover {
+  background: var(--error-8);
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.subagent-stop-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 /* ==========================================================================
    Tool Groups
    ========================================================================== */
