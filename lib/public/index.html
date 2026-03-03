@@ -245,9 +245,25 @@
               </div>
             </div>
             <div id="input-bottom-right">
-              <div id="model-menu-wrap" class="hidden">
-                <button id="model-btn" title="Model"><span id="model-label"></span> <i data-lucide="chevron-down"></i></button>
-                <div id="model-menu" class="hidden"></div>
+              <div id="config-chip-wrap" class="hidden">
+                <button id="config-chip" title="Model, mode, and effort settings">
+                  <span id="config-chip-label"></span>
+                  <i data-lucide="chevron-down"></i>
+                </button>
+                <div id="config-popover" class="hidden">
+                  <div class="config-section">
+                    <div class="config-section-label">MODEL</div>
+                    <div id="config-model-list" class="config-radio-list"></div>
+                  </div>
+                  <div class="config-section">
+                    <div class="config-section-label">MODE</div>
+                    <div id="config-mode-list" class="config-radio-list"></div>
+                  </div>
+                  <div id="config-effort-section" class="config-section">
+                    <div class="config-section-label">EFFORT</div>
+                    <div id="config-effort-bar" class="config-segmented"></div>
+                  </div>
+                </div>
               </div>
               <button id="send-btn" disabled aria-label="Send"><i data-lucide="arrow-up"></i></button>
             </div>
