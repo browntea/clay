@@ -117,7 +117,7 @@
   align-items: center;
   transition: color 0.15s;
 }
-.session-info-popover .info-copy-btn:hover { color: var(--accent); }
+.session-info-popover .info-copy-btn:hover { color: var(--accent2); }
 .session-info-popover .info-copy-btn .lucide { width: 13px; height: 13px; }
 
 .header-rename-input {

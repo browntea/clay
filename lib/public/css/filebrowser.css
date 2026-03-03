@@ -744,8 +744,8 @@
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 10px;
-  background: var(--accent-bg);
-  color: var(--accent);
+  background: var(--accent2-bg);
+  color: var(--accent2);
   flex-shrink: 0;
 }
 

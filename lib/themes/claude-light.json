@@ -2,8 +2,9 @@
   "name": "Clay Light",
   "author": "Clay",
   "variant": "light",
-  "base00": "F5F0E8", "base01": "EBE6DD", "base02": "D8D3CA", "base03": "A39E94",
-  "base04": "7A756C", "base05": "524E47", "base06": "352F28", "base07": "1A1613",
-  "base08": "C4392E", "base09": "B8603F", "base0A": "C48B2B", "base0B": "3D8B40",
-  "base0C": "2A8A7A", "base0D": "3B7BBD", "base0E": "9E5E9A", "base0F": "B89458"
+  "base00": "F3EBE7", "base01": "EBE1DC", "base02": "D8CCC6", "base03": "A09590",
+  "base04": "786D67", "base05": "504541", "base06": "332925", "base07": "1A1412",
+  "base08": "C83520", "base09": "CC5535", "base0A": "C08520", "base0B": "008F6B",
+  "base0C": "1C8575", "base0D": "3560B0", "base0E": "8C4E8E", "base0F": "A57C45",
+  "accent2": "2A26E5"
 }

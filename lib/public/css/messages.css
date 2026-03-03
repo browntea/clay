@@ -467,17 +467,18 @@ pre.mermaid-error {
   cursor: pointer;
   padding: 6px 12px;
   user-select: none;
-  background: rgba(var(--overlay-rgb), 0.03);
+  background: var(--accent2-8);
   border-radius: 8px;
   transition: background 0.15s;
 }
 
 .thinking-header:hover {
-  background: rgba(var(--overlay-rgb), 0.06);
+  background: var(--accent2-12);
 }
 
 .thinking-chevron {
-  color: var(--text-dimmer);
+  color: var(--accent2);
+  opacity: 0.5;
   transition: transform 0.2s;
   display: inline-flex;
   flex-shrink: 0;
@@ -494,7 +495,7 @@ pre.mermaid-error {
 
 .thinking-label {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--accent2);
 }
 
 .thinking-duration {
@@ -504,7 +505,7 @@ pre.mermaid-error {
 
 .thinking-spinner {
   flex-shrink: 0;
-  color: var(--text-muted);
+  color: var(--accent2);
 }
 
 .thinking-spinner .lucide {
@@ -525,7 +526,7 @@ pre.mermaid-error {
   word-break: break-word;
   max-height: 300px;
   overflow-y: auto;
-  background: rgba(var(--overlay-rgb), 0.02);
+  background: var(--accent2-8);
   border-radius: 8px;
 }
 
@@ -618,8 +619,8 @@ pre.mermaid-error {
 }
 
 .tool-desc.tool-desc-link:hover {
-  color: var(--accent);
-  text-decoration-color: var(--accent);
+  color: var(--accent2);
+  text-decoration-color: var(--accent2);
 }
 
 .tool-desc-link-icon {
@@ -748,7 +749,7 @@ pre.mermaid-error {
   cursor: pointer;
 }
 .edit-diff-path-link:hover {
-  color: var(--accent);
+  color: var(--accent2);
   text-decoration: underline;
 }
 

@@ -41,6 +41,15 @@
   --accent-20: rgba(218, 119, 86, 0.20);
   --accent-25: rgba(218, 119, 86, 0.25);
   --accent-30: rgba(218, 119, 86, 0.30);
+  --accent2: #5857FC;
+  --accent2-hover: #6C6BFC;
+  --accent2-bg: rgba(88, 87, 252, 0.12);
+  --accent2-8: rgba(88, 87, 252, 0.08);
+  --accent2-12: rgba(88, 87, 252, 0.12);
+  --accent2-15: rgba(88, 87, 252, 0.15);
+  --accent2-20: rgba(88, 87, 252, 0.20);
+  --accent2-25: rgba(88, 87, 252, 0.25);
+  --accent2-30: rgba(88, 87, 252, 0.30);
   --error-8: rgba(229, 83, 75, 0.08);
   --error-12: rgba(229, 83, 75, 0.12);
   --error-15: rgba(229, 83, 75, 0.15);
