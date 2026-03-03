@@ -464,17 +464,14 @@
 
 /* --- Session context menu --- */
 .session-ctx-menu {
-  position: absolute;
-  right: 8px;
-  top: 100%;
-  margin-top: 2px;
-  background: var(--bg-alt);
+  position: fixed;
+  background: var(--sidebar-bg);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 4px 0;
   min-width: 140px;
   box-shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.4);
-  z-index: 110;
+  z-index: 9999;
 }
 
 .session-ctx-item {
@@ -603,6 +600,35 @@
 .user-island-actions button:hover {
   background: var(--sidebar-hover);
   color: var(--text-secondary);
+}
+
+.user-island-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dimmer);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.user-island-chip .lucide {
+  width: 12px;
+  height: 12px;
+}
+
+.user-island-chip:hover {
+  color: var(--warning);
+  border-color: var(--warning);
+  background: rgba(229, 168, 75, 0.08);
 }
 
 #layout.sidebar-collapsed #user-island .user-island-info,

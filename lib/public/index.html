@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5/css/xterm.min.css">
 <script>
-(function(){try{var k="clay-theme-vars",v=localStorage.getItem(k);if(!v)return;var o=JSON.parse(v),r=document.documentElement,p;for(p in o)r.style.setProperty(p,o[p]);var vt=localStorage.getItem(k.replace("-vars","-variant"));if(vt==="light"){r.classList.add("light-theme");r.classList.remove("dark-theme")}else{r.classList.add("dark-theme");r.classList.remove("light-theme")}var m=document.querySelector('meta[name="theme-color"]');if(m&&o["--bg"])m.setAttribute("content",o["--bg"])}catch(e){}})();
+(function(){try{var k="clay-theme-vars",v=localStorage.getItem(k),r=document.documentElement;if(v){var o=JSON.parse(v),p;for(p in o)r.style.setProperty(p,o[p]);var vt=localStorage.getItem(k.replace("-vars","-variant"));if(vt==="light"){r.classList.add("light-theme");r.classList.remove("dark-theme")}else{r.classList.add("dark-theme");r.classList.remove("light-theme")}var m=document.querySelector('meta[name="theme-color"]');if(m&&o["--bg"])m.setAttribute("content",o["--bg"])}else{var sl=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches;if(sl){r.classList.add("light-theme");r.classList.remove("dark-theme")}}}catch(e){}})();
 </script>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -41,6 +41,7 @@
           </label>
         </div>
       </div>
+      <button id="theme-toggle-btn" title="Toggle dark/light mode"><i data-lucide="moon"></i></button>
       <button id="qr-btn" title="Share"><i data-lucide="share"></i></button>
       <button id="server-settings-btn" title="Server settings"><i data-lucide="settings"></i></button>
     </div>
@@ -51,12 +52,12 @@
 
   <!-- === Icon Strip === -->
   <div id="icon-strip">
-    <a href="/" class="icon-strip-home" title="Home">
+    <!-- <a href="/" class="icon-strip-home" title="Home">
       <span class="icon-strip-pill"></span>
       <img class="footer-mascot icon-strip-logo" src="favicon.svg" width="38" height="38" alt="Clay">
       <span class="icon-strip-status"></span>
     </a>
-    <div class="icon-strip-separator"></div>
+    <div class="icon-strip-separator"></div> -->
     <div class="icon-strip-projects" id="icon-strip-projects"></div>
     <button class="icon-strip-add" id="icon-strip-add" title="Add project"><i data-lucide="plus"></i></button>
   </div>
@@ -119,8 +120,10 @@
           <button id="hamburger-btn" aria-label="Toggle sidebar"><i data-lucide="menu"></i></button>
           <span class="header-title" id="header-title">Connecting...</span>
           <button id="header-rename-btn" type="button" title="Rename session"><i data-lucide="pencil"></i></button>
+          <button id="header-info-btn" type="button" title="Session info"><i data-lucide="info"></i></button>
         </div>
         <div class="status">
+          <button id="footer-status" title="Status"><i data-lucide="activity"></i></button>
           <button id="terminal-toggle-btn" title="Terminal"><i data-lucide="square-terminal"></i><span id="terminal-count" class="hidden"></span></button>
         </div>
       </div>
@@ -309,14 +312,12 @@
 
   <!-- === User Island === -->
   <div id="user-island">
-    <div class="user-island-avatar"></div>
+    <div class="user-island-avatar"><img class="footer-mascot" src="favicon.svg" width="32" height="32" alt="Clay"></div>
     <div class="user-island-info">
       <span class="user-island-name">Clay <span id="footer-version" class="footer-version"></span></span>
     </div>
     <div class="user-island-actions">
-      <button id="footer-theme" title="Theme"><i data-lucide="palette"></i></button>
-      <button id="footer-status" title="Status"><i data-lucide="activity"></i></button>
-      <button id="footer-update-check" title="Check for updates"><i data-lucide="refresh-cw"></i></button>
+      <a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="user-island-chip" title="Star on GitHub"><i data-lucide="github"></i> Star Clay</a>
     </div>
   </div>
 
@@ -393,6 +394,7 @@
             <div class="settings-field">
               <label class="settings-label">Server Version</label>
               <div class="settings-value" id="settings-server-version">-</div>
+              <button class="settings-btn-sm settings-btn-update" id="settings-update-check"><i data-lucide="refresh-cw"></i> Check for updates</button>
             </div>
             <div class="settings-field-row">
               <label class="settings-label">Port</label>
@@ -518,9 +520,9 @@
           <h2>Appearance</h2>
           <div class="settings-card">
             <div class="settings-field">
-              <label class="settings-label">Theme</label>
-              <div class="settings-hint">Current theme applied to the interface.</div>
-              <div class="settings-value" id="settings-current-theme">-</div>
+              <label class="settings-label">Skin</label>
+              <div class="settings-hint">Choose a color theme. Use the toggle in the title bar to switch between light and dark mode.</div>
+              <div id="settings-theme-picker-container"></div>
             </div>
             <div class="settings-field">
               <label class="settings-label">Context Display</label>

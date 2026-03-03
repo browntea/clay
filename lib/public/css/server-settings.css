@@ -475,6 +475,34 @@
   color: var(--text);
 }
 
+.settings-btn-update {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settings-btn-update .lucide {
+  width: 14px;
+  height: 14px;
+}
+
+.settings-btn-update:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.settings-btn-update-available {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.settings-btn-update-available:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
 .settings-btn-ghost {
   background: none;
   border-color: transparent;
@@ -618,6 +646,24 @@
 .settings-shutdown-error {
   color: var(--error) !important;
   margin-top: 8px;
+}
+
+/* --- Embedded theme picker in settings --- */
+#settings-theme-picker-container {
+  margin-top: 8px;
+}
+
+#settings-theme-picker-container .theme-picker {
+  position: static !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  max-height: none !important;
+  box-shadow: none !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 8px !important;
+  background: var(--bg) !important;
+  min-width: auto !important;
 }
 
 /* ==========  RESPONSIVE  ========== */
