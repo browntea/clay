@@ -109,7 +109,7 @@
 
 /* --- Terminal toggle button (mobile only) --- */
 #terminal-toggle-btn {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   background: none;

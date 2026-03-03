@@ -1379,6 +1379,12 @@ async function devMode(pin, keepAwake, existingPinHash) {
         setTimeout(spawnDaemon, 500);
         return;
       }
+      // Exit code 78 = fatal config error (e.g. Node version too old) — don't restart
+      if (code === 78) {
+        console.log("\x1b[31m[dev] Daemon exited with fatal error (code 78). Not restarting.\x1b[0m");
+        process.exit(78);
+        return;
+      }
       // Unexpected exit — auto restart
       console.log("\x1b[33m[dev] Daemon exited (code " + code + "), restarting...\x1b[0m");
       setTimeout(spawnDaemon, 500);
