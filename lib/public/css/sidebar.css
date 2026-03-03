@@ -555,6 +555,21 @@
   border-radius: 50%;
 }
 
+.user-island-avatar-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .user-island-info {
   flex: 1;
   min-width: 0;
