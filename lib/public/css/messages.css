@@ -1375,43 +1375,5 @@ pre.mermaid-error {
    Rate Limit Message
    ========================================================================== */
 
-.rate-limit-msg {
-  max-width: var(--content-width);
-  margin: 12px auto;
-  padding: 14px 18px;
-  background: color-mix(in srgb, var(--warning) 8%, var(--bg));
-  border: 1px solid color-mix(in srgb, var(--warning) 30%, transparent);
-  border-radius: 12px;
-  font-size: 13px;
-}
-
-.rate-limit-msg.rate-limit-rejected {
-  background: color-mix(in srgb, var(--error) 8%, var(--bg));
-  border-color: color-mix(in srgb, var(--error) 30%, transparent);
-}
-
-.rate-limit-msg.rate-limit-cleared {
-  opacity: 0.5;
-}
-
-.rate-limit-header {
-  font-weight: 600;
-  color: var(--warning);
-  margin-bottom: 4px;
-}
-
-.rate-limit-rejected .rate-limit-header {
-  color: var(--error);
-}
-
-.rate-limit-hint {
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.rate-limit-countdown {
-  font-family: "DM Mono", monospace;
-  font-weight: 600;
-}
+/* Rate limit inline cards removed — now header-only with popover (see title-bar.css) */
 

@@ -200,20 +200,16 @@
   background: var(--success);
 }
 
-/* Processing = green with pulse animation */
+/* Processing = solid green (LED off state) */
 .icon-strip-status.processing {
   background: var(--success);
-  animation: icon-status-pulse 1.5s ease-in-out infinite;
 }
 
-/* IO blink = brief dim */
+/* IO blink = HDD LED flash */
 .icon-strip-status.io {
-  opacity: 0.3;
-}
-
-@keyframes icon-status-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  background: #fff !important;
+  box-shadow: 0 0 6px var(--success);
+  transition: none;
 }
 
 /* --- Add project button --- */
