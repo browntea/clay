@@ -51,7 +51,7 @@
 
   .mobile-tab-label {
     font-size: 10px;
-    font-family: "DM Sans", system-ui, sans-serif;
+    font-family: "Pretendard", system-ui, sans-serif;
     font-weight: 500;
     line-height: 1;
   }
@@ -73,7 +73,7 @@
     color: #fff;
     font-size: 9px;
     font-weight: 700;
-    font-family: "DM Mono", monospace;
+    font-family: "Roboto Mono", monospace;
     min-width: 14px;
     height: 14px;
     border-radius: 7px;
@@ -128,7 +128,7 @@
     border: none;
     border-radius: 8px;
     color: var(--text-secondary);
-    font-family: "DM Sans", system-ui, sans-serif;
+    font-family: "Pretendard", system-ui, sans-serif;
     font-size: 14px;
     cursor: pointer;
     text-align: left;
@@ -264,7 +264,7 @@
 
   .mobile-sheet-title {
     flex: 1;
-    font-family: "DM Sans", system-ui, sans-serif;
+    font-family: "Pretendard", system-ui, sans-serif;
     font-size: 17px;
     font-weight: 700;
     color: var(--text);
@@ -309,7 +309,7 @@
     border: none;
     border-radius: 10px;
     color: var(--text-secondary);
-    font-family: "DM Sans", system-ui, sans-serif;
+    font-family: "Pretendard", system-ui, sans-serif;
     font-size: 15px;
     cursor: pointer;
     text-align: left;

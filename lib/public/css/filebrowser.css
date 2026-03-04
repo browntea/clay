@@ -194,7 +194,7 @@
 
 .file-viewer-path {
   flex: 1;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
   color: var(--text-secondary);
   overflow: hidden;
@@ -310,7 +310,7 @@
 .file-viewer-body pre {
   margin: 0;
   padding: 16px 20px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
   line-height: 1.55;
   color: var(--text);
@@ -334,7 +334,7 @@
 
 .file-viewer-code pre {
   margin: 0;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
   line-height: 1.55;
   white-space: pre;
@@ -448,7 +448,7 @@
   gap: 4px;
   padding: 8px 10px;
   font-size: 12px;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Pretendard", sans-serif;
   color: var(--text-muted);
   cursor: pointer;
   white-space: nowrap;
@@ -489,7 +489,7 @@
   border-radius: 3px;
   color: var(--text);
   font-size: 12px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   padding: 1px 4px;
   outline: none;
   width: 100px;
@@ -582,7 +582,7 @@
   border: 1px solid #444;
   background: #333;
   color: #d4d4d4;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -755,7 +755,7 @@
 }
 
 .file-history-code-subtitle {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 11px;
   color: var(--text-muted);
   margin-top: 4px;
@@ -909,7 +909,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 11px;
 }
 
@@ -1099,7 +1099,7 @@
 }
 
 .file-history-split-code code {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
 }
 
 /* --- Message blink animation --- */

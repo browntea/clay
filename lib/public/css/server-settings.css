@@ -253,7 +253,7 @@
 }
 
 .settings-value.settings-mono {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
   color: var(--text-muted);
 }
@@ -426,7 +426,7 @@
   border-radius: 6px;
   background: var(--bg);
   color: var(--text);
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 16px;
   letter-spacing: 0.15em;
   text-align: center;
@@ -608,7 +608,7 @@
   border-radius: 6px;
   background: var(--bg);
   color: var(--text);
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 14px;
   outline: none;
   transition: border-color 0.15s;

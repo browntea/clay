@@ -191,7 +191,7 @@
 .header-context-fill.danger { background: var(--error); }
 
 .header-context-label {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 10px;
   color: var(--text-dimmer);
   white-space: nowrap;

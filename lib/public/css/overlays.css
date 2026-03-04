@@ -155,7 +155,7 @@
 }
 
 #update-popover .popover-cmd code {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
   color: var(--text);
   background: rgba(var(--overlay-rgb), 0.06);
@@ -380,7 +380,7 @@
 
 .rewind-file-path {
   flex: 1;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   color: var(--text-muted);
   overflow: hidden;
@@ -411,7 +411,7 @@
 .rewind-file-diff pre {
   margin: 0;
   padding: 10px 12px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   line-height: 1.55;
   white-space: pre-wrap;
@@ -495,7 +495,7 @@
 .cli-session-meta .badge {
   background: rgba(var(--overlay-rgb), 0.07);
   padding: 1px 6px; border-radius: 4px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 10px;
 }
 
@@ -537,7 +537,7 @@
 }
 
 .notif-help-url code {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   color: var(--text);
   flex: 1;
@@ -586,14 +586,14 @@
   border-radius: 8px;
   color: var(--text);
   font-size: 13px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   padding: 10px 12px;
   outline: none;
   transition: border-color 0.2s;
 }
 
 #add-project-input:focus { border-color: var(--text-dimmer); }
-#add-project-input::placeholder { color: var(--text-muted); font-family: "DM Sans", system-ui, sans-serif; }
+#add-project-input::placeholder { color: var(--text-muted); font-family: "Pretendard", system-ui, sans-serif; }
 
 #add-project-suggestions {
   position: absolute;

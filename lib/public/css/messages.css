@@ -36,7 +36,7 @@
 #todo-sticky .todo-sticky-icon { display: inline-flex; color: var(--accent); }
 #todo-sticky .todo-sticky-icon .lucide { width: 13px; height: 13px; }
 #todo-sticky .todo-sticky-title { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
-#todo-sticky .todo-sticky-count { font-size: 11px; color: var(--text-muted); font-family: "DM Mono", monospace; }
+#todo-sticky .todo-sticky-count { font-size: 11px; color: var(--text-muted); font-family: "Roboto Mono", monospace; }
 #todo-sticky .todo-sticky-chevron { display: inline-flex; color: var(--text-muted); transition: transform 0.2s; }
 #todo-sticky .todo-sticky-chevron .lucide { width: 11px; height: 11px; }
 #todo-sticky.collapsed .todo-sticky-chevron { transform: rotate(-90deg); }
@@ -208,7 +208,7 @@
   background: rgba(var(--overlay-rgb), 0.07);
   padding: 2px 7px;
   border-radius: 6px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 0.87em;
 }
 
@@ -611,7 +611,7 @@ pre.mermaid-error {
   flex: 1;
   font-size: 13px;
   color: var(--text-muted);
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -674,7 +674,7 @@ pre.mermaid-error {
 }
 
 .tool-subtitle .tool-connector {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-style: normal;
   flex-shrink: 0;
   line-height: 1.4;
@@ -693,7 +693,7 @@ pre.mermaid-error {
 
 .tool-result-block pre {
   padding: 12px 14px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   line-height: 1.55;
   color: var(--text-muted);
@@ -711,7 +711,7 @@ pre.mermaid-error {
 /* --- Diff rendering --- */
 .tool-result-block pre.diff-content {
   padding: 12px 14px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   line-height: 1.55;
   white-space: pre-wrap;
@@ -745,7 +745,7 @@ pre.mermaid-error {
   align-items: center;
   padding: 6px 14px;
   font-size: 12px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   color: var(--text-muted);
   background: rgba(var(--overlay-rgb), 0.03);
   border-bottom: 1px solid var(--border-subtle);
@@ -809,7 +809,7 @@ pre.mermaid-error {
   margin: 0;
   max-height: none;
   overflow-y: visible;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   line-height: 1.55;
   white-space: pre;
@@ -892,7 +892,7 @@ pre.mermaid-error {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 11px;
 }
 
@@ -900,7 +900,7 @@ pre.mermaid-error {
   margin: 2px 0 2px 24px;
   padding: 2px 12px;
   font-size: 11px;
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   color: var(--text-dimmer);
 }
 
@@ -1102,7 +1102,7 @@ pre.mermaid-error {
 .plan-card-body h1 { font-size: 1.3em; }
 .plan-card-body h2 { font-size: 1.15em; }
 .plan-card-body h3 { font-size: 1.05em; }
-.plan-card-body code { background: rgba(var(--overlay-rgb),0.06); padding: 2px 6px; border-radius: 4px; font-family: "DM Mono", monospace; font-size: 0.88em; }
+.plan-card-body code { background: rgba(var(--overlay-rgb),0.06); padding: 2px 6px; border-radius: 4px; font-family: "Roboto Mono", monospace; font-size: 0.88em; }
 .plan-card-body pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; }
 .plan-card-body pre code { display: block; padding: 10px 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; background: none; border-radius: 0; }
 .plan-card-body ul, .plan-card-body ol { padding-left: 22px; margin: 6px 0; }
@@ -1136,7 +1136,7 @@ pre.mermaid-error {
 }
 .plan-permission-actions .plan-btn-clear .lucide { width: 14px; height: 14px; flex-shrink: 0; }
 .plan-ctx-pct {
-  font-family: "DM Mono", monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 11px;
   opacity: 0.7;
 }
@@ -1213,7 +1213,7 @@ pre.mermaid-error {
 .todo-header-icon { display: inline-flex; color: var(--accent); }
 .todo-header-icon .lucide { width: 16px; height: 16px; }
 .todo-header-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
-.todo-header-count { font-size: 12px; color: var(--text-muted); font-family: "DM Mono", monospace; }
+.todo-header-count { font-size: 12px; color: var(--text-muted); font-family: "Roboto Mono", monospace; }
 
 .todo-progress {
   height: 2px;
