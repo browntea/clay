@@ -117,7 +117,7 @@ SDK 업그레이드(0.2.38 → 0.2.63)에서 새로 사용 가능한 기능들.
 
 ### 17. `betas: ['context-1m-*']`
 - **설명**: Sonnet 전용 1M 컨텍스트
-- [ ] 미완료
+- [x] 완료 — config chip 팝오버에 토글 추가, Sonnet 모델일 때만 표시
 
 ### 18. `persistSession: false`
 - **설명**: 임시 세션

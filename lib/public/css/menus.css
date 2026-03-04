@@ -607,6 +607,53 @@
   font-weight: 600;
 }
 
+/* Toggle row for beta options */
+.config-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px 8px;
+}
+
+.config-toggle-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.config-toggle-btn {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.config-toggle-btn .config-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.config-toggle-btn.active {
+  background: rgba(var(--accent-rgb, 99, 102, 241), 0.15);
+  border-color: var(--accent);
+}
+
+.config-toggle-btn.active .config-toggle-knob {
+  transform: translateX(16px);
+  background: var(--accent);
+}
+
 /* --- Info panels container --- */
 #info-panels {
   position: fixed;
