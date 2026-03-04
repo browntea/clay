@@ -152,6 +152,22 @@
   padding-top: 2px;
 }
 
+.msg-action-time {
+  font-size: 11px;
+  color: var(--text-dimmer);
+  margin-right: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.msg-user:hover .msg-action-time { opacity: 1; }
+
+@media (pointer: coarse) {
+  .msg-action-time { opacity: 1; }
+}
+
 .msg-action-btn {
   display: inline-flex;
   align-items: center;
