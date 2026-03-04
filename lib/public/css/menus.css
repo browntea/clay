@@ -796,11 +796,9 @@
 }
 
 @media (max-width: 768px) {
-  #terminal-toggle-btn { display: flex; }
-
   #info-panels {
     top: auto;
-    bottom: calc(var(--safe-bottom, 0px) + 64px);
+    bottom: calc(var(--safe-bottom, 0px) + 56px + 64px);
     right: 12px;
     left: 12px;
     width: auto;

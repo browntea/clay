@@ -100,6 +100,9 @@
             </div>
           </div>
         </div>
+        <div id="sidebar-panel-projects" class="sidebar-panel hidden">
+          <div id="project-list"></div>
+        </div>
         <div id="sidebar-panel-sessions" class="sidebar-panel">
           <div id="session-list"></div>
         </div>
@@ -274,6 +277,28 @@
       </div>
     </div>
   </div>
+  <!-- Mobile fullscreen sheet overlay (Projects / Sessions) -->
+  <div id="mobile-sheet" class="hidden">
+    <div class="mobile-sheet-backdrop"></div>
+    <div class="mobile-sheet-content">
+      <div class="mobile-sheet-handle"></div>
+      <div class="mobile-sheet-header">
+        <span class="mobile-sheet-title"></span>
+        <button class="mobile-sheet-close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="mobile-sheet-list"></div>
+    </div>
+  </div>
+
+  <!-- Mobile bottom tab bar -->
+  <div id="mobile-tab-bar">
+    <button class="mobile-tab" data-tab="projects"><i data-lucide="folder-kanban"></i><span class="mobile-tab-label">Projects</span></button>
+    <button class="mobile-tab" data-tab="sessions"><i data-lucide="messages-square"></i><span class="mobile-tab-label">Sessions</span></button>
+    <button class="mobile-tab-new" id="mobile-new-session-btn"><i data-lucide="plus"></i></button>
+    <button class="mobile-tab" data-tab="files"><i data-lucide="folder-tree"></i><span class="mobile-tab-label">Files</span></button>
+    <button class="mobile-tab" data-tab="terminal"><i data-lucide="square-terminal"></i><span id="mobile-terminal-count" class="mobile-tab-badge hidden"></span><span class="mobile-tab-label">Terminal</span></button>
+  </div>
+
   <div id="file-viewer" class="hidden">
     <div class="file-viewer-header">
       <span class="file-viewer-path" id="file-viewer-path"></span>

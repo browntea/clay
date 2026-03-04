@@ -514,15 +514,16 @@
     border-right: 1px solid var(--border-subtle);
   }
 
-  #hamburger-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
+  #hamburger-btn,
   #sidebar-toggle-btn,
   #sidebar-expand-btn,
   #layout.sidebar-collapsed #sidebar-expand-btn {
+    display: none;
+  }
+
+  /* Hide sidebar tools & title bar status icons — redundant with tab bar */
+  #sidebar-tools,
+  .title-bar-main .status {
     display: none;
   }
 
@@ -532,6 +533,11 @@
 
   #input-row {
     border-radius: 20px;
+  }
+
+  /* Offset for mobile tab bar (56px) */
+  #input-area {
+    padding-bottom: calc(var(--safe-bottom) + 56px + 8px);
   }
 }
 

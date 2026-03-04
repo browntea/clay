@@ -150,6 +150,12 @@
   .title-bar-content {
     padding: 0 12px;
   }
+
+  /* Hide title-bar terminal & sticky-notes buttons on mobile (tab bar has them) */
+  .title-bar-content .status #terminal-toggle-btn,
+  .title-bar-content .status #sticky-notes-toggle-btn {
+    display: none;
+  }
 }
 
 /* ==========================================================================

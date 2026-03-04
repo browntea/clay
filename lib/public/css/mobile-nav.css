@@ -1,0 +1,354 @@
+/* ==========================================================================
+   Mobile Bottom Tab Bar
+   ========================================================================== */
+
+#mobile-tab-bar {
+  display: none;
+}
+
+#mobile-sheet {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #mobile-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    padding-bottom: var(--safe-bottom);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 200;
+  }
+
+  /* --- Tab item --- */
+  .mobile-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+    background: none;
+    border: none;
+    color: var(--text-dimmer);
+    cursor: pointer;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+  }
+
+  .mobile-tab .lucide {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobile-tab-label {
+    font-size: 10px;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .mobile-tab:active {
+    color: var(--text-secondary);
+  }
+
+  .mobile-tab.active {
+    color: var(--accent);
+  }
+
+  /* --- Badge on tab icon (e.g. terminal count) --- */
+  .mobile-tab-badge {
+    position: absolute;
+    top: 4px;
+    right: calc(50% - 18px);
+    background: var(--success);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    font-family: "DM Mono", monospace;
+    min-width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    line-height: 1;
+  }
+
+  .mobile-tab-badge.hidden { display: none; }
+
+  .mobile-tab { position: relative; }
+
+  /* --- Center "+" button (raised) --- */
+  .mobile-tab-new {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: -12px;
+    box-shadow: 0 2px 12px rgba(var(--shadow-rgb), 0.25);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s, box-shadow 0.15s;
+  }
+
+  .mobile-tab-new .lucide {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mobile-tab-new:active {
+    transform: scale(0.92);
+    box-shadow: 0 1px 6px rgba(var(--shadow-rgb), 0.2);
+  }
+
+  /* --- Mobile project list items (inside sidebar) --- */
+  .mobile-project-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s;
+  }
+
+  .mobile-project-item:active {
+    background: rgba(var(--overlay-rgb), 0.06);
+  }
+
+  .mobile-project-item.active {
+    color: var(--text);
+    background: rgba(var(--overlay-rgb), 0.06);
+  }
+
+  .mobile-project-abbrev {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  .mobile-project-item.active .mobile-project-abbrev {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .mobile-project-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-project-processing {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    flex-shrink: 0;
+  }
+
+  /* ==========================================================================
+     Mobile Sheet — fullscreen overlay for Projects / Sessions
+     ========================================================================== */
+
+  #mobile-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  #mobile-sheet.hidden { display: none; }
+
+  /* Blurred backdrop */
+  .mobile-sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(var(--shadow-rgb), 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* Content card — slides up from bottom */
+  .mobile-sheet-content {
+    position: relative;
+    background: var(--bg);
+    border-radius: 20px 20px 0 0;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -4px 32px rgba(var(--shadow-rgb), 0.2);
+    animation: sheetSlideUp 0.28s ease-out;
+  }
+
+  /* Taller sheet for file browser */
+  #mobile-sheet.sheet-files .mobile-sheet-content {
+    max-height: 90vh;
+  }
+
+  #mobile-sheet.closing .mobile-sheet-content {
+    animation: sheetSlideDown 0.22s ease-in forwards;
+  }
+
+  #mobile-sheet.closing .mobile-sheet-backdrop {
+    animation: sheetFadeOut 0.22s ease-in forwards;
+  }
+
+  @keyframes sheetSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  @keyframes sheetSlideDown {
+    from { transform: translateY(0); }
+    to   { transform: translateY(100%); }
+  }
+
+  @keyframes sheetFadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  /* Drag handle pill */
+  .mobile-sheet-handle {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--text-dimmer);
+    opacity: 0.4;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+
+  /* Header */
+  .mobile-sheet-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px 8px;
+    flex-shrink: 0;
+  }
+
+  .mobile-sheet-title {
+    flex: 1;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .mobile-sheet-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(var(--overlay-rgb), 0.06);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-sheet-close .lucide {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Scrollable list */
+  .mobile-sheet-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 8px;
+    padding-bottom: calc(var(--safe-bottom) + 16px);
+  }
+
+  /* --- Session items inside sheet --- */
+  .mobile-session-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 12px;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s;
+  }
+
+  .mobile-session-item:active {
+    background: rgba(var(--overlay-rgb), 0.06);
+  }
+
+  .mobile-session-item.active {
+    color: var(--text);
+    background: rgba(var(--overlay-rgb), 0.06);
+    font-weight: 600;
+  }
+
+  .mobile-session-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-session-processing {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Date group header inside sheet */
+  .mobile-sheet-group {
+    padding: 14px 12px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dimmer);
+    letter-spacing: 0.3px;
+  }
+}

@@ -348,12 +348,10 @@
 .sticky-note-color-dot[data-color="orange"] { background: #FFA726; }
 .sticky-note-color-dot[data-color="purple"] { background: #AB47BC; }
 
-/* --- Mobile adjustments --- */
+/* --- Mobile: hide entirely --- */
 @media (max-width: 768px) {
-  .sticky-note {
-    min-width: 140px;
-  }
-  .sticky-note-text {
-    font-size: 12px;
+  #sticky-notes-container,
+  #sticky-notes-toggle-btn {
+    display: none !important;
   }
 }
