@@ -114,7 +114,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  opacity: 0.6;
+  color: transparent;
   pointer-events: auto;
 }
 
@@ -296,6 +296,7 @@
 }
 
 .sticky-note.minimized .sticky-note-spacer {
+  color: inherit;
   opacity: 1;
 }
 
