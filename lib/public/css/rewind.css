@@ -1,31 +1,6 @@
 /* --- Rewindable user messages (always active) --- */
-.msg-user[data-uuid] {
-  position: relative;
-}
-
-.msg-user-rewind-btn {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 22px;
-  height: 22px;
-  border: none;
-  background: transparent;
-  color: var(--text-dimmer);
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 0;
-  transition: color 0.15s, background 0.15s;
-  z-index: 1;
-}
-
-.msg-user-rewind-btn .lucide { width: 13px; height: 13px; }
-.msg-user-rewind-btn:hover { color: var(--text); background: rgba(var(--overlay-rgb), 0.08); }
-.msg-user[data-uuid]:hover .msg-user-rewind-btn { display: flex; }
+/* Rewind button now lives inside .msg-actions bar (see messages.css).
+   Visibility is handled by .msg-action-btn opacity hover rules. */
 
 /* --- Rewind mode (timeline visible, strong markers) --- */
 #app.rewind-mode .msg-user[data-uuid] .bubble {
@@ -37,7 +12,7 @@
 }
 
 #app.rewind-mode .msg-user[data-uuid] .msg-user-rewind-btn {
-  display: flex;
+  opacity: 1;
   color: var(--accent);
 }
 

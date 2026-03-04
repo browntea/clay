@@ -122,9 +122,10 @@
 /* --- User message --- */
 .msg-user {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
   max-width: var(--content-width);
-  margin: 0 auto 16px;
+  margin: 0 auto 8px;
   padding: 0 20px;
 }
 
@@ -140,6 +141,47 @@
   color: var(--text);
   unicode-bidi: plaintext;
   text-align: start;
+}
+
+/* --- User message action bar --- */
+.msg-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 28px;
+  padding-top: 2px;
+}
+
+.msg-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
+}
+
+.msg-action-btn .lucide { width: 14px; height: 14px; }
+
+.msg-action-btn:hover {
+  color: var(--text);
+  background: rgba(var(--overlay-rgb), 0.08);
+}
+
+.msg-user:hover .msg-action-btn:not(.msg-action-hidden) { opacity: 1; }
+
+/* Hidden actions (fork/rewind) — created but not shown */
+.msg-action-btn.msg-action-hidden { display: none; }
+
+@media (pointer: coarse) {
+  .msg-action-btn:not(.msg-action-hidden) { opacity: 1; }
 }
 
 /* --- Assistant message --- */
