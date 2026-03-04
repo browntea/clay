@@ -9,177 +9,147 @@
 <meta name="theme-color" content="#2F2E2B">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>Claude Relay</title>
+<title>Clay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Styrene+A+Web:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5/css/xterm.min.css">
 <script>
-(function(){try{var k="claude-relay-theme-vars",v=localStorage.getItem(k);if(!v)return;var o=JSON.parse(v),r=document.documentElement,p;for(p in o)r.style.setProperty(p,o[p]);var vt=localStorage.getItem(k.replace("-vars","-variant"));if(vt==="light"){r.classList.add("light-theme");r.classList.remove("dark-theme")}else{r.classList.add("dark-theme");r.classList.remove("light-theme")}var m=document.querySelector('meta[name="theme-color"]');if(m&&o["--bg"])m.setAttribute("content",o["--bg"])}catch(e){}})();
+(function(){try{var k="clay-theme-vars",v=localStorage.getItem(k),r=document.documentElement;if(v){var o=JSON.parse(v),p;for(p in o)r.style.setProperty(p,o[p]);var vt=localStorage.getItem(k.replace("-vars","-variant"));if(vt==="light"){r.classList.add("light-theme");r.classList.remove("dark-theme")}else{r.classList.add("dark-theme");r.classList.remove("light-theme")}var m=document.querySelector('meta[name="theme-color"]');if(m&&o["--bg"])m.setAttribute("content",o["--bg"])}else{var sl=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches;if(sl){r.classList.add("light-theme");r.classList.remove("dark-theme")}}}catch(e){}})();
 </script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="layout">
-  <div id="sidebar">
-    <div id="sidebar-header">
-      <a href="/" class="sidebar-logo">
-        <svg class="footer-mascot" viewBox="0 0 12 12" width="16" height="16"><rect x="0" y="0" width="12" height="12" rx="2" fill="#3E3C37"/><rect x="5" y="0" width="1" height="1" fill="#6D6860"/><rect x="6" y="0" width="1" height="1" fill="#6D6860"/><rect x="5" y="1" width="1" height="1" fill="#6D6860"/><rect x="6" y="1" width="1" height="1" fill="#6D6860"/><rect x="2" y="2" width="8" height="2" fill="#908B81"/><rect x="2" y="4" width="1" height="2" fill="#908B81"/><rect x="3" y="4" width="1" height="2" fill="#262522"/><rect x="4" y="4" width="4" height="2" fill="#908B81"/><rect x="8" y="4" width="1" height="2" fill="#262522"/><rect x="9" y="4" width="1" height="2" fill="#908B81"/><rect x="0" y="6" width="12" height="2" fill="#908B81"/><rect x="2" y="8" width="8" height="2" fill="#908B81"/><rect x="2" y="10" width="1" height="2" fill="#908B81"/><rect x="4" y="10" width="1" height="2" fill="#908B81"/><rect x="7" y="10" width="1" height="2" fill="#908B81"/><rect x="9" y="10" width="1" height="2" fill="#908B81"/></svg>
-      </a>
-      <button id="sidebar-toggle-btn" title="Close sidebar"><i data-lucide="panel-left-close"></i></button>
-    </div>
-    <nav id="sidebar-nav">
-      <div id="project-list-section">
-        <div id="project-list-header">
-          <span class="project-list-title">Projects</span>
-          <button id="project-list-add" type="button" title="Add project"><i data-lucide="plus"></i></button>
-        </div>
-        <div id="project-list"></div>
-      </div>
-      <div id="project-hint" class="hidden">
-        <span class="project-hint-text">Run <code>npx claude-relay</code> in other directories to add more projects.</span>
-        <button id="project-hint-dismiss" type="button" aria-label="Dismiss"><i data-lucide="x"></i></button>
-      </div>
-    </nav>
-    <div id="sidebar-tools">
-      <div class="sidebar-section-header">
-        <span class="sidebar-section-title">Tools</span>
-      </div>
-      <div id="session-actions">
-        <button id="resume-session-btn" title="Resume a CLI session"><i data-lucide="terminal"></i> <span>Resume CLI</span></button>
-        <button id="file-browser-btn"><i data-lucide="folder-tree"></i> <span>File browser</span></button>
-        <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span></button>
-      </div>
-    </div>
-    <div id="sidebar-sessions-header">
-      <div id="sessions-header-content">
-        <div class="session-list-header">
-          <span>Sessions</span>
-          <div class="session-list-header-actions">
-            <button id="new-session-btn" type="button" title="New session"><i data-lucide="plus"></i></button>
-            <button id="search-session-btn" type="button" title="Search sessions"><i data-lucide="search"></i></button>
-          </div>
-        </div>
-        <div id="session-search" class="hidden">
-          <input id="session-search-input" type="text" placeholder="Search sessions..." autocomplete="off" spellcheck="false" />
-          <button id="session-search-clear" type="button" aria-label="Clear search"><i data-lucide="x"></i></button>
+  <!-- === Top Bar (full width, forms reverse-ㄱ with icon strip) === -->
+  <div id="top-bar">
+    <a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="top-bar-title"><img class="top-bar-icon" src="favicon.svg" width="16" height="16" alt="">Clay</a>
+    <div class="top-bar-actions">
+      <span id="client-count" class="hidden"></span>
+      <div id="debug-menu-wrap" class="hidden">
+        <button id="debug-btn" title="Debug"><i data-lucide="bug"></i></button>
+        <div id="debug-menu" class="hidden">
+          <label class="notif-option">
+            <span>Update banner</span>
+            <input type="checkbox" id="debug-toggle-update">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
+          <label class="notif-option">
+            <span>Onboarding banner</span>
+            <input type="checkbox" id="debug-toggle-onboarding">
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
         </div>
       </div>
-      <div id="files-header-content" class="hidden">
-        <div class="session-list-header">
-          <span>File Browser</span>
-          <div class="session-list-header-actions">
-            <button id="file-panel-refresh" type="button" title="Refresh file tree"><i data-lucide="refresh-cw"></i></button>
-            <button id="file-panel-close" type="button" title="Close file browser"><i data-lucide="x"></i></button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="sidebar-panel-sessions" class="sidebar-panel">
-      <div id="session-list"></div>
-    </div>
-    <div id="sidebar-panel-files" class="sidebar-panel hidden">
-      <div id="file-tree"></div>
-    </div>
-    <div id="sidebar-footer">
-      <button id="sidebar-footer-btn">
-        <span class="footer-btn-label"><svg class="footer-mascot" viewBox="0 0 12 12" width="16" height="16"><rect x="0" y="0" width="12" height="12" rx="2" fill="#3E3C37"/><rect x="5" y="0" width="1" height="1" fill="#6D6860"/><rect x="6" y="0" width="1" height="1" fill="#6D6860"/><rect x="5" y="1" width="1" height="1" fill="#6D6860"/><rect x="6" y="1" width="1" height="1" fill="#6D6860"/><rect x="2" y="2" width="8" height="2" fill="#908B81"/><rect x="2" y="4" width="1" height="2" fill="#908B81"/><rect x="3" y="4" width="1" height="2" fill="#262522"/><rect x="4" y="4" width="4" height="2" fill="#908B81"/><rect x="8" y="4" width="1" height="2" fill="#262522"/><rect x="9" y="4" width="1" height="2" fill="#908B81"/><rect x="0" y="6" width="12" height="2" fill="#908B81"/><rect x="2" y="8" width="8" height="2" fill="#908B81"/><rect x="2" y="10" width="1" height="2" fill="#908B81"/><rect x="4" y="10" width="1" height="2" fill="#908B81"/><rect x="7" y="10" width="1" height="2" fill="#908B81"/><rect x="9" y="10" width="1" height="2" fill="#908B81"/></svg> Claude Relay <span id="footer-version" class="footer-version"></span></span>
-        <i data-lucide="ellipsis" style="width:14px;height:14px"></i>
-      </button>
-      <div id="sidebar-footer-menu" class="hidden">
-        <a class="sidebar-menu-item" href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener">
-          <i data-lucide="star"></i> <span>Star on GitHub</span>
-        </a>
-        <button class="sidebar-menu-item" id="footer-theme">
-          <i data-lucide="palette"></i> <span>Theme</span>
-        </button>
-        <button class="sidebar-menu-item" id="footer-status">
-          <i data-lucide="activity"></i> <span>Status</span>
-        </button>
-        <button class="sidebar-menu-item" id="footer-update-check">
-          <i data-lucide="refresh-cw"></i> <span>Check for updates</span>
-        </button>
-      </div>
+      <button id="theme-toggle-btn" title="Toggle dark/light mode"><i data-lucide="moon"></i></button>
+      <button id="qr-btn" title="Share"><i data-lucide="share"></i></button>
+      <button id="server-settings-btn" title="Server settings"><i data-lucide="settings"></i></button>
     </div>
   </div>
-  <div id="sidebar-overlay"></div>
-  <div id="app">
-    <div id="update-banner" class="hidden">
-      <span class="update-banner-text"><i data-lucide="arrow-up-circle"></i> A new version of Claude Relay is available: <strong id="update-version"></strong></span>
-      <button id="update-now">Update now</button>
-      <button id="update-how" title="Manual update instructions">?</button>
-      <button id="update-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
-    </div>
-    <div id="onboarding-banner" class="hidden">
-      <span class="onboarding-banner-text" id="onboarding-banner-text"></span>
-      <button id="onboarding-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
-    </div>
-    <div id="skip-perms-banner" class="hidden">
-      <i data-lucide="shield-off"></i>
-      <span>Skip permissions mode is active. All tool executions are auto-approved.</span>
-    </div>
-    <div id="header">
-      <div id="header-left">
-        <button id="sidebar-expand-btn" title="Open sidebar"><i data-lucide="panel-left-open"></i></button>
-        <button id="hamburger-btn" aria-label="Toggle sidebar"><i data-lucide="menu"></i></button>
-        <span class="header-title" id="header-title">Connecting...</span>
-        <button id="header-rename-btn" type="button" title="Rename session"><i data-lucide="pencil"></i></button>
-      </div>
-      <div class="status">
-        <div id="debug-menu-wrap" class="hidden">
-          <button id="debug-btn" title="Debug"><i data-lucide="bug"></i></button>
-          <div id="debug-menu" class="hidden">
-            <label class="notif-option">
-              <span>Update banner</span>
-              <input type="checkbox" id="debug-toggle-update">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
-            <label class="notif-option">
-              <span>Onboarding banner</span>
-              <input type="checkbox" id="debug-toggle-onboarding">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
-          </div>
-        </div>
-        <button id="terminal-toggle-btn" title="Terminal"><i data-lucide="square-terminal"></i><span id="terminal-count" class="hidden"></span></button>
-        <button id="qr-btn" title="Share"><i data-lucide="share"></i></button>
-        <div id="qr-overlay" class="hidden">
-          <div id="qr-overlay-inner">
-            <div id="qr-canvas"></div>
-            <div id="qr-url"></div>
-          </div>
-        </div>
-        <div id="notif-menu-wrap">
-          <button id="notif-btn" title="Notifications"><i data-lucide="bell"></i></button>
-          <div id="notif-menu" class="hidden">
-            <label class="notif-option" id="notif-push-row">
-              <span><i data-lucide="smartphone" style="width:14px;height:14px"></i> Push notifications</span>
-              <input type="checkbox" id="notif-toggle-push">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
-            <label class="notif-option">
-              <span><i data-lucide="bell" style="width:14px;height:14px"></i> Browser alerts</span>
-              <input type="checkbox" id="notif-toggle-alert">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
-            <div id="notif-blocked-hint" class="hidden">Blocked by browser. <a href="#" id="notif-learn-more">Learn more</a></div>
-            <label class="notif-option">
-              <span><i data-lucide="volume-2" style="width:14px;height:14px"></i> Sound</span>
-              <input type="checkbox" id="notif-toggle-sound">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
-          </div>
-        </div>
-        <span id="client-count" class="hidden"></span>
-        <span class="status-dot" id="status-dot"></span>
-      </div>
-    </div>
 
-    <div id="connect-overlay">
-      <div id="pixel-canvas"></div>
-      <div class="connect-verb" id="connect-verb"></div>
-      <div class="connect-status" id="connect-status">Connecting...</div>
+  <!-- === Bottom row === -->
+  <div id="layout-body">
+
+  <!-- === Icon Strip === -->
+  <div id="icon-strip">
+    <div class="icon-strip-home" title="Clay">
+      <span class="icon-strip-pill"></span>
+      <img class="footer-mascot icon-strip-logo" src="favicon.svg" width="38" height="38" alt="Clay">
+      <span class="icon-strip-status"></span>
     </div>
+    <div class="icon-strip-separator"></div>
+    <div class="icon-strip-projects" id="icon-strip-projects"></div>
+    <button class="icon-strip-add" id="icon-strip-add" title="Add project"><i data-lucide="plus"></i></button>
+  </div>
+
+  <!-- === Main Area (sidebar + resize-handle + main-column) === -->
+  <div id="main-area">
+    <div id="sidebar-column">
+      <div class="title-bar-sidebar">
+        <span class="title-bar-project-name" id="title-bar-project-name"></span>
+      </div>
+      <div id="sidebar">
+        <div id="sidebar-tools">
+          <div id="session-actions">
+            <button id="file-browser-btn"><i data-lucide="folder-tree"></i> <span>File browser</span></button>
+            <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span><span id="terminal-sidebar-count" class="sidebar-badge hidden"></span></button>
+          </div>
+        </div>
+        <div id="sidebar-sessions-header">
+          <div id="sessions-header-content">
+            <div class="session-list-header">
+              <span>Sessions</span>
+              <div class="session-list-header-actions">
+                <button id="new-session-btn" type="button" data-tip="New session"><i data-lucide="plus"></i></button>
+                <button id="resume-session-btn" type="button" data-tip="Import CLI session"><i data-lucide="import"></i></button>
+                <button id="search-session-btn" type="button" data-tip="Search sessions"><i data-lucide="search"></i></button>
+              </div>
+            </div>
+            <div id="session-search" class="hidden">
+              <input id="session-search-input" type="text" placeholder="Search sessions..." autocomplete="off" spellcheck="false" />
+              <button id="session-search-clear" type="button" aria-label="Clear search"><i data-lucide="x"></i></button>
+            </div>
+          </div>
+          <div id="files-header-content" class="hidden">
+            <div class="session-list-header">
+              <span>File Browser</span>
+              <div class="session-list-header-actions">
+                <button id="file-panel-refresh" type="button" title="Refresh file tree"><i data-lucide="refresh-cw"></i></button>
+                <button id="file-panel-close" type="button" title="Close file browser"><i data-lucide="x"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="sidebar-panel-projects" class="sidebar-panel hidden">
+          <div id="project-list"></div>
+        </div>
+        <div id="sidebar-panel-sessions" class="sidebar-panel">
+          <div id="session-list"></div>
+        </div>
+        <div id="sidebar-panel-files" class="sidebar-panel hidden">
+          <div id="file-tree"></div>
+        </div>
+      </div>
+    </div>
+    <div id="sidebar-resize-handle"></div>
+    <div id="sidebar-overlay"></div>
+    <div id="main-column">
+      <div class="title-bar-content">
+        <div id="header-left">
+          <button id="sidebar-expand-btn" title="Open sidebar"><i data-lucide="panel-left-open"></i></button>
+          <button id="hamburger-btn" aria-label="Toggle sidebar"><i data-lucide="menu"></i></button>
+          <span class="header-title" id="header-title">Connecting...</span>
+          <button id="header-info-btn" type="button" title="Session info"><i data-lucide="info"></i></button>
+          <button id="header-rename-btn" type="button" title="Rename session"><i data-lucide="pencil"></i></button>
+        </div>
+        <div id="todo-sticky" class="hidden"></div>
+        <div class="status">
+          <button id="sticky-notes-toggle-btn" title="Sticky notes"><i data-lucide="notepad-text"></i><span class="sticky-notes-count hidden"></span></button>
+          <button id="terminal-toggle-btn" title="Terminal"><i data-lucide="square-terminal"></i><span id="terminal-count" class="hidden"></span></button>
+        </div>
+      </div>
+      <div id="main-panels">
+      <div id="app">
+        <div id="update-banner" class="hidden">
+          <span class="update-banner-text"><i data-lucide="arrow-up-circle"></i> A new version of Clay is available: <strong id="update-version"></strong></span>
+          <button id="update-now">Update now</button>
+          <button id="update-how" title="Manual update instructions">?</button>
+          <button id="update-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+        </div>
+        <div id="onboarding-banner" class="hidden">
+          <span class="onboarding-banner-text" id="onboarding-banner-text"></span>
+          <button id="onboarding-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+        </div>
+        <div id="skip-perms-banner" class="hidden">
+          <i data-lucide="shield-off"></i>
+          <span>Skip permissions mode is active. All tool executions are auto-approved.</span>
+        </div>
+
+        <div id="connect-overlay">
+      <img class="connect-logo" src="favicon.svg" width="48" height="48" alt="Clay">
+      <span class="connect-wordmark">Clay</span>
+    </div>
+    <div id="sticky-notes-container" class="hidden"></div>
     <div id="messages"></div>
 
     <div id="info-panels">
@@ -257,11 +227,11 @@
         </div>
       </div>
     </div>
-    <div id="todo-sticky" class="hidden"></div>
     <button id="new-msg-btn" class="hidden" aria-label="Scroll to bottom"></button>
     <div id="input-area">
       <div id="input-wrapper">
         <div id="slash-menu"></div>
+        <div id="suggestion-chips" class="hidden"></div>
         <div id="input-row">
           <div id="context-mini" class="hidden">
             <div class="context-mini-bar">
@@ -280,9 +250,34 @@
               </div>
             </div>
             <div id="input-bottom-right">
-              <div id="model-menu-wrap" class="hidden">
-                <button id="model-btn" title="Model"><span id="model-label"></span> <i data-lucide="chevron-down"></i></button>
-                <div id="model-menu" class="hidden"></div>
+              <div id="config-chip-wrap" class="hidden">
+                <button id="config-chip" title="Model, mode, and effort settings">
+                  <span id="config-chip-label"></span>
+                  <i data-lucide="chevron-down"></i>
+                </button>
+                <div id="config-popover" class="hidden">
+                  <div class="config-section">
+                    <div class="config-section-label">MODEL</div>
+                    <div id="config-model-list" class="config-radio-list"></div>
+                  </div>
+                  <div class="config-section">
+                    <div class="config-section-label">MODE</div>
+                    <div id="config-mode-list" class="config-radio-list"></div>
+                  </div>
+                  <div id="config-effort-section" class="config-section">
+                    <div class="config-section-label">EFFORT</div>
+                    <div id="config-effort-bar" class="config-segmented"></div>
+                  </div>
+                  <div id="config-beta-section" class="config-section" style="display:none">
+                    <div class="config-section-label">BETA</div>
+                    <div class="config-toggle-row">
+                      <span class="config-toggle-label">1M Context</span>
+                      <button id="config-beta-1m" class="config-toggle-btn" role="switch" aria-checked="false">
+                        <span class="config-toggle-knob"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <button id="send-btn" disabled aria-label="Send"><i data-lucide="arrow-up"></i></button>
             </div>
@@ -291,12 +286,36 @@
       </div>
     </div>
   </div>
+  <!-- Mobile fullscreen sheet overlay (Projects / Sessions) -->
+  <div id="mobile-sheet" class="hidden">
+    <div class="mobile-sheet-backdrop"></div>
+    <div class="mobile-sheet-content">
+      <div class="mobile-sheet-handle"></div>
+      <div class="mobile-sheet-header">
+        <span class="mobile-sheet-title"></span>
+        <button class="mobile-sheet-close"><i data-lucide="x"></i></button>
+      </div>
+      <div class="mobile-sheet-list"></div>
+    </div>
+  </div>
+
+  <!-- Mobile bottom tab bar -->
+  <div id="mobile-tab-bar">
+    <button class="mobile-tab" data-tab="projects"><i data-lucide="folder-kanban"></i><span class="mobile-tab-label">Projects</span></button>
+    <button class="mobile-tab" data-tab="sessions"><i data-lucide="messages-square"></i><span class="mobile-tab-label">Sessions</span></button>
+    <button class="mobile-tab-new" id="mobile-new-session-btn"><i data-lucide="plus"></i></button>
+    <button class="mobile-tab" data-tab="files"><i data-lucide="folder-tree"></i><span class="mobile-tab-label">Files</span></button>
+    <button class="mobile-tab" data-tab="terminal"><i data-lucide="square-terminal"></i><span id="mobile-terminal-count" class="mobile-tab-badge hidden"></span><span class="mobile-tab-label">Terminal</span></button>
+  </div>
+
   <div id="file-viewer" class="hidden">
     <div class="file-viewer-header">
       <span class="file-viewer-path" id="file-viewer-path"></span>
       <button class="file-viewer-btn hidden" id="file-viewer-render" title="Toggle rendered view"><i data-lucide="book-open"></i></button>
+      <button class="file-viewer-btn hidden" id="file-viewer-pdf" title="Export PDF"><i data-lucide="file-down"></i></button>
       <button class="file-viewer-btn hidden" id="file-viewer-history" title="Edit history"><i data-lucide="clock"></i></button>
       <button class="file-viewer-btn" id="file-viewer-copy" title="Copy contents"><i data-lucide="copy"></i></button>
+      <button class="file-viewer-btn" id="file-viewer-fullscreen" title="Toggle fullscreen"><i data-lucide="maximize-2"></i></button>
       <button class="file-viewer-btn" id="file-viewer-close" title="Close"><i data-lucide="x"></i></button>
     </div>
     <div class="file-viewer-body" id="file-viewer-body"></div>
@@ -306,7 +325,8 @@
       <div id="terminal-tabs" class="terminal-tabs"></div>
       <button class="terminal-new-tab-btn" id="terminal-new-tab" title="New tab"><i data-lucide="plus"></i></button>
       <div class="terminal-header-actions">
-        <button class="file-viewer-btn" id="terminal-close" title="Hide panel"><i data-lucide="chevron-up"></i></button>
+        <button class="file-viewer-btn" id="terminal-fullscreen" title="Toggle fullscreen"><i data-lucide="maximize-2"></i></button>
+        <button class="file-viewer-btn" id="terminal-close" title="Hide panel"><i data-lucide="minus"></i></button>
       </div>
     </div>
     <div id="terminal-toolbar" class="hidden">
@@ -320,6 +340,288 @@
       <button class="term-key term-key-arrow" data-key="right">&#9654;</button>
     </div>
     <div id="terminal-body"></div>
+  </div>
+  </div><!-- /main-panels -->
+  </div><!-- /main-column -->
+  </div><!-- /main-area -->
+
+  <!-- === User Island === -->
+  <div id="user-island">
+    <div class="user-island-avatar"><span class="user-island-avatar-letter">C</span></div>
+    <div class="user-island-info">
+      <span class="user-island-name">Clay <span id="footer-version" class="footer-version"></span></span>
+    </div>
+    <div class="user-island-actions">
+      <a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="user-island-chip" title="Star on GitHub"><svg class="chip-octocat" viewBox="0 0 16 16" fill="white" width="13" height="13"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="chip-star">★</span><span class="chip-label">Star Clay</span></a>
+    </div>
+  </div>
+
+  </div><!-- /layout-body -->
+</div><!-- /layout -->
+
+<!-- QR / Share overlay -->
+<div id="qr-overlay" class="hidden">
+  <div id="qr-overlay-inner">
+    <div id="qr-canvas"></div>
+    <div id="qr-url"></div>
+  </div>
+</div>
+
+<!-- Hidden notification toggles (synced by server-settings) -->
+<div id="notif-menu-wrap" style="display:none">
+  <button id="notif-btn"></button>
+  <div id="notif-menu">
+    <label class="notif-option" id="notif-push-row">
+      <span>Push notifications</span>
+      <input type="checkbox" id="notif-toggle-push">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+    <label class="notif-option">
+      <span>Browser alerts</span>
+      <input type="checkbox" id="notif-toggle-alert">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+    <div id="notif-blocked-hint" class="hidden">Blocked by browser. <a href="#" id="notif-learn-more">Learn more</a></div>
+    <label class="notif-option">
+      <span>Sound</span>
+      <input type="checkbox" id="notif-toggle-sound">
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+    </label>
+  </div>
+</div>
+
+<!-- === Server Settings (full-screen overlay) === -->
+<div id="server-settings" class="hidden">
+  <div class="server-settings-layout">
+    <div class="server-settings-nav">
+      <div class="server-settings-nav-inner">
+        <div class="server-settings-nav-header" id="settings-server-name"></div>
+        <div class="server-settings-nav-items">
+          <div class="settings-nav-category">General</div>
+          <button class="settings-nav-item active" data-section="overview"><span>Overview</span></button>
+          <button class="settings-nav-item" data-section="models"><span>Models</span></button>
+          <div class="settings-nav-separator"></div>
+          <div class="settings-nav-category">Configuration</div>
+          <button class="settings-nav-item" data-section="security"><span>Security</span></button>
+          <button class="settings-nav-item" data-section="notifications"><span>Notifications</span></button>
+          <button class="settings-nav-item" data-section="appearance"><span>Appearance</span></button>
+          <div class="settings-nav-separator"></div>
+          <div class="settings-nav-category">System</div>
+          <button class="settings-nav-item" data-section="advanced"><span>Advanced</span></button>
+          <div class="settings-nav-separator"></div>
+          <button class="settings-nav-item settings-nav-danger" data-section="shutdown"><span>Shutdown Server</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="server-settings-content">
+      <div class="server-settings-content-inner">
+        <div class="server-settings-section active" data-section="overview">
+          <h2>Server Overview</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">Project Name</label>
+              <div class="settings-value" id="settings-project-name">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Working Directory</label>
+              <div class="settings-value settings-mono" id="settings-project-cwd">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Server Version</label>
+              <div class="settings-value" id="settings-server-version">-</div>
+              <button class="settings-btn-sm settings-btn-update" id="settings-update-check"><i data-lucide="refresh-cw"></i> Check for updates</button>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Port</label>
+              <span class="settings-value settings-mono" id="settings-port">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">HTTPS</label>
+              <span class="settings-value settings-badge" id="settings-tls">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Debug Mode</label>
+              <span class="settings-value settings-badge" id="settings-debug">-</span>
+            </div>
+          </div>
+          <h3>Server Status</h3>
+          <div class="settings-card">
+            <div class="settings-field-row">
+              <label class="settings-label">PID</label>
+              <span class="settings-value settings-mono" id="settings-status-pid">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Uptime</label>
+              <span class="settings-value" id="settings-status-uptime">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Memory (RSS)</label>
+              <span class="settings-value" id="settings-status-rss">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Active Sessions</label>
+              <span class="settings-value" id="settings-status-sessions">-</span>
+            </div>
+            <div class="settings-field-row">
+              <label class="settings-label">Connected Clients</label>
+              <span class="settings-value" id="settings-status-clients">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="models">
+          <h2>Models</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">Current Model</label>
+              <div class="settings-value" id="settings-current-model">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Available Models</label>
+              <div id="settings-model-list" class="settings-model-list"></div>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="security">
+          <h2>Security</h2>
+          <div class="settings-card">
+            <div class="settings-field-row">
+              <div>
+                <label class="settings-label">Skip Permissions</label>
+                <div class="settings-hint">When enabled, all tool executions are auto-approved without asking.</div>
+              </div>
+              <span class="settings-value settings-badge" id="settings-skip-perms">Disabled</span>
+            </div>
+          </div>
+          <h3>PIN Protection</h3>
+          <div class="settings-card">
+            <div class="settings-field-row">
+              <div>
+                <label class="settings-label">PIN Status</label>
+                <div class="settings-hint">Require a 6-digit PIN to access the web UI.</div>
+              </div>
+              <span class="settings-value settings-badge" id="settings-pin-status">-</span>
+            </div>
+            <div class="settings-field-row" id="settings-pin-actions">
+              <div>
+                <label class="settings-label" id="settings-pin-action-label">Set PIN</label>
+                <div class="settings-hint">Protect access to the web interface with a PIN code.</div>
+              </div>
+              <div class="settings-pin-btns">
+                <button class="settings-btn-sm" id="settings-pin-set-btn">Set PIN</button>
+                <button class="settings-btn-sm settings-btn-danger hidden" id="settings-pin-remove-btn">Remove</button>
+              </div>
+            </div>
+            <div class="settings-field hidden" id="settings-pin-form">
+              <label class="settings-label">Enter 6-digit PIN</label>
+              <div class="settings-pin-input-row">
+                <input type="text" id="settings-pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="000000" autocomplete="off" spellcheck="false">
+                <button class="settings-btn-sm" id="settings-pin-save-btn">Save</button>
+                <button class="settings-btn-sm settings-btn-ghost" id="settings-pin-cancel-btn">Cancel</button>
+              </div>
+              <div class="settings-hint settings-pin-error hidden" id="settings-pin-error">PIN must be exactly 6 digits.</div>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="notifications">
+          <h2>Notifications</h2>
+          <div class="settings-card">
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Push Notifications</span>
+                <div class="settings-hint">Receive push notifications when tasks complete.</div>
+              </div>
+              <input type="checkbox" id="settings-notif-push">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Browser Alerts</span>
+                <div class="settings-hint">Show browser notification alerts when tasks finish.</div>
+              </div>
+              <input type="checkbox" id="settings-notif-alert">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Sound</span>
+                <div class="settings-hint">Play a sound when tasks are completed.</div>
+              </div>
+              <input type="checkbox" id="settings-notif-sound">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="appearance">
+          <h2>Appearance</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">Skin</label>
+              <div class="settings-hint">Choose a color theme. Use the toggle in the title bar to switch between light and dark mode.</div>
+              <div id="settings-theme-picker-container"></div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Context Display</label>
+              <div class="settings-hint">How context window usage is displayed.</div>
+              <div class="settings-btn-group" id="settings-context-view">
+                <button class="settings-btn-option" data-view="off">Off</button>
+                <button class="settings-btn-option" data-view="mini">Mini</button>
+                <button class="settings-btn-option" data-view="panel">Panel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="advanced">
+          <h2>Advanced</h2>
+          <div class="settings-card">
+            <div class="settings-field">
+              <label class="settings-label">WebSocket Path</label>
+              <div class="settings-value settings-mono" id="settings-ws-path">-</div>
+            </div>
+            <div class="settings-field">
+              <label class="settings-label">Project Slug</label>
+              <div class="settings-value settings-mono" id="settings-project-slug">-</div>
+            </div>
+          </div>
+          <div class="settings-card hidden" id="settings-keep-awake-card">
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Keep Awake</span>
+                <div class="settings-hint">Prevent the system from sleeping while the server is running (macOS only).</div>
+              </div>
+              <input type="checkbox" id="settings-keep-awake">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+        <div class="server-settings-section" data-section="shutdown">
+          <h2>Shutdown Server</h2>
+          <div class="settings-danger-zone">
+            <div class="settings-danger-icon"><i data-lucide="alert-triangle"></i></div>
+            <div class="settings-danger-body">
+              <h3 class="settings-danger-title">Danger Zone</h3>
+              <p class="settings-danger-desc">Shutting down the server will terminate all active sessions, disconnect all clients, and stop the Clay daemon process. This action cannot be undone.</p>
+            </div>
+          </div>
+          <div class="settings-card settings-card-danger">
+            <div class="settings-field">
+              <label class="settings-label">Confirm Shutdown</label>
+              <div class="settings-hint">Type <strong>shutdown</strong> below to confirm.</div>
+              <div class="settings-shutdown-input-row">
+                <input type="text" id="settings-shutdown-input" placeholder="Type shutdown to confirm" autocomplete="off" spellcheck="false">
+                <button class="settings-btn-sm settings-btn-shutdown" id="settings-shutdown-btn" disabled>Shutdown</button>
+              </div>
+              <div class="settings-hint settings-shutdown-error hidden" id="settings-shutdown-error"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="server-settings-close-col">
+      <button id="server-settings-close" class="server-settings-close-btn">
+        <i data-lucide="x"></i>
+        <span>ESC</span>
+      </button>
+    </div>
   </div>
 </div>
 

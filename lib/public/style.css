@@ -1,4 +1,6 @@
 @import url("css/base.css");
+@import url("css/icon-strip.css");
+@import url("css/title-bar.css");
 @import url("css/sidebar.css");
 @import url("css/overlays.css");
 @import url("css/menus.css");
@@ -8,3 +10,6 @@
 @import url("css/filebrowser.css");
 @import url("css/diff.css");
 @import url("css/highlight.css");
+@import url("css/server-settings.css");
+@import url("css/sticky-notes.css");
+@import url("css/mobile-nav.css");

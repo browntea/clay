@@ -1,43 +1,19 @@
 /* --- Rewindable user messages (always active) --- */
-.msg-user[data-uuid] .bubble {
-  cursor: pointer;
-  transition: box-shadow 0.2s;
-  position: relative;
-}
-
-.msg-user[data-uuid] .bubble:hover {
-  box-shadow: 0 0 0 1.5px var(--text-dimmer);
-}
-
-.msg-user[data-uuid] .bubble::after {
-  content: "Click to rewind";
-  position: absolute;
-  bottom: -22px;
-  right: 0;
-  font-size: 11px;
-  color: var(--text-dimmer);
-  opacity: 0;
-  transition: opacity 0.15s;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.msg-user[data-uuid] .bubble:hover::after {
-  opacity: 1;
-}
+/* Rewind button now lives inside .msg-actions bar (see messages.css).
+   Visibility is handled by .msg-action-btn opacity hover rules. */
 
 /* --- Rewind mode (timeline visible, strong markers) --- */
-#app.rewind-mode .msg-user[data-uuid] .bubble::after {
-  content: "Rewind to here";
-  color: var(--accent);
-}
-
 #app.rewind-mode .msg-user[data-uuid] .bubble {
   box-shadow: 0 0 0 2px var(--accent);
 }
 
 #app.rewind-mode .msg-user[data-uuid] .bubble:hover {
   box-shadow: 0 0 0 2px var(--accent-hover), 0 0 12px var(--accent-20);
+}
+
+#app.rewind-mode .msg-user[data-uuid] .msg-user-rewind-btn {
+  opacity: 1;
+  color: var(--accent);
 }
 
 #app.rewind-mode .msg-user:not([data-uuid]) { opacity: 0.35; }
@@ -207,7 +183,7 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: var(--accent);
+  color: var(--accent2);
 }
 
 .activity-inline .activity-icon {
@@ -225,7 +201,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 50%, var(--accent) 100%);
+  background: linear-gradient(90deg, var(--accent2) 0%, var(--accent2-hover) 50%, var(--accent2) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -280,8 +256,8 @@
 }
 
 .ask-user-option:hover {
-  background: rgba(var(--overlay-rgb), 0.06);
-  border-color: var(--accent);
+  background: var(--accent2-8);
+  border-color: var(--accent2);
 }
 
 .ask-user-option .option-label {
@@ -297,8 +273,8 @@
 }
 
 .ask-user-option.selected {
-  border-color: var(--accent);
-  background: var(--accent-bg);
+  border-color: var(--accent2);
+  background: var(--accent2-bg);
 }
 
 .ask-user-other {
@@ -418,7 +394,7 @@
 .permission-tool-desc {
   font-size: 13px;
   color: var(--text-muted);
-  font-family: "SF Mono", Menlo, Monaco, monospace;
+  font-family: "Roboto Mono", monospace;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -446,7 +422,7 @@
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   padding: 10px 12px;
-  font-family: "SF Mono", Menlo, Monaco, monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 12px;
   line-height: 1.5;
   color: var(--text-muted);

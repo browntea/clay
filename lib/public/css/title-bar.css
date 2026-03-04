@@ -1,0 +1,314 @@
+/* ==========================================================================
+   Top Bar — full-width bar above everything (forms reverse-ㄱ with icon strip)
+   ========================================================================== */
+
+#top-bar {
+  flex-shrink: 0;
+  height: 32px;
+  background: var(--sidebar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--safe-top) + 0px) 0 0;
+  position: relative;
+}
+
+.top-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Nunito", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-decoration: none;
+  -webkit-app-region: no-drag;
+  transition: color 0.15s;
+}
+
+.top-bar-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.top-bar-title:hover {
+  color: var(--text);
+}
+
+/* --- Top bar actions (right-aligned group) --- */
+.top-bar-actions {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.top-bar-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  padding: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.top-bar-actions button .lucide { width: 14px; height: 14px; }
+.top-bar-actions button:hover { color: var(--text-secondary); background: rgba(var(--overlay-rgb),0.06); }
+
+#server-settings-btn.active { color: var(--text); }
+
+/* Debug button in top bar */
+.top-bar-actions #debug-menu-wrap { position: relative; }
+.top-bar-actions #debug-menu-wrap.hidden { display: none; }
+.top-bar-actions #debug-btn { color: var(--error); opacity: 0.6; }
+.top-bar-actions #debug-btn:hover { opacity: 1; background: var(--error-8); }
+.top-bar-actions #debug-btn.active { opacity: 1; background: var(--error-12); }
+
+/* QR/Share button in top bar */
+.top-bar-actions #qr-btn.active { color: var(--text); background: rgba(var(--overlay-rgb),0.06); }
+
+/* ==========================================================================
+   Title Bar — split into sidebar-column and main-column sections
+   ========================================================================== */
+
+/* --- Sidebar section (inside #sidebar-column) --- */
+.title-bar-sidebar {
+  flex-shrink: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.title-bar-project-name {
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Content section (inside #main-column) --- */
+.title-bar-content {
+  flex-shrink: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  min-width: 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.title-bar-content #header-left {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-width: 0;
+  flex: 1;
+}
+
+.title-bar-content .status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  #top-bar {
+    padding-top: var(--safe-top);
+    height: calc(32px + var(--safe-top));
+  }
+
+  #sidebar-column {
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: visible;
+  }
+
+  .title-bar-sidebar {
+    display: none;
+  }
+
+  .title-bar-content {
+    padding: 0 12px;
+  }
+
+  /* Hide title-bar terminal & sticky-notes buttons on mobile (tab bar has them) */
+  .title-bar-content .status #terminal-toggle-btn,
+  .title-bar-content .status #sticky-notes-toggle-btn {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Header Indicators (Context Bar, Rate Limit, Fast Mode)
+   ========================================================================== */
+
+/* --- Context bar --- */
+.header-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: 80px;
+  cursor: default;
+}
+
+.header-context-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.header-context-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.header-context-fill.warn { background: var(--warning); }
+.header-context-fill.danger { background: var(--error); }
+
+.header-context-label {
+  font-family: "Roboto Mono", monospace;
+  font-size: 10px;
+  color: var(--text-dimmer);
+  white-space: nowrap;
+}
+
+/* --- Shared pill style for rate limit & fast mode --- */
+.header-rate-limit,
+.header-fast-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.header-rate-limit .lucide,
+.header-fast-mode .lucide {
+  width: 12px;
+  height: 12px;
+}
+
+.header-pill-text {
+  line-height: 1;
+}
+
+/* Rate limit wrapper for popover positioning */
+.header-rate-limit-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Rate limit states */
+.header-rate-limit.warning {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--warning);
+}
+
+.header-rate-limit.rejected {
+  background: color-mix(in srgb, var(--error) 12%, transparent);
+  color: var(--error);
+}
+
+/* Rate limit external link icon */
+.rate-limit-link {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  opacity: 0.6;
+  margin-left: 2px;
+  transition: opacity 0.15s;
+}
+
+.rate-limit-link:hover {
+  opacity: 1;
+}
+
+.rate-limit-link .lucide {
+  width: 10px;
+  height: 10px;
+}
+
+/* Rate limit popover */
+.rate-limit-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--warning) 15%, var(--bg));
+  color: var(--warning);
+  border: 1px solid color-mix(in srgb, var(--warning) 25%, transparent);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  animation: popover-in 0.2s ease-out;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.rate-limit-popover.rejected {
+  background: color-mix(in srgb, var(--error) 15%, var(--bg));
+  color: var(--error);
+  border-color: color-mix(in srgb, var(--error) 25%, transparent);
+}
+
+.rate-limit-popover.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@keyframes popover-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Fast mode states */
+.header-fast-mode.cooldown {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  color: var(--warning);
+}
+
+.header-fast-mode.active {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+/* Hide pills on very narrow screens */
+@media (max-width: 400px) {
+  .header-pill-text { display: none; }
+  .header-rate-limit,
+  .header-fast-mode { padding: 3px; }
+  .rate-limit-popover { font-size: 11px; padding: 6px 10px; }
+  .header-context { width: 50px; }
+}

@@ -8,9 +8,9 @@ var qrcode = require("qrcode-terminal");
 var net = require("net");
 
 // Detect dev mode before loading config (env must be set before require)
-var _isDev = (process.argv[1] && path.basename(process.argv[1]) === "claude-relay-dev") || process.argv.includes("--dev");
+var _isDev = (process.argv[1] && path.basename(process.argv[1]) === "clay-dev") || process.argv.includes("--dev");
 if (_isDev) {
-  process.env.CLAUDE_RELAY_HOME = path.join(os.homedir(), ".claude-relay-dev");
+  process.env.CLAY_HOME = path.join(os.homedir(), ".clay-dev");
 }
 
 var { loadConfig, saveConfig, configPath, socketPath, logPath, ensureConfigDir, isDaemonAlive, isDaemonAliveAsync, generateSlug, clearStaleConfig, loadClayrc, saveClayrc, readCrashInfo } = require("../lib/config");
@@ -56,7 +56,7 @@ for (var i = 0; i < args.length; i++) {
   } else if (args[i] === "--no-update" || args[i] === "--skip-update") {
     skipUpdate = true;
   } else if (args[i] === "--dev") {
-    // Already handled above for CLAUDE_RELAY_HOME, just skip
+    // Already handled above for CLAY_HOME, just skip
   } else if (args[i] === "--watch" || args[i] === "-w") {
     watchMode = true;
   } else if (args[i] === "--debug") {
@@ -82,10 +82,10 @@ for (var i = 0; i < args.length; i++) {
   } else if (args[i] === "--dangerously-skip-permissions") {
     dangerouslySkipPermissions = true;
   } else if (args[i] === "-h" || args[i] === "--help") {
-    console.log("Usage: claude-relay [-p|--port <port>] [--no-https] [--no-update] [--debug] [-y|--yes] [--pin <pin>] [--shutdown]");
-    console.log("       claude-relay --add <path>     Add a project to the running daemon");
-    console.log("       claude-relay --remove <path>  Remove a project from the running daemon");
-    console.log("       claude-relay --list            List registered projects");
+    console.log("Usage: clay-server [-p|--port <port>] [--no-https] [--no-update] [--debug] [-y|--yes] [--pin <pin>] [--shutdown]");
+    console.log("       clay-server --add <path>     Add a project to the running daemon");
+    console.log("       clay-server --remove <path>  Remove a project from the running daemon");
+    console.log("       clay-server --list            List registered projects");
     console.log("");
     console.log("Options:");
     console.log("  -p, --port <port>  Port to listen on (default: 2633)");
@@ -147,7 +147,7 @@ if (addPath !== null) {
   var addConfig = loadConfig();
   isDaemonAliveAsync(addConfig).then(function (alive) {
     if (!alive) {
-      console.error("No running daemon. Start with: npx claude-relay");
+      console.error("No running daemon. Start with: npx clay-server");
       process.exit(1);
     }
     sendIPCCommand(socketPath(), { cmd: "add_project", path: absAdd }).then(function (res) {
@@ -173,7 +173,7 @@ if (removePath !== null) {
   var removeConfig = loadConfig();
   isDaemonAliveAsync(removeConfig).then(function (alive) {
     if (!alive) {
-      console.error("No running daemon. Start with: npx claude-relay");
+      console.error("No running daemon. Start with: npx clay-server");
       process.exit(1);
     }
     sendIPCCommand(socketPath(), { cmd: "remove_project", path: absRemove }).then(function (res) {
@@ -194,7 +194,7 @@ if (listMode) {
   var listConfig = loadConfig();
   isDaemonAliveAsync(listConfig).then(function (alive) {
     if (!alive) {
-      console.error("No running daemon. Start with: npx claude-relay");
+      console.error("No running daemon. Start with: npx clay-server");
       process.exit(1);
     }
     sendIPCCommand(socketPath(), { cmd: "get_status" }).then(function (res) {
@@ -226,7 +226,7 @@ var a = {
   reset: "\x1b[0m",
   bold: "\x1b[1m",
   dim: "\x1b[2m",
-  cyan: "\x1b[36m",
+  clay: isBasicTerm ? "\x1b[34m" : "\x1b[38;2;88;87;252m",   // #5857FC Indigo — active interaction
   green: "\x1b[32m",
   yellow: "\x1b[33m",
   red: "\x1b[31m",
@@ -236,9 +236,9 @@ function gradient(text) {
   if (isBasicTerm) {
     return a.yellow + text + a.reset;
   }
-  // Orange (#DA7756) → Gold (#D4A574)
-  var r0 = 218, g0 = 119, b0 = 86;
-  var r1 = 212, g1 = 165, b1 = 116;
+  // Terracotta (#FE7150) → Warm brown (#D09558) — Clay earthy warmth
+  var r0 = 254, g0 = 113, b0 = 80;
+  var r1 = 208, g1 = 149, b1 = 88;
   var out = "";
   var len = text.length;
   for (var i = 0; i < len; i++) {
@@ -252,7 +252,7 @@ function gradient(text) {
 }
 
 var sym = {
-  pointer: a.cyan + "◆" + a.reset,
+  pointer: a.clay + "◆" + a.reset,
   done: a.green + "◇" + a.reset,
   bar: a.dim + "│" + a.reset,
   end: a.dim + "└" + a.reset,
@@ -317,7 +317,7 @@ function onDaemonDied() {
     // Intentional shutdown, no restart
     log("");
     log(sym.warn + "  " + a.yellow + "Server has been shut down." + a.reset);
-    log(a.dim + "     Run " + a.reset + "npx claude-relay" + a.dim + " to start again." + a.reset);
+    log(a.dim + "     Run " + a.reset + "npx clay-server" + a.dim + " to start again." + a.reset);
     log("");
     process.exit(0);
     return;
@@ -400,7 +400,7 @@ async function restartDaemonFromConfig() {
     windowsHide: true,
     stdio: ["ignore", logFd, logFd],
     env: Object.assign({}, process.env, {
-      CLAUDE_RELAY_CONFIG: configPath(),
+      CLAY_CONFIG: configPath(),
     }),
   });
   child.unref();
@@ -494,7 +494,7 @@ function getAllIPs() {
 
 function ensureCerts(ip) {
   var homeDir = os.homedir();
-  var certDir = path.join(process.env.CLAUDE_RELAY_HOME || path.join(homeDir, ".claude-relay"), "certs");
+  var certDir = path.join(process.env.CLAY_HOME || path.join(homeDir, ".clay"), "certs");
   var keyPath = path.join(certDir, "key.pem");
   var certPath = path.join(certDir, "cert.pem");
 
@@ -552,19 +552,46 @@ function ensureCerts(ip) {
 
 // --- Logo ---
 function printLogo() {
-  var c = isBasicTerm ? a.yellow : "\x1b[38;2;218;119;86m";
   var r = a.reset;
   var lines = [
-    "  ██████╗ ██╗       █████╗  ██╗   ██╗ ██████╗  ███████╗     ██████╗  ███████╗ ██╗       █████╗  ██╗   ██╗",
-    " ██╔════╝ ██║      ██╔══██╗ ██║   ██║ ██╔══██╗ ██╔════╝     ██╔══██╗ ██╔════╝ ██║      ██╔══██╗ ╚██╗ ██╔╝",
-    " ██║      ██║      ███████║ ██║   ██║ ██║  ██║ █████╗       ██████╔╝ █████╗   ██║      ███████║  ╚████╔╝ ",
-    " ██║      ██║      ██╔══██║ ██║   ██║ ██║  ██║ ██╔══╝       ██╔══██╗ ██╔══╝   ██║      ██╔══██║   ╚██╔╝  ",
-    " ╚██████╗ ███████╗ ██║  ██║ ╚██████╔╝ ██████╔╝ ███████╗     ██║  ██║ ███████╗ ███████╗ ██║  ██║    ██║   ",
-    "  ╚═════╝ ╚══════╝ ╚═╝  ╚═╝  ╚═════╝  ╚═════╝  ╚══════╝     ╚═╝  ╚═╝ ╚══════╝ ╚══════╝ ╚═╝  ╚═╝    ╚═╝   ",
+    "________/\\\\\\\\\\\\\\\\\\__/\\\\\\_________________/\\\\\\\\\\\\\\\\\\_____/\\\\\\________/\\\\\\",
+    " _____/\\\\\\////////__\\/\\\\\\_______________/\\\\\\\\\\\\\\\\\\\\\\\\\\__\\///\\\\\\____/\\\\\\/_",
+    "  ___/\\\\\\/___________\\/\\\\\\______________/\\\\\\/////////\\\\\\___\\///\\\\\\/\\\\\\/___",
+    "   __/\\\\\\_____________\\/\\\\\\_____________\\/\\\\\\_______\\/\\\\\\_____\\///\\\\\\/_____",
+    "    _\\/\\\\\\_____________\\/\\\\\\_____________\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\_______\\/\\\\\\______",
+    "     _\\//\\\\\\____________\\/\\\\\\_____________\\/\\\\\\/////////\\\\\\_______\\/\\\\\\______",
+    "      __\\///\\\\\\__________\\/\\\\\\_____________\\/\\\\\\_______\\/\\\\\\_______\\/\\\\\\______",
+    "       ____\\////\\\\\\\\\\\\\\\\\\_\\/\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\_\\/\\\\\\_______\\/\\\\\\_______\\/\\\\\\______",
+    "        _______\\/////////__\\///////////////__\\///________\\///________\\///_______",
   ];
   console.log("");
+  if (isBasicTerm) {
+    for (var i = 0; i < lines.length; i++) {
+      console.log(a.green + lines[i] + r);
+    }
+    return;
+  }
+  // Tri-accent vertical gradient: Green (#09E5A3) → Indigo (#5857FC) → Terracotta (#FE7150)
+  var stops = [
+    [9, 229, 163],
+    [88, 87, 252],
+    [254, 113, 80],
+  ];
   for (var i = 0; i < lines.length; i++) {
-    console.log(c + lines[i] + r);
+    var t = lines.length > 1 ? i / (lines.length - 1) : 0;
+    var cr, cg, cb;
+    if (t <= 0.5) {
+      var s = t * 2;
+      cr = Math.round(stops[0][0] + (stops[1][0] - stops[0][0]) * s);
+      cg = Math.round(stops[0][1] + (stops[1][1] - stops[0][1]) * s);
+      cb = Math.round(stops[0][2] + (stops[1][2] - stops[0][2]) * s);
+    } else {
+      var s = (t - 0.5) * 2;
+      cr = Math.round(stops[1][0] + (stops[2][0] - stops[1][0]) * s);
+      cg = Math.round(stops[1][1] + (stops[2][1] - stops[1][1]) * s);
+      cb = Math.round(stops[1][2] + (stops[2][2] - stops[1][2]) * s);
+    }
+    console.log("\x1b[38;2;" + cr + ";" + cg + ";" + cb + "m" + lines[i] + r);
   }
 }
 
@@ -667,7 +694,7 @@ function promptPin(callback) {
       }
     } else if (/\d/.test(ch) && pin.length < 6) {
       pin += ch;
-      process.stdout.write(a.cyan + "●" + a.reset);
+      process.stdout.write(a.clay + "●" + a.reset);
     }
   });
 }
@@ -970,7 +997,7 @@ function promptMultiSelect(title, items, callback) {
   function render() {
     var out = "";
     for (var i = 0; i < items.length; i++) {
-      var cursor = i === idx ? a.cyan + ">" + a.reset : " ";
+      var cursor = i === idx ? a.clay + ">" + a.reset : " ";
       var check = selected[i]
         ? a.green + a.bold + "■" + a.reset
         : a.dim + "□" + a.reset;
@@ -1137,7 +1164,7 @@ function setup(callback) {
   console.clear();
   printLogo();
   log("");
-  log(sym.pointer + "  " + a.bold + "Claude Relay" + a.reset + a.dim + "  ·  Unofficial, open-source project" + a.reset);
+  log(sym.pointer + "  " + a.bold + "Clay" + a.reset + a.dim + "  ·  Unofficial, open-source project" + a.reset);
   log(sym.bar);
   log(sym.bar + "  " + a.dim + "Anyone with the URL gets full Claude Code access to this machine." + a.reset);
   log(sym.bar + "  " + a.dim + "Use a private network (Tailscale, VPN)." + a.reset);
@@ -1212,7 +1239,7 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
   var portFree = await isPortFree(port);
   if (!portFree) {
     log(a.red + "Port " + port + " is already in use." + a.reset);
-    log(a.dim + "Is another Claude Relay daemon running?" + a.reset);
+    log(a.dim + "Is another Clay daemon running?" + a.reset);
     process.exit(1);
     return;
   }
@@ -1263,7 +1290,7 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
     windowsHide: true,
     stdio: ["ignore", logFd, logFd],
     env: Object.assign({}, process.env, {
-      CLAUDE_RELAY_CONFIG: configPath(),
+      CLAY_CONFIG: configPath(),
     }),
   });
   child.unref();
@@ -1362,7 +1389,7 @@ async function devMode(pin, keepAwake, existingPinHash) {
     child = spawn(process.execPath, [daemonScript], {
       stdio: ["ignore", "inherit", "inherit"],
       env: Object.assign({}, process.env, {
-        CLAUDE_RELAY_CONFIG: configPath(),
+        CLAY_CONFIG: configPath(),
       }),
     });
 
@@ -1374,9 +1401,15 @@ async function devMode(pin, keepAwake, existingPinHash) {
       }
       // Exit code 120 = update restart — respawn daemon with current dev code
       if (code === 120) {
-        console.log("\x1b[36m[dev]\x1b[0m Update restart — respawning daemon...");
+        console.log("\x1b[38;2;0;183;133m[dev]\x1b[0m Update restart — respawning daemon...");
         console.log("");
         setTimeout(spawnDaemon, 500);
+        return;
+      }
+      // Exit code 78 = fatal config error (e.g. Node version too old) — don't restart
+      if (code === 78) {
+        console.log("\x1b[31m[dev] Daemon exited with fatal error (code 78). Not restarting.\x1b[0m");
+        process.exit(78);
         return;
       }
       // Unexpected exit — auto restart
@@ -1397,9 +1430,9 @@ async function devMode(pin, keepAwake, existingPinHash) {
     }
   }
 
-  console.log("\x1b[36m[dev]\x1b[0m Starting relay on port " + port + "...");
+  console.log("\x1b[38;2;0;183;133m[dev]\x1b[0m Starting relay on port " + port + "...");
   if (watchMode) {
-    console.log("\x1b[36m[dev]\x1b[0m Watching lib/ for changes (excluding lib/public/)");
+    console.log("\x1b[38;2;0;183;133m[dev]\x1b[0m Watching lib/ for changes (excluding lib/public/)");
   }
   console.log("");
 
@@ -1431,8 +1464,8 @@ async function devMode(pin, keepAwake, existingPinHash) {
 
       if (debounceTimer) clearTimeout(debounceTimer);
       debounceTimer = setTimeout(function () {
-        console.log("\x1b[36m[dev]\x1b[0m File changed: lib/" + filename);
-        console.log("\x1b[36m[dev]\x1b[0m Restarting...");
+        console.log("\x1b[38;2;0;183;133m[dev]\x1b[0m File changed: lib/" + filename);
+        console.log("\x1b[38;2;0;183;133m[dev]\x1b[0m Restarting...");
         console.log("");
         restartDaemon();
       }, 300);
@@ -1444,7 +1477,7 @@ async function devMode(pin, keepAwake, existingPinHash) {
   process.on("SIGINT", function () {
     if (shuttingDown) return;
     shuttingDown = true;
-    console.log("\n\x1b[36m[dev]\x1b[0m Shutting down...");
+    console.log("\n\x1b[38;2;0;183;133m[dev]\x1b[0m Shutting down...");
     if (watcher) watcher.close();
     if (debounceTimer) clearTimeout(debounceTimer);
     intentionalKill = true;
@@ -1514,7 +1547,7 @@ async function restartDaemonWithTLS(config, callback) {
     windowsHide: true,
     stdio: ["ignore", logFd, logFd],
     env: Object.assign({}, process.env, {
-      CLAUDE_RELAY_CONFIG: configPath(),
+      CLAY_CONFIG: configPath(),
     }),
   });
   child.unref();
@@ -1540,7 +1573,7 @@ async function restartDaemonWithTLS(config, callback) {
       windowsHide: true,
       stdio: ["ignore", logFd2, logFd2],
       env: Object.assign({}, process.env, {
-        CLAUDE_RELAY_CONFIG: configPath(),
+        CLAY_CONFIG: configPath(),
       }),
     });
     child2.unref();
@@ -1591,7 +1624,7 @@ function showMainMenu(config, ip) {
 
     function afterQr() {
       // Status line
-      log("  " + a.dim + "claude-relay" + a.reset + " " + a.dim + "v" + currentVersion + a.reset + a.dim + " — " + url + a.reset);
+      log("  " + a.dim + "clay" + a.reset + " " + a.dim + "v" + currentVersion + a.reset + a.dim + " — " + url + a.reset);
       var parts = [];
       parts.push(a.bold + projs.length + a.reset + a.dim + (projs.length === 1 ? " project" : " projects"));
       parts.push(a.reset + a.bold + totalSessions + a.reset + a.dim + (totalSessions === 1 ? " session" : " sessions"));
@@ -1669,14 +1702,15 @@ function showMainMenu(config, ip) {
           case "exit":
             log("");
             log("  " + a.bold + "Bye!" + a.reset + "  " + a.dim + "Server is still running in background." + a.reset);
-            log("  " + a.dim + "Run " + a.reset + "npx claude-relay" + a.dim + " to come back here." + a.reset);
+            log("  " + a.dim + "Run " + a.reset + "npx clay-server" + a.dim + " to come back here." + a.reset);
             log("");
             process.exit(0);
             break;
         }
       }, {
         hint: [
-          "Run npx claude-relay in other directories to add more projects.",
+          "claude-relay has been renamed to clay-server  ·  npx clay-server",
+          "Run npx clay-server in other directories to add more projects.",
           "★ github.com/chadbyte/claude-relay — Press s to star the repo",
         ],
         keys: [
@@ -2209,7 +2243,7 @@ var currentVersion = require("../package.json").version;
     var devConfig = loadConfig();
     var devAlive = devConfig ? await isDaemonAliveAsync(devConfig) : false;
     if (devAlive) {
-      console.log("\x1b[36m[dev]\x1b[0m Shutting down existing daemon...");
+      console.log("\x1b[38;2;0;183;133m[dev]\x1b[0m Shutting down existing daemon...");
       await sendIPCCommand(socketPath(), { cmd: "shutdown" });
       clearStaleConfig();
       await new Promise(function (resolve) { setTimeout(resolve, 500); });
