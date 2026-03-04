@@ -21,6 +21,22 @@
 </head>
 <body>
 <div id="layout">
+  <!-- === Announce Bars (above top bar, full width) === -->
+  <div id="update-banner" class="hidden">
+    <span class="update-banner-text"><i data-lucide="arrow-up-circle"></i> A new version of Clay is available: <strong id="update-version"></strong></span>
+    <button id="update-now">Update now</button>
+    <button id="update-how" title="Manual update instructions">?</button>
+    <button id="update-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+  </div>
+  <div id="onboarding-banner" class="hidden">
+    <span class="onboarding-banner-text" id="onboarding-banner-text"></span>
+    <button id="onboarding-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
+  </div>
+  <div id="skip-perms-banner" class="hidden">
+    <i data-lucide="shield-off"></i>
+    <span>Skip permissions mode is active. All tool executions are auto-approved.</span>
+  </div>
+
   <!-- === Top Bar (full width, forms reverse-ㄱ with icon strip) === -->
   <div id="top-bar">
     <a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="top-bar-title"><img class="top-bar-icon" src="favicon.svg" width="16" height="16" alt="">Clay</a>
@@ -130,21 +146,6 @@
       </div>
       <div id="main-panels">
       <div id="app">
-        <div id="update-banner" class="hidden">
-          <span class="update-banner-text"><i data-lucide="arrow-up-circle"></i> A new version of Clay is available: <strong id="update-version"></strong></span>
-          <button id="update-now">Update now</button>
-          <button id="update-how" title="Manual update instructions">?</button>
-          <button id="update-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
-        </div>
-        <div id="onboarding-banner" class="hidden">
-          <span class="onboarding-banner-text" id="onboarding-banner-text"></span>
-          <button id="onboarding-banner-close" aria-label="Dismiss"><i data-lucide="x"></i></button>
-        </div>
-        <div id="skip-perms-banner" class="hidden">
-          <i data-lucide="shield-off"></i>
-          <span>Skip permissions mode is active. All tool executions are auto-approved.</span>
-        </div>
-
         <div id="connect-overlay">
       <img class="connect-logo" src="favicon.svg" width="48" height="48" alt="Clay">
       <span class="connect-wordmark">Clay</span>
@@ -352,7 +353,6 @@
       <span class="user-island-name">Clay <span id="footer-version" class="footer-version"></span></span>
     </div>
     <div class="user-island-actions">
-      <a href="https://github.com/chadbyte/claude-relay" target="_blank" rel="noopener" class="user-island-chip" title="Star on GitHub"><svg class="chip-octocat" viewBox="0 0 16 16" fill="white" width="13" height="13"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span class="chip-star">★</span><span class="chip-label">Star Clay</span></a>
     </div>
   </div>
 

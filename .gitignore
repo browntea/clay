@@ -2,3 +2,5 @@ node_modules/
 .claude/
 .claude-relay/
 ref/
+TODO.md
+publish.sh

@@ -560,7 +560,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--accent2);
+  background: var(--success);
   color: #fff;
   font-family: "Nunito", sans-serif;
   font-size: 15px;
@@ -616,102 +616,6 @@
 .user-island-actions button:hover {
   background: var(--sidebar-hover);
   color: var(--text-secondary);
-}
-
-.user-island-chip {
-  --chip-star: #FFE500;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 11px 4px 8px;
-  border-radius: 99px;
-  border: 1px solid var(--accent2-30);
-  background: var(--accent2);
-  color: #fff;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  white-space: nowrap;
-  overflow: hidden;
-  box-shadow:
-    0 1px 4px color-mix(in srgb, var(--accent2), black 75%),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-/* shimmer sweep */
-.user-island-chip::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
-  animation: chip-shimmer 5s ease-in-out 2s infinite;
-  pointer-events: none;
-}
-
-@keyframes chip-shimmer {
-  0%, 75%, 100% { left: -120%; }
-  35% { left: 160%; }
-}
-
-.chip-octocat {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.2));
-  transition: filter 0.3s ease;
-}
-
-.chip-star {
-  color: var(--chip-star);
-  font-size: 9px;
-  line-height: 1;
-  text-shadow: 0 0 5px color-mix(in srgb, var(--chip-star), transparent 60%);
-  animation: chip-star-pulse 3s ease-in-out infinite;
-  transition: text-shadow 0.3s ease;
-}
-
-@keyframes chip-star-pulse {
-  0%, 100% { opacity: 0.75; text-shadow: 0 0 4px color-mix(in srgb, var(--chip-star), transparent 70%); }
-  50% { opacity: 1; text-shadow: 0 0 8px color-mix(in srgb, var(--chip-star), transparent 35%); }
-}
-
-.chip-label {
-  color: #fff;
-  letter-spacing: 0.01em;
-}
-
-.user-island-chip:hover {
-  border-color: color-mix(in srgb, var(--chip-star), transparent 55%);
-  background: var(--accent2-hover);
-  box-shadow:
-    0 2px 10px color-mix(in srgb, var(--chip-star), transparent 88%),
-    0 1px 4px color-mix(in srgb, var(--accent2), black 65%),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transform: translateY(-1px);
-}
-
-.user-island-chip:hover .chip-octocat {
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
-}
-
-.user-island-chip:hover .chip-star {
-  text-shadow: 0 0 10px color-mix(in srgb, var(--chip-star), transparent 10%);
-  animation: none;
-  opacity: 1;
-}
-
-.user-island-chip:active {
-  transform: translateY(0);
-  box-shadow:
-    0 1px 3px color-mix(in srgb, var(--accent2), black 65%),
-    inset 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 #layout.sidebar-collapsed #user-island .user-island-info,

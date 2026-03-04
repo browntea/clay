@@ -93,8 +93,9 @@
 
 .title-bar-project-name {
   width: 100%;
-  font-size: 13px;
-  font-weight: 600;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
   color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -135,6 +136,13 @@
   #top-bar {
     padding-top: var(--safe-top);
     height: calc(32px + var(--safe-top));
+  }
+
+  .top-bar-actions {
+    top: auto;
+    bottom: 0;
+    height: 32px;
+    transform: none;
   }
 
   #sidebar-column {

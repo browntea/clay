@@ -16,12 +16,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 56px;
+    height: calc(56px + var(--safe-bottom));
     padding-bottom: var(--safe-bottom);
     background: var(--bg);
     border-top: 1px solid var(--border);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
     z-index: 200;
   }
