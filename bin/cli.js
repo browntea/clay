@@ -1358,19 +1358,29 @@ async function devMode(pin, keepAwake, existingPinHash) {
   }
 
   var slug = generateSlug(cwd, []);
-  var allProjects = [{ path: cwd, slug: slug, addedAt: Date.now() }];
+  var cwdDevEntry = { path: cwd, slug: slug, addedAt: Date.now() };
 
   // Restore previous projects
   var rc = loadClayrc();
   var restorable = (rc.recentProjects || []).filter(function (p) {
     return p.path !== cwd && fs.existsSync(p.path);
   });
+  // Restore title/icon for cwd from .clayrc
+  var rcAll = rc.recentProjects || [];
+  for (var ci = 0; ci < rcAll.length; ci++) {
+    if (rcAll[ci].path === cwd) {
+      if (rcAll[ci].title) cwdDevEntry.title = rcAll[ci].title;
+      if (rcAll[ci].icon) cwdDevEntry.icon = rcAll[ci].icon;
+      break;
+    }
+  }
+  var allProjects = [cwdDevEntry];
   var usedSlugs = [slug];
   for (var ri = 0; ri < restorable.length; ri++) {
     var rp = restorable[ri];
     var rpSlug = generateSlug(rp.path, usedSlugs);
     usedSlugs.push(rpSlug);
-    allProjects.push({ path: rp.path, slug: rpSlug, title: rp.title || undefined, addedAt: rp.addedAt || Date.now() });
+    allProjects.push({ path: rp.path, slug: rpSlug, title: rp.title || undefined, icon: rp.icon || undefined, addedAt: rp.addedAt || Date.now() });
   }
 
   var config = {
