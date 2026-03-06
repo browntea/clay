@@ -132,12 +132,141 @@
 
 /* --- Panel fullscreen --- */
 @media (min-width: 1024px) {
-  #main-column:has(.panel-fullscreen) > .title-bar-content { display: none; }
-  #main-panels:has(.panel-fullscreen) > #app { display: none; }
+  #main-column:has(.panel-fullscreen:not(.hidden)) > .title-bar-content { display: none; }
+  #main-panels:has(.panel-fullscreen:not(.hidden)) > #app { display: none; }
 }
 @media (max-width: 1023px) {
   #file-viewer-fullscreen,
   #terminal-fullscreen { display: none; }
+}
+
+/* --- Project settings --- */
+#project-settings {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  display: flex;
+  overflow: hidden;
+  border-left: 1px solid var(--border-subtle);
+}
+#project-settings.hidden { display: none; }
+
+.project-settings-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background: var(--sidebar-bg);
+  position: relative;
+}
+
+.project-settings-layout::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  background: var(--bg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.project-settings-layout > * {
+  position: relative;
+  z-index: 1;
+}
+
+.project-settings-nav {
+  width: 232px;
+  flex-shrink: 0;
+  background: var(--sidebar-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.project-settings-nav-inner {
+  width: 200px;
+  flex-shrink: 0;
+  padding: 60px 6px 40px 0;
+}
+
+.project-settings-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 740px;
+  background: var(--bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.project-settings-content-inner {
+  padding: 60px 40px 60px 40px;
+}
+
+.project-settings-close-col {
+  width: 60px;
+  flex-shrink: 0;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+@media (max-width: 1023px) {
+  #project-settings {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    border-left: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-settings-layout {
+    flex-direction: column;
+    background: var(--sidebar-bg);
+  }
+
+  .project-settings-layout::after {
+    display: none;
+  }
+
+  .project-settings-nav {
+    width: 100%;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    overflow-y: visible;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .project-settings-nav-inner {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-settings-content {
+    flex: 1 1 auto;
+    max-width: none;
+    background: var(--bg);
+  }
+
+  .project-settings-content-inner {
+    padding: 24px 16px;
+  }
+
+  .project-settings-close-col {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    width: auto;
+    padding-top: 0;
+    background: none;
+  }
 }
 
 /* --- File viewer --- */
