@@ -190,7 +190,6 @@
 
 /* Show dot only on active item or when processing */
 .icon-strip-item.active .icon-strip-status,
-.icon-strip-home.active .icon-strip-status,
 .icon-strip-status.processing {
   opacity: 1;
 }
@@ -207,6 +206,7 @@
 
 /* IO blink = HDD LED flash */
 .icon-strip-status.io {
+  opacity: 1;
   background: #fff !important;
   box-shadow: 0 0 6px var(--success);
   transition: none;

@@ -1247,7 +1247,18 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
   // Only include cwd if explicitly requested
   if (addCwd) {
     var slug = generateSlug(cwd, []);
-    allProjects.push({ path: cwd, slug: slug, addedAt: Date.now() });
+    var cwdEntry = { path: cwd, slug: slug, addedAt: Date.now() };
+    // Restore title/icon from .clayrc if available
+    var cwdRc = loadClayrc();
+    var cwdRecent = cwdRc.recentProjects || [];
+    for (var cr = 0; cr < cwdRecent.length; cr++) {
+      if (cwdRecent[cr].path === cwd) {
+        if (cwdRecent[cr].title) cwdEntry.title = cwdRecent[cr].title;
+        if (cwdRecent[cr].icon) cwdEntry.icon = cwdRecent[cr].icon;
+        break;
+      }
+    }
+    allProjects.push(cwdEntry);
     usedSlugs.push(slug);
   }
 

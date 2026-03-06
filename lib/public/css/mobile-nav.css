@@ -338,9 +338,13 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--success);
     flex-shrink: 0;
-    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  .mobile-session-processing.io {
+    background: #fff !important;
+    box-shadow: 0 0 4px var(--success);
   }
 
   /* Date group header inside sheet */

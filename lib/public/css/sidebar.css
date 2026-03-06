@@ -432,10 +432,15 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--accent);
-  animation: pulse 1.5s ease-in-out infinite;
+  background: var(--success);
   margin-right: 8px;
   vertical-align: middle;
+}
+
+/* IO blink on session processing dot */
+.session-item .session-processing.io {
+  background: #fff !important;
+  box-shadow: 0 0 4px var(--success);
 }
 
 .session-more-btn {
