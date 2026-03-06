@@ -491,6 +491,10 @@
               <div>
                 <label class="settings-label">Skip Permissions</label>
                 <div class="settings-hint">When enabled, all tool executions are auto-approved without asking.</div>
+                <div class="settings-hint">This setting cannot be changed here. Stop the server and restart with the flag below.</div>
+                <div class="settings-hint settings-copyable-wrap">
+                  <span class="settings-copyable" id="skip-perms-cmd" data-copy="npx clay-server --dangerously-skip-permissions"><code>npx clay-server --dangerously-skip-permissions</code><button class="settings-copy-btn" type="button" title="Copy">⧉</button></span>
+                </div>
               </div>
               <span class="settings-value settings-badge" id="settings-skip-perms">Disabled</span>
             </div>
