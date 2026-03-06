@@ -569,6 +569,7 @@ pre.mermaid-error {
 
 .thinking-spinner {
   flex-shrink: 0;
+  display: inline-flex;
   color: var(--text-muted);
 }
 

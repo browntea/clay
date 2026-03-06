@@ -12,8 +12,8 @@
 
 .diff-table {
   border-collapse: collapse;
-  width: 100%;
-  table-layout: fixed;
+  min-width: 100%;
+  table-layout: auto;
 }
 
 /* --- Line numbers --- */
@@ -80,8 +80,7 @@
 /* --- Split diff specifics --- */
 .diff-table-split .diff-code-old,
 .diff-table-split .diff-code-new {
-  max-width: 0;
-  overflow: hidden;
+  width: 50%;
 }
 
 /* Split: divider between left and right */
