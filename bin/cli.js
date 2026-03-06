@@ -2370,8 +2370,12 @@ var currentVersion = require("../package.json").version;
       if (autoRestorable.length > 0) {
         console.log("  " + sym.done + "  Restoring " + autoRestorable.length + " previous project(s)");
       }
-      var hasRestorable = autoRestorable.length > 0;
-      await forkDaemon(pin, false, hasRestorable ? autoRestorable : undefined, !hasRestorable);
+      // Add cwd if it has history in .clayrc, or if there are no other projects to restore
+      var cwdInRc = (autoRc.recentProjects || []).some(function (p) {
+        return p.path === cwd;
+      });
+      var addCwd = cwdInRc || autoRestorable.length === 0;
+      await forkDaemon(pin, false, autoRestorable.length > 0 ? autoRestorable : undefined, addCwd);
     } else {
       setup(function (pin, keepAwake) {
         if (dangerouslySkipPermissions && !pin) {
