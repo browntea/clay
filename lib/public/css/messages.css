@@ -13,7 +13,6 @@
 #todo-sticky {
   position: relative;
   flex-shrink: 0;
-  margin-left: 8px;
 }
 #todo-sticky.hidden { display: none; }
 

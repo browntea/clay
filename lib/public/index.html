@@ -82,7 +82,11 @@
   <div id="main-area">
     <div id="sidebar-column">
       <div class="title-bar-sidebar">
-        <span class="title-bar-project-name" id="title-bar-project-name"></span>
+        <button class="title-bar-project-dropdown" id="title-bar-project-dropdown">
+          <span class="title-bar-project-icon" id="title-bar-project-icon"></span>
+          <span class="title-bar-project-name" id="title-bar-project-name"></span>
+          <i data-lucide="chevron-down" class="title-bar-chevron"></i>
+        </button>
       </div>
       <div id="sidebar">
         <div id="sidebar-tools">
@@ -757,6 +761,7 @@
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5/lib/xterm.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0/lib/addon-fit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>

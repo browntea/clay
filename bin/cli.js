@@ -1259,7 +1259,7 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
       if (!fs.existsSync(rp.path)) continue; // skip missing directories
       var rpSlug = generateSlug(rp.path, usedSlugs);
       usedSlugs.push(rpSlug);
-      allProjects.push({ path: rp.path, slug: rpSlug, title: rp.title || undefined, addedAt: rp.addedAt || Date.now() });
+      allProjects.push({ path: rp.path, slug: rpSlug, title: rp.title || undefined, icon: rp.icon || undefined, addedAt: rp.addedAt || Date.now() });
     }
   }
 
