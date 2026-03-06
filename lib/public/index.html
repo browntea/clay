@@ -92,6 +92,7 @@
           <div id="session-actions">
             <button id="file-browser-btn"><i data-lucide="folder-tree"></i> <span>File browser</span></button>
             <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span><span id="terminal-sidebar-count" class="sidebar-badge hidden"></span></button>
+            <button id="skills-btn"><i data-lucide="puzzle"></i> <span>Skills</span></button>
           </div>
         </div>
         <div id="sidebar-sessions-header">
@@ -923,6 +924,33 @@
     <div class="confirm-actions">
       <button class="confirm-btn confirm-cancel" id="add-project-cancel">Cancel</button>
       <button class="confirm-btn confirm-ok" id="add-project-ok">Add</button>
+    </div>
+  </div>
+</div>
+
+<div id="skills-modal" class="hidden">
+  <div class="confirm-backdrop"></div>
+  <div class="confirm-dialog skills-dialog">
+    <div class="skills-header">
+      <span class="skills-title"><i data-lucide="puzzle"></i> Skills <span class="skills-powered-by">powered by <a href="https://skills.sh" target="_blank" rel="noopener noreferrer">skills.sh</a></span></span>
+      <div class="skills-header-actions">
+        <button class="skills-back-btn hidden" id="skills-back-btn"><i data-lucide="arrow-left"></i></button>
+        <button class="skills-close" id="skills-modal-close"><i data-lucide="x"></i></button>
+      </div>
+    </div>
+    <div class="skills-search" id="skills-search">
+      <i data-lucide="search"></i>
+      <input type="text" id="skills-search-input" placeholder="Search skills ..." spellcheck="false" />
+      <kbd class="skills-search-hint" id="skills-search-hint">/</kbd>
+      <button class="skills-search-clear hidden" id="skills-search-clear"><i data-lucide="x"></i></button>
+    </div>
+    <div class="skills-tabs">
+      <button class="skills-tab active" data-tab="all">All Time</button>
+      <button class="skills-tab" data-tab="trending">Trending</button>
+      <button class="skills-tab" data-tab="hot">Hot</button>
+    </div>
+    <div class="skills-content" id="skills-content">
+      <div class="skills-loading"><div class="skills-spinner"></div> Loading skills...</div>
     </div>
   </div>
 </div>
