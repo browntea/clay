@@ -1,5 +1,27 @@
 # Changelog
 
+## v2.6.0
+
+- **Skills browser**: discover and install skills powered by skills.sh
+- **File upload**: upload files with tmp directory storage
+- **Project settings UI**: shared env, defaults, and global CLAUDE.md editing in a Discord-style panel
+- **Project icons**: sidebar icon with drag-and-drop reorder, context menu, and emoji picker
+- **IO indicator**: per-session blink indicator across all projects
+- **Model/mode defaults**: persist model, mode, and effort defaults to daemon.json with priority hierarchy
+- **Suggestion chip UX**: click to send immediately, pencil icon to edit
+- Simplify server settings: remove Appearance, reorganize nav, merge Advanced into Status
+- Add deprecated claude-relay bin entry for backward compatibility
+- Add copyable command hint to Skip Permissions setting
+- Fix diff view background clipping on horizontal scroll
+- Fix thinking spinner vertical alignment
+- Fix encodeCwd to handle dots in usernames (#173)
+- Fix UI mode changes overriding dangerouslySkipPermissions bypass
+- Fix project icon/title not persisting across dev mode restarts
+- Fix clear-context plan execution crash: await old stream before starting new query
+- Fix SDK "Operation aborted" crash by deferring abort to setImmediate
+- Broadcast projects_updated to WebSocket clients on CLI project changes
+- Unify dev and prod session storage under ~/.clay
+
 ## v2.5.0
 
 - **Rename to Clay**: rebrand from claude-relay to clay-server
