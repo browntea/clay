@@ -362,6 +362,34 @@
 .ralph-step textarea::placeholder {
   color: var(--text-secondary, #666);
 }
+.ralph-field-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.ralph-field-label .ralph-field-req { color: var(--accent); }
+.ralph-field-hint {
+  margin: 3px 0 14px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.ralph-input-text {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--input-bg, #1a1a2e);
+  border: 1px solid var(--border, #333);
+  border-radius: 6px;
+  color: var(--text, #fff);
+  font-family: 'Roboto Mono', var(--font-mono, monospace);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.ralph-input-text:focus { border-color: var(--accent, #6c5ce7); }
+.ralph-input-text::placeholder { color: var(--text-secondary, #666); }
 /* Ralph Settings Row */
 .ralph-settings-row {
   display: flex;

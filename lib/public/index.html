@@ -996,8 +996,11 @@
       </div>
       <div class="ralph-step" data-step="2">
         <h3>What do you want to build?</h3>
-        <p class="ralph-hint">Describe the task Claude should complete autonomously.</p>
-        <textarea id="ralph-task" rows="6" placeholder="e.g. Add dark mode toggle to the settings page with system preference detection..."></textarea>
+        <label class="ralph-field-label" for="ralph-name">Loop name <span class="ralph-field-req">*</span></label>
+        <input type="text" id="ralph-name" maxlength="30" placeholder="e.g. auth-refactor" class="ralph-input-text" spellcheck="false" autocomplete="off">
+        <p class="ralph-field-hint">Alphanumeric, hyphens, underscores only. Used in session titles.</p>
+        <label class="ralph-field-label" for="ralph-task">Task description <span class="ralph-field-req">*</span></label>
+        <textarea id="ralph-task" rows="5" placeholder="e.g. Add dark mode toggle to the settings page with system preference detection..."></textarea>
       </div>
       <div class="ralph-step" data-step="3">
         <h3>Settings &amp; Review</h3>
