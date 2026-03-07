@@ -501,6 +501,27 @@
   cursor: not-allowed;
 }
 
+.ralph-intro-install-note {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-tertiary, #888);
+}
+
+#ralph-install-status {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary, #aaa);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#ralph-install-status .skills-spinner.small {
+  width: 14px;
+  height: 14px;
+  border-width: 1.5px;
+}
+
 /* Ralph Approval Bar */
 .ralph-approval-bar {
   display: flex;
