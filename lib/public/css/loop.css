@@ -1,0 +1,398 @@
+/* Ralph Loop */
+.loop-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-secondary, #1a1a2e);
+  border-bottom: 1px solid var(--border, #333);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.loop-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.loop-banner-icon {
+  font-size: 16px;
+}
+.loop-banner-label {
+  font-weight: 600;
+  color: var(--text-primary, #fff);
+}
+.loop-banner-status {
+  color: var(--text-secondary, #999);
+}
+.loop-stop-btn {
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border, #333);
+  background: var(--accent, #e74c3c);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+.loop-stop-btn:hover {
+  opacity: 0.85;
+}
+.loop-start-btn {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border, #333);
+  background: var(--bg-tertiary, #2a2a3e);
+  color: var(--text-primary, #fff);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.loop-start-btn:hover {
+  background: var(--bg-secondary, #1a1a2e);
+}
+
+/* Ralph Wizard */
+.ralph-wizard-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+.ralph-wizard-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: var(--bg-primary, #0d0d1a);
+  border: 1px solid var(--border, #333);
+  border-radius: 12px;
+  width: 520px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+.ralph-wizard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border, #333);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary, #fff);
+}
+.ralph-wizard-header button {
+  background: none;
+  border: none;
+  color: var(--text-secondary, #999);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+.ralph-wizard-header button:hover {
+  color: var(--text-primary, #fff);
+}
+.ralph-wizard-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px 6px;
+}
+.ralph-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border, #333);
+  transition: background 0.2s ease;
+}
+.ralph-dot.active {
+  background: var(--accent, #6c5ce7);
+}
+.ralph-dot.done {
+  background: var(--text-secondary, #999);
+}
+.ralph-wizard-steps {
+  padding: 16px 20px 8px;
+  flex: 1;
+  overflow-y: auto;
+}
+.ralph-step {
+  display: none;
+}
+.ralph-step.active {
+  display: block;
+  animation: ralphFadeIn 0.2s ease;
+}
+@keyframes ralphFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ralph-step h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: var(--text-primary, #fff);
+}
+.ralph-hint {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text-secondary, #999);
+}
+.ralph-step textarea {
+  width: 100%;
+  background: var(--bg-secondary, #1a1a2e);
+  border: 1px solid var(--border, #333);
+  border-radius: 6px;
+  color: var(--text-primary, #fff);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.ralph-step textarea:focus {
+  border-color: var(--accent, #6c5ce7);
+}
+.ralph-step textarea::placeholder {
+  color: var(--text-secondary, #666);
+}
+#ralph-review-summary {
+  background: var(--bg-secondary, #1a1a2e);
+  border: 1px solid var(--border, #333);
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 13px;
+  color: var(--text-primary, #fff);
+  line-height: 1.5;
+  max-height: 280px;
+  overflow-y: auto;
+}
+#ralph-review-summary .ralph-review-label {
+  font-weight: 600;
+  color: var(--text-secondary, #999);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+#ralph-review-summary .ralph-review-value {
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+#ralph-review-summary .ralph-review-value:last-child {
+  margin-bottom: 0;
+}
+.ralph-wizard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border, #333);
+}
+.ralph-wizard-footer > div {
+  display: flex;
+  gap: 8px;
+}
+
+/* Ralph Buttons */
+.ralph-btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, opacity 0.15s;
+}
+.ralph-btn.primary {
+  background: var(--accent, #6c5ce7);
+  color: #fff;
+}
+.ralph-btn.primary:hover {
+  opacity: 0.9;
+}
+.ralph-btn.secondary {
+  background: var(--bg-tertiary, #2a2a3e);
+  color: var(--text-primary, #fff);
+  border: 1px solid var(--border, #333);
+}
+.ralph-btn.secondary:hover {
+  background: var(--bg-secondary, #1a1a2e);
+}
+.ralph-btn.tertiary {
+  background: none;
+  color: var(--text-secondary, #999);
+}
+.ralph-btn.tertiary:hover {
+  color: var(--text-primary, #fff);
+}
+.ralph-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Ralph Approval Bar */
+.ralph-approval-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-secondary, #1a1a2e);
+  border-bottom: 1px solid var(--border, #333);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.ralph-approval-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary, #999);
+}
+.ralph-approval-left .ralph-approval-icon {
+  font-size: 16px;
+}
+.ralph-approval-left .ralph-approval-text {
+  color: var(--text-primary, #fff);
+  font-weight: 500;
+}
+.ralph-approval-actions {
+  display: flex;
+  gap: 8px;
+}
+.ralph-preview-btn {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border, #333);
+  background: var(--bg-tertiary, #2a2a3e);
+  color: var(--text-primary, #fff);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.ralph-preview-btn:hover {
+  background: var(--bg-secondary, #1a1a2e);
+}
+.ralph-start-btn {
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border, #333);
+  background: var(--accent, #6c5ce7);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+.ralph-start-btn:hover {
+  opacity: 0.9;
+}
+.ralph-start-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Ralph Preview Modal */
+.ralph-preview-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: var(--bg-primary, #0d0d1a);
+  border: 1px solid var(--border, #333);
+  border-radius: 12px;
+  width: 640px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+.ralph-preview-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border, #333);
+  padding: 0 16px;
+}
+.ralph-tab {
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary, #999);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.15s, border-color 0.15s;
+}
+.ralph-tab:hover {
+  color: var(--text-primary, #fff);
+}
+.ralph-tab.active {
+  color: var(--text-primary, #fff);
+  border-bottom-color: var(--accent, #6c5ce7);
+}
+.ralph-preview-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary, #fff);
+  min-height: 200px;
+  max-height: 60vh;
+}
+.ralph-preview-body pre {
+  background: var(--bg-secondary, #1a1a2e);
+  border-radius: 4px;
+  padding: 10px;
+  overflow-x: auto;
+}
+.ralph-preview-body code {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+}
+.ralph-preview-dialog > .ralph-btn {
+  margin: 0 16px 12px;
+  align-self: flex-end;
+}
+
+/* Crafting Banner */
+.ralph-crafting-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-secondary, #1a1a2e);
+  border-bottom: 1px solid var(--border, #333);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.ralph-crafting-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ralph-crafting-icon {
+  font-size: 16px;
+  animation: ralphSpin 2s linear infinite;
+}
+@keyframes ralphSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.ralph-crafting-text {
+  color: var(--text-primary, #fff);
+  font-weight: 500;
+}
+.ralph-crafting-sub {
+  color: var(--text-secondary, #999);
+}

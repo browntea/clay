@@ -956,6 +956,64 @@
   </div>
 </div>
 
+<!-- Ralph Wizard -->
+<div id="ralph-wizard" class="hidden">
+  <div class="ralph-wizard-backdrop"></div>
+  <div class="ralph-wizard-card">
+    <div class="ralph-wizard-header">
+      <span>New Ralph Loop</span>
+      <button id="ralph-wizard-close">&times;</button>
+    </div>
+    <div class="ralph-wizard-progress">
+      <span class="ralph-dot active" data-step="1"></span>
+      <span class="ralph-dot" data-step="2"></span>
+      <span class="ralph-dot" data-step="3"></span>
+      <span class="ralph-dot" data-step="4"></span>
+    </div>
+    <div class="ralph-wizard-steps">
+      <div class="ralph-step active" data-step="1">
+        <h3>What do you want to build?</h3>
+        <p class="ralph-hint">Describe the task Claude should complete autonomously.</p>
+        <textarea id="ralph-task" rows="6" placeholder="e.g. Add dark mode toggle to the settings page with system preference detection..."></textarea>
+      </div>
+      <div class="ralph-step" data-step="2">
+        <h3>Any constraints?</h3>
+        <p class="ralph-hint">Tech preferences, files to avoid, coding style, etc.</p>
+        <textarea id="ralph-constraints" rows="6" placeholder="Optional — leave blank to skip"></textarea>
+      </div>
+      <div class="ralph-step" data-step="3">
+        <h3>How should completion be judged?</h3>
+        <p class="ralph-hint">What does "done" look like?</p>
+        <textarea id="ralph-judge-hints" rows="6" placeholder="Optional — e.g. Tests pass, no console errors, toggle persists across reload..."></textarea>
+      </div>
+      <div class="ralph-step" data-step="4">
+        <h3>Review</h3>
+        <div id="ralph-review-summary"></div>
+      </div>
+    </div>
+    <div class="ralph-wizard-footer">
+      <button id="ralph-wizard-back" class="ralph-btn secondary">Back</button>
+      <div>
+        <button id="ralph-wizard-skip" class="ralph-btn tertiary">Skip</button>
+        <button id="ralph-wizard-next" class="ralph-btn primary">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ralph Preview Modal -->
+<div id="ralph-preview-modal" class="hidden">
+  <div class="confirm-backdrop"></div>
+  <div class="ralph-preview-dialog">
+    <div class="ralph-preview-tabs">
+      <button class="ralph-tab active" data-tab="prompt">PROMPT.md</button>
+      <button class="ralph-tab" data-tab="judge">JUDGE.md</button>
+    </div>
+    <div id="ralph-preview-body" class="ralph-preview-body"></div>
+    <button id="ralph-preview-close" class="ralph-btn secondary">Close</button>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/marked@14/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
