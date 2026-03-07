@@ -144,6 +144,7 @@
           <button id="header-rename-btn" type="button" title="Rename session"><i data-lucide="pencil"></i></button>
         </div>
         <div id="todo-sticky" class="hidden"></div>
+        <div id="ralph-sticky" class="hidden"></div>
         <div class="status">
           <button id="sticky-notes-toggle-btn" title="Sticky notes"><i data-lucide="sticky-note"></i><span class="sticky-notes-count hidden"></span></button>
           <button id="terminal-toggle-btn" title="Terminal"><i data-lucide="square-terminal"></i><span id="terminal-count" class="hidden"></span></button>
@@ -969,24 +970,48 @@
       <span class="ralph-dot" data-step="2"></span>
       <span class="ralph-dot" data-step="3"></span>
       <span class="ralph-dot" data-step="4"></span>
+      <span class="ralph-dot" data-step="5"></span>
     </div>
     <div class="ralph-wizard-steps">
       <div class="ralph-step active" data-step="1">
+        <h3>What's Ralph Loop?</h3>
+        <div class="ralph-intro">
+          <p>An autonomous coding loop. Claude writes code, a separate judge reviews the result, and if it's not done yet, Claude tries again &mdash; repeating until the judge says it passes.</p>
+          <div class="ralph-intro-diagram">
+            <div class="ralph-dia-row">
+              <span class="ralph-dia-node">Claude codes</span>
+              <span class="ralph-dia-fwd">&rarr;</span>
+              <span class="ralph-dia-node">Judge reviews</span>
+              <span class="ralph-dia-fwd">&rarr;</span>
+              <span class="ralph-dia-done">Done</span>
+            </div>
+            <div class="ralph-dia-loop">
+              <svg class="ralph-dia-svg" viewBox="0 0 200 28" preserveAspectRatio="none">
+                <path d="M170 2 C190 2 196 14 190 24 L10 24 C4 24 -2 14 10 2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 3"/>
+                <polygon points="14,-1 6,5 14,5" fill="currentColor" transform="translate(0,0)"/>
+              </svg>
+              <span class="ralph-dia-loop-label">Fail &mdash; retry</span>
+            </div>
+          </div>
+          <p class="ralph-intro-detail">In the next steps you'll describe what to build. Claude will draft the instructions, and you can preview and edit them before anything runs.</p>
+        </div>
+      </div>
+      <div class="ralph-step" data-step="2">
         <h3>What do you want to build?</h3>
         <p class="ralph-hint">Describe the task Claude should complete autonomously.</p>
         <textarea id="ralph-task" rows="6" placeholder="e.g. Add dark mode toggle to the settings page with system preference detection..."></textarea>
       </div>
-      <div class="ralph-step" data-step="2">
+      <div class="ralph-step" data-step="3">
         <h3>Any constraints?</h3>
         <p class="ralph-hint">Tech preferences, files to avoid, coding style, etc.</p>
         <textarea id="ralph-constraints" rows="6" placeholder="Optional — leave blank to skip"></textarea>
       </div>
-      <div class="ralph-step" data-step="3">
+      <div class="ralph-step" data-step="4">
         <h3>How should completion be judged?</h3>
         <p class="ralph-hint">What does "done" look like?</p>
         <textarea id="ralph-judge-hints" rows="6" placeholder="Optional — e.g. Tests pass, no console errors, toggle persists across reload..."></textarea>
       </div>
-      <div class="ralph-step" data-step="4">
+      <div class="ralph-step" data-step="5">
         <h3>Review</h3>
         <div id="ralph-review-summary"></div>
       </div>
