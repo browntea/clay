@@ -39,6 +39,104 @@
   opacity: 0.85;
 }
 /* .loop-start-btn is now inside #session-actions, inherits sidebar button styles */
+.loop-experimental {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 10.5px;
+  font-weight: 500;
+  font-family: 'Roboto Mono', var(--font-mono, monospace);
+  letter-spacing: 0.3px;
+  color: var(--text-muted);
+  background: rgba(var(--overlay-rgb), 0.06);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.loop-experimental .lucide { width: 9px; height: 9px; }
+.loop-busy-hint {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* Loop status popover */
+.loop-popover {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 0;
+  z-index: 200;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  min-width: 220px;
+  box-shadow: 0 4px 16px rgba(var(--shadow-rgb, 0,0,0), 0.3);
+  font-size: 12px;
+  color: var(--text);
+  animation: ralphFadeIn 0.15s ease;
+}
+.loop-popover-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.loop-popover-icon { display: inline-flex; color: var(--accent); }
+.loop-popover-icon .lucide { width: 14px; height: 14px; }
+.loop-popover-title { font-weight: 600; font-size: 13px; }
+.loop-popover-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.loop-popover-label {
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.loop-popover-value {
+  font-weight: 500;
+  color: var(--text);
+}
+.loop-popover-task {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.loop-popover-stop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 6px 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.loop-popover-stop .lucide { width: 12px; height: 12px; }
+.loop-popover-stop:hover {
+  background: rgba(var(--overlay-rgb), 0.06);
+  color: var(--text);
+}
 
 /* Ralph Wizard */
 #ralph-wizard {
@@ -561,3 +659,15 @@
 #ralph-sticky .ralph-sticky-start:hover { color: var(--success, #27ae60); background: rgba(39, 174, 96, 0.1); }
 #ralph-sticky .ralph-sticky-dismiss { color: var(--text-muted); margin-left: 0; }
 #ralph-sticky .ralph-sticky-dismiss:hover { color: var(--text-secondary); background: rgba(var(--overlay-rgb), 0.06); }
+
+/* Running state — accent border with subtle pulse */
+#ralph-sticky.ralph-running .ralph-sticky-inner {
+  border-color: var(--accent, #6c5ce7);
+}
+#ralph-sticky.ralph-running .ralph-sticky-icon { color: var(--accent, #6c5ce7); }
+#ralph-sticky.ralph-running .ralph-sticky-status {
+  color: var(--accent, #6c5ce7);
+  font-weight: 600;
+}
+#ralph-sticky .ralph-sticky-stop { color: var(--text-muted); }
+#ralph-sticky .ralph-sticky-stop:hover { color: var(--accent); background: rgba(var(--overlay-rgb), 0.06); }
