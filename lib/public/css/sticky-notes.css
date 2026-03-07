@@ -53,6 +53,8 @@
 .sticky-notes-count.hidden { display: none; }
 
 /* --- Individual note --- */
+.sticky-note.hidden { display: none; }
+
 .sticky-note {
   position: absolute;
   pointer-events: auto;
