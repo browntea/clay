@@ -85,9 +85,40 @@
     <div id="home-hub" class="hidden">
       <div class="home-hub-inner">
         <div class="hub-greeting">
-          <img class="hub-greeting-logo" src="clay-logo.png" alt="Clay">
           <h1 id="hub-greeting-text"></h1>
+          <p id="hub-greeting-date"></p>
         </div>
+
+        <div class="hub-columns">
+          <div class="hub-card hub-upcoming">
+            <div class="hub-card-header">
+              <span class="hub-card-title">Upcoming</span>
+              <span class="hub-card-count" id="hub-upcoming-count"></span>
+            </div>
+            <div class="hub-upcoming-list" id="hub-upcoming-list"></div>
+          </div>
+          <div class="hub-card hub-projects-summary">
+            <div class="hub-card-header">
+              <span class="hub-card-title">Projects</span>
+            </div>
+            <div class="hub-projects-list" id="hub-projects-list"></div>
+          </div>
+        </div>
+
+        <div class="hub-card hub-week">
+          <div class="hub-card-header">
+            <span class="hub-card-title">This Week</span>
+          </div>
+          <div class="hub-week-strip" id="hub-week-strip"></div>
+        </div>
+
+        <div class="hub-card hub-playbooks" id="hub-playbooks">
+          <div class="hub-card-header">
+            <span class="hub-card-title">Quick Start</span>
+          </div>
+          <div class="hub-playbooks-grid" id="hub-playbooks-grid"></div>
+        </div>
+
         <div class="hub-tip">
           <div class="hub-tip-icon">💡</div>
           <div class="hub-tip-body">
