@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Speech-to-Text (Whisper WASM)
+   Speech-to-Text (Web Speech API)
    ========================================================================== */
 
 /* --- Mic button --- */
@@ -14,28 +14,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s, color 0.15s;
+  transition: width 0.3s ease, border-radius 0.3s ease, background 0.2s, color 0.2s;
   touch-action: manipulation;
   position: relative;
+  overflow: hidden;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-#stt-btn .lucide { width: 20px; height: 20px; }
+#stt-btn .lucide { width: 20px; height: 20px; flex-shrink: 0; }
 #stt-btn:hover { background: rgba(var(--overlay-rgb), 0.06); color: var(--text); }
 
-/* Recording active */
+/* Recording active — pill shape */
 #stt-btn.stt-active {
-  color: #e53935;
-  background: rgba(229, 57, 53, 0.1);
-  animation: stt-pulse 1.5s ease-in-out infinite;
+  width: auto;
+  padding: 0 14px 0 10px;
+  border-radius: 18px;
+  color: #fff;
+  background: #e53935;
 }
 
 #stt-btn.stt-active:hover {
-  background: rgba(229, 57, 53, 0.18);
+  background: #c62828;
 }
 
-@keyframes stt-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.3); }
-  50% { box-shadow: 0 0 0 6px rgba(229, 57, 53, 0); }
+/* --- Waveform bars --- */
+.stt-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.stt-wave-bar {
+  width: 3px;
+  border-radius: 1.5px;
+  background: rgba(255, 255, 255, 0.85);
+  animation: stt-wave-bounce 1.2s ease-in-out infinite;
+}
+
+.stt-wave-bar:nth-child(1) { height: 6px;  animation-delay: 0s; }
+.stt-wave-bar:nth-child(2) { height: 12px; animation-delay: 0.15s; }
+.stt-wave-bar:nth-child(3) { height: 16px; animation-delay: 0.3s; }
+.stt-wave-bar:nth-child(4) { height: 12px; animation-delay: 0.45s; }
+.stt-wave-bar:nth-child(5) { height: 6px;  animation-delay: 0.6s; }
+
+@keyframes stt-wave-bounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+/* Stop label */
+.stt-stop-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 /* Loading state */
@@ -116,40 +152,4 @@
 
 .stt-lang-option:last-child {
   border-radius: 0 0 14px 14px;
-}
-
-/* --- Download progress --- */
-.stt-progress {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  right: 0;
-  margin-bottom: 8px;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 16px;
-  box-shadow: 0 -4px 24px rgba(var(--shadow-rgb), 0.3);
-  z-index: 20;
-}
-
-.stt-progress-label {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
-
-.stt-progress-bar {
-  height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.stt-progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  width: 0%;
-  transition: width 0.3s ease;
 }
