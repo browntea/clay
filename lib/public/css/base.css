@@ -73,6 +73,16 @@
 ::-webkit-scrollbar-thumb { background: rgba(var(--overlay-rgb),0.15); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(var(--overlay-rgb),0.25); }
 
+/* --- Global Twemoji baseline --- */
+img.emoji {
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: -0.2em;
+  margin: 0 1px;
+  display: inline;
+  pointer-events: none;
+}
+
 :root {
   --bg: #282a36;
   --bg-alt: #363447;

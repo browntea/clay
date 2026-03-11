@@ -83,20 +83,60 @@
   <!-- === Main Area (sidebar + resize-handle + main-column) === -->
   <div id="main-area">
     <div id="home-hub" class="hidden">
+      <button id="home-hub-close" class="home-hub-close-btn hidden">
+        <i data-lucide="x"></i>
+        <span>ESC</span>
+      </button>
       <div class="home-hub-inner">
         <div class="hub-greeting">
-          <img class="hub-greeting-logo" src="clay-logo.png" alt="Clay">
           <h1 id="hub-greeting-text"></h1>
+          <p id="hub-greeting-date"></p>
         </div>
+
+        <div class="hub-columns">
+          <div class="hub-card hub-upcoming">
+            <div class="hub-card-header">
+              <span class="hub-card-title">Upcoming</span>
+              <span class="hub-card-count" id="hub-upcoming-count"></span>
+            </div>
+            <div class="hub-upcoming-list" id="hub-upcoming-list"></div>
+          </div>
+          <div class="hub-card hub-projects-summary">
+            <div class="hub-card-header">
+              <span class="hub-card-title">Projects</span>
+            </div>
+            <div class="hub-projects-list" id="hub-projects-list"></div>
+          </div>
+        </div>
+
+        <div class="hub-card hub-week">
+          <div class="hub-card-header">
+            <span class="hub-card-title">This Week</span>
+          </div>
+          <div class="hub-week-strip" id="hub-week-strip"></div>
+        </div>
+
+        <div class="hub-card hub-playbooks" id="hub-playbooks">
+          <div class="hub-card-header">
+            <span class="hub-card-title">Quick Start</span>
+          </div>
+          <div class="hub-playbooks-grid" id="hub-playbooks-grid"></div>
+        </div>
+
         <div class="hub-tip">
           <div class="hub-tip-icon">💡</div>
           <div class="hub-tip-body">
             <div class="hub-tip-label">Did you know?</div>
             <div class="hub-tip-text" id="hub-tip-text"></div>
           </div>
-          <button class="hub-tip-refresh" id="hub-tip-refresh" title="Show another tip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
-          </button>
+          <div class="hub-tip-nav">
+            <button class="hub-tip-prev" id="hub-tip-prev" title="Previous tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="hub-tip-next" id="hub-tip-next" title="Next tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -332,7 +372,7 @@
   <div id="mobile-tab-bar">
     <button class="mobile-tab" data-tab="projects"><i data-lucide="folder-kanban"></i><span class="mobile-tab-label">Projects</span></button>
     <button class="mobile-tab" data-tab="sessions"><i data-lucide="messages-square"></i><span class="mobile-tab-label">Sessions</span></button>
-    <button class="mobile-tab-new" id="mobile-new-session-btn"><i data-lucide="plus"></i></button>
+    <button class="mobile-tab-home" id="mobile-home-btn"><img src="/icon-banded-76.png" alt="Clay" class="mobile-home-icon"></button>
     <button class="mobile-tab" data-tab="files"><i data-lucide="folder-tree"></i><span class="mobile-tab-label">Files</span></button>
     <button class="mobile-tab" data-tab="terminal"><i data-lucide="square-terminal"></i><span id="mobile-terminal-count" class="mobile-tab-badge hidden"></span><span class="mobile-tab-label">Terminal</span></button>
   </div>
