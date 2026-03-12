@@ -58,6 +58,13 @@
   font-display: swap;
 }
 
+/* --- Twemoji COLR Font (cross-platform consistent emoji via font, no JS parsing) --- */
+@font-face {
+  font-family: 'Twemoji';
+  src: url('https://cdn.jsdelivr.net/npm/twemoji-colr-font@15.0.3/twemoji.woff2') format('woff2');
+  font-display: swap;
+}
+
 /* --- Reset & Variables --- */
 * {
   margin: 0;
@@ -159,7 +166,7 @@ html, body {
   height: 100%;
   background: var(--bg);
   color: var(--text);
-  font-family: "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Pretendard", "Twemoji", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 15px;
   line-height: 1.6;
   overflow: hidden;

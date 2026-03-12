@@ -2,6 +2,11 @@
 
 ## WIP
 
+## v2.8.2
+
+- Replace twemoji JS parsing with Twemoji COLR font — eliminates emoji blinking during streaming, removes MutationObserver overhead
+- Remove twemoji.min.js script and all parseEmojis calls across codebase
+
 ## v2.8.1
 
 - Disable twemoji in chat area, use native emoji rendering
