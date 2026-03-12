@@ -918,6 +918,26 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
+}
+
+.user-island-cta {
+  font-size: 11px;
+  color: var(--accent, #7c3aed);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 1.2;
+}
+
+.user-island-cta.hidden {
+  display: none;
+}
+
+.user-island-cta:hover {
+  text-decoration: underline;
 }
 
 .user-island-actions {
