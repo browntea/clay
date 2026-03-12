@@ -385,6 +385,10 @@
   opacity: 0.9;
 }
 
+.admin-modal-confirm-danger {
+  background: #ef4444;
+}
+
 .admin-modal-cancel {
   background: none;
   border: 1px solid var(--border);
