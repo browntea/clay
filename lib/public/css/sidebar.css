@@ -530,6 +530,11 @@
   border: 1.5px solid var(--sidebar-bg);
   background: var(--bg-alt);
   object-fit: cover;
+  transition: filter 0.15s;
+}
+
+.session-presence-avatar:hover {
+  filter: brightness(1.3);
 }
 
 .session-presence-more {

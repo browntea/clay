@@ -462,6 +462,11 @@
   background: var(--bg-alt);
   object-fit: cover;
   cursor: default;
+  transition: filter 0.15s;
+}
+
+.client-avatar:hover {
+  filter: brightness(1.3);
 }
 
 .tooltip {
