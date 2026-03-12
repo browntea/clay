@@ -183,6 +183,28 @@
   background: var(--accent-8);
 }
 
+.admin-invite-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.admin-revoke-btn {
+  background: none;
+  border: none;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.admin-revoke-btn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
 /* Project list */
 .admin-project-list {
   display: flex;
