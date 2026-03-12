@@ -515,6 +515,30 @@
 .session-loop-group:hover .session-more-btn { opacity: 1; }
 .session-more-btn:hover { color: var(--text); background: rgba(var(--overlay-rgb), 0.06); }
 
+/* --- Session presence avatars (multi-user) --- */
+.session-presence {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+
+.session-presence-avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sidebar-bg);
+  background: var(--bg-alt);
+  object-fit: cover;
+}
+
+.session-presence-more {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-dimmer);
+  margin-left: 2px;
+}
+
 /* --- Session context menu --- */
 .session-ctx-menu {
   position: fixed;
