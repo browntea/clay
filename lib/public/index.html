@@ -602,6 +602,28 @@
     <div class="server-settings-nav">
       <div class="server-settings-nav-inner">
         <div class="server-settings-nav-header" id="settings-server-name"></div>
+        <select id="settings-nav-dropdown" class="settings-nav-dropdown">
+          <optgroup label="General">
+            <option value="overview" selected>Status</option>
+            <option value="notifications">Notifications</option>
+          </optgroup>
+          <optgroup label="Session">
+            <option value="models">Model &amp; Behavior</option>
+            <option value="claudemd">CLAUDE.md</option>
+            <option value="environment">Environment Variables</option>
+          </optgroup>
+          <optgroup label="Admin" class="settings-admin-only">
+            <option value="admin-users">Users</option>
+            <option value="admin-invites">Invites</option>
+            <option value="admin-projects">Projects</option>
+            <option value="admin-smtp">Email (SMTP)</option>
+          </optgroup>
+          <optgroup label="Server">
+            <option value="security">Security</option>
+            <option value="restart">Restart Server</option>
+            <option value="shutdown">Shutdown Server</option>
+          </optgroup>
+        </select>
         <div class="server-settings-nav-items">
           <div class="settings-nav-category">General</div>
           <button class="settings-nav-item active" data-section="overview"><span>Status</span></button>

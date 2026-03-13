@@ -89,6 +89,11 @@
   white-space: nowrap;
 }
 
+/* --- Nav dropdown (mobile only) --- */
+.settings-nav-dropdown {
+  display: none;
+}
+
 /* --- Nav items --- */
 .server-settings-nav-items {
   display: flex;
@@ -744,41 +749,39 @@
     padding: 12px 16px 8px;
   }
 
-  /* Scroll wrapper with fade hints */
+  /* Hide desktop nav items on mobile, show dropdown instead */
   .server-settings-nav-items {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 2px;
-    scrollbar-width: none;
-    padding: 0 16px 10px;
-    -webkit-mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 24px), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0, black 16px, black calc(100% - 24px), transparent 100%);
-  }
-
-  .server-settings-nav-items::-webkit-scrollbar { display: none; }
-
-  .settings-nav-item {
-    flex-shrink: 0;
-    font-size: 13px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: rgba(var(--overlay-rgb), 0.04);
-  }
-
-  .settings-nav-item.active {
-    background: rgba(var(--overlay-rgb), 0.12);
-  }
-
-  .settings-nav-item.settings-nav-danger {
-    background: var(--error-12);
-  }
-
-  .settings-nav-separator {
     display: none;
   }
 
-  .settings-nav-category {
-    display: none;
+  .settings-nav-dropdown {
+    display: block;
+    width: calc(100% - 32px);
+    margin: 0 16px 12px;
+    padding: 10px 12px;
+    font-family: "Pretendard", system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+  }
+
+  .settings-nav-dropdown optgroup {
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .settings-nav-dropdown option {
+    font-weight: 500;
+    color: var(--text);
   }
 
   .server-settings-content {
@@ -787,7 +790,7 @@
   }
 
   .server-settings-content-inner {
-    padding: calc(var(--safe-top) + 24px) 16px calc(var(--safe-bottom) + 24px);
+    padding: 24px 16px calc(var(--safe-bottom) + 24px);
   }
 
   .server-settings-close-col {
