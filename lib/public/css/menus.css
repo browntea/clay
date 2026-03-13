@@ -142,46 +142,6 @@
   flex-shrink: 0;
 }
 
-/* --- Debug menu --- */
-#debug-menu-wrap {
-  position: relative;
-}
-
-#debug-menu-wrap.hidden { display: none; }
-
-#debug-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  color: var(--error);
-  cursor: pointer;
-  padding: 4px;
-  opacity: 0.6;
-  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
-}
-
-#debug-btn .lucide { width: 15px; height: 15px; }
-#debug-btn:hover { opacity: 1; background: var(--error-8); border-color: var(--error-25); }
-#debug-btn.active { opacity: 1; background: var(--error-12); border-color: var(--error-25); }
-
-#debug-menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 0;
-  min-width: 200px;
-  box-shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.4);
-  z-index: 200;
-}
-
-#debug-menu.hidden { display: none; }
-
 /* --- Terminal toggle button (mobile only) --- */
 #footer-status,
 #terminal-toggle-btn {

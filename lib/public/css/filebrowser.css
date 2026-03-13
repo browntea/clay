@@ -890,7 +890,12 @@
 @media (max-width: 1023px) {
   #terminal-container {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
     background: var(--bg);
     z-index: 300;
     display: flex;

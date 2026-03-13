@@ -41,6 +41,154 @@ button.top-bar-pill {
   transition: background 0.15s;
 }
 button.top-bar-pill.pill-success:hover { background: color-mix(in srgb, var(--success) 20%, transparent); }
+button.top-bar-pill.pill-accent:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+
+/* PWA install button — left side of top bar, icon only */
+.top-bar-install-btn {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+.top-bar-install-btn .lucide { width: 14px; height: 14px; }
+.top-bar-install-btn:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.top-bar-install-btn.hidden { display: none; }
+.pwa-standalone .top-bar-install-btn { display: none !important; }
+
+@media (max-width: 768px) {
+  .top-bar-install-btn {
+    top: auto;
+    bottom: 0;
+    height: 32px;
+    transform: none;
+  }
+}
+
+/* PWA install modal */
+.pwa-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.pwa-modal.hidden { display: none; }
+
+.pwa-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.pwa-modal-card {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px 20px;
+  max-width: 340px;
+  width: 100%;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+  animation: modal-in 0.2s ease-out;
+  text-align: center;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.pwa-modal-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.pwa-modal-title {
+  font-family: "Pretendard", system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.pwa-modal-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.pwa-modal-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.pwa-modal-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.pwa-modal-benefits li:last-child { border-bottom: none; }
+
+.pwa-benefit-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.pwa-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pwa-modal-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  font-family: "Pretendard", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.pwa-modal-btn:hover { opacity: 0.85; }
+
+.pwa-modal-btn.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pwa-modal-btn.secondary {
+  background: none;
+  color: var(--text-muted);
+  font-weight: 500;
+}
 
 /* Pill close button (onboarding) */
 .pill-close {
@@ -57,22 +205,6 @@ button.top-bar-pill.pill-success:hover { background: color-mix(in srgb, var(--su
 }
 .pill-close:hover { opacity: 1; }
 .pill-close .lucide { width: 10px; height: 10px; }
-
-/* Onboarding pill text */
-.onboarding-pill-text { display: inline-flex; align-items: center; gap: 4px; }
-.onboarding-pill-text .lucide { width: 12px; height: 12px; }
-.onboarding-pill-text a,
-.onboarding-pill-text button.onboarding-cta {
-  color: inherit;
-  font-weight: 600;
-  text-decoration: underline;
-  background: none;
-  border: none;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: pointer;
-  padding: 0;
-}
 
 /* Update pill wrapper */
 #update-pill-wrap {
