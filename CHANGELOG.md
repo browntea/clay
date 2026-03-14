@@ -1,3 +1,10 @@
+## [2.9.3-beta.7](https://github.com/chadbyte/clay/compare/v2.9.3-beta.6...v2.9.3-beta.7) (2026-03-14)
+
+
+### Bug Fixes
+
+* **ci:** restructure stable release to dispatch on release branch ([bedd7a8](https://github.com/chadbyte/clay/commit/bedd7a885a37f63a04d8f43032778fb787a48dbc))
+
 ## [2.9.3-beta.6](https://github.com/chadbyte/clay/compare/v2.9.3-beta.5...v2.9.3-beta.6) (2026-03-14)
 
 
