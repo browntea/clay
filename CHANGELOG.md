@@ -1,3 +1,10 @@
+## [2.9.3-beta.1](https://github.com/chadbyte/clay/compare/v2.9.2...v2.9.3-beta.1) (2026-03-14)
+
+
+### Bug Fixes
+
+* **release:** add --tag flag for prerelease alias publishing ([2575627](https://github.com/chadbyte/clay/commit/2575627b148f713b39d466347332cf06edfe8aec))
+
 # 1.0.0-beta.1 (2026-03-14)
 
 
