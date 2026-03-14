@@ -1,3 +1,17 @@
+## [2.9.3](https://github.com/chadbyte/clay/compare/v2.9.2...v2.9.3) (2026-03-14)
+
+
+### Bug Fixes
+
+* **ci:** also override GITHUB_REF_NAME for stable release ([9d63dc5](https://github.com/chadbyte/clay/commit/9d63dc5675768e8b1cbf738db4c2ae711d8f09e3))
+* **ci:** override GITHUB_REF for stable release job ([9c7dae1](https://github.com/chadbyte/clay/commit/9c7dae1cf38f897f249e5892616019bc515c809d))
+* **ci:** restructure stable release to dispatch on release branch ([bedd7a8](https://github.com/chadbyte/clay/commit/bedd7a885a37f63a04d8f43032778fb787a48dbc))
+* **release:** add --tag flag for prerelease alias publishing ([2575627](https://github.com/chadbyte/clay/commit/2575627b148f713b39d466347332cf06edfe8aec))
+* **release:** write .npmrc in alias temp dir for CI auth ([fab3b8e](https://github.com/chadbyte/clay/commit/fab3b8eb640c5c114a98e5cf8c637fceaa35f7a1))
+* **sdk-bridge:** handle agent task stop without process errors ([95c5b1b](https://github.com/chadbyte/clay/commit/95c5b1b6b2447acf286810a1e7f5ec9b46cca89a)), closes [#209](https://github.com/chadbyte/clay/issues/209)
+* **sdk-bridge:** resolve agent task stop and info message rendering ([ddb1184](https://github.com/chadbyte/clay/commit/ddb1184029e9bd521061d3b77a75844eb7f686c6)), closes [#209](https://github.com/chadbyte/clay/issues/209)
+* **security:** allow all image sources in CSP policy ([93a8f24](https://github.com/chadbyte/clay/commit/93a8f24f83b12460edc8913d8a3fece7c39b4c95)), closes [#211](https://github.com/chadbyte/clay/issues/211)
+
 ## [2.9.3-beta.7](https://github.com/chadbyte/clay/compare/v2.9.3-beta.6...v2.9.3-beta.7) (2026-03-14)
 
 
