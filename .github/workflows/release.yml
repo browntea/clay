@@ -20,7 +20,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: false
+
+      - name: Sync release tags into main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git rev-parse --verify origin/release >/dev/null 2>&1; then
+            RELEASE_AHEAD=$(git rev-list --count HEAD..origin/release)
+            if [ "$RELEASE_AHEAD" -gt 0 ]; then
+              echo "Release branch is $RELEASE_AHEAD commits ahead of main, merging..."
+              git merge origin/release --no-edit
+              git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git main
+            fi
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -83,3 +97,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Merge release back to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git merge release --no-edit
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
