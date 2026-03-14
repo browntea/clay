@@ -38,6 +38,10 @@ if (fs.existsSync(readmeSrc)) {
   fs.copyFileSync(readmeSrc, path.join(aliasDir, "README.md"))
 }
 
+if (process.env.NPM_TOKEN) {
+  fs.writeFileSync(path.join(aliasDir, ".npmrc"), "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n")
+}
+
 var tag = version.includes("-") ? version.split("-")[1].split(".")[0] : "latest"
 
 console.log("[alias] Publishing claude-relay@" + version + " (tag: " + tag + ") ...")
