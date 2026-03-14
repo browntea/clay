@@ -4,19 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      channel:
-        description: "Release channel"
-        required: true
-        default: "stable"
-        type: choice
-        options:
-          - stable
 
 permissions:
   contents: write
   issues: write
   pull-requests: write
+  actions: write
 
 jobs:
   beta:
@@ -43,8 +36,32 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  promote:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge main to release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout release
+          git merge main --no-edit
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger stable release
+        run: gh workflow run release.yml --ref release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   stable:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/release'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -61,20 +78,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Merge to release branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout release
-          git merge main --no-edit
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run semantic-release (stable)
         run: npx semantic-release --branches release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_REF: refs/heads/release
-          GITHUB_REF_NAME: release
