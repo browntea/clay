@@ -1,3 +1,10 @@
+## [2.9.3-beta.5](https://github.com/chadbyte/clay/compare/v2.9.3-beta.4...v2.9.3-beta.5) (2026-03-14)
+
+
+### Bug Fixes
+
+* **ci:** override GITHUB_REF for stable release job ([9c7dae1](https://github.com/chadbyte/clay/commit/9c7dae1cf38f897f249e5892616019bc515c809d))
+
 ## [2.9.3-beta.4](https://github.com/chadbyte/clay/compare/v2.9.3-beta.3...v2.9.3-beta.4) (2026-03-14)
 
 
