@@ -1,4 +1,5 @@
 var config = {
+  repositoryUrl: "https://github.com/chadbyte/clay.git",
   branches: [
     { name: "main", prerelease: "beta" },
     { name: "release" }

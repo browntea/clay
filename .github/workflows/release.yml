@@ -4,6 +4,14 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      channel:
+        description: "Release channel"
+        required: true
+        default: "stable"
+        type: choice
+        options:
+          - stable
 
 permissions:
   contents: write
@@ -11,7 +19,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  release:
+  beta:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,8 +37,31 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Merge to release branch (stable release only)
-        if: github.event_name == 'workflow_dispatch'
+      - name: Run semantic-release (beta)
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  stable:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Merge to release branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -39,15 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run semantic-release (beta)
-        if: github.event_name == 'push'
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Run semantic-release (stable)
-        if: github.event_name == 'workflow_dispatch'
         run: npx semantic-release --branches release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
