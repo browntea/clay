@@ -1,3 +1,10 @@
+## [2.9.3-beta.2](https://github.com/chadbyte/clay/compare/v2.9.3-beta.1...v2.9.3-beta.2) (2026-03-14)
+
+
+### Bug Fixes
+
+* **release:** write .npmrc in alias temp dir for CI auth ([fab3b8e](https://github.com/chadbyte/clay/commit/fab3b8eb640c5c114a98e5cf8c637fceaa35f7a1))
+
 ## [2.9.3-beta.1](https://github.com/chadbyte/clay/compare/v2.9.2...v2.9.3-beta.1) (2026-03-14)
 
 
