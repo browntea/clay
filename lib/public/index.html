@@ -68,6 +68,8 @@
     <div class="icon-strip-separator"></div>
     <div class="icon-strip-projects" id="icon-strip-projects"></div>
     <button class="icon-strip-add" id="icon-strip-add" title="Add project"><i data-lucide="plus"></i></button>
+    <div class="icon-strip-users hidden" id="icon-strip-users"></div>
+    <div class="icon-strip-me" id="icon-strip-me"></div>
   </div>
 
   <!-- === Main Area (sidebar + resize-handle + main-column) === -->
@@ -191,6 +193,10 @@
     <div id="sidebar-resize-handle"></div>
     <div id="sidebar-overlay"></div>
     <div id="main-column">
+      <div class="dm-header-bar" id="dm-header-bar">
+        <img id="dm-header-avatar" class="dm-header-avatar" alt="">
+        <span id="dm-header-name" class="dm-header-name"></span>
+      </div>
       <div class="title-bar-content">
         <div id="header-left">
           <button id="sidebar-expand-btn" title="Open sidebar"><i data-lucide="panel-left-open"></i></button>

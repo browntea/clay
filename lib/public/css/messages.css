@@ -1465,3 +1465,177 @@ pre.mermaid-error {
 
 /* Rate limit inline cards removed — now header-only with popover (see title-bar.css) */
 
+/* ==========================================================================
+   DM Messages (P2P chat)
+   ========================================================================== */
+
+/* --- Slack-style DM messages --- */
+
+.dm-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 16px;
+}
+
+.dm-msg:hover {
+  background: var(--bg-alt);
+}
+
+.dm-msg-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dm-msg-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dm-msg-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.dm-msg-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.dm-msg-time {
+  font-size: 12px;
+  color: var(--text-dimmer);
+}
+
+.dm-msg-body {
+  font-size: 15px;
+  line-height: 1.46;
+  color: var(--text);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Compact: same sender within 5 min */
+.dm-msg-compact {
+  padding: 1px 16px 1px 60px; /* 16 + 36 avatar + 8 gap = 60 */
+  position: relative;
+}
+
+.dm-msg-compact:hover .dm-msg-hover-time {
+  opacity: 1;
+}
+
+.dm-msg-hover-time {
+  position: absolute;
+  left: 16px;
+  width: 36px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dimmer);
+  opacity: 0;
+  transition: opacity 0.1s;
+  line-height: 1.46;
+}
+
+/* Typing indicator */
+.dm-typing-indicator {
+  align-items: center;
+  gap: 8px;
+  padding: 4px 16px;
+}
+
+.dm-typing-indicator .dm-msg-avatar {
+  opacity: 0.7;
+}
+
+.dm-typing-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--bg-alt);
+  border-radius: 12px;
+}
+
+.dm-typing-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-dimmer);
+  animation: dm-typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.dm-typing-dots span:nth-child(1) { animation-delay: 0s; }
+.dm-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.dm-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dm-typing-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* DM mode: hide project-specific UI elements */
+#main-column.dm-mode .msg-group,
+#main-column.dm-mode #suggestion-chips,
+#main-column.dm-mode .tool-group {
+  display: none;
+}
+
+/* DM mode: simplify input bar (no voice, no model config, no context, no slash menu) */
+#main-column.dm-mode #stt-btn,
+#main-column.dm-mode #config-chip-wrap,
+#main-column.dm-mode #context-mini,
+#main-column.dm-mode #slash-menu {
+  display: none !important;
+}
+
+/* DM mode: hide sidebar column and resize handle */
+#sidebar-column.dm-mode {
+  display: none !important;
+}
+
+#sidebar-resize-handle.dm-mode {
+  display: none !important;
+}
+
+/* DM header bar: replaces normal title-bar-content */
+.dm-header-bar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+#main-column.dm-mode .title-bar-content {
+  display: none;
+}
+
+#main-column.dm-mode .dm-header-bar {
+  display: flex;
+}
+
+.dm-header-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dm-header-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+

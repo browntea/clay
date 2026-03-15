@@ -848,6 +848,10 @@
   border-radius: 10px;
 }
 
+#user-island.dm-hidden {
+  display: none;
+}
+
 #user-island::before {
   content: "";
   position: absolute;
