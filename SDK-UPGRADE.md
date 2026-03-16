@@ -38,11 +38,10 @@ Covers all unapplied changes from 0.2.38 through 0.2.76.
 - ~~**Where:** `project.js` `list_cli_sessions` handler now uses `sdk.listSessions()` with fallback to manual parsing.~~
 - ~~**Options:** `{ dir?: string, limit?: number }`~~
 
-### 2.2 `getSessionMessages()` top-level function (since 0.2.51+)
-- **Status:** Not implemented
-- **What:** Read session conversation messages with pagination.
-- **Impact:** Could replace or supplement current session history replay. Useful for session preview/search features.
-- **Options:** `{ dir?: string, limit?: number, offset?: number }`
+### ~~2.2 `getSessionMessages()` top-level function (since 0.2.51+) -- SKIP~~
+- ~~**Status:** Skipped~~
+- ~~**What:** Read session conversation messages with pagination.~~
+- ~~**Why skipped:** Relay already loads session history via `readCliSessionHistory()` which works well. SDK function adds no sync benefit (unlike renameSession/listSessions). Per-session API calls make it unsuitable for search. No current feature needs this.~~
 
 ### ~~2.3 `getSessionInfo()` top-level function (since 0.2.74+)~~
 - ~~**Status:** Implemented~~
@@ -55,12 +54,12 @@ Covers all unapplied changes from 0.2.38 through 0.2.76.
 - ~~**Impact:** Better sub-agent progress visibility in UI. Currently only tool names/descriptions are shown.~~
 - ~~**Where:** `sdk-bridge.js` - add `agentProgressSummaries: true` to queryOptions. Handle new summary messages in `processSDKMessage()`.~~
 
-### 2.5 `forkSession()` top-level function (since 0.2.76+)
-- **Status:** Not implemented
-- **What:** Branch a conversation from a specific message point. Creates a new session with transcript sliced at `upToMessageId`.
-- **Impact:** Enables "branch conversation" UI feature. Reuses prompt cache, so cost is minimal.
-- **Options:** `{ upToMessageId?: string, title?: string, dir?: string }`
-- **Returns:** `{ sessionId: string }`
+### ~~2.5 `forkSession()` top-level function (since 0.2.76+)~~
+- ~~**Status:** Implemented~~
+- ~~**What:** Branch a conversation from a specific message point. Creates a new session with transcript sliced at `upToMessageId`.~~
+- ~~**Impact:** Enables "branch conversation" UI feature. Reuses prompt cache, so cost is minimal.~~
+- ~~**Options:** `{ upToMessageId?: string, title?: string, dir?: string }`~~
+- ~~**Returns:** `{ sessionId: string }`~~
 
 
 ## Priority 3 - Low (Nice-to-have, polish)
