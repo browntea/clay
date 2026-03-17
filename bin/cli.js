@@ -131,8 +131,8 @@ for (var i = 0; i < args.length; i++) {
     console.log("  --remove <path>    Remove a project directory");
     console.log("  --list             List all registered projects");
     console.log("  --headless         Start daemon and exit immediately (implies --yes)");
-    console.log("  --multi-user       Enable multi-user mode (generates setup code)");
-    console.log("  --os-users         Enable OS-level user isolation (Linux only, requires root + --multi-user)");
+    console.log("  --multi-user       Start in multi-user mode (use with --yes for headless)");
+    console.log("  --os-users         Enable OS-level user isolation (Linux, requires root + --multi-user)");
     console.log("  --dangerously-skip-permissions");
     console.log("                     Bypass all permission prompts");
     process.exit(0);
@@ -271,59 +271,8 @@ if (listMode) {
   return;
 }
 
-// --- Handle --multi-user before anything else ---
-if (multiUserMode) {
-  var muResult = enableMultiUser();
-  if (muResult.alreadyEnabled && muResult.hasAdmin) {
-    console.log("");
-    console.log("Multi-user mode is already enabled and an admin account exists.");
-    console.log("No changes made.");
-    console.log("");
-  } else if (muResult.setupCode) {
-    console.log("");
-    console.log("\x1b[33m⚠ Experimental Feature\x1b[0m");
-    console.log("");
-    console.log("  Multi-user mode is experimental and may change in future releases.");
-    console.log("  Sharing access to AI-powered tools may be subject to your provider's");
-    console.log("  terms of service. Please review the applicable usage policies before");
-    console.log("  granting access to other users.");
-    console.log("");
-    console.log("\x1b[32mMulti-user mode enabled.\x1b[0m");
-    console.log("");
-    console.log("Setup code:  \x1b[1m" + muResult.setupCode + "\x1b[0m");
-    console.log("");
-    console.log("Open Clay in your browser and enter this code to create the admin account.");
-    console.log("The code is single-use and will be cleared once the admin is set up.");
-    console.log("");
-  }
-  if (!osUsersMode) {
-    process.exit(0);
-  }
-}
-
-// --- Handle --os-users validation ---
-if (osUsersMode) {
-  if (process.platform !== "linux") {
-    console.error("\x1b[31mError: --os-users requires Linux.\x1b[0m");
-    console.error("OS-level user isolation depends on setfacl, getent, and uid/gid process spawning.");
-    process.exit(1);
-  }
-  if (typeof process.getuid === "function" && process.getuid() !== 0) {
-    console.error("\x1b[31mError: --os-users requires running as root.\x1b[0m");
-    console.error("The daemon must run as root to spawn worker processes as different users.");
-    console.error("Use: sudo clay --multi-user --os-users");
-    process.exit(1);
-  }
-  if (!isMultiUser()) {
-    console.error("\x1b[31mError: --os-users requires --multi-user mode.\x1b[0m");
-    console.error("Enable multi-user mode first: clay --multi-user");
-    process.exit(1);
-  }
-  console.log("\x1b[32mOS-level user isolation enabled.\x1b[0m");
-  console.log("Worker processes will run as mapped Linux users.");
-  console.log("Linux accounts will be auto-provisioned for existing users on startup.");
-  console.log("");
-}
+// --multi-user / --os-users are now handled in the main entry flow (setup wizard or repeat run)
+// Flags are parsed above and applied during forkDaemon()
 
 var cwd = process.cwd();
 
@@ -1310,44 +1259,70 @@ function setup(callback) {
           }
           port = p;
           log(sym.bar);
-
-          function askPin() {
-            promptPin(function (pin) {
-              if (dangerouslySkipPermissions && !pin) {
-                log(sym.bar);
-                log(sym.warn + "  " + a.yellow + "WARNING: No PIN + skip permissions = anyone with the URL" + a.reset);
-                log(sym.bar + "  " + a.yellow + "can execute any command without approval." + a.reset);
-                log(sym.bar);
-                promptToggle("Continue without PIN?", null, false, function (confirmed) {
-                  if (!confirmed) {
-                    clearUp(6);
-                    log(sym.done + "  PIN protection " + a.dim + "·" + a.reset + " " + a.yellow + "Required for skip permissions" + a.reset);
-                    log(sym.bar);
-                    askPin();
-                    return;
-                  }
-                  afterPin(pin);
-                });
-              } else {
-                afterPin(pin);
-              }
-            });
-          }
-
-          function afterPin(pin) {
-            if (process.platform === "darwin") {
-              promptToggle("Keep awake", "Prevent system sleep while relay is running", false, function (keepAwake) {
-                callback(pin, keepAwake);
-              });
-            } else {
-              callback(pin, false);
-            }
-          }
-
-          askPin();
+          askMode();
         });
       });
     }
+
+    function askMode() {
+      promptSelect("How will you use Clay?", [
+        { label: "Just me (single user)", value: "single" },
+        { label: "Multiple users", value: "multi" },
+      ], function (mode) {
+        if (mode === "single") {
+          finishSetup(mode, false);
+        } else {
+          askOsUsers(mode);
+        }
+      });
+    }
+
+    function askOsUsers(mode) {
+      // Only offer OS user isolation on Linux
+      if (process.platform !== "linux") {
+        finishSetup(mode, false);
+        return;
+      }
+      log(sym.bar);
+      promptToggle("Enable OS-level user isolation?", "Run each user's sessions as a separate Linux account", false, function (wantOsUsers) {
+        if (wantOsUsers) {
+          var isRoot = typeof process.getuid === "function" && process.getuid() === 0;
+          if (!isRoot) {
+            // Save config so sudo clay can pick it up
+            var partialConfig = {
+              port: port,
+              host: host,
+              mode: "multi",
+              osUsers: true,
+              setupCompleted: true,
+              dangerouslySkipPermissions: dangerouslySkipPermissions,
+            };
+            saveConfig(partialConfig);
+            log(sym.bar);
+            log(sym.warn + "  " + a.yellow + "OS user isolation requires root." + a.reset);
+            log(sym.bar + "  Run:");
+            log(sym.bar + "    " + a.bold + "sudo clay" + a.reset);
+            log(sym.end);
+            log("");
+            process.exit(0);
+            return;
+          }
+        }
+        finishSetup(mode, wantOsUsers);
+      });
+    }
+
+    function finishSetup(mode, wantOsUsers) {
+      if (process.platform === "darwin") {
+        log(sym.bar);
+        promptToggle("Keep awake", "Prevent system sleep while relay is running", false, function (keepAwake) {
+          callback(mode, keepAwake, wantOsUsers);
+        });
+      } else {
+        callback(mode, false, wantOsUsers);
+      }
+    }
+
     askPort();
   });
 }
@@ -1355,7 +1330,7 @@ function setup(callback) {
 // ==============================
 // Fork the daemon process
 // ==============================
-async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
+async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
   var ip = getLocalIP();
   var hasTls = false;
 
@@ -1434,12 +1409,14 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
     pid: null,
     port: port,
     host: host,
-    pinHash: pin ? generateAuthToken(pin) : null,
+    pinHash: mode === "multi" && cliPin ? generateAuthToken(cliPin) : null,
     tls: hasTls,
     debug: debugMode,
     keepAwake: keepAwake,
     dangerouslySkipPermissions: dangerouslySkipPermissions,
-    osUsers: osUsersMode,
+    osUsers: wantOsUsers || osUsersMode,
+    mode: mode || "single",
+    setupCompleted: true,
     projects: allProjects,
   };
 
@@ -1481,6 +1458,18 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
     return;
   }
 
+  // Enable multi-user mode if requested
+  if (config.mode === "multi") {
+    var muResult = enableMultiUser();
+    if (muResult.setupCode) {
+      log("");
+      log(sym.done + "  " + a.green + "Multi-user mode enabled." + a.reset);
+      log(sym.bar + "  Setup code:  " + a.bold + muResult.setupCode + a.reset);
+      log(sym.bar + "  Open Clay in your browser and enter this code to create the admin account.");
+      log("");
+    }
+  }
+
   // Headless mode — print status and exit immediately
   if (headlessMode) {
     var protocol = config.tls ? "https" : "http";
@@ -1499,7 +1488,7 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
 // ==============================
 // Dev mode — foreground daemon with file watching
 // ==============================
-async function devMode(pin, keepAwake, existingPinHash) {
+async function devMode(mode, keepAwake, existingPinHash) {
   var ip = getLocalIP();
   var hasTls = false;
 
@@ -1565,11 +1554,13 @@ async function devMode(pin, keepAwake, existingPinHash) {
     pid: null,
     port: port,
     host: host,
-    pinHash: existingPinHash || (pin ? generateAuthToken(pin) : null),
+    pinHash: existingPinHash || null,
     tls: hasTls,
     debug: true,
     keepAwake: keepAwake || false,
     dangerouslySkipPermissions: dangerouslySkipPermissions,
+    mode: mode || "single",
+    setupCompleted: true,
     projects: allProjects,
   };
 
@@ -2337,6 +2328,11 @@ function showSettingsMenu(config, ip) {
       ? a.green + "Enabled" + a.reset
       : a.dim + "Off" + a.reset;
 
+    var modeLabel = config.mode === "multi" ? "Multi-user" : "Single user";
+    var modeStatus = config.mode === "multi"
+      ? a.clay + modeLabel + a.reset
+      : a.dim + modeLabel + a.reset;
+    log(sym.bar + "  Mode         " + modeStatus);
     log(sym.bar + "  PIN          " + pinStatus);
     log(sym.bar + "  Multi-user   " + muStatus);
     var osUsersStatus = isOsUsers
@@ -2375,6 +2371,7 @@ function showSettingsMenu(config, ip) {
       items.push({ label: isAwake ? "Disable keep awake" : "Enable keep awake", value: "awake" });
     }
     items.push({ label: "View logs", value: "logs" });
+    items.push({ label: "Re-run setup wizard", value: "rerun_setup" });
     items.push({ label: "Back", value: "back" });
 
   promptSelect("Select", items, function (choice) {
@@ -2572,6 +2569,70 @@ function showSettingsMenu(config, ip) {
         });
         break;
 
+      case "rerun_setup":
+        log(sym.bar);
+        log(sym.bar + "  " + a.yellow + sym.warn + " Re-run setup wizard?" + a.reset);
+        log(sym.bar);
+        log(sym.bar + "  " + a.dim + "This will shut down the running daemon, reset your setup" + a.reset);
+        log(sym.bar + "  " + a.dim + "preferences (mode, port), and walk you through the wizard again." + a.reset);
+        log(sym.bar + "  " + a.dim + "Your projects and user accounts will be preserved." + a.reset);
+        log(sym.bar);
+        promptSelect("Confirm", [
+          { label: "Re-run setup wizard", value: "confirm" },
+          { label: "Cancel", value: "cancel" },
+        ], function (confirmChoice) {
+          if (confirmChoice === "confirm") {
+            // Clear setupCompleted so setup() runs fresh
+            var cfg = loadConfig() || {};
+            delete cfg.setupCompleted;
+            delete cfg.mode;
+            cfg.pid = null;
+            saveConfig(cfg);
+            // Shut down the daemon
+            sendIPCCommand(socketPath(), { cmd: "shutdown" }).then(function () {
+              clearStaleConfig();
+              // Run the setup wizard, then fork a new daemon
+              setup(function (mode, keepAwake, wantOsUsers) {
+                var rc = loadClayrc();
+                var restorable = (rc.recentProjects || []).filter(function (p) {
+                  return p.path !== cwd && fs.existsSync(p.path);
+                });
+                if (restorable.length > 0) {
+                  promptRestoreProjects(restorable, function (selected) {
+                    forkDaemon(mode, keepAwake, selected, false, wantOsUsers);
+                  });
+                } else {
+                  log(sym.bar);
+                  log(sym.end + "  " + a.dim + "Starting relay..." + a.reset);
+                  log("");
+                  forkDaemon(mode, keepAwake, undefined, true, wantOsUsers);
+                }
+              });
+            }).catch(function () {
+              clearStaleConfig();
+              setup(function (mode, keepAwake, wantOsUsers) {
+                var rc = loadClayrc();
+                var restorable = (rc.recentProjects || []).filter(function (p) {
+                  return p.path !== cwd && fs.existsSync(p.path);
+                });
+                if (restorable.length > 0) {
+                  promptRestoreProjects(restorable, function (selected) {
+                    forkDaemon(mode, keepAwake, selected, false, wantOsUsers);
+                  });
+                } else {
+                  log(sym.bar);
+                  log(sym.end + "  " + a.dim + "Starting relay..." + a.reset);
+                  log("");
+                  forkDaemon(mode, keepAwake, undefined, true, wantOsUsers);
+                }
+              });
+            });
+          } else {
+            showSettingsMenu(config, ip);
+          }
+        });
+        break;
+
       case "logs":
         console.clear();
         log(a.bold + "Daemon logs" + a.reset + " " + a.dim + "(" + logPath() + ")" + a.reset);
@@ -2633,14 +2694,14 @@ var currentVersion = require("../package.json").version;
       if (devConfig.pid) clearStaleConfig();
       devConfig = null;
     }
-    // No config — go through setup (disclaimer, port, PIN, etc.)
+    // No config — go through setup (disclaimer, port, mode, etc.)
     if (!devConfig) {
-      setup(function (pin, keepAwake) {
-        devMode(pin, keepAwake, null);
+      setup(function (mode, keepAwake, wantOsUsers) {
+        devMode(mode, keepAwake, null);
       });
     } else {
-      // Reuse existing PIN hash from previous config
-      await devMode(cliPin || null, devConfig.keepAwake || false, devConfig.pinHash || null);
+      // Reuse existing config (repeat run)
+      await devMode(devConfig.mode || "single", devConfig.keepAwake || false, devConfig.pinHash || null);
     }
     return;
   }
@@ -2717,19 +2778,55 @@ var currentVersion = require("../package.json").version;
       showMainMenu(config || { pid: status.pid, port: status.port, tls: status.tls }, ip);
     }
   } else {
-    // No daemon running — first-time setup
-    if (autoYes) {
-      var pin = cliPin || null;
-      console.log("  " + sym.done + "  Auto-accepted disclaimer");
-      console.log("  " + sym.done + "  PIN: " + (pin ? "Enabled" : "Skipped"));
-      if (dangerouslySkipPermissions) {
-        console.log("  " + sym.warn + "  " + a.yellow + "Skip permissions mode enabled" + (pin ? "" : " (no PIN)") + a.reset);
+    // No daemon running — check for saved config (repeat run)
+    var savedConfig = loadConfig();
+    var isRepeatRun = savedConfig && savedConfig.setupCompleted;
+
+    // --multi-user / --os-users CLI flags set config directly for headless/scripted usage
+    if (multiUserMode) {
+      if (!savedConfig) savedConfig = {};
+      savedConfig.mode = "multi";
+      savedConfig.setupCompleted = true;
+    }
+    if (osUsersMode) {
+      if (!savedConfig) savedConfig = {};
+      savedConfig.osUsers = true;
+      savedConfig.mode = "multi";
+      savedConfig.setupCompleted = true;
+    }
+    isRepeatRun = savedConfig && savedConfig.setupCompleted;
+
+    if (isRepeatRun || autoYes) {
+      // Repeat run or --yes: skip wizard, reuse saved config
+      var savedMode = (savedConfig && savedConfig.mode) || "single";
+      var savedKeepAwake = (savedConfig && savedConfig.keepAwake) || false;
+      var savedOsUsers = (savedConfig && savedConfig.osUsers) || false;
+
+      // os-users requires root
+      if (savedOsUsers && typeof process.getuid === "function" && process.getuid() !== 0) {
+        console.error(a.red + "OS user isolation requires root." + a.reset);
+        console.error("Run:  " + a.bold + "sudo clay" + a.reset);
+        process.exit(1);
+        return;
       }
+
+      if (savedConfig && savedConfig.port) port = savedConfig.port;
+      if (savedConfig && savedConfig.host) host = savedConfig.host;
+      if (savedConfig && savedConfig.dangerouslySkipPermissions) dangerouslySkipPermissions = true;
+
+      if (autoYes) {
+        console.log("  " + sym.done + "  Auto-accepted disclaimer");
+        console.log("  " + sym.done + "  Mode: " + savedMode);
+        if (dangerouslySkipPermissions) {
+          console.log("  " + sym.warn + "  " + a.yellow + "Skip permissions mode enabled" + a.reset);
+        }
+      }
+
       var autoRc = loadClayrc();
       var autoRestorable = (autoRc.recentProjects || []).filter(function (p) {
         return p.path !== cwd && fs.existsSync(p.path);
       });
-      if (autoRestorable.length > 0) {
+      if (autoRestorable.length > 0 && autoYes) {
         console.log("  " + sym.done + "  Restoring " + autoRestorable.length + " previous project(s)");
       }
       // Add cwd if it has history in .clayrc, or if there are no other projects to restore
@@ -2737,9 +2834,10 @@ var currentVersion = require("../package.json").version;
         return p.path === cwd;
       });
       var addCwd = cwdInRc || autoRestorable.length === 0;
-      await forkDaemon(pin, false, autoRestorable.length > 0 ? autoRestorable : undefined, addCwd);
+      await forkDaemon(savedMode, savedKeepAwake, autoRestorable.length > 0 ? autoRestorable : undefined, addCwd, savedOsUsers);
     } else {
-      setup(function (pin, keepAwake) {
+      // First run: interactive wizard
+      setup(function (mode, keepAwake, wantOsUsers) {
         // Check ~/.clayrc for previous projects to restore
         var rc = loadClayrc();
         var restorable = (rc.recentProjects || []).filter(function (p) {
@@ -2748,13 +2846,13 @@ var currentVersion = require("../package.json").version;
 
         if (restorable.length > 0) {
           promptRestoreProjects(restorable, function (selected) {
-            forkDaemon(pin, keepAwake, selected, false);
+            forkDaemon(mode, keepAwake, selected, false, wantOsUsers);
           });
         } else {
           log(sym.bar);
           log(sym.end + "  " + a.dim + "Starting relay..." + a.reset);
           log("");
-          forkDaemon(pin, keepAwake, undefined, true);
+          forkDaemon(mode, keepAwake, undefined, true, wantOsUsers);
         }
       });
     }
