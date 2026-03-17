@@ -1,3 +1,10 @@
+# [2.11.0-beta.6](https://github.com/chadbyte/clay/compare/v2.11.0-beta.5...v2.11.0-beta.6) (2026-03-17)
+
+
+### Bug Fixes
+
+* **cli:** allow --os-users flag when --multi-user is already enabled ([d31a895](https://github.com/chadbyte/clay/commit/d31a895af5b1cf8f51a55a2e622df32c643d715b))
+
 # [2.11.0-beta.5](https://github.com/chadbyte/clay/compare/v2.11.0-beta.4...v2.11.0-beta.5) (2026-03-17)
 
 
