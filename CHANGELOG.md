@@ -1,3 +1,11 @@
+# [2.11.0-beta.5](https://github.com/chadbyte/clay/compare/v2.11.0-beta.4...v2.11.0-beta.5) (2026-03-17)
+
+
+### Features
+
+* **os-users:** add OS-level user isolation with ACL management ([9641380](https://github.com/chadbyte/clay/commit/9641380bf641511ee552d13ce2072e7fd694b4b7))
+* **project:** add empty project creation and GitHub clone modes ([9c7bf96](https://github.com/chadbyte/clay/commit/9c7bf96919ee06170d1bd7643988fb6597150fac))
+
 # [2.11.0-beta.4](https://github.com/chadbyte/clay/compare/v2.11.0-beta.3...v2.11.0-beta.4) (2026-03-17)
 
 
