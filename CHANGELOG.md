@@ -1,3 +1,15 @@
+# [2.11.0-beta.4](https://github.com/chadbyte/clay/compare/v2.11.0-beta.3...v2.11.0-beta.4) (2026-03-17)
+
+
+### Bug Fixes
+
+* **admin:** fix broken admin section UI ([9af9e93](https://github.com/chadbyte/clay/commit/9af9e9351de0d6b0c7b7136b69ce2c33215af9db))
+
+
+### Features
+
+* **update:** add beta update channel support ([afe552b](https://github.com/chadbyte/clay/commit/afe552b4682c8f12116dceb38efe7ba74d5fe3ed))
+
 # [2.11.0-beta.3](https://github.com/chadbyte/clay/compare/v2.11.0-beta.2...v2.11.0-beta.3) (2026-03-16)
 
 
