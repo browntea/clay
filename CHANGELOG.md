@@ -1,3 +1,10 @@
+# [2.11.0-beta.13](https://github.com/chadbyte/clay/compare/v2.11.0-beta.12...v2.11.0-beta.13) (2026-03-17)
+
+
+### Bug Fixes
+
+* **daemon:** pass PATH env when running git init as OS user ([e9fe51f](https://github.com/chadbyte/clay/commit/e9fe51f4d93465574f58b2ca11a47cf5e1abb825))
+
 # [2.11.0-beta.12](https://github.com/chadbyte/clay/compare/v2.11.0-beta.11...v2.11.0-beta.12) (2026-03-17)
 
 
