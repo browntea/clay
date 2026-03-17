@@ -296,7 +296,9 @@ if (multiUserMode) {
     console.log("The code is single-use and will be cleared once the admin is set up.");
     console.log("");
   }
-  process.exit(0);
+  if (!osUsersMode) {
+    process.exit(0);
+  }
 }
 
 // --- Handle --os-users validation ---
