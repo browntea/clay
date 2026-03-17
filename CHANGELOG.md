@@ -1,3 +1,10 @@
+# [2.11.0-beta.7](https://github.com/chadbyte/clay/compare/v2.11.0-beta.6...v2.11.0-beta.7) (2026-03-17)
+
+
+### Bug Fixes
+
+* **ui:** route icon strip add button through openAddProjectModal ([a16f8cd](https://github.com/chadbyte/clay/commit/a16f8cd9fdbe69fa3ec6e9bb6c38f003d4028d49))
+
 # [2.11.0-beta.6](https://github.com/chadbyte/clay/compare/v2.11.0-beta.5...v2.11.0-beta.6) (2026-03-17)
 
 
