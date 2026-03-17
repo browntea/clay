@@ -1,3 +1,10 @@
+# [2.11.0-beta.16](https://github.com/chadbyte/clay/compare/v2.11.0-beta.15...v2.11.0-beta.16) (2026-03-17)
+
+
+### Bug Fixes
+
+* **sdk-bridge:** propagate worker exit errors to client sessions ([bc439df](https://github.com/chadbyte/clay/commit/bc439df7e9d060f12240c36b2ae69b49ed357359))
+
 # [2.11.0-beta.15](https://github.com/chadbyte/clay/compare/v2.11.0-beta.14...v2.11.0-beta.15) (2026-03-17)
 
 
