@@ -1,3 +1,10 @@
+# [2.11.0-beta.11](https://github.com/chadbyte/clay/compare/v2.11.0-beta.10...v2.11.0-beta.11) (2026-03-17)
+
+
+### Features
+
+* **terminal:** add multi-line URL detection for wrapped links ([7914475](https://github.com/chadbyte/clay/commit/79144753146dfdb085ec0e7d4c2172111a6495ac))
+
 # [2.11.0-beta.10](https://github.com/chadbyte/clay/compare/v2.11.0-beta.9...v2.11.0-beta.10) (2026-03-17)
 
 
