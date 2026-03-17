@@ -1,3 +1,10 @@
+# [2.11.0-beta.9](https://github.com/chadbyte/clay/compare/v2.11.0-beta.8...v2.11.0-beta.9) (2026-03-17)
+
+
+### Bug Fixes
+
+* **session:** auto-create session on connect and backfill legacy ownerId ([b1137fc](https://github.com/chadbyte/clay/commit/b1137fc1a2e4989e8d2c1a3055a8caf29d34f9fa))
+
 # [2.11.0-beta.8](https://github.com/chadbyte/clay/compare/v2.11.0-beta.7...v2.11.0-beta.8) (2026-03-17)
 
 
