@@ -442,6 +442,21 @@
                 </div>
                 <div id="ps-emoji-picker-anchor"></div>
               </div>
+              <div class="settings-field" id="ps-owner-field" style="display:none">
+                <label class="settings-label">Owner</label>
+                <div class="settings-hint">The user whose Claude account is used for all sessions in this project.</div>
+                <div class="ps-owner-row">
+                  <span class="settings-value" id="ps-owner-name">-</span>
+                  <button class="settings-btn-sm" id="ps-transfer-btn">Transfer</button>
+                </div>
+                <div class="ps-transfer-form hidden" id="ps-transfer-form">
+                  <select class="ps-select" id="ps-transfer-select"></select>
+                  <div class="ps-rename-actions">
+                    <button class="settings-btn-sm" id="ps-transfer-save">Transfer</button>
+                    <button class="settings-btn-sm settings-btn-ghost" id="ps-transfer-cancel">Cancel</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <!-- Defaults -->

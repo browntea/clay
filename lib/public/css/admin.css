@@ -267,6 +267,7 @@
   gap: 8px;
 }
 
+.admin-owner-select,
 .admin-vis-select {
   background: var(--bg-alt);
   border: 1px solid var(--border);
@@ -278,6 +279,11 @@
   font-family: inherit;
 }
 
+.admin-owner-select {
+  max-width: 140px;
+}
+
+.admin-owner-select:focus,
 .admin-vis-select:focus {
   border-color: var(--accent);
   outline: none;

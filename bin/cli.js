@@ -62,6 +62,7 @@ var headlessMode = false;
 var watchMode = false;
 var host = null;
 var multiUserMode = false;
+var osUsersMode = false;
 
 for (var i = 0; i < args.length; i++) {
   if (args[i] === "-p" || args[i] === "--port") {
@@ -108,6 +109,8 @@ for (var i = 0; i < args.length; i++) {
     dangerouslySkipPermissions = true;
   } else if (args[i] === "--multi-user") {
     multiUserMode = true;
+  } else if (args[i] === "--os-users") {
+    osUsersMode = true;
   } else if (args[i] === "-h" || args[i] === "--help") {
     console.log("Usage: clay-server [-p|--port <port>] [--host <address>] [--no-https] [--no-update] [--debug] [-y|--yes] [--pin <pin>] [--shutdown] [--restart]");
     console.log("       clay-server --add <path>     Add a project to the running daemon");
@@ -129,6 +132,7 @@ for (var i = 0; i < args.length; i++) {
     console.log("  --list             List all registered projects");
     console.log("  --headless         Start daemon and exit immediately (implies --yes)");
     console.log("  --multi-user       Enable multi-user mode (generates setup code)");
+    console.log("  --os-users         Enable OS-level user isolation (Linux only, requires root + --multi-user)");
     console.log("  --dangerously-skip-permissions");
     console.log("                     Bypass all permission prompts");
     process.exit(0);
@@ -293,6 +297,30 @@ if (multiUserMode) {
     console.log("");
   }
   process.exit(0);
+}
+
+// --- Handle --os-users validation ---
+if (osUsersMode) {
+  if (process.platform !== "linux") {
+    console.error("\x1b[31mError: --os-users requires Linux.\x1b[0m");
+    console.error("OS-level user isolation depends on setfacl, getent, and uid/gid process spawning.");
+    process.exit(1);
+  }
+  if (typeof process.getuid === "function" && process.getuid() !== 0) {
+    console.error("\x1b[31mError: --os-users requires running as root.\x1b[0m");
+    console.error("The daemon must run as root to spawn worker processes as different users.");
+    console.error("Use: sudo clay --multi-user --os-users");
+    process.exit(1);
+  }
+  if (!isMultiUser()) {
+    console.error("\x1b[31mError: --os-users requires --multi-user mode.\x1b[0m");
+    console.error("Enable multi-user mode first: clay --multi-user");
+    process.exit(1);
+  }
+  console.log("\x1b[32mOS-level user isolation enabled.\x1b[0m");
+  console.log("Worker processes will run as mapped Linux users.");
+  console.log("Linux accounts will be auto-provisioned for existing users on startup.");
+  console.log("");
 }
 
 var cwd = process.cwd();
@@ -460,6 +488,7 @@ async function restartDaemonFromConfig() {
     debug: lastConfig.debug || false,
     keepAwake: lastConfig.keepAwake || false,
     dangerouslySkipPermissions: lastConfig.dangerouslySkipPermissions || false,
+    osUsers: lastConfig.osUsers || false,
     projects: (lastConfig.projects || []).filter(function (p) {
       return fs.existsSync(p.path);
     }),
@@ -1408,6 +1437,7 @@ async function forkDaemon(pin, keepAwake, extraProjects, addCwd) {
     debug: debugMode,
     keepAwake: keepAwake,
     dangerouslySkipPermissions: dangerouslySkipPermissions,
+    osUsers: osUsersMode,
     projects: allProjects,
   };
 
@@ -2268,6 +2298,7 @@ function showSetupGuide(config, ip, goBack) {
 function showSettingsMenu(config, ip) {
   sendIPCCommand(socketPath(), { cmd: "get_status" }).then(function (status) {
     var isAwake = status && status.keepAwake;
+    var isOsUsers = status && status.osUsers;
 
     console.clear();
     printLogo();
@@ -2306,6 +2337,12 @@ function showSettingsMenu(config, ip) {
 
     log(sym.bar + "  PIN          " + pinStatus);
     log(sym.bar + "  Multi-user   " + muStatus);
+    var osUsersStatus = isOsUsers
+      ? a.green + "Enabled" + a.reset
+      : a.dim + "Off" + a.reset;
+    if (muEnabled) {
+      log(sym.bar + "  OS users     " + osUsersStatus);
+    }
     if (process.platform === "darwin") {
       log(sym.bar + "  Keep awake   " + awakeStatus);
     }
@@ -2324,6 +2361,11 @@ function showSettingsMenu(config, ip) {
     }
     if (muEnabled) {
       items.push({ label: "Disable multi-user mode", value: "disable_multi_user" });
+      if (isOsUsers) {
+        items.push({ label: "Disable OS-level user isolation", value: "disable_os_users" });
+      } else {
+        items.push({ label: "Enable OS-level user isolation", value: "os_users" });
+      }
     } else {
       items.push({ label: "Enable multi-user mode", value: "multi_user" });
     }
@@ -2413,6 +2455,118 @@ function showSettingsMenu(config, ip) {
             log(sym.bar);
           }
           showSettingsMenu(config, ip);
+        });
+        break;
+
+      case "os_users":
+        if (process.platform === "win32") {
+          log(sym.bar);
+          log(sym.bar + "  " + a.red + "OS-level user isolation is not supported on Windows." + a.reset);
+          log(sym.bar);
+          promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
+            showSettingsMenu(config, ip);
+          });
+          break;
+        }
+        if (process.getuid() !== 0) {
+          log(sym.bar);
+          log(sym.bar + "  " + a.red + "Requires running as root." + a.reset);
+          log(sym.bar);
+          promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
+            showSettingsMenu(config, ip);
+          });
+          break;
+        }
+        if (process.platform !== "linux") {
+          log(sym.bar);
+          log(sym.bar + "  " + a.red + sym.warn + " OS-level user isolation requires Linux." + a.reset);
+          log(sym.bar + "  " + a.dim + "This feature depends on setfacl, getent, and uid/gid process spawning." + a.reset);
+          log(sym.bar + "  " + a.dim + "Use Docker or a Linux VM to run Clay with OS user isolation." + a.reset);
+          log(sym.bar);
+          showSettingsMenu(config, ip);
+          return;
+        }
+        log(sym.bar);
+        log(sym.bar + "  " + a.yellow + sym.warn + " OS-Level User Isolation" + a.reset);
+        log(sym.bar);
+        log(sym.bar + "  " + a.dim + "This feature maps each Clay user to a Linux OS user account." + a.reset);
+        log(sym.bar + "  " + a.dim + "The daemon must run as root and will spawn processes (SDK workers," + a.reset);
+        log(sym.bar + "  " + a.dim + "terminals, file operations) as the mapped Linux user." + a.reset);
+        log(sym.bar);
+        log(sym.bar + "  " + a.dim + "What this means:" + a.reset);
+        log(sym.bar + "  " + a.dim + "- Each mapped user uses their own ~/.claude/ credentials" + a.reset);
+        log(sym.bar + "  " + a.dim + "- Terminals and file access follow Linux permissions" + a.reset);
+        log(sym.bar + "  " + a.dim + "- Linux user accounts are created automatically (clay-username)" + a.reset);
+        log(sym.bar);
+        log(sym.bar + "  " + a.dim + "Recommended: Run on a dedicated Clay server or cloud instance," + a.reset);
+        log(sym.bar + "  " + a.dim + "not on a personal computer or general-purpose server." + a.reset);
+        log(sym.bar);
+        promptSelect("Select", [
+          { label: "Enable OS-level user isolation", value: "confirm" },
+          { label: "Cancel", value: "cancel" },
+        ], function (confirmChoice) {
+          if (confirmChoice === "confirm") {
+            sendIPCCommand(socketPath(), { cmd: "set_os_users", value: true }).then(function (res) {
+              if (res.ok) {
+                config.osUsers = true;
+                log(sym.bar);
+                log(sym.done + "  " + a.green + "OS-level user isolation enabled." + a.reset);
+                if (res.provisioning) {
+                  var p = res.provisioning;
+                  if (p.provisioned.length > 0) {
+                    log(sym.bar);
+                    log(sym.bar + "  " + a.green + "Provisioned " + p.provisioned.length + " Linux account(s):" + a.reset);
+                    for (var pi = 0; pi < p.provisioned.length; pi++) {
+                      log(sym.bar + "    " + a.dim + p.provisioned[pi].username + " -> " + p.provisioned[pi].linuxUser + a.reset);
+                    }
+                  }
+                  if (p.skipped.length > 0) {
+                    log(sym.bar + "  " + a.dim + p.skipped.length + " user(s) already mapped." + a.reset);
+                  }
+                  if (p.errors.length > 0) {
+                    log(sym.bar);
+                    log(sym.bar + "  " + a.red + p.errors.length + " user(s) failed to provision:" + a.reset);
+                    for (var ei = 0; ei < p.errors.length; ei++) {
+                      log(sym.bar + "    " + a.red + p.errors[ei].username + ": " + p.errors[ei].error + a.reset);
+                    }
+                  }
+                }
+                log(sym.bar + "  " + a.dim + "Restart the daemon for changes to take full effect." + a.reset);
+                log(sym.bar);
+              }
+              showSettingsMenu(config, ip);
+            });
+          } else {
+            showSettingsMenu(config, ip);
+          }
+        });
+        break;
+
+      case "disable_os_users":
+        log(sym.bar);
+        log(sym.bar + "  " + a.yellow + sym.warn + " Disable OS-level user isolation?" + a.reset);
+        log(sym.bar);
+        log(sym.bar + "  " + a.dim + "Processes will no longer be spawned as mapped Linux users." + a.reset);
+        log(sym.bar + "  " + a.dim + "User mappings will be preserved and restored if re-enabled." + a.reset);
+        log(sym.bar);
+        promptSelect("Confirm", [
+          { label: "Disable OS-level user isolation", value: "confirm" },
+          { label: "Cancel", value: "cancel" },
+        ], function (confirmChoice) {
+          if (confirmChoice === "confirm") {
+            sendIPCCommand(socketPath(), { cmd: "set_os_users", value: false }).then(function (res) {
+              if (res.ok) {
+                config.osUsers = false;
+                log(sym.bar);
+                log(sym.done + "  " + a.green + "OS-level user isolation disabled." + a.reset);
+                log(sym.bar + "  " + a.dim + "Restart the daemon for changes to take full effect." + a.reset);
+                log(sym.bar);
+              }
+              showSettingsMenu(config, ip);
+            });
+          } else {
+            showSettingsMenu(config, ip);
+          }
         });
         break;
 
