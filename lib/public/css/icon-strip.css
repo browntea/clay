@@ -730,6 +730,32 @@
   display: flex;
 }
 
+/* Project unread badge */
+.icon-strip-project-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 0 2px var(--bg);
+  z-index: 2;
+}
+
+.icon-strip-project-badge.has-unread {
+  display: flex;
+}
+
 /* Pill for user icons */
 .icon-strip-user:hover .icon-strip-pill {
   opacity: 1;
