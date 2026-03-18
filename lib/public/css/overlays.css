@@ -906,31 +906,29 @@ button.top-bar-pill.pill-accent:hover { background: color-mix(in srgb, var(--acc
 .add-project-panel.active { display: block; }
 
 /* Removed projects list in add project modal */
-#add-project-removed { margin-bottom: 10px; }
+#add-project-removed { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
 #add-project-removed.hidden { display: none; }
-.add-project-removed-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 .add-project-removed-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: var(--sidebar-hover);
-  margin-bottom: 4px;
-  font-size: 13px;
-  cursor: default;
+  gap: 10px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 .add-project-removed-item:last-child { margin-bottom: 0; }
+.add-project-removed-item:hover { background: var(--sidebar-hover); }
 .add-project-removed-icon {
   flex-shrink: 0;
-  width: 20px;
-  text-align: center;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--sidebar-hover);
   font-size: 14px;
 }
 .add-project-removed-info {
@@ -944,6 +942,8 @@ button.top-bar-pill.pill-accent:hover { background: color-mix(in srgb, var(--acc
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 13px;
+  line-height: 1.3;
 }
 .add-project-removed-path {
   font-size: 11px;
@@ -951,20 +951,7 @@ button.top-bar-pill.pill-accent:hover { background: color-mix(in srgb, var(--acc
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.add-project-removed-readd {
-  flex-shrink: 0;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 3px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  font-weight: 500;
-}
-.add-project-removed-readd:hover {
-  filter: brightness(1.1);
+  line-height: 1.3;
 }
 
 #add-project-create-input,

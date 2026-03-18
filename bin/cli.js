@@ -443,6 +443,7 @@ async function restartDaemonFromConfig() {
     projects: (lastConfig.projects || []).filter(function (p) {
       return fs.existsSync(p.path);
     }),
+    removedProjects: lastConfig.removedProjects || [],
   };
 
   ensureConfigDir();
