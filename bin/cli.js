@@ -1347,7 +1347,7 @@ function setup(callback) {
             log(sym.bar);
             log(sym.warn + "  " + a.yellow + "OS user isolation requires root." + a.reset);
             log(sym.bar + "  Run:");
-            log(sym.bar + "    " + a.bold + "sudo clay" + a.reset);
+            log(sym.bar + "    " + a.bold + "sudo npx clay-server" + a.reset);
             log(sym.end);
             log("");
             process.exit(0);
@@ -2851,7 +2851,7 @@ var currentVersion = require("../package.json").version;
       // os-users requires root
       if (savedOsUsers && typeof process.getuid === "function" && process.getuid() !== 0) {
         console.error(a.red + "OS user isolation requires root." + a.reset);
-        console.error("Run:  " + a.bold + "sudo clay" + a.reset);
+        console.error("Run:  " + a.bold + "sudo npx clay-server" + a.reset);
         process.exit(1);
         return;
       }
