@@ -1,3 +1,10 @@
+# [2.11.0-beta.25](https://github.com/chadbyte/clay/compare/v2.11.0-beta.24...v2.11.0-beta.25) (2026-03-18)
+
+
+### Bug Fixes
+
+* **cli:** suppress console.clear in --debug mode and add foreground to initial setup ([2d4fd18](https://github.com/chadbyte/clay/commit/2d4fd1893369c2e11423fc2fdeee0e402a355322))
+
 # [2.11.0-beta.24](https://github.com/chadbyte/clay/compare/v2.11.0-beta.23...v2.11.0-beta.24) (2026-03-18)
 
 
