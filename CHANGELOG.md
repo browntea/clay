@@ -1,3 +1,10 @@
+# [2.11.0-beta.24](https://github.com/chadbyte/clay/compare/v2.11.0-beta.23...v2.11.0-beta.24) (2026-03-18)
+
+
+### Features
+
+* **cli:** run daemon in foreground with --debug flag ([8ec6904](https://github.com/chadbyte/clay/commit/8ec690420cc2a8f9556764137074ab5be7eab886))
+
 # [2.11.0-beta.23](https://github.com/chadbyte/clay/compare/v2.11.0-beta.22...v2.11.0-beta.23) (2026-03-18)
 
 
