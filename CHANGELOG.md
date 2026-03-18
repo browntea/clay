@@ -1,3 +1,32 @@
+# [2.11.0-beta.17](https://github.com/chadbyte/clay/compare/v2.11.0-beta.16...v2.11.0-beta.17) (2026-03-18)
+
+
+### Bug Fixes
+
+* **dm:** hide sticky notes on DM entry and restore session on return ([4e4e6a2](https://github.com/chadbyte/clay/commit/4e4e6a2d6ebe81d0102f3226ff4999ba37e97f61))
+* **dm:** persist removed users server-side and add dust particles ([76943a5](https://github.com/chadbyte/clay/commit/76943a5cf8cf9b2c6e05ce45cf0ea0b03e411db5))
+* **dm:** remove user from conversations list when unfavorited ([6be6f80](https://github.com/chadbyte/clay/commit/6be6f8062863808404ec8b05c35e138daebe662d))
+* **dm:** route favorite messages to server and add particle effect ([cd69d19](https://github.com/chadbyte/clay/commit/cd69d1988c5822739f134b0405b1d867d019698a))
+* **plan:** switch focus to new session on clear context ([472501b](https://github.com/chadbyte/clay/commit/472501b2a8ceed493f6fd3e911672774fc8f42b6))
+* **projects:** improve remove and re-add UX ([707449b](https://github.com/chadbyte/clay/commit/707449bcefe6a0c7973c102f318ab4986e4ba269))
+* **server:** use correct variable name in WS upgrade handler ([518fd71](https://github.com/chadbyte/clay/commit/518fd71ec2e7439fd280ea20b38ab3a68e0b511b))
+* **server:** wire onRestart callback through to project context ([52d1e79](https://github.com/chadbyte/clay/commit/52d1e79fce86f3de5bc2eeee45fc4b049c589267)), closes [#219](https://github.com/chadbyte/clay/issues/219)
+* **terminal:** prevent terminal overflow below viewport ([61178fb](https://github.com/chadbyte/clay/commit/61178fb4ff0a37dd862ec0bdf86b8c4b42ca7837))
+* **ui:** make diff view toggle bar sticky in file viewer ([d1caa60](https://github.com/chadbyte/clay/commit/d1caa609c23e12b0825f13fe6c73bd72b93ff813))
+* **ui:** use theme-aware color for icon strip pill indicator ([2aadb18](https://github.com/chadbyte/clay/commit/2aadb18ff40323a87f123e56af1b94e0b10f6628)), closes [#fff](https://github.com/chadbyte/clay/issues/fff)
+* **update:** restrict update notifications to admins and re-fetch on channel change ([9a9b83b](https://github.com/chadbyte/clay/commit/9a9b83b38e176ce61ab10504e5f091c2d458ed83))
+
+
+### Features
+
+* **cli:** require explicit "agree" for disclaimer and add OS users warning to setup wizard ([0b3a60c](https://github.com/chadbyte/clay/commit/0b3a60c73fe7a4695a2875394254b71e9a736443))
+* **dm:** add favorites model to user strip with picker UI ([57c9d24](https://github.com/chadbyte/clay/commit/57c9d244bf0f0213c2ff36db39dc01093368da2b))
+* **dm:** add right-click to remove user from DM favorites ([e56f329](https://github.com/chadbyte/clay/commit/e56f329ddeee71b4d5ed3d1830f804d77a102612))
+* **dm:** show context menu on right-click for DM user icons ([f568713](https://github.com/chadbyte/clay/commit/f568713ad0da74a839127f7bc39aa9f734d36bfa))
+* **projects:** allow re-adding previously removed projects ([886369f](https://github.com/chadbyte/clay/commit/886369f725833bb9ee88e2cc2ec98828f5b14a3c))
+* **ui:** add remove project option to icon strip context menu ([c437675](https://github.com/chadbyte/clay/commit/c43767500a6fe6c5ee292178837cb51ea1428721))
+* **ui:** add unread message badges to session list and project icons ([d09974b](https://github.com/chadbyte/clay/commit/d09974bc11624260bac1cebaba6a8035fa37cfa7))
+
 # [2.11.0-beta.16](https://github.com/chadbyte/clay/compare/v2.11.0-beta.15...v2.11.0-beta.16) (2026-03-17)
 
 
