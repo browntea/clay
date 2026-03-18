@@ -1,3 +1,10 @@
+# [2.11.0-beta.28](https://github.com/chadbyte/clay/compare/v2.11.0-beta.27...v2.11.0-beta.28) (2026-03-18)
+
+
+### Bug Fixes
+
+* **auth:** hide input area when Claude Code is not logged in ([d1814ea](https://github.com/chadbyte/clay/commit/d1814ea91d9baf2ba94c85335984646d34029bf2))
+
 # [2.11.0-beta.27](https://github.com/chadbyte/clay/compare/v2.11.0-beta.26...v2.11.0-beta.27) (2026-03-18)
 
 
