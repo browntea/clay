@@ -1,3 +1,12 @@
+# [2.11.0-beta.23](https://github.com/chadbyte/clay/compare/v2.11.0-beta.22...v2.11.0-beta.23) (2026-03-18)
+
+
+### Bug Fixes
+
+* **auth:** grant project owner access to their own private projects ([edbbaa9](https://github.com/chadbyte/clay/commit/edbbaa98d7ebc4df3b2dd5381536caa0bb5e2e63))
+* **dm:** show online status dot in DM favorites user strip ([a066565](https://github.com/chadbyte/clay/commit/a0665656784921d61e02803fe17824e3dfed3bae))
+* **sticky-notes:** show format toolbar when selection extends outside note ([7ac0d94](https://github.com/chadbyte/clay/commit/7ac0d94c3294f9dd321773290afc6f3c2ff49edc))
+
 # [2.11.0-beta.22](https://github.com/chadbyte/clay/compare/v2.11.0-beta.21...v2.11.0-beta.22) (2026-03-18)
 
 
