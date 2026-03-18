@@ -1,3 +1,12 @@
+# [2.11.0-beta.22](https://github.com/chadbyte/clay/compare/v2.11.0-beta.21...v2.11.0-beta.22) (2026-03-18)
+
+
+### Bug Fixes
+
+* **sticky-notes:** cap minimized width and show Untitled for empty notes ([adc85a3](https://github.com/chadbyte/clay/commit/adc85a3e96259b79b33b10116de2e8f446f2d4b6))
+* **terminal:** prevent duplicate prompt on initial terminal open ([4279e53](https://github.com/chadbyte/clay/commit/4279e5360a96bb6a0e19c830b62c5b12bbc840ff))
+* **ui:** update DM add button tooltip to "Add DM favorite" ([7c889b3](https://github.com/chadbyte/clay/commit/7c889b377418f7b0bde68a336ddc56ddd1ba4541))
+
 # [2.11.0-beta.21](https://github.com/chadbyte/clay/compare/v2.11.0-beta.20...v2.11.0-beta.21) (2026-03-18)
 
 
