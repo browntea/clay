@@ -1,3 +1,15 @@
+# [2.11.0-beta.20](https://github.com/chadbyte/clay/compare/v2.11.0-beta.19...v2.11.0-beta.20) (2026-03-18)
+
+
+### Bug Fixes
+
+* **os-users:** chmod package dir instead of copying worker to tmp ([af9fe0f](https://github.com/chadbyte/clay/commit/af9fe0ffcf4c87c0e8955aa6b01639b3fd066f3c))
+
+
+### Features
+
+* **projects:** auto-set ownership and visibility for non-admin users ([d459c26](https://github.com/chadbyte/clay/commit/d459c261c0a12b4b44dbef613a771e4d36b57803))
+
 # [2.11.0-beta.19](https://github.com/chadbyte/clay/compare/v2.11.0-beta.18...v2.11.0-beta.19) (2026-03-18)
 
 
