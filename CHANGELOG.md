@@ -1,3 +1,11 @@
+# [2.11.0-beta.18](https://github.com/chadbyte/clay/compare/v2.11.0-beta.17...v2.11.0-beta.18) (2026-03-18)
+
+
+### Bug Fixes
+
+* **cli:** correct sudo command in OS users mode guidance ([761cc0c](https://github.com/chadbyte/clay/commit/761cc0ce353649b00d21c57b91bb62f1e824eba6))
+* **os-users:** copy sdk-worker to temp path for user access ([6034ba0](https://github.com/chadbyte/clay/commit/6034ba03ba365957ee0765a17fd12aecfb1472e8))
+
 # [2.11.0-beta.17](https://github.com/chadbyte/clay/compare/v2.11.0-beta.16...v2.11.0-beta.17) (2026-03-18)
 
 
