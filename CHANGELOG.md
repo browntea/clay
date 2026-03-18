@@ -1,3 +1,10 @@
+# [2.11.0-beta.19](https://github.com/chadbyte/clay/compare/v2.11.0-beta.18...v2.11.0-beta.19) (2026-03-18)
+
+
+### Bug Fixes
+
+* **os-users:** set NODE_PATH so copied worker can find SDK ([2354f77](https://github.com/chadbyte/clay/commit/2354f77c8e0e3abc96d92111b0edd765cc233b45))
+
 # [2.11.0-beta.18](https://github.com/chadbyte/clay/compare/v2.11.0-beta.17...v2.11.0-beta.18) (2026-03-18)
 
 
