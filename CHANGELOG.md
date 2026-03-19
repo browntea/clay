@@ -1,3 +1,10 @@
+# [2.13.0-beta.2](https://github.com/chadbyte/clay/compare/v2.13.0-beta.1...v2.13.0-beta.2) (2026-03-19)
+
+
+### Bug Fixes
+
+* **mates:** clean DM state transitions, mate-colored title bar, and hover seed tooltip ([dedbab8](https://github.com/chadbyte/clay/commit/dedbab8468830b320a4a9495072742c3000bf19b))
+
 # [2.13.0-beta.1](https://github.com/chadbyte/clay/compare/v2.12.0...v2.13.0-beta.1) (2026-03-19)
 
 
