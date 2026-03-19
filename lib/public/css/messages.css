@@ -8,6 +8,13 @@
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   padding: 20px 0 12px;
+  position: relative;
+}
+
+/* --- Remote cursors (Figma-style) --- */
+.remote-cursor {
+  pointer-events: none;
+  z-index: 9999;
 }
 
 /* --- Sticky todo (inline in title bar) --- */
