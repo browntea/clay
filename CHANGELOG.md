@@ -1,3 +1,10 @@
+# [2.13.0-beta.9](https://github.com/chadbyte/clay/compare/v2.13.0-beta.8...v2.13.0-beta.9) (2026-03-20)
+
+
+### Features
+
+* **mates:** add experimental badge to mate creation intro ([6d6550e](https://github.com/chadbyte/clay/commit/6d6550e84d213f2492a5053fef77b9a0695b5cf5))
+
 # [2.13.0-beta.8](https://github.com/chadbyte/clay/compare/v2.13.0-beta.7...v2.13.0-beta.8) (2026-03-20)
 
 
