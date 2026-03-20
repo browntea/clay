@@ -2,14 +2,76 @@
    Command Palette (Cmd+K)
    ========================================================================== */
 
+/* --- Top bar search bar trigger (Slack-style) --- */
+.cmd-palette-searchbar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+  padding: 0 10px;
+  background: rgba(var(--overlay-rgb), 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--text-dimmer);
+  transition: background 0.15s, border-color 0.15s;
+  width: min(520px, 40%);
+}
+
+.cmd-palette-searchbar:hover {
+  background: rgba(var(--overlay-rgb), 0.08);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.cmd-palette-searchbar .lucide {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.cmd-palette-searchbar-text {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cmd-palette-searchbar-kbd {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(var(--overlay-rgb), 0.08);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-family: inherit;
+  line-height: 16px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .cmd-palette-searchbar {
+    max-width: none;
+  }
+  .cmd-palette-searchbar-text {
+    display: none;
+  }
+  .cmd-palette-searchbar-kbd {
+    display: none;
+  }
+}
+
 .cmd-palette {
   position: fixed;
   inset: 0;
   z-index: 400;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 12vh;
 }
 
 .cmd-palette.hidden { display: none; }
@@ -17,28 +79,29 @@
 .cmd-palette-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(var(--shadow-rgb), 0.5);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: rgba(var(--shadow-rgb), 0.3);
 }
 
 .cmd-palette-dialog {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
   background: var(--bg-alt);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  max-width: 560px;
-  width: 94%;
-  box-shadow: 0 8px 32px rgba(var(--shadow-rgb), 0.5);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  width: min(560px, 44%);
+  box-shadow: 0 8px 32px rgba(var(--shadow-rgb), 0.4);
   display: flex;
   flex-direction: column;
-  max-height: 60vh;
-  animation: cmdPaletteIn 0.12s ease-out;
+  max-height: 70vh;
+  animation: cmdPaletteExpand 0.15s ease-out;
 }
 
-@keyframes cmdPaletteIn {
-  from { opacity: 0; transform: translateY(-12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes cmdPaletteExpand {
+  from { opacity: 0; max-height: 0; }
+  to { opacity: 1; max-height: 70vh; }
 }
 
 /* --- Search input row --- */
@@ -46,7 +109,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -75,12 +138,16 @@
 .cmd-palette-kbd {
   font-size: 11px;
   color: var(--text-dimmer);
-  background: rgba(var(--overlay-rgb), 0.06);
-  border: 1px solid var(--border-subtle);
-  border-radius: 4px;
-  padding: 1px 6px;
-  font-family: inherit;
+  cursor: pointer;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cmd-palette-kbd .lucide {
+  width: 18px;
+  height: 18px;
 }
 
 /* --- Results area --- */
@@ -94,7 +161,7 @@
 .cmd-palette-group-label {
   font-size: 11px;
   font-weight: 600;
-  color: var(--text-dimmer);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   padding: 8px 16px 4px;
@@ -147,13 +214,14 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: var(--text-dimmer);
+  color: var(--text-muted);
 }
 
 .cmd-palette-item-project {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--text-muted);
 }
 
 .cmd-palette-item-snippet {
@@ -190,21 +258,48 @@
   color: var(--text-muted);
 }
 
-/* --- Footer hint --- */
+/* --- Footer --- */
 .cmd-palette-footer {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 16px;
+  justify-content: space-between;
+  padding: 6px 14px;
   border-top: 1px solid var(--border-subtle);
   font-size: 11px;
-  color: var(--text-dimmer);
+  color: var(--text-muted);
+}
+
+.cmd-palette-brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: "Nunito", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.cmd-palette-brand img {
+  border-radius: 3px;
+}
+
+.cmd-palette-brand:hover {
+  color: var(--text-secondary);
+}
+
+.cmd-palette-footer-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .cmd-palette-footer kbd {
   font-size: 10px;
-  background: rgba(var(--overlay-rgb), 0.06);
-  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  background: rgba(var(--overlay-rgb), 0.08);
+  border: 1px solid var(--border);
   border-radius: 3px;
   padding: 0 4px;
   font-family: inherit;
@@ -212,13 +307,10 @@
 
 /* --- Mobile --- */
 @media (max-width: 768px) {
-  .cmd-palette {
-    padding-top: 6vh;
-  }
-
   .cmd-palette-dialog {
-    max-height: 70vh;
-    border-radius: 12px;
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 0 0 10px 10px;
   }
 
   .cmd-palette-item-snippet {
