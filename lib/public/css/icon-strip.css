@@ -215,6 +215,22 @@
   transition: none;
 }
 
+/* Pending permission shake */
+.icon-strip-item.has-pending-perm,
+.icon-strip-wt-item.has-pending-perm {
+  animation: permShake 2s ease-in-out infinite;
+}
+@keyframes permShake {
+  0%, 8% { transform: translateX(0); }
+  1% { transform: translateX(-2px); }
+  2% { transform: translateX(2px); }
+  3% { transform: translateX(-2px); }
+  4% { transform: translateX(2px); }
+  5% { transform: translateX(-1px); }
+  6% { transform: translateX(1px); }
+  7% { transform: translateX(0); }
+}
+
 /* --- Add project button --- */
 .icon-strip-add {
   position: relative;
