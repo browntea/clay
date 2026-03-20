@@ -1336,4 +1336,6 @@ body.mate-dm-active .context-overflow-msg,
 body.mate-dm-active .sys-msg,
 body.mate-dm-active .activity-inline {
   padding-left: 60px;
+  margin-left: 0;
+  margin-right: 0;
 }
