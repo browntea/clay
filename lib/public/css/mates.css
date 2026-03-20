@@ -1216,3 +1216,110 @@ body.mate-dm-active .notes-archive-header button:hover {
   color: #fff;
   background: rgba(255, 255, 255, 0.15);
 }
+
+/* ==========================================================================
+   Mate DM: Chat bubble style (messenger feel)
+   ========================================================================== */
+
+/* --- Avatar (injected by JS into .msg-user / .msg-assistant) --- */
+.dm-bubble-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: none;
+  object-fit: cover;
+  margin-top: 2px;
+}
+body.mate-dm-active .dm-bubble-avatar {
+  display: block;
+}
+
+/* --- DM bubble header (name + time) --- */
+.dm-bubble-content {
+  flex: 1;
+  min-width: 0;
+}
+.dm-bubble-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.dm-bubble-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+}
+.dm-bubble-time {
+  font-size: 12px;
+  color: var(--text-dimmer);
+}
+
+/* --- Shared: Slack-style flat layout for both user & assistant --- */
+body.mate-dm-active .msg-user,
+body.mate-dm-active .msg-assistant {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+  padding: 4px 16px;
+  margin: 0;
+  border-radius: 0;
+}
+body.mate-dm-active .msg-user:hover,
+body.mate-dm-active .msg-assistant:hover {
+  background: var(--bg-alt);
+}
+
+/* --- User messages --- */
+body.mate-dm-active .msg-user {
+  justify-content: flex-start; /* left-aligned like DM */
+}
+body.mate-dm-active .msg-user .dm-bubble-avatar-me {
+  order: -1; /* avatar first (left) */
+}
+body.mate-dm-active .msg-user .bubble {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  max-width: 100%;
+  font-size: 15px;
+  line-height: 1.46;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+body.mate-dm-active .msg-user .msg-actions {
+  display: none;
+}
+
+/* --- Assistant messages --- */
+body.mate-dm-active .msg-assistant .dm-bubble-content {
+  flex: 1;
+  min-width: 0;
+}
+body.mate-dm-active .msg-assistant .md-content {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+/* Hide turn meta in mate DM */
+body.mate-dm-active .turn-meta {
+  display: none;
+}
+
+/* --- Interstitial elements: indent to align with message content (16px pad + 36px avatar + 8px gap = 60px) --- */
+body.mate-dm-active .thinking-item,
+body.mate-dm-active .tool-item,
+body.mate-dm-active .tool-group,
+body.mate-dm-active .plan-card,
+body.mate-dm-active .permission-container,
+body.mate-dm-active .ask-user-container,
+body.mate-dm-active .subagent-log,
+body.mate-dm-active .conflict-msg,
+body.mate-dm-active .context-overflow-msg,
+body.mate-dm-active .sys-msg,
+body.mate-dm-active .activity-inline {
+  padding-left: 60px;
+}
