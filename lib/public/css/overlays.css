@@ -335,6 +335,9 @@ button.top-bar-pill.pill-accent:hover { background: color-mix(in srgb, var(--acc
 .skill-install-item .skill-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .skill-install-item .skill-name { font-weight: 500; font-size: 14px; color: var(--text); }
 .skill-install-item .skill-scope { font-size: 12px; color: var(--text-muted); }
+.skill-badge { font-size: 11px; padding: 1px 7px; border-radius: 6px; font-weight: 500; white-space: nowrap; }
+.skill-badge-new { background: rgba(46,204,113,0.15); color: var(--success, #2ecc71); }
+.skill-badge-update { background: rgba(243,156,18,0.15); color: var(--warning, #f39c12); }
 .skill-install-item .skill-status { margin-left: auto; flex-shrink: 0; }
 .skill-status-ok { color: var(--success, #2ecc71); font-size: 16px; font-weight: 600; }
 #skill-install-status { font-size: 13px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; color: var(--text-secondary); }
