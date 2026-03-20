@@ -1,3 +1,37 @@
+# [2.13.0-beta.4](https://github.com/chadbyte/clay/compare/v2.13.0-beta.3...v2.13.0-beta.4) (2026-03-20)
+
+
+### Bug Fixes
+
+* **admin:** exclude worktree projects from visibility and owner settings ([cb27ddc](https://github.com/chadbyte/clay/commit/cb27ddcc52b8a23804d62092618417b5f40774d5))
+* **input:** always show stop button during processing ([6f30f50](https://github.com/chadbyte/clay/commit/6f30f50ca72f6697088990b972e02dbcf7553650))
+* **input:** ensure stop button shows when input is empty during processing ([83bc28a](https://github.com/chadbyte/clay/commit/83bc28a14015a2bca305d93f8fb845042c195b7b))
+* **input:** prevent paste event from being intercepted in modals ([b03f6b6](https://github.com/chadbyte/clay/commit/b03f6b61c4069f951fdfd6d11b2060b3c77987e5))
+* **loop:** ensure coder-to-judge transition and restore stop controls ([60a5c2e](https://github.com/chadbyte/clay/commit/60a5c2e239b8001ae85c93aeeb6f8136cb73ffdd))
+* **loop:** include startedAt in crafting session loop metadata ([1adfa30](https://github.com/chadbyte/clay/commit/1adfa30370832b58089f5999af9e9680adc3e961))
+* **notifications:** suppress disconnect notifications on mobile and respect alert toggle ([5f09afb](https://github.com/chadbyte/clay/commit/5f09afb6eba41e7513f6dda641e50b51b486100b)), closes [#228](https://github.com/chadbyte/clay/issues/228)
+* **rewind:** set lastRewindUuid to last kept message instead of removed one ([f5aa8b6](https://github.com/chadbyte/clay/commit/f5aa8b6c3f8409308c7eaaf5e4ea20b60dbf3017)), closes [#231](https://github.com/chadbyte/clay/issues/231)
+* **scheduler:** restore previous session when closing crafting mode ([567270e](https://github.com/chadbyte/clay/commit/567270e8b8c4393e47aa84f2f3b942a902e1affd))
+* **session:** update all clients on server-initiated session switch ([6aef325](https://github.com/chadbyte/clay/commit/6aef325a9f8ee847e949766ad0c5a57f459a9da2))
+* **sidebar:** close overlay panels when switching sessions ([0b585ec](https://github.com/chadbyte/clay/commit/0b585ec4db54f061e63022356f47777e726cdd94))
+* **worktree:** preserve original branch name for git operations ([84a7114](https://github.com/chadbyte/clay/commit/84a711422a140bb1e5154313950d827a2eb2c74e)), closes [#233](https://github.com/chadbyte/clay/issues/233)
+
+
+### Features
+
+* **auth:** add admin password recovery via CLI settings menu ([6443f20](https://github.com/chadbyte/clay/commit/6443f205d13b79ed85f31fc254ea7398b9d16d7e))
+* **auth:** add per-user RBAC permissions for multi-user mode ([7c4ad7f](https://github.com/chadbyte/clay/commit/7c4ad7fae91223ebe27b36028cfbf2fe78f60557))
+* **loop:** allow users to provide their own PROMPT.md and JUDGE.md ([209be5d](https://github.com/chadbyte/clay/commit/209be5d9b1d393d54fad2f8cbafa64aefffb0f8b))
+* **mates:** add intro landing page to Mate creation wizard ([883c231](https://github.com/chadbyte/clay/commit/883c2313066eac73484366d9e14134ef78e11407))
+* **notes:** add opacity slider to sticky note header ([4d7a62d](https://github.com/chadbyte/clay/commit/4d7a62d90fef3df018701b5b533db3d903633534))
+* **palette:** add cross-project session search with Cmd+K ([fe756e1](https://github.com/chadbyte/clay/commit/fe756e10c434357179af835b20583ca563d5c4b9))
+* **scheduler:** add mode and prompt fields to loop registry ([feb2062](https://github.com/chadbyte/clay/commit/feb2062300525fc1828fb0eb25e594db86a69ca1))
+* **scheduler:** add single/multi-round toggle for schedule iterations ([60ca568](https://github.com/chadbyte/clay/commit/60ca5682516155cc0ac9f62cc8c73ed61ab9f820))
+* **server:** remember last visited project on root redirect ([505705e](https://github.com/chadbyte/clay/commit/505705e8a36fc64eeae82a40eb45fa86bff4a50b)), closes [#229](https://github.com/chadbyte/clay/issues/229)
+* **sidebar:** add collapse button, tooltip, and align avatar to icon-strip center ([0ab9ab7](https://github.com/chadbyte/clay/commit/0ab9ab75a6a65f6a0ee4ac998472b54011751985))
+* **skills:** add version checking and auto-update for installed skills ([3132240](https://github.com/chadbyte/clay/commit/31322409ce311adb061e00d5b596b60d92e8ba33))
+* **ui:** shake project icon when permission request is pending ([1aa1835](https://github.com/chadbyte/clay/commit/1aa1835a7f7db72e4c015f87eee202c23fbc4060))
+
 # [2.13.0-beta.3](https://github.com/chadbyte/clay/compare/v2.13.0-beta.2...v2.13.0-beta.3) (2026-03-20)
 
 
