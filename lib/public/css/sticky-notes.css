@@ -138,6 +138,27 @@
 .sticky-note:hover .sticky-note-header button { opacity: 0.5; }
 .sticky-note .sticky-note-header button:hover { opacity: 0.9; background: rgba(0,0,0,0.06); }
 
+/* Opacity slider */
+.sticky-note-opacity {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+.sticky-note:hover .sticky-note-opacity {
+  opacity: 0.6;
+  pointer-events: auto;
+}
+.sticky-note-opacity-slider {
+  width: 40px;
+  height: 3px;
+  cursor: pointer;
+  accent-color: rgba(0,0,0,0.4);
+  margin: 0;
+}
+.dark-theme .sticky-note-opacity-slider { accent-color: rgba(255,255,255,0.4); }
+
 .sticky-note-header button .lucide { width: 13px; height: 13px; }
 
 /* Text colors per note color (light) */
