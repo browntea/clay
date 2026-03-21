@@ -1521,15 +1521,30 @@ body.mate-dm-active .activity-inline {
   display: none;
 }
 
-/* --- Mate AskUserQuestion: avatar + name header --- */
-.ask-user-mate-header {
-  display: none;
-}
-body.mate-dm-active .ask-user-mate-header {
+/* --- Mate AskUserQuestion: avatar + content layout (matches msg-assistant) --- */
+body.mate-dm-active .mate-ask-user {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   gap: 8px;
-  margin-bottom: 8px;
+  padding: 4px 16px;
+  margin: 0;
+  max-width: 100%;
+}
+body.mate-dm-active .mate-ask-user:hover {
+  background: var(--bg-alt);
+}
+body.mate-dm-active .mate-ask-user > .dm-bubble-avatar {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+body.mate-dm-active .mate-ask-user > .dm-bubble-content {
+  flex: 1;
+  min-width: 0;
 }
 
 /* --- Interstitial elements: indent to align with message content (16px pad + 36px avatar + 8px gap = 60px) --- */
