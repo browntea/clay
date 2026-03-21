@@ -1,3 +1,22 @@
+# [2.14.0-beta.11](https://github.com/chadbyte/clay/compare/v2.14.0-beta.10...v2.14.0-beta.11) (2026-03-21)
+
+
+### Bug Fixes
+
+* **mates:** restore user identity on refresh and update knowledge badge on connect ([9771d60](https://github.com/chadbyte/clay/commit/9771d60ed4127386c06c7dd1b528044df60c3d5c))
+* **sdk:** remove invalid setEffort call on query instance ([19168b9](https://github.com/chadbyte/clay/commit/19168b927f0c3868ed89a032f7def8eef7e2491a))
+
+
+### Features
+
+* **knowledge:** redesign as Obsidian-style split editor with sidebar integration ([20ab9b6](https://github.com/chadbyte/clay/commit/20ab9b673a53107a951449f17003f1dc23547cca))
+* **mates:** add JSONL knowledge file support with read-only table view ([621a227](https://github.com/chadbyte/clay/commit/621a2271feccffbe6d36225900e49296a7ab1424))
+* **mates:** add session search to mate sidebar with in-session search linking ([7623817](https://github.com/chadbyte/clay/commit/7623817fabacbb9bacee886194a11e7d1d9c63f8))
+* **mates:** delay pre-thinking dots by 1s to feel more natural ([b485ba6](https://github.com/chadbyte/clay/commit/b485ba635310449499adc1bc46ba2e5647bf0f1a))
+* **mates:** enforce crisis safety section on mate CLAUDE.md files ([da16e5d](https://github.com/chadbyte/clay/commit/da16e5d46107c35f8b1eb0080c50c8502bc6cb79))
+* **mates:** unify DM element layouts with consistent avatar column ([2156a63](https://github.com/chadbyte/clay/commit/2156a633102716d95eb059e4ac8959a9151b8d8a))
+* **ui:** full-width DM input, reduce border-radius, restore mate DM on refresh ([a69132b](https://github.com/chadbyte/clay/commit/a69132b4452c7af157358650b3b88150e9615116))
+
 # [2.14.0-beta.10](https://github.com/chadbyte/clay/compare/v2.14.0-beta.9...v2.14.0-beta.10) (2026-03-21)
 
 
