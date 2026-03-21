@@ -4,13 +4,13 @@
   <img src="media/phone.gif" alt="Clay on phone" width="300">
 </p>
 
-<h3 align="center">A multi-user web UI for Claude Code, built on the Agent SDK.</h3>
+<h3 align="center">Turn Claude Code into a team workspace. Any device, one command.</h3>
 
 [![npm version](https://img.shields.io/npm/v/clay-server)](https://www.npmjs.com/package/clay-server) [![npm downloads](https://img.shields.io/npm/dw/clay-server)](https://www.npmjs.com/package/clay-server) [![GitHub stars](https://img.shields.io/github/stars/chadbyte/clay)](https://github.com/chadbyte/clay) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/chadbyte/clay/blob/main/LICENSE)
 
-Clay extends Claude Code from a single-user CLI into a multi-user, multi-session web platform. It runs locally as a daemon, serves a browser UI over WebSocket, and lets non-technical teammates use Claude Code without touching the terminal.
+Clay gives Claude Code a browser UI that runs on any device. Use it from your phone, run it on macOS, Windows, or Linux. Invite teammates, manage multiple projects from one sidebar, and get push notifications when Claude needs you. Built on the official Claude Agent SDK, not a terminal parser. Your machine is the server. No cloud relay in between, no extra network surface.
 
-No relay server in the cloud. Your machine is the server. Zero install — one command:
+One command to start:
 
 ```bash
 npx clay-server
@@ -65,6 +65,18 @@ If someone gets stuck, join their session to unblock them in real time. Permissi
 
 ---
 
+## Mates
+
+Build your team, even if you're solo.
+
+Mates are AI teammates you create through conversation. Interview them, give them a name, avatar, and role. A code reviewer, a marketing lead, a writing partner. They remember how you work together and carry context across sessions.
+
+They sit in your sidebar next to your human teammates. DM them, bring them into projects, let them work autonomously. In a multi-user workspace, your whole team, human and AI, works in one place.
+
+<!-- screenshot: sidebar with Mates visible -->
+
+---
+
 ## Mobile & notifications
 
 Phone, tablet, couch. All you need is a browser.
@@ -85,15 +97,13 @@ The scheduler kicks off agents at set times.
 Have it check open issues and submit PRs every morning at 8 AM.
 Or compile world news and email you a digest every day.
 
-Take it further with Ralph Loop — autonomous iteration built into Clay. Define a task (`PROMPT.md`) and success criteria (`JUDGE.md`), then start the loop. The agent works, commits, and a judge evaluates the git diff as PASS or FAIL. On FAIL, a fresh session starts over. Each iteration has **no memory of previous conversations** — only the code carries over. Based on [Geoffrey Huntley's Ralph Wiggum technique](https://ghuntley.com/loop/).
+Take it further with Ralph Loop, an autonomous coding loop built into Clay. The agent works, commits, and a judge evaluates. If it fails, a fresh session starts over with no memory of the previous attempt. Only the code carries over. Based on [Geoffrey Huntley's Ralph Wiggum technique](https://ghuntley.com/loop/).
 
 ---
 
 ## Security & Privacy
 
-Clay turns your machine into the relay server. There is no intermediary server on the internet. No third-party service sits between your browser and your code.
-
-The best relay server to trust is the one that doesn't exist. Clay has none. Your data flows directly from your machine to the Anthropic API — exactly as it does when you use the CLI. No one intercepts, collects, or reroutes it. Clay adds a browser layer on top, not a middleman.
+Your data flows directly from your machine to the Anthropic API, exactly as it does when you use the CLI. Clay adds a browser layer on top, not a middleman.
 
 PIN authentication, per-project/session permissions, and HTTPS are supported by default. For local network use, this is sufficient. For remote access, we recommend a VPN like Tailscale.
 
@@ -119,11 +129,12 @@ PIN authentication, per-project/session permissions, and HTTPS are supported by 
 
 ## Key Features
 
+* **Mates** - AI teammates with persistent identity, context, and memory. Create through an interview, DM them, collaborate across sessions.
 * **Multi-user** - Accounts, invitations, per-project/session permissions, real-time presence.
 * **Multi-agent** - Parallel agents per project, sidebar switching.
 * **Push notifications** - Approval, completion, error. Native-like PWA experience.
 * **Scheduler** - Cron-based automatic agent execution.
-* **Ralph Loop** - Autonomous coding loop with PROMPT.md + JUDGE.md. Iterates until the judge says PASS.
+* **Ralph Loop** - Autonomous coding loop. The agent works, a judge evaluates, and it iterates until it passes.
 * **File browser** - File exploration, syntax highlighting, live reload.
 * **Built-in terminal** - Multi-tab terminal, mobile keyboard support.
 * **Session search** - Full-text search across all conversation history.
@@ -136,20 +147,8 @@ PIN authentication, per-project/session permissions, and HTTPS are supported by 
 **"Is this just a terminal wrapper?"**
 No. Clay runs on the Claude Agent SDK. It doesn't wrap terminal output. It communicates directly with the agent through the SDK.
 
-**"Is it free? Open source?"**
-Free. MIT-licensed open source. All code is public.
-
-**"Do I need to install anything?"**
-No. `npx clay-server` runs it directly. No global install, no build step, no Docker. Node.js and Claude Code are the only prerequisites.
-
 **"Does my code leave my machine?"**
 The Clay server runs locally. Files stay local. Only Claude API calls go out, which is the same as using the CLI.
-
-**"Is it secure?"**
-PIN authentication, per-project/session permissions, and HTTPS are supported by default. See [Security & Privacy](#security--privacy) for details.
-
-**"What OS does it run on?"**
-Windows, Linux, and macOS are all supported.
 
 **"Can I continue a CLI session?"**
 Yes. Pick up a CLI session in the browser, or continue a browser session in the CLI.
@@ -157,26 +156,20 @@ Yes. Pick up a CLI session in the browser, or continue a browser session in the 
 **"Does my existing CLAUDE.md work?"**
 Yes. If your project has a CLAUDE.md, it works in Clay as-is.
 
-**"Can I use it as an app?"**
-PWA is supported. On mobile, tap the download icon in the top-left corner to open the PWA install guide. Once installed, it provides a native-like experience.
-
-**"Can I use the terminal on mobile?"**
-Yes. Clay provides a built-in terminal with mobile keyboard support.
-
 **"Does each teammate need their own API key?"**
 No. Teammates share the Claude Code session logged in on the server. If needed, you can configure per-project environment variables to use different API keys.
 
 **"Does it work with MCP servers?"**
 Yes. MCP configurations from the CLI carry over as-is.
 
-**"How do I update?"**
-Auto-update is supported. When a new version is available, apply it with one click.
+**"What are Mates?"**
+AI teammates you create through a conversation. Each Mate has a name, avatar, personality, and persistent memory. They live in your sidebar and you can DM them or bring them into projects.
 
-**"Can I use other AI models besides Claude?"**
-Currently Clay is Claude Code only. Other model support is on the roadmap.
+**"How is a Mate different from Claude Projects?"**
+Claude Projects save prompts and files as context. A Mate is a teammate. It has its own identity formed through an interview, remembers how you work together across sessions, and exists alongside your human teammates in the workspace. You're not organizing prompts. You're building a team.
 
-**"Can I run it in Docker?"**
-There's no official Docker image yet, but it can run in a container with a Node.js environment.
+**"Can I create multiple Mates?"**
+Yes. Create as many as you need. A code reviewer, a writing partner, a project manager. Each one is independent.
 
 ---
 
@@ -222,8 +215,7 @@ npx clay-server --dev        # Dev mode (foreground, auto-restart on lib/ change
 
 ## Architecture
 
-Clay is not a wrapper that intercepts stdio.
-It's a local relay server that drives Claude Code execution through the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) and streams it to the browser over WebSocket.
+Clay drives Claude Code execution through the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) and streams it to the browser over WebSocket.
 
 ```mermaid
 graph LR
