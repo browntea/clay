@@ -209,8 +209,13 @@
         <div class="mate-sidebar-sessions-header">
           <span>Conversations</span>
           <div class="mate-sidebar-actions">
+            <button id="mate-search-session-btn" type="button" title="Search sessions"><i data-lucide="search"></i></button>
             <button id="mate-new-session-btn" type="button" title="New session"><i data-lucide="plus"></i></button>
           </div>
+        </div>
+        <div id="mate-session-search" class="mate-session-search hidden">
+          <input id="mate-session-search-input" type="text" placeholder="Search sessions..." autocomplete="off" spellcheck="false" />
+          <button id="mate-session-search-clear" type="button" aria-label="Clear search"><i data-lucide="x"></i></button>
         </div>
         <div id="mate-session-list" class="mate-session-list"></div>
       </div>
