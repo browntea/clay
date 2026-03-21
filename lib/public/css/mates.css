@@ -909,6 +909,52 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.mate-knowledge-file-badge {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-alt, #2a2a3a);
+  color: var(--text-dimmer);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* JSONL table view */
+.mate-knowledge-jsonl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.mate-knowledge-jsonl-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dimmer);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg-panel, var(--bg));
+}
+.mate-knowledge-jsonl-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border-subtle, rgba(128,128,128,0.1));
+  color: var(--text);
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mate-knowledge-jsonl-table tbody tr:hover td {
+  background: var(--bg-hover, rgba(128,128,128,0.06));
+}
+
 .mate-knowledge-empty {
   padding: 20px 12px;
   text-align: center;
@@ -929,24 +975,44 @@
   display: none;
 }
 
-/* Name input for new files */
-#mate-knowledge-editor-name {
-  background: none;
+/* Name input group for new files */
+.mate-knowledge-name-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   padding: 4px 10px;
+  max-width: 280px;
+}
+.mate-knowledge-name-group:focus-within {
+  border-color: var(--accent);
+}
+.mate-knowledge-name-group.hidden {
+  display: none;
+}
+#mate-knowledge-editor-name {
+  background: none;
+  border: none;
+  padding: 0;
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
   color: var(--text);
   outline: none;
-  max-width: 280px;
+  min-width: 0;
+  width: 160px;
 }
-#mate-knowledge-editor-name:focus {
-  border-color: var(--accent);
+#mate-knowledge-editor-name::placeholder {
+  color: var(--text-dimmer);
+  font-weight: 500;
 }
-#mate-knowledge-editor-name.hidden {
-  display: none;
+.mate-knowledge-editor-ext {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dimmer);
+  user-select: none;
+  flex-shrink: 0;
 }
 
 .mate-knowledge-toolbar-spacer {

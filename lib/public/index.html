@@ -236,7 +236,10 @@
         <div class="mate-knowledge-header-bar">
           <i data-lucide="file-text" class="mate-knowledge-header-icon"></i>
           <span id="mate-knowledge-active-name" class="mate-knowledge-active-name">No file selected</span>
-          <input type="text" id="mate-knowledge-editor-name" class="hidden" placeholder="File name..." maxlength="80" spellcheck="false">
+          <div id="mate-knowledge-name-group" class="mate-knowledge-name-group hidden">
+            <input type="text" id="mate-knowledge-editor-name" placeholder="Knowledge name..." maxlength="80" spellcheck="false">
+            <span id="mate-knowledge-editor-ext" class="mate-knowledge-editor-ext">.md</span>
+          </div>
           <div class="mate-knowledge-toolbar-spacer"></div>
           <button id="mate-knowledge-editor-delete" class="mate-knowledge-header-btn" style="display:none" title="Delete"><i data-lucide="trash-2"></i></button>
           <button id="mate-knowledge-editor-save" class="mate-knowledge-header-btn" disabled title="Save"><i data-lucide="save"></i></button>
