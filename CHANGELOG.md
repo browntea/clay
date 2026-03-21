@@ -1,3 +1,10 @@
+# [2.14.0-beta.2](https://github.com/chadbyte/clay/compare/v2.14.0-beta.1...v2.14.0-beta.2) (2026-03-21)
+
+
+### Features
+
+* **mates:** collapse thinking and tools by default in mate DM ([c8ccdfb](https://github.com/chadbyte/clay/commit/c8ccdfb5772ed35664a85615efaeed043634b729))
+
 # [2.14.0-beta.1](https://github.com/chadbyte/clay/compare/v2.13.1-beta.1...v2.14.0-beta.1) (2026-03-21)
 
 
