@@ -325,7 +325,7 @@ pre:hover .code-copy-btn { opacity: 1; }
 }
 
 .md-content strong { font-weight: 600; }
-.md-content em { font-style: italic; }
+.md-content em { font-style: italic; font-synthesis: style; }
 
 .md-content a {
   color: var(--accent);
