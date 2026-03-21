@@ -1,3 +1,10 @@
+# [2.14.0-beta.9](https://github.com/chadbyte/clay/compare/v2.14.0-beta.8...v2.14.0-beta.9) (2026-03-21)
+
+
+### Features
+
+* **mates:** redesign permission dialog as conversational chat bubble ([3778e43](https://github.com/chadbyte/clay/commit/3778e43f91fd3bbd031c6414a29219318c978f0b))
+
 # [2.14.0-beta.8](https://github.com/chadbyte/clay/compare/v2.14.0-beta.7...v2.14.0-beta.8) (2026-03-21)
 
 
