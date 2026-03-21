@@ -1464,6 +1464,31 @@ body.mate-dm-active .activity-inline {
   display: none;
 }
 
+/* --- Mate AskUserQuestion: avatar + name header --- */
+.ask-user-mate-header {
+  display: none;
+}
+body.mate-dm-active .ask-user-mate-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* --- Mate Permission: avatar + name header --- */
+body.mate-dm-active .mate-permission .permission-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px 8px;
+}
+.mate-permission-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
 /* --- Interstitial elements: indent to align with message content (16px pad + 36px avatar + 8px gap = 60px) --- */
 body.mate-dm-active .thinking-item,
 body.mate-dm-active .tool-item,
