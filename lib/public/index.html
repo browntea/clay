@@ -232,7 +232,8 @@
     </div>
 
     <div id="main-column">
-      <div id="mate-knowledge-container" class="hidden">
+      <!-- Knowledge editor (full overlay, shown on Edit) -->
+      <div id="mate-knowledge-editor" class="mate-knowledge-editor hidden">
         <div class="mate-knowledge-header-bar">
           <i data-lucide="file-text" class="mate-knowledge-header-icon"></i>
           <span id="mate-knowledge-active-name" class="mate-knowledge-active-name">No file selected</span>
@@ -461,6 +462,19 @@
       <button class="file-viewer-btn" id="file-viewer-close" title="Close"><i data-lucide="x"></i></button>
     </div>
     <div class="file-viewer-body" id="file-viewer-body"></div>
+  </div>
+  <!-- Knowledge viewer (side panel, like file-viewer) -->
+  <div id="mate-knowledge-viewer" class="hidden">
+    <div class="mate-knowledge-viewer-header">
+      <i data-lucide="file-text" class="mate-knowledge-header-icon"></i>
+      <span id="mate-knowledge-viewer-name" class="mate-knowledge-active-name">No file selected</span>
+      <div class="mate-knowledge-toolbar-spacer"></div>
+      <button id="mate-knowledge-viewer-edit-btn" class="file-viewer-btn" title="Edit"><i data-lucide="pencil"></i></button>
+      <button id="mate-knowledge-viewer-close-btn" class="file-viewer-btn" title="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="mate-knowledge-viewer-body">
+      <div id="mate-knowledge-viewer-content" class="mate-knowledge-preview-content md-content"></div>
+    </div>
   </div>
   <div id="project-settings" class="hidden panel-fullscreen">
     <div class="project-settings-layout">

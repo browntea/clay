@@ -795,8 +795,8 @@
   height: 16px;
 }
 
-/* Knowledge editor/preview panel (overlays main content) */
-#mate-knowledge-container {
+/* Knowledge editor panel (overlays main content) */
+#mate-knowledge-editor {
   position: absolute;
   inset: 0;
   z-index: 100;
@@ -805,7 +805,61 @@
   flex-direction: column;
   overflow: hidden;
 }
-#mate-knowledge-container.hidden {
+#mate-knowledge-editor.hidden {
+  display: none;
+}
+
+/* --- Knowledge viewer (side panel, mirrors #file-viewer) --- */
+@media (min-width: 1024px) {
+  #mate-knowledge-viewer {
+    width: 50%;
+    max-width: 720px;
+    min-width: 360px;
+    border-left: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  #mate-knowledge-viewer.hidden { display: none; }
+}
+@media (max-width: 1023px) {
+  #mate-knowledge-viewer {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #mate-knowledge-viewer.hidden { display: none; }
+}
+.mate-knowledge-viewer-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  min-height: 44px;
+}
+.mate-knowledge-viewer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+/* Knowledge editor (full overlay) */
+.mate-knowledge-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.mate-knowledge-editor.hidden {
   display: none;
 }
 
@@ -876,23 +930,25 @@
 .mate-knowledge-file-list {
   flex: 1;
   overflow-y: auto;
-  padding: 4px 0;
+  padding: 4px 6px;
 }
 .mate-knowledge-file-item {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 5px 8px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
   color: var(--text-secondary);
-  transition: background 0.1s;
+  transition: background 0.15s, color 0.15s;
 }
 .mate-knowledge-file-item:hover {
-  background: rgba(var(--overlay-rgb), 0.06);
+  background: var(--sidebar-hover);
+  color: var(--text);
 }
 .mate-knowledge-file-item.active {
-  background: rgba(var(--overlay-rgb), 0.1);
+  background: var(--sidebar-active);
   color: var(--text);
   font-weight: 600;
 }
@@ -920,6 +976,85 @@
   color: var(--text-dimmer);
   margin-left: auto;
   flex-shrink: 0;
+}
+
+/* Common knowledge section headers */
+.mate-knowledge-section-header {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-dimmer);
+  padding: 10px 12px 4px;
+}
+.mate-knowledge-file-badge.common {
+  background: rgba(0, 184, 148, 0.15);
+  color: #00b894;
+}
+.mate-knowledge-file-badge.promoted {
+  background: rgba(0, 184, 148, 0.15);
+  color: #00b894;
+}
+.mate-knowledge-dots-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  margin-left: auto;
+  color: var(--text-dimmer);
+  flex-shrink: 0;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+.mate-knowledge-dots-btn .lucide {
+  width: 14px;
+  height: 14px;
+}
+.mate-knowledge-file-item:hover .mate-knowledge-dots-btn {
+  display: flex;
+}
+.mate-knowledge-dots-btn:hover {
+  opacity: 1;
+}
+.mate-knowledge-file-menu {
+  position: fixed;
+  z-index: 9999;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px 0;
+  min-width: 140px;
+  box-shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.4);
+}
+.mate-knowledge-file-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.mate-knowledge-file-menu-item:hover {
+  background: rgba(var(--overlay-rgb), 0.05);
+}
+.mate-knowledge-file-menu-item .lucide {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.mate-knowledge-file-menu-item.menu-item-danger {
+  color: var(--error);
+}
+.mate-knowledge-file-menu-item.menu-item-danger:hover {
+  background: var(--error-8);
 }
 
 /* JSONL table view */
@@ -1329,6 +1464,7 @@
 
 /* Match panel header heights to sidebar header (48px) */
 body.mate-dm-active .mate-knowledge-header-bar,
+body.mate-dm-active .mate-knowledge-viewer-header,
 body.mate-dm-active .scheduler-top-bar,
 body.mate-dm-active .notes-archive-header {
   height: 48px;
@@ -1336,7 +1472,7 @@ body.mate-dm-active .notes-archive-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Knowledge header bar */
+/* Knowledge editor header bar (full mate color, overrides whole area) */
 body.mate-dm-active .mate-knowledge-header-bar {
   background: var(--mate-color);
   color: #fff;
@@ -1361,15 +1497,33 @@ body.mate-dm-active .mate-knowledge-header-bar .mate-knowledge-header-btn:hover 
   background: rgba(255, 255, 255, 0.15);
 }
 body.mate-dm-active .mate-knowledge-header-bar .mate-knowledge-header-btn:disabled {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.4);
 }
 body.mate-dm-active .mate-knowledge-header-bar .mate-knowledge-header-btn:disabled:hover {
   background: none;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.4);
 }
 body.mate-dm-active .mate-knowledge-header-bar #mate-knowledge-editor-delete:hover {
-  color: #fff;
-  background: rgba(255, 80, 80, 0.4);
+  color: #ff5555;
+  background: rgba(255, 85, 85, 0.15);
+}
+
+/* Knowledge viewer header bar (side panel, light tint via --mate-color + 0a) */
+body.mate-dm-active .mate-knowledge-viewer-header {
+  background: var(--mate-color-tint, var(--bg-secondary));
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-subtle);
+}
+body.mate-dm-active .mate-knowledge-viewer-header .mate-knowledge-header-icon,
+body.mate-dm-active .mate-knowledge-viewer-header .mate-knowledge-active-name {
+  color: var(--text-main);
+}
+body.mate-dm-active .mate-knowledge-viewer-header .file-viewer-btn {
+  color: var(--text-dim);
+}
+body.mate-dm-active .mate-knowledge-viewer-header .file-viewer-btn:hover {
+  color: var(--text-main);
+  background: rgba(var(--overlay-rgb), 0.08);
 }
 
 /* Scheduler top bar (main header) */
