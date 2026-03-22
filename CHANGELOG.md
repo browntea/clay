@@ -1,3 +1,10 @@
+# [2.15.0-beta.5](https://github.com/chadbyte/clay/compare/v2.15.0-beta.4...v2.15.0-beta.5) (2026-03-22)
+
+
+### Bug Fixes
+
+* **mates:** use projectOwnerId instead of non-existent opts.ownerId ([3324547](https://github.com/chadbyte/clay/commit/332454738fcbafb093ae9b121407a847a692e0f1))
+
 # [2.15.0-beta.4](https://github.com/chadbyte/clay/compare/v2.15.0-beta.3...v2.15.0-beta.4) (2026-03-22)
 
 
