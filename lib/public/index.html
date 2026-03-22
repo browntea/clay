@@ -1625,6 +1625,7 @@
       <input type="date" class="sched-create-date-input" id="sched-create-date-picker" value="">
       <input type="time" class="sched-create-time-input" id="sched-create-time" value="09:00">
       <button class="sched-create-recurrence-btn" id="sched-create-recurrence-btn" title="Recurrence"><i data-lucide="repeat"></i></button>
+      <button class="sched-create-interval-btn" id="sched-create-interval-btn" title="Interval"><i data-lucide="timer"></i></button>
     </div>
     <button class="sched-create-close-btn" id="sched-create-cancel" title="Close"><i data-lucide="x"></i></button>
   </div>
@@ -1666,6 +1667,15 @@
     <i data-lucide="align-left" class="sched-create-row-icon"></i>
     <textarea class="sched-create-row-textarea" id="sched-create-desc" rows="3" placeholder="Description"></textarea>
   </div>
+  <div class="sched-skip-running-row hidden" id="sched-skip-running-row">
+    <label class="sched-switch-label" for="sched-skip-running">
+      <div class="sched-switch">
+        <input type="checkbox" id="sched-skip-running" checked>
+        <span class="sched-switch-slider"></span>
+      </div>
+      <span class="sched-switch-text">Skip if previous run still active</span>
+    </label>
+  </div>
   <!-- Bottom bar -->
   <div class="sched-create-bottom">
     <div class="sched-create-bottom-left">
@@ -1703,6 +1713,8 @@
         <span class="sched-custom-label">Every</span>
         <input type="number" class="sched-custom-interval" id="sched-custom-interval" value="1" min="1" max="99">
         <select class="sched-field-select sched-custom-unit" id="sched-custom-unit">
+          <option value="minute">Minute</option>
+          <option value="hour">Hour</option>
           <option value="day">Day</option>
           <option value="week" selected>Week</option>
           <option value="month">Month</option>
@@ -1760,6 +1772,24 @@
       <div class="sched-custom-actions">
         <button class="sched-btn sched-btn-cancel" id="sched-custom-cancel">Cancel</button>
         <button class="sched-btn sched-btn-save" id="sched-custom-ok">OK</button>
+      </div>
+    </div>
+  </div>
+  <!-- Interval dropdown -->
+  <div class="sched-create-interval-dropdown hidden" id="sched-create-interval-dropdown">
+    <div class="sched-interval-options" id="sched-create-interval-list">
+      <button class="sched-interval-option active" data-interval="none">No interval</button>
+      <button class="sched-interval-option" data-interval="1">Every minute</button>
+      <button class="sched-interval-option" data-interval="5">Every 5 minutes</button>
+      <button class="sched-interval-option" data-interval="15">Every 15 minutes</button>
+      <button class="sched-interval-option" data-interval="30">Every 30 minutes</button>
+      <button class="sched-interval-option" data-interval="60">Every hour</button>
+    </div>
+    <div class="sched-interval-custom-row">
+      <span class="sched-custom-label">Every</span>
+      <input type="number" class="sched-custom-interval" id="sched-interval-custom-value" value="10" min="1" max="999">
+      <div class="sched-interval-unit-toggle" id="sched-interval-custom-unit">
+        <button type="button" class="sched-interval-seg active" data-unit="minute">min</button><button type="button" class="sched-interval-seg" data-unit="hour">hrs</button>
       </div>
     </div>
   </div>

@@ -596,6 +596,11 @@
   box-sizing: border-box;
 }
 
+.light-theme .sched-create-date-input,
+.light-theme .sched-create-time-input {
+  color-scheme: light;
+}
+
 .sched-create-date-input:focus,
 .sched-create-time-input:focus {
   border-color: var(--accent);
@@ -1074,6 +1079,194 @@
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   color: var(--accent);
   font-weight: 600;
+}
+
+.sched-create-interval-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.sched-create-interval-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.sched-create-interval-btn.has-recurrence {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.sched-create-interval-btn .lucide {
+  width: 14px;
+  height: 14px;
+}
+
+.sched-create-interval-dropdown {
+  position: fixed;
+  z-index: 1200;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  min-width: 200px;
+  max-width: 260px;
+  overflow: hidden;
+}
+
+.sched-create-interval-dropdown.hidden {
+  display: none;
+}
+
+.sched-interval-options {
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sched-interval-option {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 6px;
+  color: var(--text);
+}
+
+.sched-interval-option:hover {
+  background: var(--hover);
+}
+
+.sched-interval-option.active {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sched-interval-custom-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 6px;
+  border-top: 1px solid var(--border);
+}
+
+.sched-interval-custom-row .sched-custom-label {
+  font-size: 13px;
+}
+
+.sched-interval-custom-row .sched-custom-interval {
+  width: 48px;
+  padding: 4px 6px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+.sched-interval-unit-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sched-interval-seg {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  background: var(--input-bg);
+  color: var(--text-dimmer);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sched-interval-seg:first-child {
+  border-right: 1px solid var(--border);
+}
+
+.sched-interval-seg.active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.sched-interval-seg:not(.active):hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.sched-skip-running-row {
+  padding: 6px 12px;
+}
+
+.sched-skip-running-row.hidden {
+  display: none;
+}
+
+.sched-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sched-switch-text {
+  font-size: 11px;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.sched-switch {
+  position: relative;
+  width: 28px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.sched-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.sched-switch-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.sched-switch-slider::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.sched-switch input:checked + .sched-switch-slider {
+  background: var(--accent);
+}
+
+.sched-switch input:checked + .sched-switch-slider::before {
+  transform: translateX(12px);
 }
 
 /* --- Custom repeat panel --- */
