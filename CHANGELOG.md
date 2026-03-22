@@ -1,3 +1,10 @@
+# [2.15.0-beta.4](https://github.com/chadbyte/clay/compare/v2.15.0-beta.3...v2.15.0-beta.4) (2026-03-22)
+
+
+### Features
+
+* **mates:** check mate interview skill updates when opening mate DM ([0ddf43d](https://github.com/chadbyte/clay/commit/0ddf43d2729ec76ed2dc9909f4c483a889d2cab0))
+
 # [2.15.0-beta.3](https://github.com/chadbyte/clay/compare/v2.15.0-beta.2...v2.15.0-beta.3) (2026-03-22)
 
 
