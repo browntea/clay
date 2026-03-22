@@ -1,4 +1,4 @@
-## [2.15.1](https://github.com/chadbyte/clay/compare/v2.15.0...v2.15.1) (2026-03-22)
+## [2.15.1-beta.1](https://github.com/chadbyte/clay/compare/v2.15.0...v2.15.1-beta.1) (2026-03-22)
 
 
 ### Bug Fixes
