@@ -163,20 +163,7 @@
   font-size: 48px;
   line-height: 1;
 }
-.mate-intro-experimental {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: 10px;
-  padding: 2px 7px;
-  vertical-align: middle;
-  margin-right: 4px;
-}
+
 .mate-intro-title {
   font-size: 22px;
   font-weight: 700;
