@@ -1,3 +1,23 @@
+# [2.16.0-beta.1](https://github.com/chadbyte/clay/compare/v2.15.2...v2.16.0-beta.1) (2026-03-23)
+
+
+### Bug Fixes
+
+* **mates:** keep mate WS alive in background on DM exit ([305375b](https://github.com/chadbyte/clay/commit/305375bf29ab95a4ca6828d4d0cb054c67495ba1))
+* **ralph:** ignore untracked files in git dirty check ([5370248](https://github.com/chadbyte/clay/commit/5370248e73d1f848e4adbb2e1e64c63407a4dc55))
+* **ui:** prevent suggestion chips from covering last message ([297f669](https://github.com/chadbyte/clay/commit/297f66917105854e2fa7c7317551008acb6a304a))
+
+
+### Features
+
+* **images:** persist chat images to disk with configurable retention ([af2aa6b](https://github.com/chadbyte/clay/commit/af2aa6bc872e1bc4af46288f9690c24f50013bad))
+* **mates:** add IO blink, unread badge, and permission shake to mate icons ([568fe33](https://github.com/chadbyte/clay/commit/568fe3371bfe14302f3e085cc4a2412cf824c1f2))
+* **mobile:** implement comprehensive mobile redesign ([b409b7c](https://github.com/chadbyte/clay/commit/b409b7ce0d95fe8cce70296d5877bb436bc17aa6))
+* **mobile:** improve mobile UI and mate IO blink ([8e18466](https://github.com/chadbyte/clay/commit/8e18466280e86a906ca90114cc8d60ad67756d47))
+* **ralph:** allow judge to use tools and provide commit history ([b25c29b](https://github.com/chadbyte/clay/commit/b25c29b88f4761d7bf2ee9bb31506b49cbf595b1))
+* **ralph:** craft judge when only prompt provided in own mode ([054add2](https://github.com/chadbyte/clay/commit/054add26a2804e251d993274960d11df2c93a7c1))
+* **ui:** add long-press context menu support for touch devices ([8c33b82](https://github.com/chadbyte/clay/commit/8c33b82f6814f0cdaf719d154a9016c6b55550e7))
+
 ## [2.15.2](https://github.com/chadbyte/clay/compare/v2.15.1...v2.15.2) (2026-03-22)
 
 
