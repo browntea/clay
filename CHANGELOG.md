@@ -1,3 +1,10 @@
+# [2.17.0-beta.5](https://github.com/chadbyte/clay/compare/v2.17.0-beta.4...v2.17.0-beta.5) (2026-03-23)
+
+
+### Features
+
+* **ui:** add /pwa route and fix top bar pill layout ([efda994](https://github.com/chadbyte/clay/commit/efda994805d6d321afc07f36d7716bfd3eea4e79))
+
 # [2.17.0-beta.4](https://github.com/chadbyte/clay/compare/v2.17.0-beta.3...v2.17.0-beta.4) (2026-03-23)
 
 
