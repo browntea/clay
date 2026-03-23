@@ -642,10 +642,12 @@ function ensureCerts(ip) {
 
   if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
     var needRegen = false;
+    var isMkcertCert = false;
     try {
       var certText = execFileSync("openssl", ["x509", "-in", certPath, "-text", "-noout"], { encoding: "utf8" });
       // If cert is from an external CA (e.g. Tailscale/Let's Encrypt), never regenerate
       if (certText.indexOf("mkcert") === -1) return { key: keyPath, cert: certPath, caRoot: caRoot };
+      isMkcertCert = true;
       for (var i = 0; i < allIPs.length; i++) {
         if (certText.indexOf(allIPs[i]) === -1) {
           needRegen = true;
@@ -653,6 +655,8 @@ function ensureCerts(ip) {
         }
       }
     } catch (e) { needRegen = true; }
+    // mkcert cert but mkcert uninstalled: CA is gone, cert is untrusted. Skip it.
+    if (isMkcertCert && !mkcertInstalled) needRegen = true;
     if (!needRegen) {
       return { key: keyPath, cert: certPath, caRoot: caRoot, mkcertDetected: mkcertInstalled && !forceMkcert };
     }
