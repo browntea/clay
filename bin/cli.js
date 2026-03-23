@@ -1595,6 +1595,7 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
       : protocol + "://" + ip + ":" + config.port;
     console.log("  " + sym.done + "  Daemon started (PID " + config.pid + ")");
     console.log("  " + sym.done + "  " + url);
+    if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio is only used for HTTPS certificates. All traffic stays on your local network. https://github.com/chadbyte/clay/tree/main/clay-dns");
     console.log("  " + sym.done + "  Headless mode — exiting CLI");
     process.exit(0);
     return;
@@ -1951,6 +1952,7 @@ function showMainMenu(config, ip) {
     function afterQr() {
       // Status line
       log("  " + a.dim + "clay" + a.reset + " " + a.dim + "v" + currentVersion + a.reset + a.dim + " — " + url + a.reset);
+      if (config.builtinCert) log("  " + a.dim + "d.clay.studio is only used for HTTPS certificates. All traffic stays on your local network. https://github.com/chadbyte/clay/tree/main/clay-dns" + a.reset);
       var parts = [];
       parts.push(a.bold + projs.length + a.reset + a.dim + (projs.length === 1 ? " project" : " projects"));
       parts.push(a.reset + a.bold + totalSessions + a.reset + a.dim + (totalSessions === 1 ? " session" : " sessions"));
@@ -2725,6 +2727,7 @@ var currentVersion = require("../package.json").version;
         : protocol + "://" + ip + ":" + config.port;
       console.log("  " + sym.done + "  Daemon already running (PID " + config.pid + ")");
       console.log("  " + sym.done + "  " + url);
+      if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio is only used for HTTPS certificates. All traffic stays on your local network. https://github.com/chadbyte/clay/tree/main/clay-dns");
       process.exit(0);
       return;
     }
