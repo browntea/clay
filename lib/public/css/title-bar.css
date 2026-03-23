@@ -323,35 +323,13 @@
 /* --- Mobile --- */
 @media (max-width: 768px) {
   #top-bar {
-    padding-top: var(--safe-top);
-    height: calc(32px + var(--safe-top));
-  }
-
-  .top-bar-actions {
-    top: auto;
-    bottom: 0;
-    height: 32px;
-    transform: none;
+    display: none !important;
   }
 
   #sidebar-column {
     width: 0 !important;
     min-width: 0 !important;
     overflow: visible;
-  }
-
-  .title-bar-sidebar {
-    display: none;
-  }
-
-  .title-bar-content {
-    padding: 0 12px;
-  }
-
-  /* Hide title-bar terminal & sticky-notes buttons on mobile (tab bar has them) */
-  .title-bar-content .status #terminal-toggle-btn,
-  .title-bar-content .status #sticky-notes-toggle-btn {
-    display: none;
   }
 }
 

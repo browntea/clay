@@ -200,6 +200,7 @@
         <img id="mate-sidebar-avatar" class="mate-sidebar-avatar" alt="">
         <span id="mate-sidebar-name" class="mate-sidebar-name"></span>
         <div id="mate-sidebar-seed-tooltip" class="mate-seed-tooltip hidden"></div>
+        <button id="mate-sidebar-toggle-btn" class="sidebar-collapse-btn" title="Collapse sidebar"><i data-lucide="panel-left-close"></i></button>
       </div>
       <div id="mate-sidebar-tools">
         <button id="mate-knowledge-btn"><i data-lucide="book-open"></i> <span>Knowledge</span><span id="mate-knowledge-count" class="sidebar-badge hidden"></span></button>
@@ -271,6 +272,10 @@
       <div class="title-bar-content">
         <div id="header-left">
           <button id="sidebar-expand-btn" title="Open sidebar"><i data-lucide="panel-left-open"></i></button>
+          <div id="mate-collapsed-info" class="mate-collapsed-info">
+            <img id="mate-collapsed-avatar" class="mate-collapsed-avatar" alt="">
+            <span id="mate-collapsed-name" class="mate-collapsed-name"></span>
+          </div>
           <button id="hamburger-btn" aria-label="Toggle sidebar" title="Toggle sidebar"><i data-lucide="menu"></i></button>
           <span class="header-title" id="header-title">Connecting...</span>
           <button id="header-info-btn" type="button" title="Session info"><i data-lucide="info"></i></button>
@@ -279,7 +284,6 @@
             <button id="mate-mobile-back" class="mate-mobile-back" type="button" aria-label="Back"><i data-lucide="chevron-left"></i></button>
             <img id="mate-mobile-avatar" class="mate-mobile-avatar" alt="">
             <span id="mate-mobile-name" class="mate-mobile-name"></span>
-            <span id="mate-mobile-status" class="mate-mobile-status"></span>
           </div>
         </div>
         <div id="todo-sticky" class="hidden"></div>
@@ -456,11 +460,11 @@
 
   <!-- Mobile bottom tab bar -->
   <div id="mobile-tab-bar">
-    <button class="mobile-tab" data-tab="projects"><i data-lucide="folder-kanban"></i><span class="mobile-tab-label">Projects</span></button>
-    <button class="mobile-tab" data-tab="sessions"><i data-lucide="messages-square"></i><span class="mobile-tab-label">Sessions</span></button>
-    <button class="mobile-tab-home" id="mobile-home-btn"><img src="/icon-banded-76.png" alt="Clay" class="mobile-home-icon"></button>
-    <button class="mobile-tab" data-tab="files"><i data-lucide="folder-tree"></i><span class="mobile-tab-label">Files</span></button>
-    <button class="mobile-tab" data-tab="terminal"><i data-lucide="square-terminal"></i><span id="mobile-terminal-count" class="mobile-tab-badge hidden"></span><span class="mobile-tab-label">Terminal</span></button>
+    <button class="mobile-tab" data-tab="chat" id="mob-tab-chat"><i data-lucide="message-square"></i><span class="mobile-tab-label">Chat</span></button>
+    <button class="mobile-tab" data-tab="search" id="mob-tab-search"><i data-lucide="search"></i><span class="mobile-tab-label">Search</span></button>
+    <button class="mobile-tab-home" id="mobile-home-btn"><img src="/icon-banded-76.png" alt="Home" class="mobile-home-icon"></button>
+    <button class="mobile-tab" data-tab="tools" id="mob-tab-tools"><i data-lucide="wrench"></i><span class="mobile-tab-label">Tools</span></button>
+    <button class="mobile-tab" data-tab="settings" id="mob-tab-settings"><i data-lucide="settings"></i><span class="mobile-tab-label">Settings</span></button>
   </div>
 
   <div id="file-viewer" class="hidden">
@@ -493,6 +497,16 @@
       <div class="project-settings-nav">
         <div class="project-settings-nav-inner">
           <div class="server-settings-nav-header" id="ps-nav-title">-</div>
+          <select id="ps-nav-dropdown" class="settings-nav-dropdown">
+            <optgroup label="General">
+              <option value="profile" selected>Profile</option>
+              <option value="defaults">Model</option>
+            </optgroup>
+            <optgroup label="Config">
+              <option value="instructions">Instructions</option>
+              <option value="environment">Environment</option>
+            </optgroup>
+          </select>
           <div class="server-settings-nav-items">
             <div class="settings-nav-category">General</div>
             <button class="settings-nav-item active" data-section="profile"><span>Profile</span></button>

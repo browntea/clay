@@ -774,7 +774,8 @@
   }
 
   .server-settings-nav-header {
-    padding: 12px 16px 8px;
+    padding: 10px 48px 8px 16px;
+    line-height: 36px;  /* match close btn height for vertical align */
   }
 
   /* Hide desktop nav items on mobile, show dropdown instead */
@@ -822,15 +823,17 @@
   }
 
   .server-settings-close-col {
-    top: calc(var(--safe-top) + 12px);
-    right: 12px;
+    position: absolute;
+    top: calc(var(--safe-top) + 6px);
+    right: 8px;
+    z-index: 10;
   }
 
   .server-settings-close-btn {
     width: 36px;
     height: 36px;
-    background: var(--bg-alt);
-    border-color: var(--border);
+    background: none;
+    border: none;
   }
 
   .server-settings-close-btn span {

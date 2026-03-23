@@ -305,15 +305,55 @@
   font-family: inherit;
 }
 
-/* --- Mobile --- */
+/* --- Mobile: bottom sheet style --- */
 @media (max-width: 768px) {
+  /* Hide the top-bar search trigger on mobile */
+  .cmd-palette-searchbar {
+    display: none !important;
+  }
+
+  /* Palette dialog: bottom sheet instead of top dropdown */
   .cmd-palette-dialog {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
     width: 100%;
-    max-height: 80vh;
-    border-radius: 0 0 10px 10px;
+    max-height: 85vh;
+    border-radius: 16px 16px 0 0;
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    animation: cmdPaletteMobileUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @keyframes cmdPaletteMobileUp {
+    from { opacity: 0; transform: translateY(100%); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Bigger input for touch */
+  .cmd-palette-input-row {
+    padding: 14px 16px;
+  }
+
+  .cmd-palette-input {
+    font-size: 16px; /* prevents iOS zoom */
+  }
+
+  /* Bigger tap targets */
+  .cmd-palette-item {
+    padding: 12px 16px;
+    min-height: 44px;
   }
 
   .cmd-palette-item-snippet {
+    display: none;
+  }
+
+  /* Hide keyboard shortcut hints */
+  .cmd-palette-footer-shortcuts {
     display: none;
   }
 }

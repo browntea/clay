@@ -477,7 +477,8 @@
   font-weight: 600;
 }
 
-.session-item .session-processing {
+.session-item .session-processing,
+.mate-session-item .session-processing {
   display: inline-block;
   width: 6px;
   height: 6px;
@@ -488,7 +489,8 @@
 }
 
 /* IO blink on session processing dot */
-.session-item .session-processing.io {
+.session-item .session-processing.io,
+.mate-session-item .session-processing.io {
   background: #fff !important;
   box-shadow: 0 0 4px var(--success);
 }
@@ -1249,6 +1251,22 @@
 
   #user-island {
     display: none;
+  }
+
+  /* Mobile: hide both sidebars completely */
+  #sidebar-column,
+  #mate-sidebar-column {
+    display: none !important;
+  }
+
+  /* Mobile: hide icon strip */
+  #icon-strip {
+    display: none !important;
+  }
+
+  /* Mobile: hide sidebar overlay */
+  #sidebar-overlay {
+    display: none !important;
   }
 }
 

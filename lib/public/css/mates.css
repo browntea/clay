@@ -618,6 +618,49 @@
   font-weight: 600;
 }
 
+/* Collapse button inside mate header: white to match header style */
+.mate-sidebar-header .sidebar-collapse-btn {
+  color: rgba(255,255,255,0.7);
+}
+.mate-sidebar-header .sidebar-collapse-btn:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+}
+
+/* When collapsed, mate sidebar fully hidden (same as project sidebar) */
+#layout.sidebar-collapsed #mate-sidebar-column {
+  width: 0 !important;
+  min-width: 0 !important;
+  overflow: hidden;
+}
+
+/* Mate info shown in header when sidebar is collapsed */
+.mate-collapsed-info {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 3px;
+  background: rgba(var(--overlay-rgb), 0.08);
+  border-radius: 999px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
+  display: flex;
+}
+.mate-collapsed-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.mate-collapsed-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
 .mate-sidebar-header .mate-sidebar-avatar {
   border: 2px solid rgba(255,255,255,0.3);
 }
@@ -1450,14 +1493,15 @@
   opacity: 0.35;
 }
 
-.mate-session-processing {
+.mate-session-item .icon-strip-status {
+  position: static;
   display: inline-block;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background: var(--success);
+  border: none;
   margin-right: 8px;
   vertical-align: middle;
+  opacity: 1;
 }
 
 /* --- Mate color theming for panels --- */
@@ -1972,17 +2016,25 @@ body.mate-dm-active .activity-inline {
 /* ==========================================================================
    Mobile Mate DM Title Bar
    ========================================================================== */
-.mate-mobile-title.hidden {
+.mate-mobile-title {
   display: none !important;
 }
 
 @media (max-width: 768px) {
-  /* Show mobile mate title, hide default header children */
+  .mate-mobile-title:not(.hidden) {
+    display: flex !important;
+  }
+  /* Show mobile mate title, hide everything else in title bar */
   body.mate-dm-active #header-left #sidebar-expand-btn,
   body.mate-dm-active #header-left #hamburger-btn,
   body.mate-dm-active #header-left #header-title,
   body.mate-dm-active #header-left #header-info-btn,
-  body.mate-dm-active #header-left #header-rename-btn {
+  body.mate-dm-active #header-left #header-rename-btn,
+  body.mate-dm-active .title-bar-content #todo-sticky,
+  body.mate-dm-active .title-bar-content #ralph-sticky,
+  body.mate-dm-active .dm-header-bar,
+  body.mate-dm-active .title-bar-content .status #sticky-notes-toggle-btn,
+  body.mate-dm-active .title-bar-content .status #terminal-toggle-btn {
     display: none !important;
   }
 
@@ -2042,6 +2094,32 @@ body.mate-dm-active .activity-inline {
     color: rgba(255, 255, 255, 0.7);
     white-space: nowrap;
     flex-shrink: 0;
+  }
+
+  .mate-mobile-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    padding: 0;
+    margin-left: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mate-mobile-more svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mate-mobile-more:active {
+    color: #fff;
   }
 }
 

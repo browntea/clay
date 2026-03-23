@@ -139,7 +139,7 @@ mark.session-search-highlight-active {
 /* Mobile */
 @media (max-width: 768px) {
   #find-in-session-btn {
-    display: none;
+    display: flex;
   }
 
   .session-search-bar {
