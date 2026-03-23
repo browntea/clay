@@ -53,6 +53,7 @@ var args = process.argv.slice(2);
 var port = _isDev ? 2635 : 2633;
 var useHttps = true;
 var forceMkcert = false;
+var forceBuiltin = false;
 var skipUpdate = false;
 var debugMode = false;
 var autoYes = false;
@@ -84,6 +85,8 @@ for (var i = 0; i < args.length; i++) {
     useHttps = false;
   } else if (args[i] === "--local-cert") {
     forceMkcert = true;
+  } else if (args[i] === "--builtin-cert") {
+    forceBuiltin = true;
   } else if (args[i] === "--no-update" || args[i] === "--skip-update") {
     skipUpdate = true;
   } else if (args[i] === "--dev") {
@@ -128,7 +131,8 @@ for (var i = 0; i < args.length; i++) {
     console.log("  -p, --port <port>  Port to listen on (default: 2633)");
     console.log("  --host <address>   Address to bind to (default: 0.0.0.0)");
     console.log("  --no-https         Disable HTTPS (enabled by default)");
-    console.log("  --local-cert       Use local certificate (mkcert) instead of builtin");
+    console.log("  --local-cert       Use local certificate (mkcert), suppress migration notice");
+    console.log("  --builtin-cert    Use builtin certificate even if mkcert is installed");
     console.log("  --no-update        Skip auto-update check on startup");
     console.log("  --debug            Enable debug panel in the web UI");
     console.log("  -y, --yes          Skip interactive prompts (accept defaults)");
@@ -599,6 +603,13 @@ function toClayStudioUrl(ip, port, protocol) {
 }
 
 function ensureCerts(ip) {
+  // --builtin-cert: skip mkcert entirely, go straight to builtin
+  if (forceBuiltin) {
+    var builtin = getBuiltinCert();
+    if (builtin) return builtin;
+    return null;
+  }
+
   var homeDir = os.homedir();
   var certDir = path.join(process.env.CLAY_HOME || path.join(homeDir, ".clay"), "certs");
   var keyPath = path.join(certDir, "key.pem");
@@ -1611,8 +1622,8 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
       : protocol + "://" + ip + ":" + config.port;
     console.log("  " + sym.done + "  Daemon started (PID " + config.pid + ")");
     console.log("  " + sym.done + "  " + url);
-    if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio is only used for HTTPS certificates. All traffic stays on your local network. https://github.com/chadbyte/clay/tree/main/clay-dns");
-    if (config.mkcertDetected) console.log("  " + sym.warn + "  mkcert detected. Uninstall mkcert to use builtin cert, or pass --local-cert to suppress this warning.");
+    if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio provides HTTPS certificates only. Your traffic never leaves your network.");
+    if (config.mkcertDetected) console.log("  " + sym.warn + "  Clay now ships with a builtin HTTPS certificate. To use it, pass --builtin-cert or uninstall mkcert.");
     console.log("  " + sym.done + "  Headless mode — exiting CLI");
     process.exit(0);
     return;
@@ -1974,7 +1985,7 @@ function showMainMenu(config, ip) {
     function afterQr() {
       // Status line
       log("  " + a.dim + "clay" + a.reset + " " + a.dim + "v" + currentVersion + a.reset + a.dim + " — " + url + a.reset);
-      if (config.builtinCert) log("  " + a.dim + "d.clay.studio is only used for HTTPS certificates. All traffic stays on your local network. https://github.com/chadbyte/clay/tree/main/clay-dns" + a.reset);
+      if (config.builtinCert) log("  " + a.dim + "d.clay.studio provides HTTPS certificates only. Your traffic never leaves your network." + a.reset);
       var parts = [];
       parts.push(a.bold + projs.length + a.reset + a.dim + (projs.length === 1 ? " project" : " projects"));
       parts.push(a.reset + a.bold + totalSessions + a.reset + a.dim + (totalSessions === 1 ? " session" : " sessions"));
@@ -1986,11 +1997,9 @@ function showMainMenu(config, ip) {
       log("");
 
       if (config.mkcertDetected) {
-        log("  " + sym.warn + "  " + a.yellow + "mkcert detected." + a.reset + " Clay now ships with a builtin HTTPS certificate.");
-        log("     " + a.dim + "Uninstall mkcert to use it. No more CA setup on each device." + a.reset);
-        log("     " + a.dim + "  brew uninstall mkcert  (macOS)" + a.reset);
-        log("     " + a.dim + "  sudo apt remove mkcert  (Linux)" + a.reset);
-        log("     " + a.dim + "Or pass --local-cert to keep using mkcert without this warning." + a.reset);
+        log("  " + sym.warn + "  " + a.yellow + "Clay now ships with a builtin HTTPS certificate." + a.reset);
+        log("     " + a.dim + "No more CA setup on each device." + a.reset);
+        log("     " + a.dim + "To use it, pass --builtin-cert or uninstall mkcert." + a.reset);
         log("");
       }
 
@@ -2063,9 +2072,8 @@ function showMainMenu(config, ip) {
         }
       }, {
         hint: [
-          "claude-relay has been renamed to clay-server  ·  npx clay-server",
           "Run npx clay-server in other directories to add more projects.",
-          "★ github.com/chadbyte/claude-relay — Press s to star the repo",
+          "★ github.com/chadbyte/clay — Press s to star the repo",
         ],
         keys: [
           { key: "o", onKey: function () {
@@ -2073,7 +2081,7 @@ function showMainMenu(config, ip) {
             showMainMenu(config, ip);
           }},
           { key: "s", onKey: function () {
-            openUrl("https://github.com/chadbyte/claude-relay");
+            openUrl("https://github.com/chadbyte/clay");
             showMainMenu(config, ip);
           }},
         ],
@@ -2758,7 +2766,7 @@ var currentVersion = require("../package.json").version;
         : protocol + "://" + ip + ":" + config.port;
       console.log("  " + sym.done + "  Daemon already running (PID " + config.pid + ")");
       console.log("  " + sym.done + "  " + url);
-      if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio is only used for HTTPS certificates. All traffic stays on your local network. https://github.com/chadbyte/clay/tree/main/clay-dns");
+      if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio provides HTTPS certificates only. Your traffic never leaves your network.");
       process.exit(0);
       return;
     }
