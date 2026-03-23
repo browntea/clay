@@ -83,6 +83,8 @@
           <p id="hub-greeting-date"></p>
         </div>
 
+        <div id="home-hub-mates" class="home-hub-mates hidden"></div>
+
         <div class="hub-columns">
           <div class="hub-card hub-upcoming">
             <div class="hub-card-header">
@@ -246,8 +248,12 @@
           <button id="mate-knowledge-editor-save" class="mate-knowledge-header-btn" disabled title="Save"><i data-lucide="save"></i></button>
           <button id="mate-knowledge-close-btn" class="mate-knowledge-header-btn" title="Close"><i data-lucide="x"></i></button>
         </div>
+        <div class="mate-knowledge-tab-bar">
+          <button class="mate-knowledge-tab-btn active" data-tab="edit">Edit</button>
+          <button class="mate-knowledge-tab-btn" data-tab="preview">Preview</button>
+        </div>
         <div class="mate-knowledge-body">
-          <div class="mate-knowledge-editor-pane">
+          <div class="mate-knowledge-editor-pane mobile-active">
             <div class="mate-editor-highlight-wrap">
               <pre class="mate-editor-highlight-pre" aria-hidden="true"><code id="mate-knowledge-editor-highlight" class="language-markdown"></code></pre>
               <textarea id="mate-knowledge-editor-content" placeholder="Select a file from the sidebar..." spellcheck="false"></textarea>
@@ -269,6 +275,12 @@
           <span class="header-title" id="header-title">Connecting...</span>
           <button id="header-info-btn" type="button" title="Session info"><i data-lucide="info"></i></button>
           <button id="header-rename-btn" type="button" title="Rename session"><i data-lucide="pencil"></i></button>
+          <div id="mate-mobile-title" class="mate-mobile-title hidden">
+            <button id="mate-mobile-back" class="mate-mobile-back" type="button" aria-label="Back"><i data-lucide="chevron-left"></i></button>
+            <img id="mate-mobile-avatar" class="mate-mobile-avatar" alt="">
+            <span id="mate-mobile-name" class="mate-mobile-name"></span>
+            <span id="mate-mobile-status" class="mate-mobile-status"></span>
+          </div>
         </div>
         <div id="todo-sticky" class="hidden"></div>
         <div id="ralph-sticky" class="hidden"></div>
@@ -662,6 +674,11 @@
       <button class="term-key term-key-arrow" data-key="down">&#9660;</button>
       <button class="term-key term-key-arrow" data-key="left">&#9664;</button>
       <button class="term-key term-key-arrow" data-key="right">&#9654;</button>
+      <span class="term-key-spacer"></span>
+      <button class="term-key term-key-toggle" data-key="alt">Alt</button>
+      <button class="term-key" data-key="pipe">|</button>
+      <button class="term-key" data-key="slash">/</button>
+      <button class="term-key" data-key="tilde">~</button>
     </div>
     <div id="terminal-body"></div>
   </div>

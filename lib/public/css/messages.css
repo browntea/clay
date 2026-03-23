@@ -311,7 +311,15 @@ pre:hover .code-copy-btn { opacity: 1; }
 }
 
 @media (pointer: coarse) {
-  .code-copy-btn { opacity: 1; }
+  .code-copy-btn {
+    opacity: 1;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .md-content pre code {
@@ -1714,6 +1722,18 @@ pre.mermaid-error {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   Mobile message adjustments
+   ========================================================================== */
+@media (max-width: 768px) {
+  .msg-user .bubble {
+    max-width: 90%;
+  }
+  .msg-assistant {
+    max-width: 100%;
+  }
 }
 
 

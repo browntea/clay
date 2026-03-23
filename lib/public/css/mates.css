@@ -1968,3 +1968,129 @@ body.mate-dm-active .activity-inline {
   margin-left: 0;
   margin-right: 0;
 }
+
+/* ==========================================================================
+   Mobile Mate DM Title Bar
+   ========================================================================== */
+.mate-mobile-title.hidden {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  /* Show mobile mate title, hide default header children */
+  body.mate-dm-active #header-left #sidebar-expand-btn,
+  body.mate-dm-active #header-left #hamburger-btn,
+  body.mate-dm-active #header-left #header-title,
+  body.mate-dm-active #header-left #header-info-btn,
+  body.mate-dm-active #header-left #header-rename-btn {
+    display: none !important;
+  }
+
+  .mate-mobile-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mate-mobile-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mate-mobile-back svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .mate-mobile-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .mate-mobile-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mate-mobile-status {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* ==========================================================================
+   Mobile Knowledge Editor Tabs
+   ========================================================================== */
+.mate-knowledge-tab-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mate-knowledge-tab-bar {
+    display: flex;
+    gap: 0;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+
+  .mate-knowledge-tab-btn {
+    flex: 1;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .mate-knowledge-tab-btn.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  /* Hide both panes by default on mobile, show only .mobile-active */
+  .mate-knowledge-editor-pane,
+  .mate-knowledge-preview-pane {
+    display: none !important;
+  }
+
+  .mate-knowledge-editor-pane.mobile-active,
+  .mate-knowledge-preview-pane.mobile-active {
+    display: flex !important;
+    flex: 1;
+  }
+}
