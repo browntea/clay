@@ -1,3 +1,10 @@
+# [2.17.0-beta.2](https://github.com/chadbyte/clay/compare/v2.17.0-beta.1...v2.17.0-beta.2) (2026-03-23)
+
+
+### Bug Fixes
+
+* **sw:** skip cross-origin requests in service worker fetch handler ([14615ed](https://github.com/chadbyte/clay/commit/14615edf56d1c1b4424aa3a760eaed9e61beb0e7))
+
 # [2.17.0-beta.1](https://github.com/chadbyte/clay/compare/v2.16.0...v2.17.0-beta.1) (2026-03-23)
 
 
