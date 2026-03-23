@@ -2251,7 +2251,7 @@ function showSetupGuide(config, ip, goBack) {
     // mkcert: use HTTP onboarding server for CA install flow
     var setupUrl;
     if (config.builtinCert) {
-      setupUrl = toClayStudioUrl(setupIP, config.port, "https") + "?playbook=push-notifications";
+      setupUrl = toClayStudioUrl(setupIP, config.port, "https") + "/pwa";
     } else if (config.tls) {
       setupUrl = "http://" + setupIP + ":" + (config.port + 1) + "/setup" + setupQuery;
     } else {
