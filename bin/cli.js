@@ -599,12 +599,6 @@ function toClayStudioUrl(ip, port, protocol) {
 }
 
 function ensureCerts(ip) {
-  // Check builtin cert first (unless --local-cert flag is set)
-  if (!forceMkcert) {
-    var builtin = getBuiltinCert();
-    if (builtin) return builtin;
-  }
-
   var homeDir = os.homedir();
   var certDir = path.join(process.env.CLAY_HOME || path.join(homeDir, ".clay"), "certs");
   var keyPath = path.join(certDir, "key.pem");
@@ -619,14 +613,18 @@ function ensureCerts(ip) {
     fs.copyFileSync(legacyCert, certPath);
   }
 
+  var mkcertInstalled = hasMkcert();
+
   var caRoot = null;
-  try {
-    caRoot = path.join(
-      execSync("mkcert -CAROOT", { encoding: "utf8" }).trim(),
-      "rootCA.pem"
-    );
-    if (!fs.existsSync(caRoot)) caRoot = null;
-  } catch (e) {}
+  if (mkcertInstalled) {
+    try {
+      caRoot = path.join(
+        execSync("mkcert -CAROOT", { encoding: "utf8" }).trim(),
+        "rootCA.pem"
+      );
+      if (!fs.existsSync(caRoot)) caRoot = null;
+    } catch (e) {}
+  }
 
   // Collect all IPv4 addresses (Tailscale + LAN)
   var allIPs = getAllIPs();
@@ -644,24 +642,56 @@ function ensureCerts(ip) {
         }
       }
     } catch (e) { needRegen = true; }
-    if (!needRegen) return { key: keyPath, cert: certPath, caRoot: caRoot };
+    if (!needRegen) {
+      if (mkcertInstalled && !forceMkcert) {
+        log("");
+        log(sym.warn + "  " + a.yellow + "mkcert detected." + a.reset + " Clay now ships with a builtin HTTPS certificate.");
+        log("   " + a.dim + "Uninstall mkcert to use it. No more CA setup on each device." + a.reset);
+        log("   " + a.dim + "  brew uninstall mkcert  (macOS)" + a.reset);
+        log("   " + a.dim + "  sudo apt remove mkcert  (Linux)" + a.reset);
+        log("   " + a.dim + "Or pass --local-cert to keep using mkcert without this warning." + a.reset);
+        log("");
+      }
+      return { key: keyPath, cert: certPath, caRoot: caRoot };
+    }
   }
 
-  fs.mkdirSync(certDir, { recursive: true });
+  // mkcert installed: generate local cert (legacy behavior)
+  if (mkcertInstalled) {
+    if (!forceMkcert) {
+      log("");
+      log(sym.warn + "  " + a.yellow + "mkcert detected." + a.reset + " Clay now ships with a builtin HTTPS certificate.");
+      log("   " + a.dim + "Uninstall mkcert to use it. No more CA setup on each device." + a.reset);
+      log("   " + a.dim + "Or pass --local-cert to keep using mkcert without this warning." + a.reset);
+      log("");
+    }
 
-  var domains = ["localhost", "127.0.0.1", "::1"];
-  for (var i = 0; i < allIPs.length; i++) {
-    if (domains.indexOf(allIPs[i]) === -1) domains.push(allIPs[i]);
+    fs.mkdirSync(certDir, { recursive: true });
+
+    var domains = ["localhost", "127.0.0.1", "::1"];
+    for (var i = 0; i < allIPs.length; i++) {
+      if (domains.indexOf(allIPs[i]) === -1) domains.push(allIPs[i]);
+    }
+
+    try {
+      var mkcertArgs = ["-key-file", keyPath, "-cert-file", certPath].concat(domains);
+      execFileSync("mkcert", mkcertArgs, { stdio: "pipe" });
+    } catch (err) {
+      // mkcert generation failed, fall through to builtin
+    }
+
+    if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+      return { key: keyPath, cert: certPath, caRoot: caRoot };
+    }
   }
 
-  try {
-    var mkcertArgs = ["-key-file", keyPath, "-cert-file", certPath].concat(domains);
-    execFileSync("mkcert", mkcertArgs, { stdio: "pipe" });
-  } catch (err) {
-    return null;
+  // Fallback: builtin cert (unless --local-cert forces mkcert-only)
+  if (!forceMkcert) {
+    var builtin = getBuiltinCert();
+    if (builtin) return builtin;
   }
 
-  return { key: keyPath, cert: certPath, caRoot: caRoot };
+  return null;
 }
 
 // --- Logo ---
