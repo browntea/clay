@@ -1,3 +1,10 @@
+# [2.17.0-beta.4](https://github.com/chadbyte/clay/compare/v2.17.0-beta.3...v2.17.0-beta.4) (2026-03-23)
+
+
+### Bug Fixes
+
+* **tls:** skip stale mkcert cert when mkcert is uninstalled ([0b4f6bf](https://github.com/chadbyte/clay/commit/0b4f6bf33c89af54f4ff77f0245ffcaeb39ab01e))
+
 # [2.17.0-beta.3](https://github.com/chadbyte/clay/compare/v2.17.0-beta.2...v2.17.0-beta.3) (2026-03-23)
 
 
