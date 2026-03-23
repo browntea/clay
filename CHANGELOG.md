@@ -1,3 +1,10 @@
+# [2.16.0-beta.2](https://github.com/chadbyte/clay/compare/v2.16.0-beta.1...v2.16.0-beta.2) (2026-03-23)
+
+
+### Bug Fixes
+
+* **pwa:** handle standard port when behind reverse proxy ([012ab31](https://github.com/chadbyte/clay/commit/012ab310210763ae644338ab66cb4930d6ce89e4)), closes [#241](https://github.com/chadbyte/clay/issues/241)
+
 # [2.16.0-beta.1](https://github.com/chadbyte/clay/compare/v2.15.2...v2.16.0-beta.1) (2026-03-23)
 
 
