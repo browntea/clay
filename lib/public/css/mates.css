@@ -1,3 +1,15 @@
+/* === Avatar anti-aliasing === */
+.mate-sidebar-avatar,
+.mate-collapsed-avatar,
+.dm-bubble-avatar,
+.dm-bubble-avatar-me,
+.home-hub-mate-avatar {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: smooth;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 /* === Mate Chat Title Bar === */
 
 .title-bar-content.mate-dm-active {
