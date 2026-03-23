@@ -168,7 +168,7 @@ Yes. Create as many as you need. A code reviewer, a writing partner, a project m
 
 ## HTTPS
 
-HTTPS is enabled by default using a builtin wildcard certificate for `*.d.clay.studio`. No setup required. Your browser connects to a URL like:
+HTTPS is enabled by default using a builtin wildcard certificate for `*.d.clay.studio`. No setup required. Available from `v2.17.0-beta.2`. Your browser connects to a URL like:
 
 ```
 https://192-168-1-50.d.clay.studio:2633
