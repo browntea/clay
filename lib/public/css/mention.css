@@ -1,0 +1,141 @@
+/* ==========================================================================
+   @Mention Autocomplete Dropdown
+   ========================================================================== */
+
+#mention-menu {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 8px;
+  box-shadow: 0 -4px 24px rgba(var(--shadow-rgb), 0.4);
+  z-index: 10;
+}
+
+#mention-menu.visible { display: block; }
+
+.mention-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.mention-item:last-child { border-bottom: none; }
+
+.mention-item:hover,
+.mention-item.active {
+  background: rgba(var(--overlay-rgb), 0.05);
+}
+
+.mention-item-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mention-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.mention-item-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   @Mention Chip (in user bubble)
+   ========================================================================== */
+
+.mention-chip {
+  display: inline;
+  color: var(--accent);
+  font-weight: 600;
+  background: rgba(var(--accent-rgb, 124, 58, 237), 0.12);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: inherit;
+}
+
+/* ==========================================================================
+   @Mention Response Block
+   ========================================================================== */
+
+.msg-mention {
+  position: relative;
+  max-width: var(--content-width);
+  margin: 0 auto 12px;
+  padding: 4px 20px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--mention-color, #6c5ce7) 6%, transparent);
+  transition: background 0.15s;
+}
+
+.msg-mention:hover {
+  background: color-mix(in srgb, var(--mention-color, #6c5ce7) 10%, transparent);
+}
+
+.mention-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.mention-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mention-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mention-color, #6c5ce7);
+}
+
+.mention-content {
+  font-size: 15px;
+  line-height: 1.7;
+  word-break: break-word;
+  color: var(--text);
+}
+
+/* Activity bar inside mention block */
+.msg-mention .mention-activity-bar {
+  margin: 4px 0;
+  padding: 0;
+}
+
+/* Error state */
+.mention-error {
+  color: var(--danger, #e74c3c);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Mobile adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .msg-mention {
+    max-width: 100%;
+    padding: 4px 12px;
+  }
+}

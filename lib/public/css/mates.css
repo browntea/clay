@@ -1958,10 +1958,7 @@ body.mate-dm-active .mate-permission.resolved .permission-decision-label {
   color: var(--text-dimmer);
 }
 
-/* --- Mate Activity: avatar + text (hidden, dots row is enough) --- */
-body.mate-dm-active .activity-inline {
-  display: none;
-}
+/* --- Mate Activity: avatar + text --- */
 
 /* --- Mate AskUserQuestion: avatar + content layout (matches msg-assistant) --- */
 body.mate-dm-active .mate-ask-user {
