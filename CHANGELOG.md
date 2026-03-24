@@ -1,3 +1,23 @@
+# [2.17.0](https://github.com/chadbyte/clay/compare/v2.16.0...v2.17.0) (2026-03-24)
+
+
+### Bug Fixes
+
+* **cli:** move mkcert deprecation warning to main menu after render ([a702390](https://github.com/chadbyte/clay/commit/a70239065497bd35adf79fe414f8cf30e20210ce))
+* **images:** hydrate image refs during session switch replay ([a71c771](https://github.com/chadbyte/clay/commit/a71c771c7f29c0654d21fef51a1a5b1de7f91e7a))
+* **profile:** show custom avatar in popover header on open ([a7902e4](https://github.com/chadbyte/clay/commit/a7902e4b0c0b1322bcd9004da96782e31c5b68a2))
+* **sw:** skip cross-origin requests in service worker fetch handler ([14615ed](https://github.com/chadbyte/clay/commit/14615edf56d1c1b4424aa3a760eaed9e61beb0e7))
+* **tls:** skip stale mkcert cert when mkcert is uninstalled ([0b4f6bf](https://github.com/chadbyte/clay/commit/0b4f6bf33c89af54f4ff77f0245ffcaeb39ab01e))
+* **ui:** prevent command palette from hiding behind iPad keyboard ([3008138](https://github.com/chadbyte/clay/commit/3008138a133fa2989a669843f4108e6c01ac38f4))
+
+
+### Features
+
+* **avatar:** add custom avatar upload with position picker ([a6a3497](https://github.com/chadbyte/clay/commit/a6a34970f9692c954545121b77872f939992e05c))
+* **tls:** use builtin *.d.clay.studio wildcard certificate by default ([4c30000](https://github.com/chadbyte/clay/commit/4c30000ff4004286469de0d0016a6d6c920b7020))
+* **ui:** add /pwa route and fix top bar pill layout ([efda994](https://github.com/chadbyte/clay/commit/efda994805d6d321afc07f36d7716bfd3eea4e79))
+* **ui:** add Share button with QR code on desktop top bar ([851ee31](https://github.com/chadbyte/clay/commit/851ee31d84e62b4e7b51df035871cef8a36c6c9c))
+
 # [2.17.0-beta.10](https://github.com/chadbyte/clay/compare/v2.17.0-beta.9...v2.17.0-beta.10) (2026-03-24)
 
 
