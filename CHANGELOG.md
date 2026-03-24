@@ -1,3 +1,10 @@
+# [2.17.0-beta.9](https://github.com/chadbyte/clay/compare/v2.17.0-beta.8...v2.17.0-beta.9) (2026-03-24)
+
+
+### Features
+
+* **ui:** add Share button with QR code on desktop top bar ([851ee31](https://github.com/chadbyte/clay/commit/851ee31d84e62b4e7b51df035871cef8a36c6c9c))
+
 # [2.17.0-beta.8](https://github.com/chadbyte/clay/compare/v2.17.0-beta.7...v2.17.0-beta.8) (2026-03-23)
 
 
