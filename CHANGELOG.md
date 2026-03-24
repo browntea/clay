@@ -1,3 +1,10 @@
+# [2.17.0-beta.10](https://github.com/chadbyte/clay/compare/v2.17.0-beta.9...v2.17.0-beta.10) (2026-03-24)
+
+
+### Bug Fixes
+
+* **profile:** show custom avatar in popover header on open ([a7902e4](https://github.com/chadbyte/clay/commit/a7902e4b0c0b1322bcd9004da96782e31c5b68a2))
+
 # [2.17.0-beta.9](https://github.com/chadbyte/clay/compare/v2.17.0-beta.8...v2.17.0-beta.9) (2026-03-24)
 
 
