@@ -244,6 +244,25 @@
   margin-top: 2px;
   font-weight: 400;
 }
+.qr-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.qr-share-btn:hover { background: #f5f5f5; }
+.qr-share-btn .lucide { width: 14px; height: 14px; }
+.qr-share-btn.hidden { display: none; }
 
 /* --- Notification menu --- */
 #notif-menu-wrap {
