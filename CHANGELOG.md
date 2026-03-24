@@ -1,3 +1,17 @@
+# [2.18.0-beta.1](https://github.com/chadbyte/clay/compare/v2.17.0...v2.18.0-beta.1) (2026-03-24)
+
+
+### Bug Fixes
+
+* **mention:** improve mention UX in mate DM and project chat ([6927a4c](https://github.com/chadbyte/clay/commit/6927a4cc8eaef7e9e56f2780ec34fc5305a60b52))
+* **mobile:** eliminate gap between input bar and iOS keyboard ([5cd807d](https://github.com/chadbyte/clay/commit/5cd807dab576d530744cb97540a0da5417a997d1)), closes [#layout](https://github.com/chadbyte/clay/issues/layout)
+
+
+### Features
+
+* **mention:** add [@mention](https://github.com/mention) system for invoking Mates in project chat ([4daee97](https://github.com/chadbyte/clay/commit/4daee97921e3c638003c95dd404eeabd92b3c9b1))
+* **mention:** add session digest and memory section for mates ([3c58f17](https://github.com/chadbyte/clay/commit/3c58f17eb3e21bad178868655da3d03489919a13))
+
 # [2.17.0](https://github.com/chadbyte/clay/compare/v2.16.0...v2.17.0) (2026-03-24)
 
 
