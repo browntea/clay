@@ -1,3 +1,16 @@
+# [2.18.0-beta.3](https://github.com/chadbyte/clay/compare/v2.18.0-beta.2...v2.18.0-beta.3) (2026-03-24)
+
+
+### Bug Fixes
+
+* **mention:** include pasted content when sending mentions ([4c277c6](https://github.com/chadbyte/clay/commit/4c277c6b7d2a4fdbbc933b02a64f3e481d7864c3))
+* **mention:** prevent digest callbacks from being nulled after onDone ([5580733](https://github.com/chadbyte/clay/commit/558073313593bd47738aec3955412d81cffeb79b))
+
+
+### Features
+
+* **mention:** route non-read tools through permission system ([09749cc](https://github.com/chadbyte/clay/commit/09749ccff04fb84dd339ee0dee3f387e090f84d9))
+
 # [2.18.0-beta.2](https://github.com/chadbyte/clay/compare/v2.18.0-beta.1...v2.18.0-beta.2) (2026-03-24)
 
 
