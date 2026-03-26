@@ -1,3 +1,10 @@
+# [2.18.0-beta.5](https://github.com/chadbyte/clay/compare/v2.18.0-beta.4...v2.18.0-beta.5) (2026-03-26)
+
+
+### Bug Fixes
+
+* **mate:** auto-approve read tools in mate DM sessions ([d14c9e2](https://github.com/chadbyte/clay/commit/d14c9e255dafc8dcf98cd928ba632208672412b6))
+
 # [2.18.0-beta.4](https://github.com/chadbyte/clay/compare/v2.18.0-beta.3...v2.18.0-beta.4) (2026-03-24)
 
 
