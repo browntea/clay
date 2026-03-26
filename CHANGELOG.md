@@ -1,3 +1,10 @@
+# [2.18.0-beta.6](https://github.com/chadbyte/clay/compare/v2.18.0-beta.5...v2.18.0-beta.6) (2026-03-26)
+
+
+### Bug Fixes
+
+* **mate:** pass mateDisplayName on daemon startup mate restoration ([c2e0cf7](https://github.com/chadbyte/clay/commit/c2e0cf7f358b6d6ccb03f6dea106c0b5d824d895))
+
 # [2.18.0-beta.5](https://github.com/chadbyte/clay/compare/v2.18.0-beta.4...v2.18.0-beta.5) (2026-03-26)
 
 
