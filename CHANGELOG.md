@@ -1,3 +1,10 @@
+# [2.18.0-beta.9](https://github.com/chadbyte/clay/compare/v2.18.0-beta.8...v2.18.0-beta.9) (2026-03-26)
+
+
+### Bug Fixes
+
+* **session:** persist active session per project in localStorage ([8074574](https://github.com/chadbyte/clay/commit/807457497d871391489422037df6b3ff4b33ab62))
+
 # [2.18.0-beta.8](https://github.com/chadbyte/clay/compare/v2.18.0-beta.7...v2.18.0-beta.8) (2026-03-26)
 
 
