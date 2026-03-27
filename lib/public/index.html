@@ -210,6 +210,7 @@
         <button id="mate-sticky-notes-btn"><i data-lucide="sticky-note"></i> <span>Sticky Notes</span></button>
         <button id="mate-skills-btn"><i data-lucide="puzzle"></i> <span>Skills</span></button>
         <button id="mate-scheduler-btn"><i data-lucide="calendar-clock"></i> <span>Scheduled Tasks</span></button>
+        <button id="mate-debate-btn"><i data-lucide="mic"></i> <span>Start Debate</span></button>
       </div>
       <div id="mate-sidebar-conversations">
         <div class="mate-sidebar-sessions-header">
@@ -291,6 +292,7 @@
         </div>
         <div id="todo-sticky" class="hidden"></div>
         <div id="ralph-sticky" class="hidden"></div>
+        <div id="debate-sticky" class="hidden"></div>
         <div class="status">
           <button id="find-in-session-btn" title="Search in session (Ctrl+F)"><i data-lucide="search"></i></button>
           <button id="sticky-notes-toggle-btn" title="Sticky notes"><i data-lucide="sticky-note"></i><span class="sticky-notes-count hidden"></span></button>
@@ -304,6 +306,7 @@
       <p id="connect-overlay-msg">Reconnecting to server…</p>
     </div>
     <div id="sticky-notes-container" class="hidden"></div>
+    <div id="debate-info-float" class="hidden"></div>
     <div id="messages"></div>
 
     <div id="info-panels">
@@ -1300,6 +1303,27 @@
     </div>
     <div class="skills-content" id="skills-content">
       <div class="skills-loading"><div class="skills-spinner"></div> Loading skills...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Debate Modal -->
+<div id="debate-modal" class="hidden">
+  <div class="debate-modal-backdrop"></div>
+  <div class="debate-modal-card">
+    <div class="debate-modal-header">
+      <span><i data-lucide="mic"></i> New Debate</span>
+      <button id="debate-modal-close">&times;</button>
+    </div>
+    <div class="debate-modal-body">
+      <label class="debate-field-label" for="debate-topic-input">Topic <span class="debate-field-req">*</span></label>
+      <textarea id="debate-topic-input" rows="2" placeholder="e.g. Should AI development be regulated?"></textarea>
+      <label class="debate-field-label" for="debate-panel-list">Select panelists</label>
+      <div id="debate-panel-list" class="debate-panel-list"></div>
+    </div>
+    <div class="debate-modal-footer">
+      <button id="debate-modal-cancel" class="debate-btn-cancel">Cancel</button>
+      <button id="debate-modal-start" class="debate-btn-start">Start</button>
     </div>
   </div>
 </div>
