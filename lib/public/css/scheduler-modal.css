@@ -1206,6 +1206,89 @@
   color: var(--text);
 }
 
+/* Interval end conditions */
+.sched-interval-end-section {
+  padding: 0 4px 6px;
+}
+
+.sched-interval-end-section.hidden {
+  display: none;
+}
+
+.sched-interval-end-divider {
+  border-top: 1px solid var(--border);
+  margin: 2px 4px 6px;
+}
+
+.sched-interval-end-options {
+  display: flex;
+  gap: 2px;
+  padding: 0 4px;
+}
+
+.sched-interval-end-opt {
+  flex: 1;
+  background: none;
+  border: 1px solid transparent;
+  padding: 5px 6px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 6px;
+  color: var(--text-dimmer);
+  transition: background 0.15s, color 0.15s;
+}
+
+.sched-interval-end-opt:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.sched-interval-end-opt.active {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sched-interval-end-after,
+.sched-interval-end-until {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 2px;
+}
+
+.sched-interval-end-after.hidden,
+.sched-interval-end-until.hidden {
+  display: none;
+}
+
+.sched-interval-end-input {
+  width: 48px;
+  padding: 4px 6px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+.sched-interval-end-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.sched-interval-end-time {
+  width: 90px;
+  padding: 4px 6px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  color-scheme: dark;
+}
+
 .sched-skip-running-row {
   padding: 6px 12px;
 }

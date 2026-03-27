@@ -655,6 +655,15 @@
   opacity: 0.35;
 }
 
+.scheduler-cell.past {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.scheduler-cell.past .scheduler-day-num {
+  text-decoration: line-through;
+}
+
 .scheduler-cell.today {
   background: color-mix(in srgb, var(--accent) 8%, transparent);
 }

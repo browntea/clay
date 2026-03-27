@@ -1872,6 +1872,21 @@
         <button type="button" class="sched-interval-seg active" data-unit="minute">min</button><button type="button" class="sched-interval-seg" data-unit="hour">hrs</button>
       </div>
     </div>
+    <div class="sched-interval-end-section hidden" id="sched-interval-end-section">
+      <div class="sched-interval-end-divider"></div>
+      <div class="sched-interval-end-options">
+        <button class="sched-interval-end-opt active" data-iend="allday">All day</button>
+        <button class="sched-interval-end-opt" data-iend="after">Stop after</button>
+        <button class="sched-interval-end-opt" data-iend="until">Stop at</button>
+      </div>
+      <div class="sched-interval-end-after hidden" id="sched-interval-end-after-row">
+        <input type="number" class="sched-interval-end-input" id="sched-interval-end-after" value="5" min="1" max="999">
+        <span class="sched-interval-end-label">runs</span>
+      </div>
+      <div class="sched-interval-end-until hidden" id="sched-interval-end-until-row">
+        <input type="time" class="sched-interval-end-time" id="sched-interval-end-time" value="18:00">
+      </div>
+    </div>
   </div>
 </div>
 
