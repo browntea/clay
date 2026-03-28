@@ -685,9 +685,7 @@
    Events on cells
    ============================ */
 .scheduler-event {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  display: block;
   padding: 2px 6px;
   margin-bottom: 2px;
   border-radius: 4px;
