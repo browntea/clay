@@ -1,92 +1,6 @@
 /* ============================
-   Scheduler — Edit Modal
+   Scheduler — Shared Form Styles
    ============================ */
-
-#schedule-edit-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 310;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#schedule-edit-modal.hidden { display: none; }
-
-.schedule-edit-dialog {
-  width: 420px;
-  max-width: 90vw;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.schedule-edit-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-alt);
-}
-
-.schedule-edit-title {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--text);
-}
-
-.schedule-edit-close {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
-  padding: 2px 4px;
-}
-
-.schedule-edit-close:hover {
-  color: var(--text);
-}
-
-.schedule-edit-body {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-/* --- Form fields --- */
-.sched-field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.sched-field-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.sched-field-input {
-  background: var(--input-bg, var(--bg-alt));
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 14px;
-  color: var(--text);
-  outline: none;
-  font-family: inherit;
-}
-
-.sched-field-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
-}
 
 .sched-field-select {
   background: var(--input-bg, var(--bg-alt));
@@ -105,41 +19,6 @@
 }
 
 .sched-field-select:focus {
-  border-color: var(--accent);
-}
-
-.sched-field-hint {
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-/* --- Repeat preset buttons --- */
-.sched-preset-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.sched-preset-btn {
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.12s;
-}
-
-.sched-preset-btn:hover {
-  background: var(--hover);
-  color: var(--text);
-}
-
-.sched-preset-btn.active {
-  background: var(--accent);
-  color: #fff;
   border-color: var(--accent);
 }
 
@@ -176,166 +55,7 @@
   border-color: var(--accent);
 }
 
-/* --- Time picker --- */
-.sched-time-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.sched-time-input {
-  background: var(--input-bg, var(--bg-alt));
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px 10px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-  outline: none;
-  width: 110px;
-  font-family: "Roboto Mono", monospace;
-}
-
-.sched-time-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
-}
-
-/* --- Cron preview --- */
-.sched-cron-preview {
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 12px;
-  font-family: "Roboto Mono", monospace;
-  color: var(--text-muted);
-}
-
-.sched-cron-preview .human {
-  color: var(--text);
-  font-family: inherit;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 2px;
-}
-
-/* --- Toggle switch --- */
-.sched-toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sched-toggle {
-  position: relative;
-  width: 40px;
-  height: 22px;
-  cursor: pointer;
-}
-
-.sched-toggle input {
-  display: none;
-}
-
-.sched-toggle-track {
-  position: absolute;
-  inset: 0;
-  border-radius: 11px;
-  background: var(--border);
-  transition: background 0.2s;
-}
-
-.sched-toggle input:checked + .sched-toggle-track {
-  background: var(--accent);
-}
-
-.sched-toggle-thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fff;
-  transition: transform 0.2s;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.sched-toggle input:checked ~ .sched-toggle-thumb {
-  transform: translateX(18px);
-}
-
-/* --- History list --- */
-.sched-history {
-  max-height: 150px;
-  overflow-y: auto;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-}
-
-.sched-history-empty {
-  padding: 16px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 12px;
-}
-
-.sched-history-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-bottom: 1px solid var(--border-subtle, var(--border));
-  font-size: 12px;
-}
-
-.sched-history-item:last-child {
-  border-bottom: none;
-}
-
-.sched-history-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.sched-history-dot.pass {
-  background: var(--success);
-}
-
-.sched-history-dot.fail, .sched-history-dot.error, .sched-history-dot.max_iterations {
-  background: var(--error);
-}
-
-.sched-history-date {
-  color: var(--text-muted);
-  flex-shrink: 0;
-  font-family: "Roboto Mono", monospace;
-  font-size: 11px;
-}
-
-.sched-history-result {
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-
-.sched-history-iterations {
-  color: var(--text-muted);
-  margin-left: auto;
-}
-
-/* --- Footer buttons --- */
-.schedule-edit-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 12px 16px;
-  border-top: 1px solid var(--border);
-  background: var(--bg-alt);
-}
-
+/* --- Shared buttons --- */
 .sched-btn {
   padding: 7px 16px;
   border-radius: 6px;
@@ -537,14 +257,6 @@
   border-color: var(--accent);
 }
 
-@media (max-width: 480px) {
-  .schedule-edit-dialog {
-    width: 100vw;
-    max-width: none;
-    border-radius: 0;
-  }
-}
-
 /* ============================
    Scheduler — Create Popover (inline)
    ============================ */
@@ -616,9 +328,10 @@
   border-radius: 6px;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 4px 5px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
+  gap: 2px;
   transition: all 0.12s;
 }
 
@@ -1050,47 +763,18 @@
   display: none;
 }
 
-.sched-recurrence-options {
-  padding: 4px;
-  display: flex;
-  flex-direction: column;
-  max-height: 260px;
-  overflow-y: auto;
-}
-
-.sched-recurrence-option {
-  background: none;
-  border: none;
-  color: var(--text);
-  cursor: pointer;
-  padding: 7px 10px;
-  font-size: 13px;
-  font-weight: 400;
-  text-align: left;
-  transition: background 0.1s;
-  border-radius: 6px;
-}
-
-.sched-recurrence-option:hover {
-  background: var(--hover);
-}
-
-.sched-recurrence-option.active {
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent);
-  font-weight: 600;
-}
 
 .sched-create-interval-btn {
   background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 4px 6px;
+  padding: 4px 8px;
   cursor: pointer;
   color: var(--text-muted);
   display: flex;
   align-items: center;
-  transition: color 0.15s, border-color 0.15s;
+  gap: 2px;
+  transition: all 0.12s;
 }
 
 .sched-create-interval-btn:hover {
@@ -1101,11 +785,12 @@
 .sched-create-interval-btn.has-recurrence {
   color: var(--accent);
   border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
-.sched-create-interval-btn .lucide {
-  width: 14px;
-  height: 14px;
+.sched-create-interval-btn svg {
+  width: 13px;
+  height: 13px;
 }
 
 .sched-create-interval-dropdown {
@@ -1115,8 +800,8 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  min-width: 200px;
-  max-width: 260px;
+  min-width: 220px;
+  max-width: 280px;
   overflow: hidden;
 }
 
@@ -1124,48 +809,24 @@
   display: none;
 }
 
-.sched-interval-options {
-  padding: 4px;
-  display: flex;
-  flex-direction: column;
-}
 
-.sched-interval-option {
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  text-align: left;
-  cursor: pointer;
-  font-size: 13px;
-  border-radius: 6px;
-  color: var(--text);
-}
-
-.sched-interval-option:hover {
-  background: var(--hover);
-}
-
-.sched-interval-option.active {
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent);
-  font-weight: 600;
-}
-
+/* --- Interval custom row --- */
 .sched-interval-custom-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 8px 6px;
-  border-top: 1px solid var(--border);
+  gap: 8px;
+  padding: 10px 12px;
 }
 
 .sched-interval-custom-row .sched-custom-label {
   font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
 }
 
 .sched-interval-custom-row .sched-custom-interval {
   width: 48px;
-  padding: 4px 6px;
+  padding: 5px 6px;
   font-size: 13px;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -1181,7 +842,7 @@
 }
 
 .sched-interval-seg {
-  padding: 4px 10px;
+  padding: 5px 10px;
   font-size: 12px;
   font-weight: 500;
   border: none;
@@ -1206,9 +867,12 @@
   color: var(--text);
 }
 
-/* Interval end conditions */
+/* --- Interval end conditions --- */
 .sched-interval-end-section {
-  padding: 0 4px 6px;
+  padding: 0 12px 4px;
+  border-top: 1px solid var(--border-subtle, var(--border));
+  margin-top: 2px;
+  padding-top: 8px;
 }
 
 .sched-interval-end-section.hidden {
@@ -1216,14 +880,12 @@
 }
 
 .sched-interval-end-divider {
-  border-top: 1px solid var(--border);
-  margin: 2px 4px 6px;
+  display: none;
 }
 
 .sched-interval-end-options {
   display: flex;
   gap: 2px;
-  padding: 0 4px;
 }
 
 .sched-interval-end-opt {
@@ -1255,7 +917,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 8px 2px;
+  padding: 8px 0 2px;
 }
 
 .sched-interval-end-after.hidden,
@@ -1265,7 +927,7 @@
 
 .sched-interval-end-input {
   width: 48px;
-  padding: 4px 6px;
+  padding: 5px 6px;
   font-size: 13px;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -1280,7 +942,7 @@
 
 .sched-interval-end-time {
   width: 90px;
-  padding: 4px 6px;
+  padding: 5px 6px;
   font-size: 13px;
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -1289,12 +951,15 @@
   color-scheme: dark;
 }
 
-.sched-skip-running-row {
-  padding: 6px 12px;
+.light-theme .sched-interval-end-time {
+  color-scheme: light;
 }
 
-.sched-skip-running-row.hidden {
-  display: none;
+/* --- Skip if running toggle --- */
+.sched-skip-running-row {
+  padding: 8px 12px 4px;
+  border-top: 1px solid var(--border-subtle, var(--border));
+  margin-top: 4px;
 }
 
 .sched-switch-label {
@@ -1359,36 +1024,6 @@
   flex-direction: column;
 }
 
-.sched-custom-repeat-panel.hidden {
-  display: none;
-}
-
-.sched-custom-header {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border-subtle, var(--border));
-}
-
-.sched-custom-back {
-  background: none;
-  border: none;
-  color: var(--text);
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: 1px;
-}
-
-.sched-custom-back svg {
-  width: 13px;
-  height: 13px;
-}
-
-.sched-custom-back:hover {
-  color: var(--accent);
-}
 
 .sched-custom-row {
   display: flex;

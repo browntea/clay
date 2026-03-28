@@ -1622,79 +1622,6 @@
 <!-- Scheduler panel is dynamically created in #app by scheduler.js -->
 
 <!-- Schedule Edit Modal -->
-<div id="schedule-edit-modal" class="hidden">
-  <div class="confirm-backdrop"></div>
-  <div class="confirm-dialog schedule-edit-dialog">
-    <div class="schedule-edit-header">
-      <span class="schedule-edit-title" id="schedule-edit-title">New Schedule</span>
-      <button class="schedule-edit-close" id="schedule-edit-close">&times;</button>
-    </div>
-    <div class="schedule-edit-body">
-      <div class="sched-field">
-        <label class="sched-field-label" for="sched-name">Name</label>
-        <input type="text" class="sched-field-input" id="sched-name" placeholder="e.g. Daily Code Review" maxlength="60" spellcheck="false" autocomplete="off">
-      </div>
-      <div class="sched-field" id="sched-job-field">
-        <label class="sched-field-label">Job</label>
-        <div class="sched-field-hint" id="sched-job-name" style="font-weight:600;color:var(--text)"></div>
-      </div>
-      <div class="sched-field">
-        <label class="sched-field-label">Repeat</label>
-        <div class="sched-preset-group" id="sched-presets">
-          <button class="sched-preset-btn" data-preset="daily">Every day</button>
-          <button class="sched-preset-btn" data-preset="weekdays">Weekdays</button>
-          <button class="sched-preset-btn" data-preset="weekly">Weekly</button>
-          <button class="sched-preset-btn" data-preset="monthly">Monthly</button>
-          <button class="sched-preset-btn" data-preset="custom">Custom</button>
-        </div>
-      </div>
-      <div class="sched-field" id="sched-dow-field" style="display:none">
-        <label class="sched-field-label">Days of week</label>
-        <div class="sched-dow-row" id="sched-dow-row">
-          <button class="sched-dow-btn" data-dow="0">Su</button>
-          <button class="sched-dow-btn" data-dow="1">Mo</button>
-          <button class="sched-dow-btn" data-dow="2">Tu</button>
-          <button class="sched-dow-btn" data-dow="3">We</button>
-          <button class="sched-dow-btn" data-dow="4">Th</button>
-          <button class="sched-dow-btn" data-dow="5">Fr</button>
-          <button class="sched-dow-btn" data-dow="6">Sa</button>
-        </div>
-      </div>
-      <div class="sched-field">
-        <label class="sched-field-label">Time</label>
-        <div class="sched-time-row">
-          <input type="time" class="sched-time-input" id="sched-time" value="09:00">
-        </div>
-      </div>
-      <div class="sched-field">
-        <label class="sched-field-label">Preview</label>
-        <div class="sched-cron-preview" id="sched-cron-preview">
-          <span class="human" id="sched-human-text">Every day at 09:00</span>
-          <span id="sched-cron-text">0 9 * * *</span>
-        </div>
-      </div>
-      <div class="sched-field">
-        <div class="sched-toggle-row">
-          <span class="sched-field-label" style="margin:0">Enabled</span>
-          <label class="sched-toggle">
-            <input type="checkbox" id="sched-enabled" checked>
-            <span class="sched-toggle-track"></span>
-            <span class="sched-toggle-thumb"></span>
-          </label>
-        </div>
-      </div>
-      <div class="sched-field" id="sched-history-field" style="display:none">
-        <label class="sched-field-label">Run History</label>
-        <div class="sched-history" id="sched-history"></div>
-      </div>
-    </div>
-    <div class="schedule-edit-footer">
-      <button class="sched-btn sched-btn-delete" id="sched-delete" style="display:none">Delete</button>
-      <button class="sched-btn sched-btn-cancel" id="sched-cancel">Cancel</button>
-      <button class="sched-btn sched-btn-save" id="sched-save">Save</button>
-    </div>
-  </div>
-</div>
 
 <!-- Schedule Create Popover (inline) -->
 <div id="schedule-create-popover" class="sched-create-popover hidden">
@@ -1747,15 +1674,6 @@
     <i data-lucide="align-left" class="sched-create-row-icon"></i>
     <textarea class="sched-create-row-textarea" id="sched-create-desc" rows="3" placeholder="Description"></textarea>
   </div>
-  <div class="sched-skip-running-row hidden" id="sched-skip-running-row">
-    <label class="sched-switch-label" for="sched-skip-running">
-      <div class="sched-switch">
-        <input type="checkbox" id="sched-skip-running" checked>
-        <span class="sched-switch-slider"></span>
-      </div>
-      <span class="sched-switch-text">Skip if previous run still active</span>
-    </label>
-  </div>
   <!-- Bottom bar -->
   <div class="sched-create-bottom">
     <div class="sched-create-bottom-left">
@@ -1775,26 +1693,11 @@
   </div>
   <!-- Recurrence dropdown -->
   <div class="sched-create-recurrence-dropdown hidden" id="sched-create-recurrence-dropdown">
-    <div class="sched-recurrence-options" id="sched-create-recurrence-list">
-      <button class="sched-recurrence-option active" data-recurrence="none">Does not repeat</button>
-      <button class="sched-recurrence-option" data-recurrence="daily">Every day</button>
-      <button class="sched-recurrence-option" data-recurrence="weekly" id="sched-recurrence-weekly">Weekly on Tuesday</button>
-      <button class="sched-recurrence-option" data-recurrence="biweekly" id="sched-recurrence-biweekly">Every 2nd Tuesday of the month</button>
-      <button class="sched-recurrence-option" data-recurrence="yearly" id="sched-recurrence-yearly">Every year on Mar 10</button>
-      <button class="sched-recurrence-option" data-recurrence="monthly" id="sched-recurrence-monthly">Every month on the 10th</button>
-      <button class="sched-recurrence-option" data-recurrence="weekdays">Every weekday</button>
-      <button class="sched-recurrence-option" data-recurrence="custom">Custom&hellip;</button>
-    </div>
-    <div class="sched-custom-repeat-panel hidden" id="sched-custom-repeat-panel">
-      <div class="sched-custom-header">
-        <button class="sched-custom-back" id="sched-custom-back"><i data-lucide="chevron-left"></i> Back</button>
-      </div>
+    <div class="sched-custom-repeat-panel" id="sched-custom-repeat-panel">
       <div class="sched-custom-row">
         <span class="sched-custom-label">Every</span>
         <input type="number" class="sched-custom-interval" id="sched-custom-interval" value="1" min="1" max="99">
         <select class="sched-field-select sched-custom-unit" id="sched-custom-unit">
-          <option value="minute">Minute</option>
-          <option value="hour">Hour</option>
           <option value="day">Day</option>
           <option value="week" selected>Week</option>
           <option value="month">Month</option>
@@ -1857,14 +1760,6 @@
   </div>
   <!-- Interval dropdown -->
   <div class="sched-create-interval-dropdown hidden" id="sched-create-interval-dropdown">
-    <div class="sched-interval-options" id="sched-create-interval-list">
-      <button class="sched-interval-option active" data-interval="none">No interval</button>
-      <button class="sched-interval-option" data-interval="1">Every minute</button>
-      <button class="sched-interval-option" data-interval="5">Every 5 minutes</button>
-      <button class="sched-interval-option" data-interval="15">Every 15 minutes</button>
-      <button class="sched-interval-option" data-interval="30">Every 30 minutes</button>
-      <button class="sched-interval-option" data-interval="60">Every hour</button>
-    </div>
     <div class="sched-interval-custom-row">
       <span class="sched-custom-label">Every</span>
       <input type="number" class="sched-custom-interval" id="sched-interval-custom-value" value="10" min="1" max="999">
@@ -1886,6 +1781,19 @@
       <div class="sched-interval-end-until hidden" id="sched-interval-end-until-row">
         <input type="time" class="sched-interval-end-time" id="sched-interval-end-time" value="18:00">
       </div>
+    </div>
+    <div class="sched-skip-running-row" id="sched-skip-running-row">
+      <label class="sched-switch-label" for="sched-skip-running">
+        <div class="sched-switch">
+          <input type="checkbox" id="sched-skip-running" checked>
+          <span class="sched-switch-slider"></span>
+        </div>
+        <span class="sched-switch-text">Skip if previous run still active</span>
+      </label>
+    </div>
+    <div class="sched-custom-actions">
+      <button class="sched-btn sched-btn-cancel" id="sched-interval-cancel">Cancel</button>
+      <button class="sched-btn sched-btn-save" id="sched-interval-ok">OK</button>
     </div>
   </div>
 </div>
