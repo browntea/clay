@@ -124,6 +124,9 @@ No. Teammates share the Claude Code session logged in on the server. You can als
 **"Does it work with MCP servers?"**
 Yes. MCP configurations from the CLI carry over as-is.
 
+**"What is d.clay.studio in my browser URL?"**
+It's a DNS-only service that resolves to your local IP for HTTPS certificate validation. No data passes through it. All traffic stays between your browser and your machine. See [clay-dns](clay-dns/) for details.
+
 ## CLI Options
 
 ```bash
