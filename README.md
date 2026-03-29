@@ -100,9 +100,9 @@ For remote access, use a VPN like Tailscale.
 
 **AI is a teammate, not a tool.** A tool gets used once and forgotten. A teammate accumulates your history, your decisions, your working style. Give them a specialty, let them build context over time, and bring them into any project as a colleague.
 
-**Friction is a feature.** The goal of AI is not to remove all friction. It's to free you to focus on the friction that matters. Reviewing a critical decision, shaping the direction, catching what the agent missed. Clay keeps those moments in, on purpose.
-
 **AI should understand you first.** When you create a Mate, set up a scheduled task, or start a Ralph Loop, Clay interviews you. Not to save time, but to use AI's capability to understand what you actually want. "Just do it for me" is a trap. The better AI understands you, the better the output.
+
+**Friction is a feature.** The goal of AI is not to remove all friction. It's to free you to focus on the friction that matters. Reviewing a critical decision, shaping the direction, catching what the agent missed. Clay keeps those moments in, on purpose.
 
 ## FAQ
 
