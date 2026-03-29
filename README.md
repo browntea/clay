@@ -4,7 +4,9 @@
 
 [![npm version](https://img.shields.io/npm/v/clay-server)](https://www.npmjs.com/package/clay-server) [![npm downloads](https://img.shields.io/npm/dw/clay-server)](https://www.npmjs.com/package/clay-server) [![GitHub stars](https://img.shields.io/github/stars/chadbyte/clay)](https://github.com/chadbyte/clay) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/chadbyte/clay/blob/main/LICENSE)
 
-Everything Claude Code does, Clay does in your browser. Plus multi-session, file browser, scheduled agents, mobile notifications, and more. Invite your team to work together in the same session, or build an AI team from scratch. **Your machine is the server.** No cloud relay, no middleman.
+Claude Code, but persistent, collaborative, and runs on your machine.
+
+I wanted AI that works as part of a team, not something you just "run".
 
 ```bash
 npx clay-server
@@ -25,11 +27,27 @@ That's Clay now. A workspace where AI teammates have names, persistent memory, a
 
 ## What you get
 
-### Everything the CLI does
+- **Full CLI parity.** Same SDK, same CLAUDE.md, same MCP. Zero migration.
+- **Multi-session, multi-project.** Run agents in parallel, switch in the sidebar.
+- **Real-time collaboration.** Invite your team, jump into any session.
+- **AI teammates.** Mates with persistent memory, personality, and opinions.
+- **Self-hosted.** Your machine is the server. No relay, no middleman.
+
+### Drop-in replacement for the CLI
 
 Your CLI sessions, your CLAUDE.md rules, your MCP servers. **All of it works in Clay as-is.** Pick up a CLI session in the browser, or continue a browser session in the CLI. Same SDK, same tools, same results.
 
+### Before vs Clay
+
+| Before | With Clay |
+|---|---|
+| One CLI session at a time | Persistent agents across projects |
+| No shared context across teammates | Shared workspace with your team |
+| No memory between decisions | AI that remembers past decisions and challenges new ones |
+
 ### Everything the CLI doesn't
+
+Run multiple agents, automate workflows, and stay in the loop from anywhere.
 
 **Multiple agents, multiple projects, at the same time.** Switch between them in the sidebar. Browse project files live while the agent works, with syntax highlighting for 180+ languages. Mermaid diagrams render as diagrams. Tables render as tables.
 
@@ -37,13 +55,13 @@ Your CLI sessions, your CLAUDE.md rules, your MCP servers. **All of it works in 
 
 ### Bring your whole team
 
-**One API key runs the whole workspace.** Invite teammates, set permissions per person, per project, per session. A designer reports a bug in plain language. A junior dev works with guardrails. If someone gets stuck, **jump into their session** to help in real time.
+**One API key runs the whole workspace.** Invite teammates, set permissions per person, per project, per session. A designer reports a bug in plain language. A junior dev works with guardrails. If someone gets stuck, **jump into their session** to help in real time. Real-time presence shows who's where.
 
-Add a CLAUDE.md and the AI operates within those rules: explains technical terms simply, escalates risky operations to seniors, summarizes changes in plain words. Real-time presence shows who's where, what they're working on.
+Add a CLAUDE.md and the AI operates within those rules: explains technical terms simply, escalates risky operations to seniors, summarizes changes in plain words.
 
 ### Build your team with Mates
 
-Not *"act like a design expert."* Mates are AI teammates shaped through real conversation, trained with your context, and built to hold their own perspective. Give them a name, avatar, expertise, and working style. **They don't flatter you. They push back.**
+Not *"act like a design expert."* Mates are AI teammates shaped through real conversation, trained with your context, and built to hold their own perspective. Give them a name, avatar, expertise, and working style. **They don't flatter you. They push back.** *"You ship too fast. You're ignoring onboarding again."*
 
 They live in your sidebar next to your human teammates. @mention them in any project session when you need their take, DM them directly, or bring multiple into the same conversation. Each Mate builds persistent knowledge over time, remembering past decisions, project context, and how you work together.
 
@@ -51,7 +69,7 @@ They live in your sidebar next to your human teammates. @mention them in any pro
 
 Let your Mates challenge each other. Set up a debate. Pick a moderator and panelists, give them a topic, and let them go. You can raise your hand to interject. When it wraps up, you get opposing perspectives from every angle.
 
-"Should we rewrite this in Rust?" "Should we delay the launch to fix onboarding?" "Should we position this as enterprise-first or PLG?" Get opposing perspectives before you commit.
+"Should we rewrite this in Rust?" "This architecture won't scale past 10k users. Here's why." "Should we position this as enterprise-first or PLG?" Get opposing perspectives before you commit.
 
 ### Your machine, your server
 
@@ -59,20 +77,11 @@ Clay runs as a daemon on your machine. **No cloud relay, no intermediary service
 
 The frontend is served directly from your machine. There is no third-party hosted UI between you and your server. PIN authentication, per-project permissions, and HTTPS are built in. For remote access, use a VPN like Tailscale.
 
-## How Clay compares
+## Who is Clay for
 
-*As of March 2026.*
-
-| | CLI | Remote Control | Channels | **Clay** |
-|---|---|---|---|---|
-| Multi-user with roles | – | – | Platform-dependent | **Accounts + RBAC** |
-| AI teammates (Mates + Debates) | – | – | – | **Yes** |
-| Join teammate's session | – | – | – | **Yes** |
-| Persistent daemon | – | Session-based | – | **Yes** |
-| Native mobile app | – | **Yes** | **Platform app** | PWA |
-| Official support | **Anthropic** | **Anthropic** | **Anthropic** | Community |
-
-Clay is a community project, not affiliated with Anthropic. Official tools receive guaranteed support and updates.
+- **Solo dev juggling multiple roles.** You need a code reviewer, a marketing lead, a writing partner, but it's just you. Build them as Mates.
+- **Small team sharing one AI workflow.** One API key, everyone in the browser, no terminal knowledge required.
+- **Founder doing dev + product + ops.** Run agents overnight, get notified on your phone, review in the morning.
 
 ## Getting Started
 
@@ -89,7 +98,7 @@ For remote access, use a VPN like Tailscale.
 
 ## Philosophy
 
-**AI is a teammate, not a tool.** A tool gets used once and forgotten. A teammate accumulates your history, your decisions, your working style. Give them a specialty, let them build context over time, and bring them into any project as a colleague. A solo developer gets a code reviewer, a marketing lead, a writing partner.
+**AI is a teammate, not a tool.** A tool gets used once and forgotten. A teammate accumulates your history, your decisions, your working style. Give them a specialty, let them build context over time, and bring them into any project as a colleague.
 
 **Friction is a feature.** The goal of AI is not to remove all friction. It's to free you to focus on the friction that matters. Reviewing a critical decision, shaping the direction, catching what the agent missed. Clay keeps those moments in, on purpose.
 
