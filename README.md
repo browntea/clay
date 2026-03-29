@@ -13,15 +13,21 @@ npx clay-server
 
 ---
 
+## Why I built Clay
+
+Claude Code is not just a coding tool. It's the best foundation for a personal AI agent I've found. I wanted to turn it into my own AI assistant, one that knows my context, remembers my decisions, and works the way I work.
+
+That started as a browser interface so I could access it from anywhere. Then I added multi-user so my team could use it too. Then I started building the AI teammates themselves.
+
+Most AI agent projects go for full autonomy. Let the AI loose, give it all the permissions, let it run. I wanted the opposite: **AI that works as part of a team.** Visible, controllable, accountable. Your teammates can see what the agent is doing, jump in when it needs help, and set the rules it operates under.
+
+That's Clay now. A workspace where AI teammates have names, persistent memory, and their own perspective. Not "act like an expert" prompting. Actual teammates that push back, remember last week, and sit in your sidebar next to your human colleagues.
+
 ## What you get
 
 ### Everything the CLI does
 
 Your CLI sessions, your CLAUDE.md rules, your MCP servers. **All of it works in Clay as-is.** Pick up a CLI session in the browser, or continue a browser session in the CLI. Same SDK, same tools, same results.
-
-<p align="center">
-  <img src="media/split.gif" alt="split-screen workflow" width="700">
-</p>
 
 ### Everything the CLI doesn't
 
@@ -29,15 +35,11 @@ Your CLI sessions, your CLAUDE.md rules, your MCP servers. **All of it works in 
 
 **Schedule agents with cron**, or let them run autonomously with **Ralph Loop**. Your phone buzzes when Claude needs approval, finishes a task, or hits an error. Install as a **PWA for push notifications**. Close your laptop, sessions keep running.
 
-<p align="center">
-  <img src="media/phone.gif" alt="Clay on phone" width="280">
-</p>
-
 ### Bring your whole team
 
 **One API key runs the whole workspace.** Invite teammates, set permissions per person, per project, per session. A designer reports a bug in plain language. A junior dev works with guardrails. If someone gets stuck, **jump into their session** to help in real time.
 
-Add a CLAUDE.md and the AI operates within those rules: explains technical terms simply, escalates risky operations to seniors, summarizes changes in plain words. Real-time presence shows who's where.
+Add a CLAUDE.md and the AI operates within those rules: explains technical terms simply, escalates risky operations to seniors, summarizes changes in plain words. Real-time presence shows who's where, what they're working on.
 
 ### Build your team with Mates
 
@@ -49,27 +51,13 @@ They live in your sidebar next to your human teammates. @mention them in any pro
 
 Let your Mates challenge each other. Set up a debate. Pick a moderator and panelists, give them a topic, and let them go. You can raise your hand to interject. When it wraps up, you get opposing perspectives from every angle.
 
-"Should we rewrite this in Rust?" "Should we delay the launch to fix onboarding?" "Should we position this as enterprise-first or PLG?" Get real opposing perspectives before you commit.
+"Should we rewrite this in Rust?" "Should we delay the launch to fix onboarding?" "Should we position this as enterprise-first or PLG?" Get opposing perspectives before you commit.
 
 ### Your machine, your server
 
-Clay runs as a daemon on your machine. **No cloud relay, no intermediary service** between your browser and your code. Data flows directly to the Anthropic API, exactly as it does from the CLI.
+Clay runs as a daemon on your machine. **No cloud relay, no intermediary service** between your browser and your code. **Data flows directly to the Anthropic API**, exactly as it does from the CLI.
 
-PIN authentication, per-project permissions, and HTTPS are built in. For remote access, use a VPN like Tailscale.
-
----
-
-## How a bug gets fixed
-
-**Without Clay:**
-Designer finds a bug → writes up a ticket on Asana → dev asks clarifying questions → PM prioritizes → dev opens terminal, fixes it → shares a preview → QA checks → deploy
-<br>*7 steps. 3 people. 2 days.*
-
-**With Clay:**
-Designer opens Clay in the browser, describes the bug in plain language → senior joins the same session, reviews the fix together → merge
-<br>*2 steps. 2 people. Minutes. The designer never touched a terminal.*
-
----
+The frontend is served directly from your machine. There is no third-party hosted UI between you and your server. PIN authentication, per-project permissions, and HTTPS are built in. For remote access, use a VPN like Tailscale.
 
 ## How Clay compares
 
@@ -86,8 +74,6 @@ Designer opens Clay in the browser, describes the bug in plain language → seni
 
 Clay is a community project, not affiliated with Anthropic. Official tools receive guaranteed support and updates.
 
----
-
 ## Getting Started
 
 **Requirements:** Node.js 20+, Claude Code CLI (authenticated).
@@ -101,11 +87,13 @@ Scan the QR code to connect from your phone instantly.
 
 For remote access, use a VPN like Tailscale.
 
-<p align="center">
-  <img src="media/start.gif" alt="Clay starting from CLI" width="600">
-</p>
+## Philosophy
 
----
+**AI is a teammate, not a tool.** A tool gets used once and forgotten. A teammate accumulates your history, your decisions, your working style. Give them a specialty, let them build context over time, and bring them into any project as a colleague. A solo developer gets a code reviewer, a marketing lead, a writing partner.
+
+**Friction is a feature.** The goal of AI is not to remove all friction. It's to free you to focus on the friction that matters. Reviewing a critical decision, shaping the direction, catching what the agent missed. Clay keeps those moments in, on purpose.
+
+**AI should understand you first.** When you create a Mate, set up a scheduled task, or start a Ralph Loop, Clay interviews you. Not to save time, but to use AI's capability to understand what you actually want. "Just do it for me" is a trap. The better AI understands you, the better the output.
 
 ## FAQ
 
@@ -126,37 +114,6 @@ No. Teammates share the Claude Code session logged in on the server. You can als
 
 **"Does it work with MCP servers?"**
 Yes. MCP configurations from the CLI carry over as-is.
-
----
-
-## HTTPS
-
-HTTPS is enabled by default using a builtin wildcard certificate for `*.d.clay.studio`. No setup required. Available from `v2.17.0-beta.2`. Your browser connects to a URL like:
-
-```
-https://192-168-1-50.d.clay.studio:2633
-```
-
-The domain resolves to your local IP. All traffic stays on your network. See [clay-dns](clay-dns/) for details on how this works.
-
-Push notifications require HTTPS, so they work out of the box with this setup. Install Clay as a PWA on your device to receive them.
-
-<details>
-<summary><strong>Alternative: local certificate with mkcert</strong></summary>
-
-If you prefer to use a locally generated certificate (e.g. air-gapped environments where DNS is unavailable):
-
-```bash
-brew install mkcert
-mkcert -install
-npx clay-server --local-cert
-```
-
-This generates a self-signed certificate trusted by your machine. The setup wizard will guide you through installing the CA on other devices.
-
-</details>
-
----
 
 ## CLI Options
 
@@ -179,8 +136,6 @@ npx clay-server --dangerously-skip-permissions
                               # Bypass all permission prompts (requires PIN at setup)
 npx clay-server --dev        # Dev mode (foreground, auto-restart on lib/ changes, port 2635)
 ```
-
----
 
 ## Architecture
 
@@ -206,8 +161,6 @@ graph LR
 ```
 
 For detailed sequence diagrams, daemon architecture, and design decisions, see [docs/architecture.md](docs/architecture.md).
-
----
 
 ## Contributors
 
