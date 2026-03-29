@@ -666,3 +666,84 @@
   pointer-events: none;
   opacity: 0.5;
 }
+
+/* ==========================================================================
+   Rate Limit Schedule Mode
+   ========================================================================== */
+
+/* Input area styling when rate limited */
+#input-row.input-rate-limited {
+  border-color: var(--warning, #d97706);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--warning, #d97706) 20%, transparent);
+}
+
+#input-row.input-rate-limited:focus-within {
+  border-color: var(--warning, #d97706);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--warning, #d97706) 30%, transparent);
+}
+
+/* Scheduled message bubble in chat */
+.scheduled-msg-wrap {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 16px;
+}
+
+.scheduled-msg-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--warning, #d97706) 8%, var(--bg-alt));
+  border: 1px dashed color-mix(in srgb, var(--warning, #d97706) 40%, transparent);
+}
+
+.scheduled-msg-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.scheduled-msg-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--warning, #d97706);
+}
+
+.scheduled-msg-icon .lucide {
+  width: 14px;
+  height: 14px;
+}
+
+.scheduled-msg-countdown {
+  flex: 1;
+}
+
+.scheduled-msg-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.scheduled-msg-cancel:hover {
+  background: rgba(var(--overlay-rgb), 0.08);
+  color: var(--error);
+}
+
+.scheduled-msg-cancel .lucide {
+  width: 14px;
+  height: 14px;
+}
