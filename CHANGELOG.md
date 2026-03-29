@@ -1,3 +1,10 @@
+# [2.19.0-beta.2](https://github.com/chadbyte/clay/compare/v2.19.0-beta.1...v2.19.0-beta.2) (2026-03-29)
+
+
+### Bug Fixes
+
+* **auth:** separate auth token files and cookies for dev and prod servers ([f722f90](https://github.com/chadbyte/clay/commit/f722f90256ae601edd93d5cababfc31717a47d41))
+
 # [2.19.0-beta.1](https://github.com/chadbyte/clay/compare/v2.18.1-beta.1...v2.19.0-beta.1) (2026-03-29)
 
 
