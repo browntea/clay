@@ -364,6 +364,38 @@
 .ask-user-container.answered .ask-user-other input { opacity: 0.5; pointer-events: none; }
 .ask-user-container.answered .ask-user-submit { display: none; }
 
+/* Answer summary (shown after answering and during replay) */
+.ask-user-answer-summary {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(var(--overlay-rgb), 0.06);
+  border: 1px solid var(--border-subtle);
+}
+.ask-user-answer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0;
+}
+.ask-user-answer-row + .ask-user-answer-row {
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4px;
+  padding-top: 8px;
+}
+.ask-user-answer-label {
+  font-size: 11px;
+  color: var(--text-dimmer);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.ask-user-answer-value {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
 /* ==========================================================================
    Permission Request
    ========================================================================== */
