@@ -33,6 +33,29 @@
 .pill-accent  { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
 .pill-error   { background: color-mix(in srgb, var(--error) 12%, transparent); color: var(--error); }
 
+/* Usage pill variants */
+.pill-warning { background: color-mix(in srgb, var(--warning) 12%, transparent); color: var(--warning); }
+.pill-dim     { background: color-mix(in srgb, var(--text-dimmer) 8%, transparent); color: var(--text-dimmer); }
+
+/* Usage check link in top bar */
+.usage-check-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.usage-check-link:hover {
+  background: color-mix(in srgb, var(--text-dimmer) 16%, transparent);
+}
+.usage-check-link .lucide {
+  width: 12px;
+  height: 12px;
+}
+.usage-check-link .lucide:last-child {
+  opacity: 0.5;
+  width: 10px;
+  height: 10px;
+}
+
 /* Clickable pill (update) */
 button.top-bar-pill {
   border: none;
