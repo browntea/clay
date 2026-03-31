@@ -2506,7 +2506,19 @@ function showSettingsMenu(config, ip) {
         ], function (confirmChoice) {
           if (confirmChoice === "confirm") {
             sendIPCCommand(socketPath(), { cmd: "set_os_users", value: true }).then(function (res) {
-              if (res.ok) {
+              if (res.error === "acl_not_installed") {
+                log(sym.bar);
+                log(sym.bar + "  " + a.red + sym.warn + " setfacl is not installed." + a.reset);
+                log(sym.bar);
+                log(sym.bar + "  OS user isolation requires the ACL (Access Control List) package");
+                log(sym.bar + "  to manage per-user file permissions on shared projects.");
+                log(sym.bar);
+                log(sym.bar + "  " + a.bold + "Install it:" + a.reset);
+                log(sym.bar + "  " + a.cyan + res.installCmd + a.reset);
+                log(sym.bar);
+                log(sym.bar + "  " + a.dim + "Then try enabling OS user isolation again." + a.reset);
+                log(sym.bar);
+              } else if (res.ok) {
                 config.osUsers = true;
                 log(sym.bar);
                 log(sym.done + "  " + a.green + "OS-level user isolation enabled." + a.reset);
@@ -2855,6 +2867,21 @@ var currentVersion = require("../package.json").version;
         console.error("Run:  " + a.bold + "sudo npx clay-server" + a.reset);
         process.exit(1);
         return;
+      }
+
+      // os-users requires setfacl (ACL package)
+      if (savedOsUsers && process.platform === "linux") {
+        var { checkAclSupport } = require("../lib/os-users");
+        var aclCheck = checkAclSupport();
+        if (!aclCheck.available) {
+          console.error(a.red + "OS user isolation requires the 'acl' package (setfacl)." + a.reset);
+          console.error("");
+          console.error("Install it:  " + a.bold + aclCheck.installCmd + a.reset);
+          console.error("");
+          console.error("Then restart Clay.");
+          process.exit(1);
+          return;
+        }
       }
 
       if (savedConfig && savedConfig.port) port = savedConfig.port;
