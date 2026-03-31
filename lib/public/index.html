@@ -790,9 +790,11 @@
       <nav class="us-modal-nav">
         <select id="user-settings-nav-dropdown" class="settings-nav-dropdown">
           <option value="us-account" selected>Account</option>
+          <option value="us-behavior">Behavior</option>
         </select>
         <div class="us-modal-nav-items">
           <button class="us-nav-item active" data-section="us-account"><span>Account</span></button>
+          <button class="us-nav-item" data-section="us-behavior"><span>Behavior</span></button>
           <div class="us-nav-separator"></div>
           <button class="us-nav-item us-nav-danger" data-section="us-logout"><span>Log Out</span></button>
         </div>
@@ -823,6 +825,21 @@
           </div>
         </div>
 
+        <!-- Behavior section -->
+        <div class="us-section" data-section="us-behavior">
+          <h2>Behavior</h2>
+          <div class="settings-card">
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Auto-continue on rate limit</span>
+                <div class="settings-hint">When rate limited, automatically send "continue" after the limit resets. Without this, you must manually send a message.</div>
+              </div>
+              <input type="checkbox" id="us-auto-continue">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+
         <!-- Log out section -->
         <div class="us-section" data-section="us-logout">
           <h2>Log Out</h2>
@@ -849,7 +866,6 @@
           <optgroup label="General">
             <option value="overview" selected>Status</option>
             <option value="notifications">Notifications</option>
-            <option value="behavior">Behavior</option>
             <option value="security">Security</option>
           </optgroup>
           <optgroup label="Defaults">
@@ -875,7 +891,6 @@
           <div class="settings-nav-category">General</div>
           <button class="settings-nav-item active" data-section="overview"><span>Status</span></button>
           <button class="settings-nav-item" data-section="notifications"><span>Notifications</span></button>
-          <button class="settings-nav-item" data-section="behavior"><span>Behavior</span></button>
           <button class="settings-nav-item" data-section="security"><span>Security</span></button>
           <div class="settings-nav-separator"></div>
           <div class="settings-nav-category">Defaults</div>
@@ -1133,19 +1148,7 @@
             </label>
           </div>
         </div>
-        <div class="server-settings-section" data-section="behavior">
-          <h2>Behavior</h2>
-          <div class="settings-card">
-            <label class="settings-toggle-row">
-              <div>
-                <span class="settings-label">Auto-continue on rate limit</span>
-                <div class="settings-hint">When rate limited, automatically send "continue" after the limit resets. Without this, you must manually send a message.</div>
-              </div>
-              <input type="checkbox" id="settings-auto-continue">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
-          </div>
-        </div>
+        <!-- Auto-continue moved to User Settings > Behavior -->
         <div class="server-settings-section hidden" data-section="keep-awake" id="settings-keep-awake-section">
           <h2>Keep Awake</h2>
           <div class="settings-card">
