@@ -20,7 +20,7 @@
 /* --- Modal box --- */
 .us-modal {
   position: relative;
-  background: var(--bg-alt);
+  background: var(--sidebar-bg);
   border: 1px solid var(--border);
   border-radius: 14px;
   width: 680px;
@@ -92,7 +92,6 @@
   flex-shrink: 0;
   padding: 12px 8px;
   border-right: 1px solid var(--border-subtle);
-  background: var(--sidebar-bg);
   overflow-y: auto;
 }
 
@@ -156,6 +155,7 @@
   min-width: 0;
   overflow-y: auto;
   padding: 20px 24px;
+  background: var(--bg);
 }
 
 /* --- Sections --- */
