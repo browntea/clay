@@ -775,18 +775,20 @@
   <div class="confirm-backdrop" id="user-settings-backdrop"></div>
   <div class="us-modal">
     <div class="us-modal-header">
-      <span class="us-modal-title">User Settings</span>
+      <span class="us-modal-title">Settings</span>
       <button class="us-modal-close" id="user-settings-close" title="Close"><i data-lucide="x"></i></button>
     </div>
     <div class="us-modal-body">
       <nav class="us-modal-nav">
         <select id="user-settings-nav-dropdown" class="settings-nav-dropdown">
           <option value="us-account" selected>Account</option>
-          <option value="us-behavior">Behavior</option>
+          <option value="us-appearance">Appearance</option>
+          <option value="us-chat">Chat</option>
         </select>
         <div class="us-modal-nav-items">
           <button class="us-nav-item active" data-section="us-account"><span>Account</span></button>
-          <button class="us-nav-item" data-section="us-behavior"><span>Behavior</span></button>
+          <button class="us-nav-item" data-section="us-appearance"><span>Appearance</span></button>
+          <button class="us-nav-item" data-section="us-chat"><span>Chat</span></button>
           <div class="us-nav-separator"></div>
           <button class="us-nav-item us-nav-danger" data-section="us-logout"><span>Log Out</span></button>
         </div>
@@ -804,40 +806,45 @@
               </div>
             </div>
           </div>
-          <h3>Change PIN</h3>
+          <h3>Security</h3>
           <div class="settings-card">
             <div class="settings-field">
-              <label class="settings-label">New PIN (6 digits)</label>
+              <label class="settings-label">PIN</label>
+              <div class="settings-hint">6-digit code used to sign in to your account.</div>
               <div class="us-pin-row">
-                <input type="password" class="us-text-input us-pin-input" id="us-pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="000000" autocomplete="off">
-                <button class="us-btn" id="us-pin-save" disabled>Update PIN</button>
+                <input type="password" class="us-text-input us-pin-input" id="us-pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="Enter new PIN" autocomplete="off">
+                <button class="us-btn" id="us-pin-save" disabled>Change PIN</button>
               </div>
               <div class="us-pin-msg hidden" id="us-pin-msg"></div>
             </div>
           </div>
         </div>
 
-        <!-- Behavior section -->
-        <div class="us-section" data-section="us-behavior">
-          <h2>Behavior</h2>
+        <!-- Appearance section -->
+        <div class="us-section" data-section="us-appearance">
+          <h2>Appearance</h2>
           <div class="settings-card">
             <label class="settings-toggle-row">
               <div>
-                <span class="settings-label">Auto-continue on rate limit</span>
-                <div class="settings-hint">When rate limited, automatically send "continue" after the limit resets. Without this, you must manually send a message.</div>
+                <span class="settings-label">Light theme</span>
+                <div class="settings-hint">Use a light color scheme instead of dark.</div>
               </div>
-              <input type="checkbox" id="us-auto-continue">
+              <input type="checkbox" id="us-theme-toggle">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>
-          <h3>Appearance</h3>
+        </div>
+
+        <!-- Chat section -->
+        <div class="us-section" data-section="us-chat">
+          <h2>Chat</h2>
           <div class="settings-card">
             <label class="settings-toggle-row">
               <div>
-                <span class="settings-label">Light mode</span>
-                <div class="settings-hint">Switch between dark and light theme.</div>
+                <span class="settings-label">Auto-continue</span>
+                <div class="settings-hint">Automatically resume the conversation when a rate limit clears.</div>
               </div>
-              <input type="checkbox" id="us-theme-toggle">
+              <input type="checkbox" id="us-auto-continue">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>
@@ -848,7 +855,7 @@
           <h2>Log Out</h2>
           <div class="settings-card settings-card-danger">
             <div class="settings-field">
-              <p class="settings-hint" style="margin:0 0 12px;font-size:14px;color:var(--text-secondary)">You will be signed out and redirected to the login screen.</p>
+              <p class="settings-hint" style="margin:0 0 12px;font-size:14px;color:var(--text-secondary)">End your current session. You can sign back in anytime.</p>
               <button class="us-btn us-btn-danger" id="us-logout-btn">Log Out</button>
             </div>
           </div>
