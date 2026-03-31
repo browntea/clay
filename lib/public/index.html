@@ -45,14 +45,6 @@
       <!-- Pill badges -->
       <div id="skip-perms-pill" class="top-bar-pill pill-error hidden"><i data-lucide="shield-off"></i> <span>Skip perms</span></div>
       <div id="client-count" class="top-bar-pill pill-accent hidden"><i data-lucide="users"></i> <span id="client-count-text"></span></div>
-      <label id="theme-toggle-btn" class="theme-toggle" title="Toggle dark/light mode">
-        <input type="checkbox" id="theme-toggle-check">
-        <span class="theme-toggle-track">
-          <span class="theme-toggle-icon theme-toggle-moon"><i data-lucide="moon"></i></span>
-          <span class="theme-toggle-icon theme-toggle-sun"><i data-lucide="sun"></i></span>
-          <span class="theme-toggle-thumb"></span>
-        </span>
-      </label>
       <button id="server-settings-btn" title="Server settings"><i data-lucide="settings"></i></button>
     </div>
   </div>
@@ -835,6 +827,17 @@
                 <div class="settings-hint">When rate limited, automatically send "continue" after the limit resets. Without this, you must manually send a message.</div>
               </div>
               <input type="checkbox" id="us-auto-continue">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+          <h3>Appearance</h3>
+          <div class="settings-card">
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Light mode</span>
+                <div class="settings-hint">Switch between dark and light theme.</div>
+              </div>
+              <input type="checkbox" id="us-theme-toggle">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>
