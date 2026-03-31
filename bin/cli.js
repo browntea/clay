@@ -1604,14 +1604,11 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
   }
 
   // Enable/disable multi-user mode based on startup config
+  var _pendingSetupCode = null;
   if (config.mode === "multi") {
     var muResult = enableMultiUser();
     if (muResult.setupCode) {
-      log("");
-      log(sym.done + "  " + a.green + "Multi-user mode enabled." + a.reset);
-      log(sym.bar + "  Setup code:  " + a.bold + muResult.setupCode + a.reset);
-      log(sym.bar + "  Open Clay in your browser and enter this code to create the admin account.");
-      log("");
+      _pendingSetupCode = muResult.setupCode;
     }
   } else if (isMultiUser()) {
     disableMultiUser();
@@ -1627,13 +1624,19 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
     console.log("  " + sym.done + "  " + url);
     if (config.builtinCert) console.log("  " + sym.done + "  d.clay.studio provides HTTPS certificates only. Your traffic never leaves your network.");
     if (config.mkcertDetected) console.log("  " + sym.warn + "  Clay now ships with a builtin HTTPS certificate. To use it, pass --builtin-cert or uninstall mkcert.");
+    if (_pendingSetupCode) {
+      console.log("");
+      console.log("  " + sym.done + "  " + a.green + "Multi-user mode enabled." + a.reset);
+      console.log("  " + sym.bar + "  Setup code:  " + a.bold + _pendingSetupCode + a.reset);
+      console.log("  " + sym.bar + "  Open Clay in your browser and enter this code to create the admin account.");
+    }
     console.log("  " + sym.done + "  Headless mode — exiting CLI");
     process.exit(0);
     return;
   }
 
   // Show success + QR
-  showServerStarted(config, ip);
+  showServerStarted(config, ip, _pendingSetupCode);
 }
 
 // ==============================
@@ -1958,14 +1961,14 @@ async function restartDaemonWithTLS(config, callback) {
 // ==============================
 // Show server started info
 // ==============================
-function showServerStarted(config, ip) {
-  showMainMenu(config, ip);
+function showServerStarted(config, ip, setupCode) {
+  showMainMenu(config, ip, setupCode);
 }
 
 // ==============================
 // Main management menu
 // ==============================
-function showMainMenu(config, ip) {
+function showMainMenu(config, ip, setupCode) {
   startDaemonWatcher();
   var protocol = config.tls ? "https" : "http";
   var url = config.builtinCert
@@ -2003,6 +2006,12 @@ function showMainMenu(config, ip) {
         log("  " + sym.warn + "  " + a.yellow + "Clay now ships with a builtin HTTPS certificate." + a.reset);
         log("     " + a.dim + "No more CA setup on each device." + a.reset);
         log("     " + a.dim + "To use it, pass --builtin-cert or uninstall mkcert." + a.reset);
+        log("");
+      }
+
+      if (setupCode) {
+        log("  " + a.yellow + sym.warn + " Setup code:  " + a.bold + setupCode + a.reset);
+        log("  " + a.dim + "Open Clay in your browser and enter this code to create the admin account." + a.reset);
         log("");
       }
 
