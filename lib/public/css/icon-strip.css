@@ -830,13 +830,17 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 8px;
-  width: 220px;
+  width: 300px;
+  max-height: 70vh;
+  overflow-y: auto;
   box-shadow: 0 8px 24px rgba(var(--shadow-rgb), 0.5);
   z-index: 10001;
   animation: ctxMenuAppear 0.15s ease-out;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
 .dm-user-picker-search {
@@ -861,11 +865,27 @@
 }
 
 .dm-user-picker-list {
-  max-height: 200px;
+  overflow: visible;
+}
+
+.dm-user-picker-list.dm-mates-list {
+  max-height: 336px;  /* ~7 items at ~48px each */
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.dm-user-picker-list.dm-mates-list.scrolled-bottom {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 35%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 35%);
+}
+
+.dm-user-picker-list.dm-mates-list.no-overflow {
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 .dm-user-picker-list::-webkit-scrollbar {
@@ -917,6 +937,39 @@
   font-size: 13px;
   color: var(--text-dimmer);
   text-align: center;
+}
+
+.dm-picker-fav-btn,
+.dm-picker-del-btn {
+  flex-shrink: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.dm-picker-fav-btn:hover,
+.dm-picker-del-btn:hover {
+  opacity: 1;
+}
+
+.dm-picker-del-btn:hover {
+  color: var(--danger, #e74c3c) !important;
+}
+
+.dm-picker-fav-btn svg,
+.dm-picker-del-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dm-picker-fav .dm-picker-fav-btn {
+  opacity: 1;
 }
 
 /* --- Worktree folder groups --- */
