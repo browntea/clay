@@ -1,3 +1,10 @@
+# [2.20.0-beta.4](https://github.com/chadbyte/clay/compare/v2.20.0-beta.3...v2.20.0-beta.4) (2026-04-01)
+
+
+### Bug Fixes
+
+* **ui:** use theme-aware background for PIN input boxes ([234ed6e](https://github.com/chadbyte/clay/commit/234ed6e4056523e8f3d0bee0045bd3486839b92c))
+
 # [2.20.0-beta.3](https://github.com/chadbyte/clay/compare/v2.20.0-beta.2...v2.20.0-beta.3) (2026-04-01)
 
 
