@@ -1,3 +1,10 @@
+# [2.20.0-beta.3](https://github.com/chadbyte/clay/compare/v2.20.0-beta.2...v2.20.0-beta.3) (2026-04-01)
+
+
+### Bug Fixes
+
+* **auth:** fix PIN digit input not displaying on force-change overlay ([5f432c0](https://github.com/chadbyte/clay/commit/5f432c07b856fa1125c7571685365273dfbae9de))
+
 # [2.20.0-beta.2](https://github.com/chadbyte/clay/compare/v2.20.0-beta.1...v2.20.0-beta.2) (2026-04-01)
 
 
