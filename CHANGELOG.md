@@ -1,3 +1,18 @@
+# [2.20.0-beta.2](https://github.com/chadbyte/clay/compare/v2.20.0-beta.1...v2.20.0-beta.2) (2026-04-01)
+
+
+### Bug Fixes
+
+* **mates:** add first session detection to builtin mate prompts ([285dc4d](https://github.com/chadbyte/clay/commit/285dc4d8f29c7a2c6b3d2f079ef318fb2e506e02))
+* **mates:** serve nested static files and include avatarCustom in mate DM ([c2741dd](https://github.com/chadbyte/clay/commit/c2741dd251d6c1588a1ba9976a8b0e2422e4e330))
+
+
+### Features
+
+* **mates:** add built-in mates Ally, Scout, Sage ([8d08c94](https://github.com/chadbyte/clay/commit/8d08c947bf54282189610c1fd03cd7879b1e5143))
+* **mates:** add favorites system and builtin mate re-add flow ([c01e42a](https://github.com/chadbyte/clay/commit/c01e42a8c0abf3dc0931d96c83c0286655d0e638))
+* **schedule:** add message scheduling with timer picker ([195d29d](https://github.com/chadbyte/clay/commit/195d29dcabba0c470aab10776f89edfb82257ae9))
+
 # [2.20.0-beta.1](https://github.com/chadbyte/clay/compare/v2.19.0...v2.20.0-beta.1) (2026-03-31)
 
 
