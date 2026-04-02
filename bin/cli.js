@@ -36,7 +36,7 @@ var crypto = require("crypto");
 var { loadConfig, saveConfig, configPath, socketPath, logPath, ensureConfigDir, isDaemonAlive, isDaemonAliveAsync, generateSlug, clearStaleConfig, loadClayrc, saveClayrc, readCrashInfo, REAL_HOME } = require("../lib/config");
 var { sendIPCCommand } = require("../lib/ipc");
 var { generateAuthToken } = require("../lib/server");
-var { enableMultiUser, disableMultiUser, hasAdmin, isMultiUser } = require("../lib/users");
+var { enableMultiUser, disableMultiUser, hasAdmin, isMultiUser, getSetupCode } = require("../lib/users");
 
 function openUrl(url) {
   try {
@@ -1417,16 +1417,15 @@ function setup(callback) {
           }
           var isRoot = typeof process.getuid === "function" && process.getuid() === 0;
           if (!isRoot) {
-            // Save config so sudo clay can pick it up
-            var partialConfig = {
-              port: port,
-              host: host,
-              mode: "multi",
-              osUsers: true,
-              setupCompleted: true,
-              dangerouslySkipPermissions: dangerouslySkipPermissions,
-            };
-            saveConfig(partialConfig);
+            // Merge into existing config (preserve projects, TLS, etc.)
+            var existingCfg = loadConfig() || {};
+            existingCfg.port = port;
+            existingCfg.host = host;
+            existingCfg.mode = "multi";
+            existingCfg.osUsers = true;
+            existingCfg.setupCompleted = true;
+            if (dangerouslySkipPermissions) existingCfg.dangerouslySkipPermissions = true;
+            saveConfig(existingCfg);
             log(sym.bar);
             log(sym.warn + "  " + a.yellow + "OS user isolation requires root." + a.reset);
             log(sym.bar + "  Run:");
@@ -2009,8 +2008,14 @@ function showMainMenu(config, ip, setupCode) {
         log("");
       }
 
-      if (setupCode) {
-        log("  " + a.yellow + sym.warn + " Setup code:  " + a.bold + setupCode + a.reset);
+      // Always check for pending setup code if multi-user is on and no admin exists
+      var displayCode = setupCode;
+      if (!displayCode && isMultiUser() && !hasAdmin()) {
+        var pendingCode = getSetupCode();
+        if (pendingCode) displayCode = pendingCode;
+      }
+      if (displayCode) {
+        log("  " + a.yellow + sym.warn + " Setup code:  " + a.bold + displayCode + a.reset);
         log("  " + a.dim + "Open Clay in your browser and enter this code to create the admin account." + a.reset);
         log("");
       }
@@ -2373,6 +2378,12 @@ function showSettingsMenu(config, ip) {
     } else {
       items.push({ label: "Enable multi-user mode", value: "multi_user" });
     }
+    if (muEnabled && !hasAdmin()) {
+      var pendingSetupCode = getSetupCode();
+      if (pendingSetupCode) {
+        items.push({ label: "Show setup code", value: "show_setup_code" });
+      }
+    }
     if (muEnabled && hasAdmin()) {
       items.push({ label: "Recover admin password", value: "recover_admin" });
     }
@@ -2478,7 +2489,9 @@ function showSettingsMenu(config, ip) {
         }
         if (process.getuid() !== 0) {
           log(sym.bar);
-          log(sym.bar + "  " + a.red + "Requires running as root." + a.reset);
+          log(sym.bar + "  " + a.red + sym.warn + " OS user isolation requires root." + a.reset);
+          log(sym.bar + "  " + a.dim + "Shut down this server, then restart with:" + a.reset);
+          log(sym.bar + "    " + a.bold + "sudo npx clay-server" + a.reset);
           log(sym.bar);
           promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
             showSettingsMenu(config, ip);
@@ -2603,54 +2616,97 @@ function showSettingsMenu(config, ip) {
           { label: "Cancel", value: "cancel" },
         ], function (confirmChoice) {
           if (confirmChoice === "confirm") {
-            // Clear setupCompleted so setup() runs fresh
+            // Save old PID before clearing, so we can force-kill if needed
             var cfg = loadConfig() || {};
+            var oldPid = cfg.pid;
+            // Clear setupCompleted so setup() runs fresh
             delete cfg.setupCompleted;
             delete cfg.mode;
             cfg.pid = null;
             saveConfig(cfg);
-            // Shut down the daemon
+
+            // Helper: wait for port to be free, force-kill if needed
+            function waitForPortFree(cb) {
+              var attempts = 0;
+              var maxAttempts = 12; // 6 seconds total
+              function check() {
+                isPortFree(port).then(function (free) {
+                  if (free) return cb();
+                  attempts++;
+                  if (attempts >= maxAttempts) {
+                    // Port still busy, force-kill old daemon
+                    if (oldPid) {
+                      try { process.kill(oldPid, "SIGKILL"); } catch (e) {}
+                    }
+                    // Wait a bit more after SIGKILL
+                    setTimeout(function () {
+                      isPortFree(port).then(function (free2) {
+                        if (!free2) {
+                          log(sym.warn + "  " + a.yellow + "Port " + port + " still in use. Kill the process manually:" + a.reset);
+                          log(sym.bar + "    " + a.bold + "lsof -ti:" + port + " | xargs kill -9" + a.reset);
+                        }
+                        cb();
+                      });
+                    }, 1000);
+                    return;
+                  }
+                  setTimeout(check, 500);
+                });
+              }
+              check();
+            }
+
+            // Helper: run setup wizard after daemon is dead
+            function proceedWithSetup() {
+              clearStaleConfig();
+              setup(function (mode, keepAwake, wantOsUsers) {
+                var rc = loadClayrc();
+                var restorable = (rc.recentProjects || []).filter(function (p) {
+                  return p.path !== cwd && fs.existsSync(p.path);
+                });
+                if (restorable.length > 0) {
+                  promptRestoreProjects(restorable, function (selected) {
+                    forkDaemon(mode, keepAwake, selected, false, wantOsUsers);
+                  });
+                } else {
+                  log(sym.bar);
+                  log(sym.end + "  " + a.dim + "Starting relay..." + a.reset);
+                  log("");
+                  forkDaemon(mode, keepAwake, undefined, true, wantOsUsers);
+                }
+              });
+            }
+
+            // Shut down the daemon, then wait for port to be free
             sendIPCCommand(socketPath(), { cmd: "shutdown" }).then(function () {
-              clearStaleConfig();
-              // Run the setup wizard, then fork a new daemon
-              setup(function (mode, keepAwake, wantOsUsers) {
-                var rc = loadClayrc();
-                var restorable = (rc.recentProjects || []).filter(function (p) {
-                  return p.path !== cwd && fs.existsSync(p.path);
-                });
-                if (restorable.length > 0) {
-                  promptRestoreProjects(restorable, function (selected) {
-                    forkDaemon(mode, keepAwake, selected, false, wantOsUsers);
-                  });
-                } else {
-                  log(sym.bar);
-                  log(sym.end + "  " + a.dim + "Starting relay..." + a.reset);
-                  log("");
-                  forkDaemon(mode, keepAwake, undefined, true, wantOsUsers);
-                }
-              });
+              waitForPortFree(proceedWithSetup);
             }).catch(function () {
-              clearStaleConfig();
-              setup(function (mode, keepAwake, wantOsUsers) {
-                var rc = loadClayrc();
-                var restorable = (rc.recentProjects || []).filter(function (p) {
-                  return p.path !== cwd && fs.existsSync(p.path);
-                });
-                if (restorable.length > 0) {
-                  promptRestoreProjects(restorable, function (selected) {
-                    forkDaemon(mode, keepAwake, selected, false, wantOsUsers);
-                  });
-                } else {
-                  log(sym.bar);
-                  log(sym.end + "  " + a.dim + "Starting relay..." + a.reset);
-                  log("");
-                  forkDaemon(mode, keepAwake, undefined, true, wantOsUsers);
-                }
-              });
+              // IPC failed, daemon may be unresponsive. Try SIGTERM, then wait.
+              if (oldPid) {
+                try { process.kill(oldPid, "SIGTERM"); } catch (e) {}
+              }
+              waitForPortFree(proceedWithSetup);
             });
           } else {
             showSettingsMenu(config, ip);
           }
+        });
+        break;
+
+      case "show_setup_code":
+        var currentCode = getSetupCode();
+        if (currentCode) {
+          log(sym.bar);
+          log(sym.bar + "  " + a.yellow + sym.warn + " Setup code:  " + a.bold + currentCode + a.reset);
+          log(sym.bar + "  " + a.dim + "Open Clay in your browser and enter this code to create the admin account." + a.reset);
+          log(sym.bar);
+        } else {
+          log(sym.bar);
+          log(sym.bar + "  " + a.dim + "No pending setup code (admin already exists)." + a.reset);
+          log(sym.bar);
+        }
+        promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
+          showSettingsMenu(config, ip);
         });
         break;
 
