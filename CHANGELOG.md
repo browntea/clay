@@ -1,3 +1,10 @@
+## [2.20.1-beta.3](https://github.com/chadbyte/clay/compare/v2.20.1-beta.2...v2.20.1-beta.3) (2026-04-02)
+
+
+### Bug Fixes
+
+* **cli:** show config path in main menu and always expose setup code ([f1e6f99](https://github.com/chadbyte/clay/commit/f1e6f99fa3e0d3cbf10798ae0f91e83a99f5d4c5))
+
 ## [2.20.1-beta.2](https://github.com/chadbyte/clay/compare/v2.20.1-beta.1...v2.20.1-beta.2) (2026-04-02)
 
 
