@@ -1,3 +1,10 @@
+## [2.20.1-beta.16](https://github.com/chadbyte/clay/compare/v2.20.1-beta.15...v2.20.1-beta.16) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** add exit reason diagnostics to SDK worker ([a631f3a](https://github.com/chadbyte/clay/commit/a631f3a02da9c12fbec30ad92eba11cd632ee60e))
+
 ## [2.20.1-beta.15](https://github.com/chadbyte/clay/compare/v2.20.1-beta.14...v2.20.1-beta.15) (2026-04-02)
 
 
