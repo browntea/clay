@@ -1,3 +1,10 @@
+# [2.21.0-beta.4](https://github.com/chadbyte/clay/compare/v2.21.0-beta.3...v2.21.0-beta.4) (2026-04-02)
+
+
+### Bug Fixes
+
+* **mates:** check all segments of compound bash commands for safe whitelist ([3a278b4](https://github.com/chadbyte/clay/commit/3a278b4c7043b1fd88a68addee80fd9b339d1a66))
+
 # [2.21.0-beta.3](https://github.com/chadbyte/clay/compare/v2.21.0-beta.2...v2.21.0-beta.3) (2026-04-02)
 
 
