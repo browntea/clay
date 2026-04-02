@@ -1,3 +1,10 @@
+## [2.20.1-beta.13](https://github.com/chadbyte/clay/compare/v2.20.1-beta.12...v2.20.1-beta.13) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** add spawn diagnostics and handle premature worker exit ([8c402f6](https://github.com/chadbyte/clay/commit/8c402f6e552133cbfc950e153402b44d0e3c1240))
+
 ## [2.20.1-beta.12](https://github.com/chadbyte/clay/compare/v2.20.1-beta.11...v2.20.1-beta.12) (2026-04-02)
 
 
