@@ -2008,12 +2008,8 @@ function showMainMenu(config, ip, setupCode) {
         log("");
       }
 
-      // Always check for pending setup code if multi-user is on and no admin exists
-      var displayCode = setupCode;
-      if (!displayCode && isMultiUser() && !hasAdmin()) {
-        var pendingCode = getSetupCode();
-        if (pendingCode) displayCode = pendingCode;
-      }
+      // Always show setup code if one exists (persists until admin is created)
+      var displayCode = setupCode || getSetupCode();
       if (displayCode) {
         log("  " + a.yellow + sym.warn + " Setup code:  " + a.bold + displayCode + a.reset);
         log("  " + a.dim + "Open Clay in your browser and enter this code to create the admin account." + a.reset);
@@ -2378,11 +2374,9 @@ function showSettingsMenu(config, ip) {
     } else {
       items.push({ label: "Enable multi-user mode", value: "multi_user" });
     }
-    if (muEnabled && !hasAdmin()) {
-      var pendingSetupCode = getSetupCode();
-      if (pendingSetupCode) {
-        items.push({ label: "Show setup code", value: "show_setup_code" });
-      }
+    var pendingSetupCode = getSetupCode();
+    if (muEnabled && pendingSetupCode) {
+      items.push({ label: "Show setup code", value: "show_setup_code" });
     }
     if (muEnabled && hasAdmin()) {
       items.push({ label: "Recover admin password", value: "recover_admin" });
