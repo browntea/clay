@@ -1,3 +1,10 @@
+## [2.20.1-beta.14](https://github.com/chadbyte/clay/compare/v2.20.1-beta.13...v2.20.1-beta.14) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** inherit full env for SDK worker spawn ([2f079b9](https://github.com/chadbyte/clay/commit/2f079b974dccc69cd6a5757753bfd1e622166fa0))
+
 ## [2.20.1-beta.13](https://github.com/chadbyte/clay/compare/v2.20.1-beta.12...v2.20.1-beta.13) (2026-04-02)
 
 
