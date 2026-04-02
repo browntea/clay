@@ -1,3 +1,10 @@
+## [2.20.1-beta.4](https://github.com/chadbyte/clay/compare/v2.20.1-beta.3...v2.20.1-beta.4) (2026-04-02)
+
+
+### Bug Fixes
+
+* **cli:** add error handling for OS users toggle IPC ([92ba05d](https://github.com/chadbyte/clay/commit/92ba05ddf1a7a63347e5c5f9c11ecc5866b3cb2b))
+
 ## [2.20.1-beta.3](https://github.com/chadbyte/clay/compare/v2.20.1-beta.2...v2.20.1-beta.3) (2026-04-02)
 
 
