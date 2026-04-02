@@ -1641,7 +1641,7 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
 // ==============================
 // Dev mode — foreground daemon with file watching
 // ==============================
-async function devMode(mode, keepAwake, existingPinHash) {
+async function devMode(mode, keepAwake, existingPinHash, wantOsUsers) {
   var ip = getLocalIP();
   var hasTls = false;
   var hasBuiltinCert = false;
@@ -1723,6 +1723,7 @@ async function devMode(mode, keepAwake, existingPinHash) {
     mode: mode || "single",
     setupCompleted: true,
     projects: allProjects,
+    osUsers: wantOsUsers || (prevDevConfig ? (prevDevConfig.osUsers || false) : false),
   };
 
   ensureConfigDir();
@@ -2877,11 +2878,11 @@ var currentVersion = require("../package.json").version;
     // No config — go through setup (disclaimer, port, mode, etc.)
     if (!devConfig) {
       setup(function (mode, keepAwake, wantOsUsers) {
-        devMode(mode, keepAwake, null);
+        devMode(mode, keepAwake, null, wantOsUsers);
       });
     } else {
       // Reuse existing config (repeat run)
-      await devMode(devConfig.mode || "single", devConfig.keepAwake || false, devConfig.pinHash || null);
+      await devMode(devConfig.mode || "single", devConfig.keepAwake || false, devConfig.pinHash || null, devConfig.osUsers || false);
     }
     return;
   }
