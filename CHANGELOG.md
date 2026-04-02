@@ -1,3 +1,10 @@
+## [2.20.1-beta.7](https://github.com/chadbyte/clay/compare/v2.20.1-beta.6...v2.20.1-beta.7) (2026-04-02)
+
+
+### Bug Fixes
+
+* **config:** add fallbacks for getRealHome under sudo on GCE ([483e35b](https://github.com/chadbyte/clay/commit/483e35b863e8be80d95c39457e6cf82506981ad7))
+
 ## [2.20.1-beta.6](https://github.com/chadbyte/clay/compare/v2.20.1-beta.5...v2.20.1-beta.6) (2026-04-02)
 
 
