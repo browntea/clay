@@ -1,3 +1,10 @@
+## [2.20.1-beta.5](https://github.com/chadbyte/clay/compare/v2.20.1-beta.4...v2.20.1-beta.5) (2026-04-02)
+
+
+### Bug Fixes
+
+* **cli:** run OS user provisioning from CLI with live progress ([6773da9](https://github.com/chadbyte/clay/commit/6773da99d3d6f8a9d1f0428fb05dac568d34f555))
+
 ## [2.20.1-beta.4](https://github.com/chadbyte/clay/compare/v2.20.1-beta.3...v2.20.1-beta.4) (2026-04-02)
 
 
