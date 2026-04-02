@@ -1,3 +1,10 @@
+# [2.21.0-beta.2](https://github.com/chadbyte/clay/compare/v2.21.0-beta.1...v2.21.0-beta.2) (2026-04-02)
+
+
+### Bug Fixes
+
+* add missing path require in os-users and handle EIO in shutdown ([40aa14e](https://github.com/chadbyte/clay/commit/40aa14e47ba6ce69494cb509d5505106052ea4d4))
+
 # [2.21.0-beta.1](https://github.com/chadbyte/clay/compare/v2.20.1-beta.17...v2.21.0-beta.1) (2026-04-02)
 
 
