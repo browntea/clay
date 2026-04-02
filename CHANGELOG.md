@@ -1,3 +1,16 @@
+# [2.21.0-beta.3](https://github.com/chadbyte/clay/compare/v2.21.0-beta.2...v2.21.0-beta.3) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** pre-copy CLI sessions before worker spawn and fix race conditions ([d6cd8c2](https://github.com/chadbyte/clay/commit/d6cd8c2e7080a9d51887b353b4cf0c2566bab49e))
+* **sessions:** suppress noisy migration failed logs on startup ([ecc05d0](https://github.com/chadbyte/clay/commit/ecc05d0319c2e1233d180f487323064e771481cb))
+
+
+### Performance Improvements
+
+* **os-users:** skip full ACL re-application on every startup ([e0a0f6a](https://github.com/chadbyte/clay/commit/e0a0f6a16c5ff8989284e0de4e5ba0e6d76b6a72))
+
 # [2.21.0-beta.2](https://github.com/chadbyte/clay/compare/v2.21.0-beta.1...v2.21.0-beta.2) (2026-04-02)
 
 
