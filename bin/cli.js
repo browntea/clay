@@ -1998,6 +1998,7 @@ function showMainMenu(config, ip, setupCode) {
         parts.push(a.reset + a.yellow + a.bold + totalAwaiting + a.reset + a.yellow + " awaiting" + a.reset + a.dim);
       }
       log("  " + a.dim + parts.join(a.reset + a.dim + " · ") + a.reset);
+      log("  " + a.dim + "~/.clay → " + path.join(REAL_HOME, ".clay") + a.reset);
       log("  Press " + a.bold + "o" + a.reset + " to open in browser");
       log("");
 
@@ -2374,8 +2375,7 @@ function showSettingsMenu(config, ip) {
     } else {
       items.push({ label: "Enable multi-user mode", value: "multi_user" });
     }
-    var pendingSetupCode = getSetupCode();
-    if (muEnabled && pendingSetupCode) {
+    if (muEnabled) {
       items.push({ label: "Show setup code", value: "show_setup_code" });
     }
     if (muEnabled && hasAdmin()) {
@@ -2688,17 +2688,20 @@ function showSettingsMenu(config, ip) {
         break;
 
       case "show_setup_code":
+        // getSetupCode() auto-generates if multi-user is on and no code exists
         var currentCode = getSetupCode();
+        log(sym.bar);
         if (currentCode) {
-          log(sym.bar);
           log(sym.bar + "  " + a.yellow + sym.warn + " Setup code:  " + a.bold + currentCode + a.reset);
-          log(sym.bar + "  " + a.dim + "Open Clay in your browser and enter this code to create the admin account." + a.reset);
-          log(sym.bar);
+          if (hasAdmin()) {
+            log(sym.bar + "  " + a.dim + "Admin account exists. This code is for adding the next admin." + a.reset);
+          } else {
+            log(sym.bar + "  " + a.dim + "Enter this code in the browser to create the admin account." + a.reset);
+          }
         } else {
-          log(sym.bar);
-          log(sym.bar + "  " + a.dim + "No pending setup code (admin already exists)." + a.reset);
-          log(sym.bar);
+          log(sym.bar + "  " + a.dim + "Multi-user mode is not enabled." + a.reset);
         }
+        log(sym.bar);
         promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
           showSettingsMenu(config, ip);
         });
