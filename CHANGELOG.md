@@ -1,3 +1,10 @@
+## [2.20.1-beta.2](https://github.com/chadbyte/clay/compare/v2.20.1-beta.1...v2.20.1-beta.2) (2026-04-02)
+
+
+### Bug Fixes
+
+* **cli:** auto-regenerate setup code and add daemon startup diagnostics ([b0e8987](https://github.com/chadbyte/clay/commit/b0e89873f707ff0a2f7d65fd07fe08e051a33d04))
+
 ## [2.20.1-beta.1](https://github.com/chadbyte/clay/compare/v2.20.0...v2.20.1-beta.1) (2026-04-02)
 
 
