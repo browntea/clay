@@ -2534,41 +2534,86 @@ function showSettingsMenu(config, ip) {
                 log(sym.bar);
                 log(sym.bar + "  " + a.dim + "Then try enabling OS user isolation again." + a.reset);
                 log(sym.bar);
+                showSettingsMenu(config, ip);
+                return;
               } else if (res.error) {
                 log(sym.bar);
                 log(sym.bar + "  " + a.red + sym.warn + " Failed to enable OS users: " + res.error + a.reset);
                 log(sym.bar);
-              } else if (res.ok) {
-                config.osUsers = true;
-                log(sym.bar);
-                log(sym.done + "  " + a.green + "OS-level user isolation enabled." + a.reset);
-                if (res.provisioning) {
-                  var p = res.provisioning;
-                  if (p.provisioned.length > 0) {
-                    log(sym.bar);
-                    log(sym.bar + "  " + a.green + "Provisioned " + p.provisioned.length + " Linux account(s):" + a.reset);
-                    for (var pi = 0; pi < p.provisioned.length; pi++) {
-                      log(sym.bar + "    " + a.dim + p.provisioned[pi].username + " -> " + p.provisioned[pi].linuxUser + a.reset);
-                    }
-                  }
-                  if (p.skipped.length > 0) {
-                    log(sym.bar + "  " + a.dim + p.skipped.length + " user(s) already mapped." + a.reset);
-                  }
-                  if (p.errors.length > 0) {
-                    log(sym.bar);
-                    log(sym.bar + "  " + a.red + p.errors.length + " user(s) failed to provision:" + a.reset);
-                    for (var ei = 0; ei < p.errors.length; ei++) {
-                      log(sym.bar + "    " + a.red + p.errors[ei].username + ": " + p.errors[ei].error + a.reset);
-                    }
-                  }
-                }
-                log(sym.bar);
-              } else {
+                showSettingsMenu(config, ip);
+                return;
+              } else if (!res.ok) {
                 log(sym.bar);
                 log(sym.bar + "  " + a.red + sym.warn + " Unexpected response from daemon." + a.reset);
                 log(sym.bar + "  " + a.dim + JSON.stringify(res) + a.reset);
                 log(sym.bar);
+                showSettingsMenu(config, ip);
+                return;
               }
+              // Daemon saved the flag. Now provision from CLI with live progress.
+              config.osUsers = true;
+              log(sym.bar);
+              log(sym.done + "  " + a.green + "OS-level user isolation enabled." + a.reset);
+              log(sym.bar);
+
+              // Provision Linux accounts from CLI (we have root + terminal)
+              var osUsersLib = require("../lib/os-users");
+              var usersLib = require("../lib/users");
+
+              try { osUsersLib.ensureProjectsDir(); } catch (e) {
+                log(sym.bar + "  " + a.yellow + sym.warn + " Failed to create projects dir: " + e.message + a.reset);
+              }
+
+              var allUsers = usersLib.getAllUsers();
+              if (allUsers.length === 0) {
+                log(sym.bar + "  " + a.dim + "No users to provision yet. Accounts will be created when users register." + a.reset);
+              } else {
+                log(sym.bar + "  " + a.dim + "Provisioning " + allUsers.length + " user(s)..." + a.reset);
+                for (var ui = 0; ui < allUsers.length; ui++) {
+                  var usr = allUsers[ui];
+                  if (usr.linuxUser && osUsersLib.linuxUserExists(usr.linuxUser)) {
+                    log(sym.bar + "    " + a.dim + sym.done + " " + usr.username + " -> " + usr.linuxUser + " (exists)" + a.reset);
+                    continue;
+                  }
+                  log(sym.bar + "    " + a.dim + "Creating Linux account for " + usr.username + "..." + a.reset);
+                  var provision = osUsersLib.provisionLinuxUser(usr.username);
+                  if (provision.ok) {
+                    usersLib.updateLinuxUser(usr.id, provision.linuxUser);
+                    log(sym.bar + "    " + a.green + sym.done + " " + usr.username + " -> " + provision.linuxUser + a.reset);
+                  } else {
+                    log(sym.bar + "    " + a.red + sym.warn + " " + usr.username + ": " + (provision.error || "unknown error") + a.reset);
+                  }
+                }
+              }
+
+              // Set up ACLs for existing projects
+              var cfg = loadConfig() || {};
+              var cfgProjects = cfg.projects || [];
+              if (cfgProjects.length > 0) {
+                log(sym.bar);
+                log(sym.bar + "  " + a.dim + "Setting ACLs for " + cfgProjects.length + " project(s)..." + a.reset);
+                for (var pi = 0; pi < cfgProjects.length; pi++) {
+                  var proj = cfgProjects[pi];
+                  try {
+                    if (proj.visibility === "public") {
+                      osUsersLib.grantAllUsersAccess(proj.path, usersLib);
+                    }
+                    if (proj.ownerId) {
+                      var ownerUser = usersLib.findUserById(proj.ownerId);
+                      if (ownerUser && ownerUser.linuxUser) {
+                        osUsersLib.grantProjectAccess(proj.path, ownerUser.linuxUser);
+                      }
+                    }
+                    log(sym.bar + "    " + a.dim + sym.done + " " + (proj.slug || proj.path) + a.reset);
+                  } catch (aclErr) {
+                    log(sym.bar + "    " + a.yellow + sym.warn + " " + (proj.slug || proj.path) + ": " + aclErr.message + a.reset);
+                  }
+                }
+              }
+
+              log(sym.bar);
+              log(sym.bar + "  " + a.dim + "Restart the daemon for full effect." + a.reset);
+              log(sym.bar);
               showSettingsMenu(config, ip);
             }).catch(function (err) {
               log(sym.bar);
