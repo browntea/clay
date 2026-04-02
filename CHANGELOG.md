@@ -1,3 +1,10 @@
+## [2.20.1-beta.9](https://github.com/chadbyte/clay/compare/v2.20.1-beta.8...v2.20.1-beta.9) (2026-04-02)
+
+
+### Bug Fixes
+
+* **daemon:** defer startup ACL provisioning to unblock IPC ([39743bd](https://github.com/chadbyte/clay/commit/39743bdda435785de515886b3f7b55f156d4dee0))
+
 ## [2.20.1-beta.8](https://github.com/chadbyte/clay/compare/v2.20.1-beta.7...v2.20.1-beta.8) (2026-04-02)
 
 
