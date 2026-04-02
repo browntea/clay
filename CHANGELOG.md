@@ -1,3 +1,10 @@
+## [2.20.1-beta.15](https://github.com/chadbyte/clay/compare/v2.20.1-beta.14...v2.20.1-beta.15) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** add early boot diagnostics to SDK worker ([a2b0724](https://github.com/chadbyte/clay/commit/a2b07245b0af9e9d64bf16509ca319cc1605983a))
+
 ## [2.20.1-beta.14](https://github.com/chadbyte/clay/compare/v2.20.1-beta.13...v2.20.1-beta.14) (2026-04-02)
 
 
