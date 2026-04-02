@@ -1,3 +1,10 @@
+## [2.20.1-beta.10](https://github.com/chadbyte/clay/compare/v2.20.1-beta.9...v2.20.1-beta.10) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** skip recursive ACL on home directories ([e95ec4c](https://github.com/chadbyte/clay/commit/e95ec4c9b9d8f717d3ca7ac6d66e1bf554e34bff))
+
 ## [2.20.1-beta.9](https://github.com/chadbyte/clay/compare/v2.20.1-beta.8...v2.20.1-beta.9) (2026-04-02)
 
 
