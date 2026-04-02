@@ -1,3 +1,10 @@
+## [2.20.1-beta.11](https://github.com/chadbyte/clay/compare/v2.20.1-beta.10...v2.20.1-beta.11) (2026-04-02)
+
+
+### Bug Fixes
+
+* **os-users:** grant traverse permission on ancestor dirs for SDK worker ([c02de47](https://github.com/chadbyte/clay/commit/c02de470d190ea481fbc7d314f0c3c9a7cce8fe2))
+
 ## [2.20.1-beta.10](https://github.com/chadbyte/clay/compare/v2.20.1-beta.9...v2.20.1-beta.10) (2026-04-02)
 
 
