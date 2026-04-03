@@ -2011,14 +2011,6 @@ function showMainMenu(config, ip, setupCode) {
         log("");
       }
 
-      // Always show setup code if one exists (persists until admin is created)
-      var displayCode = setupCode || getSetupCode();
-      if (displayCode) {
-        log("  " + a.yellow + sym.warn + " Setup code:  " + a.bold + displayCode + a.reset);
-        log("  " + a.dim + "Open Clay in your browser and enter this code to create the admin account." + a.reset);
-        log("");
-      }
-
       showMenuItems();
     }
 
@@ -2116,16 +2108,6 @@ function showSettingsMenu(config, ip) {
     log(sym.bar);
 
     // Detect current state
-    var tsIP = getTailscaleIP();
-    var tsOk = tsIP !== null;
-    var mcOk = hasMkcert();
-
-    var tsStatus = tsOk
-      ? a.green + "Connected" + a.reset + a.dim + " · " + tsIP + a.reset
-      : a.dim + "Not detected" + a.reset;
-    var mcStatus = mcOk
-      ? a.green + "Installed" + a.reset
-      : a.dim + "Not found" + a.reset;
     var tlsStatus = config.tls
       ? a.green + "Enabled" + a.reset
       : a.dim + "Disabled" + a.reset;
@@ -2136,8 +2118,6 @@ function showSettingsMenu(config, ip) {
       ? a.green + "On" + a.reset
       : a.dim + "Off" + a.reset;
 
-    log(sym.bar + "  Tailscale    " + tsStatus);
-    log(sym.bar + "  mkcert       " + mcStatus);
     log(sym.bar + "  HTTPS        " + tlsStatus);
     var muEnabled = isMultiUser();
     var muStatus = muEnabled
