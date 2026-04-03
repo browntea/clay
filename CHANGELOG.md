@@ -1,3 +1,18 @@
+# [2.23.0-beta.1](https://github.com/chadbyte/clay/compare/v2.22.3-beta.1...v2.23.0-beta.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **mates:** close file viewer and terminal when switching to mate DM ([e9b928a](https://github.com/chadbyte/clay/commit/e9b928aa8d2c03bd5ecd55a598c91f849bfbe79f))
+* **mates:** limit auto-favorite to core 3 built-in mates ([e4cfa90](https://github.com/chadbyte/clay/commit/e4cfa90784545d490831fb4c420e9f7ad45d102d))
+
+
+### Features
+
+* **debate:** support natural debate proposals from DM conversations ([59879d8](https://github.com/chadbyte/clay/commit/59879d81ce32ba7d492664486773e1ced09e10da))
+* **mates:** add dust particle effect on mate removal ([88cd210](https://github.com/chadbyte/clay/commit/88cd210c9b7b822d9827c3473ef2e064eee93dd5))
+* **mates:** inject project registry into mate CLAUDE.md ([646c411](https://github.com/chadbyte/clay/commit/646c4117d7b9aca4d7aa0ccd1736aa9882585df4))
+
 ## [2.22.3-beta.1](https://github.com/chadbyte/clay/compare/v2.22.2...v2.22.3-beta.1) (2026-04-03)
 
 
