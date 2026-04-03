@@ -1,3 +1,15 @@
+# [2.22.0-beta.3](https://github.com/chadbyte/clay/compare/v2.22.0-beta.2...v2.22.0-beta.3) (2026-04-03)
+
+
+### Bug Fixes
+
+* **ui:** hide update banner on reconnect after successful update ([1d8eb03](https://github.com/chadbyte/clay/commit/1d8eb03d1f11944f150bdda7426d074c43f360cb))
+
+
+### Features
+
+* **projects:** allow project owners to manage access and visibility ([12dbb38](https://github.com/chadbyte/clay/commit/12dbb384dcb7c63f17f115e1fcc26ce5b424bd57))
+
 # [2.22.0-beta.2](https://github.com/chadbyte/clay/compare/v2.22.0-beta.1...v2.22.0-beta.2) (2026-04-03)
 
 
