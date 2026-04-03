@@ -2036,7 +2036,6 @@ function showMainMenu(config, ip, setupCode) {
 
     function showMenuItems() {
       var items = [
-        { label: "Setup notifications", value: "notifications" },
         { label: "Settings", value: "settings" },
         { label: "Shut down server", value: "shutdown" },
         { label: "Keep server alive & exit", value: "exit" },
@@ -2044,13 +2043,6 @@ function showMainMenu(config, ip, setupCode) {
 
       promptSelect("What would you like to do?", items, function (choice) {
         switch (choice) {
-          case "notifications":
-            showSetupGuide(config, ip, function () {
-              config = loadConfig() || config;
-              showMainMenu(config, ip);
-            });
-            break;
-
           case "settings":
             showSettingsMenu(config, ip);
             break;
@@ -2109,190 +2101,6 @@ function showMainMenu(config, ip, setupCode) {
 // ==============================
 // Setup guide (2x2 toggle flow)
 // ==============================
-function showSetupGuide(config, ip, goBack) {
-  var protocol = config.tls ? "https" : "http";
-  var wantRemote = false;
-  var wantPush = false;
-
-  console.clear();
-  printLogo();
-  log("");
-  log(sym.pointer + "  " + a.bold + "Setup Notifications" + a.reset);
-  log(sym.bar);
-
-  function redraw(renderFn) {
-    console.clear();
-    printLogo();
-    log("");
-    log(sym.pointer + "  " + a.bold + "Setup Notifications" + a.reset);
-    log(sym.bar);
-    if (wantRemote) log(sym.done + "  Access from outside your network? " + a.dim + "·" + a.reset + " " + a.green + "Yes" + a.reset);
-    else log(sym.done + "  Access from outside your network? " + a.dim + "· No" + a.reset);
-    log(sym.bar);
-    if (wantPush) log(sym.done + "  Want push notifications? " + a.dim + "·" + a.reset + " " + a.green + "Yes" + a.reset);
-    else log(sym.done + "  Want push notifications? " + a.dim + "· No" + a.reset);
-    log(sym.bar);
-    renderFn();
-  }
-
-  promptToggle("Access from outside your network?", "Requires Tailscale on both devices", false, function (remote) {
-    wantRemote = remote;
-    log(sym.bar);
-    promptToggle("Want push notifications?", "Requires HTTPS", false, function (push) {
-      wantPush = push;
-      log(sym.bar);
-      afterToggles();
-    });
-  });
-
-  function afterToggles() {
-    if (!wantRemote && !wantPush) {
-      log(sym.done + "  " + a.green + "All set!" + a.reset + a.dim + " · No additional setup needed." + a.reset);
-      log(sym.end);
-      log("");
-      promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
-        goBack();
-      });
-      return;
-    }
-    if (wantRemote) {
-      renderTailscale();
-    } else {
-      renderHttps();
-    }
-  }
-
-  function renderTailscale() {
-    var tsIP = getTailscaleIP();
-
-    log(sym.pointer + "  " + a.bold + "Tailscale Setup" + a.reset);
-    if (tsIP) {
-      log(sym.bar + "  " + a.green + "Tailscale is running" + a.reset + a.dim + " · " + tsIP + a.reset);
-      log(sym.bar);
-      log(sym.bar + "  On your phone/tablet:");
-      log(sym.bar + "  " + a.dim + "1. Install Tailscale (App Store / Google Play)" + a.reset);
-      log(sym.bar + "  " + a.dim + "2. Sign in with the same account" + a.reset);
-      log(sym.bar);
-      renderHttps();
-    } else {
-      log(sym.bar + "  " + a.yellow + "Tailscale not found on this machine." + a.reset);
-      log(sym.bar + "  " + a.dim + "Install: " + a.reset + "https://tailscale.com/download");
-      log(sym.bar + "  " + a.dim + "Then run: " + a.reset + "tailscale up");
-      log(sym.bar);
-      log(sym.bar + "  On your phone/tablet:");
-      log(sym.bar + "  " + a.dim + "1. Install Tailscale (App Store / Google Play)" + a.reset);
-      log(sym.bar + "  " + a.dim + "2. Sign in with the same account" + a.reset);
-      log(sym.bar);
-      promptSelect("Select", [
-        { label: "Re-check", value: "recheck" },
-        { label: "Back", value: "back" },
-      ], function (choice) {
-        if (choice === "recheck") {
-          redraw(renderTailscale);
-        } else {
-          goBack();
-        }
-      });
-    }
-  }
-
-  function renderHttps() {
-    if (!wantPush) {
-      showSetupQR();
-      return;
-    }
-
-    // Builtin cert: HTTPS already active, skip mkcert flow entirely
-    if (config.builtinCert) {
-      log(sym.pointer + "  " + a.bold + "HTTPS" + a.reset + a.dim + " · Enabled (builtin certificate)" + a.reset);
-      log(sym.bar);
-      showSetupQR();
-      return;
-    }
-
-    // mkcert flow (--mkcert or fallback)
-    var mcReady = hasMkcert();
-    log(sym.pointer + "  " + a.bold + "HTTPS Setup (for push notifications)" + a.reset);
-    if (mcReady) {
-      log(sym.bar + "  " + a.green + "mkcert is installed" + a.reset);
-      if (!config.tls) {
-        log(sym.bar + "  " + a.dim + "Restarting server with HTTPS..." + a.reset);
-        restartDaemonWithTLS(config, function (newConfig) {
-          config = newConfig;
-          log(sym.bar);
-          showSetupQR();
-        });
-        return;
-      }
-      log(sym.bar);
-      showSetupQR();
-    } else {
-      log(sym.bar + "  " + a.yellow + "mkcert not found." + a.reset);
-      var mkcertHint = process.platform === "win32"
-        ? "choco install mkcert && mkcert -install"
-        : process.platform === "darwin"
-          ? "brew install mkcert && mkcert -install"
-          : "apt install mkcert && mkcert -install";
-      log(sym.bar + "  " + a.dim + "Install: " + a.reset + mkcertHint);
-      log(sym.bar);
-      promptSelect("Select", [
-        { label: "Re-check", value: "recheck" },
-        { label: "Back", value: "back" },
-      ], function (choice) {
-        if (choice === "recheck") {
-          redraw(renderHttps);
-        } else {
-          goBack();
-        }
-      });
-    }
-  }
-
-  function showSetupQR() {
-    var tsIP = getTailscaleIP();
-    var lanIP = null;
-    if (!wantRemote) {
-      var allIPs = getAllIPs();
-      for (var j = 0; j < allIPs.length; j++) {
-        if (!allIPs[j].startsWith("100.")) { lanIP = allIPs[j]; break; }
-      }
-    }
-    var setupIP = wantRemote ? (tsIP || ip) : (lanIP || ip);
-    var setupQuery = wantRemote ? "" : "?mode=lan";
-    // Builtin cert: link directly to the app with push notification guide
-    // mkcert: use HTTP onboarding server for CA install flow
-    var setupUrl;
-    if (config.builtinCert) {
-      setupUrl = toClayStudioUrl(setupIP, config.port, "https") + "/pwa";
-    } else if (config.tls) {
-      setupUrl = "http://" + setupIP + ":" + (config.port + 1) + "/setup" + setupQuery;
-    } else {
-      setupUrl = "http://" + setupIP + ":" + config.port + "/setup" + setupQuery;
-    }
-    log(sym.pointer + "  " + a.bold + "Continue on your device" + a.reset);
-    log(sym.bar + "  " + a.dim + "Scan the QR code or open:" + a.reset);
-    log(sym.bar + "  " + a.bold + setupUrl + a.reset);
-    log(sym.bar);
-    qrcode.generate(setupUrl, { small: !isBasicTerm }, function (code) {
-      var lines = code.split("\n").map(function (l) { return "  " + sym.bar + "  " + l; }).join("\n");
-      console.log(lines);
-      log(sym.bar);
-      if (wantRemote) {
-        log(sym.bar + "  " + a.dim + "Can't connect? Make sure Tailscale is installed on your phone too." + a.reset);
-      } else {
-        log(sym.bar + "  " + a.dim + "Can't connect? Your phone must be on the same Wi-Fi network." + a.reset);
-      }
-      log(sym.bar);
-      log(sym.done + "  " + a.dim + "Setup complete." + a.reset);
-      log(sym.end);
-      log("");
-      promptSelect("Back?", [{ label: "Back", value: "back" }], function () {
-        goBack();
-      });
-    });
-  }
-}
-
 // ==============================
 // Settings sub-menu
 // ==============================
@@ -2355,9 +2163,7 @@ function showSettingsMenu(config, ip) {
     log(sym.bar);
 
     // Build items
-    var items = [
-      { label: "Setup notifications", value: "guide" },
-    ];
+    var items = [];
 
     if (!muEnabled) {
       if (config.pinHash) {
@@ -2392,13 +2198,6 @@ function showSettingsMenu(config, ip) {
 
   promptSelect("Select", items, function (choice) {
     switch (choice) {
-      case "guide":
-        showSetupGuide(config, ip, function () {
-          config = loadConfig() || config;
-          showSettingsMenu(config, ip);
-        });
-        break;
-
       case "pin":
         log(sym.bar);
         promptPin(function (pin) {
