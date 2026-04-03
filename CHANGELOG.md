@@ -1,3 +1,11 @@
+# [2.22.0-beta.4](https://github.com/chadbyte/clay/compare/v2.22.0-beta.3...v2.22.0-beta.4) (2026-04-03)
+
+
+### Bug Fixes
+
+* block auto-update in headless mode and restrict update UI to admins ([1b276f6](https://github.com/chadbyte/clay/commit/1b276f6e4dc03a23124b2533668f9b025e9ced7c)), closes [#258](https://github.com/chadbyte/clay/issues/258)
+* remove mkcert -CAROOT exec from daemon startup ([e627873](https://github.com/chadbyte/clay/commit/e627873d81f68e693bbb95841795e9c73e91f8cd)), closes [#258](https://github.com/chadbyte/clay/issues/258)
+
 # [2.22.0-beta.3](https://github.com/chadbyte/clay/compare/v2.22.0-beta.2...v2.22.0-beta.3) (2026-04-03)
 
 
