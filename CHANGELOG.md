@@ -1,3 +1,10 @@
+# [2.23.0-beta.2](https://github.com/chadbyte/clay/compare/v2.23.0-beta.1...v2.23.0-beta.2) (2026-04-03)
+
+
+### Bug Fixes
+
+* **mates:** hide mate projects from admin Project Access list ([b35429a](https://github.com/chadbyte/clay/commit/b35429a7d21204228bac87d427cde510585ee585))
+
 # [2.23.0-beta.1](https://github.com/chadbyte/clay/compare/v2.22.3-beta.1...v2.23.0-beta.1) (2026-04-03)
 
 
