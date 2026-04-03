@@ -1,3 +1,20 @@
+# [2.22.0](https://github.com/chadbyte/clay/compare/v2.21.0...v2.22.0) (2026-04-03)
+
+
+### Bug Fixes
+
+* block auto-update in headless mode and restrict update UI to admins ([1b276f6](https://github.com/chadbyte/clay/commit/1b276f6e4dc03a23124b2533668f9b025e9ced7c)), closes [#258](https://github.com/chadbyte/clay/issues/258)
+* **input:** enable send button when attachments are added during processing ([8b0e09f](https://github.com/chadbyte/clay/commit/8b0e09f2e8429a53e97292711bc5b8169bde35dc))
+* remove mkcert -CAROOT exec from daemon startup ([e627873](https://github.com/chadbyte/clay/commit/e627873d81f68e693bbb95841795e9c73e91f8cd)), closes [#258](https://github.com/chadbyte/clay/issues/258)
+* **ui:** hide update banner on reconnect after successful update ([1d8eb03](https://github.com/chadbyte/clay/commit/1d8eb03d1f11944f150bdda7426d074c43f360cb))
+
+
+### Features
+
+* **mates:** improve memory digestion with richer context and lower gate threshold ([c4dad96](https://github.com/chadbyte/clay/commit/c4dad96a4c7b3c0be807286a1ef9889877d9c060))
+* **mates:** replace Scout and Sage with 5 perspective mates ([5e4cf70](https://github.com/chadbyte/clay/commit/5e4cf70a65eba2f5eefe1a7fab62abf33e665ff1))
+* **projects:** allow project owners to manage access and visibility ([12dbb38](https://github.com/chadbyte/clay/commit/12dbb384dcb7c63f17f115e1fcc26ce5b424bd57))
+
 # [2.22.0-beta.4](https://github.com/chadbyte/clay/compare/v2.22.0-beta.3...v2.22.0-beta.4) (2026-04-03)
 
 
