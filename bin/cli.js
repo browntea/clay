@@ -1546,6 +1546,7 @@ async function forkDaemon(mode, keepAwake, extraProjects, addCwd, wantOsUsers) {
     builtinCert: hasBuiltinCert,
     mkcertDetected: mkcertDetected,
     debug: debugMode,
+    headless: headlessMode,
     keepAwake: keepAwake,
     dangerouslySkipPermissions: dangerouslySkipPermissions,
     osUsers: wantOsUsers || osUsersMode,
