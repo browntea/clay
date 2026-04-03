@@ -1,3 +1,10 @@
+## [2.22.1](https://github.com/chadbyte/clay/compare/v2.22.0...v2.22.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **os-users:** narrow session-not-found detection to prevent false positives ([88926d8](https://github.com/chadbyte/clay/commit/88926d8f22dd6bdf8ff8d353c3e8aa52f06002bf))
+
 ## [2.22.1-beta.1](https://github.com/chadbyte/clay/compare/v2.22.0...v2.22.1-beta.1) (2026-04-03)
 
 
