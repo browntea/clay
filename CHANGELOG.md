@@ -1,3 +1,10 @@
+# [2.22.0-beta.1](https://github.com/chadbyte/clay/compare/v2.21.1-beta.1...v2.22.0-beta.1) (2026-04-03)
+
+
+### Features
+
+* **mates:** replace Scout and Sage with 5 perspective mates ([5e4cf70](https://github.com/chadbyte/clay/commit/5e4cf70a65eba2f5eefe1a7fab62abf33e665ff1))
+
 ## [2.21.1-beta.1](https://github.com/chadbyte/clay/compare/v2.21.0...v2.21.1-beta.1) (2026-04-03)
 
 
