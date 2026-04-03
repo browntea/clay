@@ -443,20 +443,13 @@ async function restartDaemonFromConfig() {
   }
 
   // Rebuild config (preserve everything except pid)
-  var newConfig = {
+  var newConfig = Object.assign({}, lastConfig, {
     pid: null,
     port: targetPort,
-    pinHash: lastConfig.pinHash || null,
-    tls: lastConfig.tls !== undefined ? lastConfig.tls : useHttps,
-    debug: lastConfig.debug || false,
-    keepAwake: lastConfig.keepAwake || false,
-    dangerouslySkipPermissions: lastConfig.dangerouslySkipPermissions || false,
-    osUsers: lastConfig.osUsers || false,
     projects: (lastConfig.projects || []).filter(function (p) {
       return fs.existsSync(p.path);
-    }),
-    removedProjects: lastConfig.removedProjects || [],
-  };
+    })
+  });
 
   ensureConfigDir();
   saveConfig(newConfig);
