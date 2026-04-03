@@ -1,3 +1,11 @@
+# [2.23.0-beta.4](https://github.com/chadbyte/clay/compare/v2.23.0-beta.3...v2.23.0-beta.4) (2026-04-03)
+
+
+### Bug Fixes
+
+* **config:** preserve all daemon.json settings on restart ([ec32a7b](https://github.com/chadbyte/clay/commit/ec32a7bc63d104b223fbdb7742b6cc11070698fe)), closes [#259](https://github.com/chadbyte/clay/issues/259)
+* **profile:** show saved name instead of placeholder in user island ([4ee9197](https://github.com/chadbyte/clay/commit/4ee919789aa0dc39e01b35e0c076001c62e60c5e)), closes [#260](https://github.com/chadbyte/clay/issues/260)
+
 # [2.23.0-beta.3](https://github.com/chadbyte/clay/compare/v2.23.0-beta.2...v2.23.0-beta.3) (2026-04-03)
 
 
