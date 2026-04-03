@@ -1,3 +1,10 @@
+# [2.23.0-beta.3](https://github.com/chadbyte/clay/compare/v2.23.0-beta.2...v2.23.0-beta.3) (2026-04-03)
+
+
+### Bug Fixes
+
+* **mates:** prevent circular mate DM restore loops ([bf227bc](https://github.com/chadbyte/clay/commit/bf227bcc010ed5014c40cd0ebfed1eff00409ec2))
+
 # [2.23.0-beta.2](https://github.com/chadbyte/clay/compare/v2.23.0-beta.1...v2.23.0-beta.2) (2026-04-03)
 
 
