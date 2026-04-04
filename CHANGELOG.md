@@ -1,3 +1,18 @@
+# [2.23.0-beta.6](https://github.com/chadbyte/clay/compare/v2.23.0-beta.5...v2.23.0-beta.6) (2026-04-04)
+
+
+### Bug Fixes
+
+* **mates:** prevent identity wipe with atomic enforce and backup system ([e173087](https://github.com/chadbyte/clay/commit/e17308785c5e4fdf34fd8f70f75adbe7b81f2103))
+
+
+### Features
+
+* **mates:** add global search for Ally across all mates' sessions ([962f435](https://github.com/chadbyte/clay/commit/962f4350f50626c684fe21bb82916c1189d5fdbf))
+* **mates:** replace static team section with dynamic roster ([8c10685](https://github.com/chadbyte/clay/commit/8c1068547c5af2a2ac214bf3627e3e3a53e359ae))
+* **search:** add multi-language tokenization support ([8a1e8c0](https://github.com/chadbyte/clay/commit/8a1e8c0db9f2bb073a4532f8781aba14534bf961))
+* **search:** add unified BM25 search for session history and Cmd+K ([44ee0a8](https://github.com/chadbyte/clay/commit/44ee0a811b2c4d7bbcdfcb2c04685d062d517600))
+
 # [2.23.0-beta.5](https://github.com/chadbyte/clay/compare/v2.23.0-beta.4...v2.23.0-beta.5) (2026-04-03)
 
 
