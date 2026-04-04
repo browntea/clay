@@ -1433,6 +1433,13 @@
       <textarea id="debate-topic-input" rows="2" placeholder="e.g. Should AI development be regulated?"></textarea>
       <label class="debate-field-label" for="debate-panel-list">Select panelists</label>
       <div id="debate-panel-list" class="debate-panel-list"></div>
+      <div id="debate-skip-setup-row" class="debate-skip-setup-row hidden">
+        <label class="debate-toggle-label">
+          <input type="checkbox" id="debate-skip-setup-toggle">
+          <span>Skip setup</span>
+          <span class="debate-skip-setup-hint">Moderator generates the brief automatically from conversation context</span>
+        </label>
+      </div>
     </div>
     <div class="debate-modal-footer">
       <button id="debate-modal-cancel" class="debate-btn-cancel">Cancel</button>

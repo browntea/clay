@@ -910,6 +910,31 @@
   line-height: 1.4;
 }
 
+.debate-skip-setup-row {
+  margin-top: 12px;
+  padding: 8px 0;
+}
+
+.debate-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.debate-toggle-label input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.debate-skip-setup-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
 .debate-modal-footer {
   display: flex;
   justify-content: flex-end;
