@@ -1,3 +1,31 @@
+# [2.23.0-beta.7](https://github.com/chadbyte/clay/compare/v2.23.0-beta.6...v2.23.0-beta.7) (2026-04-04)
+
+
+### Bug Fixes
+
+* **mates:** disable context menu for primary mates ([b94c528](https://github.com/chadbyte/clay/commit/b94c52828ae33c4333fee29cb9fd0c0f90a54313))
+* **mates:** fix command whitelist splitting on quoted pipe characters ([2fe0c38](https://github.com/chadbyte/clay/commit/2fe0c384153bdd3d6579df861fc8496f2a629df6))
+* **mates:** hide memory panel when switching between mates ([c432ab9](https://github.com/chadbyte/clay/commit/c432ab9322e235eec9152d6732b7c86d66b42f9d))
+* **mates:** prevent infinite warning loop for identity-less mates ([9083425](https://github.com/chadbyte/clay/commit/90834250aa27e06f920b4004b644e60ccc019c28))
+* **mates:** restore dynamic project registry injection ([a1a5e8d](https://github.com/chadbyte/clay/commit/a1a5e8d2b4229c3e30d6805e8cb0b8a99a6aee4d))
+* **permissions:** default fileBrowser permission to true ([565a78a](https://github.com/chadbyte/clay/commit/565a78a3da8d2cdc77e330ddb403bd81de0eee85))
+* **terminal:** use user's default shell instead of hardcoded bash ([722129c](https://github.com/chadbyte/clay/commit/722129c212f0a5489407823a4499a82e145c1835))
+* **ui:** auto-switch to schedule mode on rate limit rejection ([3a5546d](https://github.com/chadbyte/clay/commit/3a5546dd9d8b522ffc0d4f1e6123a78b0ad4be1f))
+* **ui:** clear debate UI on session switch ([95b2cd4](https://github.com/chadbyte/clay/commit/95b2cd4cb2185a87b56fdcf644d44ca50c442b07))
+* **ui:** increase rate limit schedule buffer from 3s to 3min ([f945852](https://github.com/chadbyte/clay/commit/f9458528f245074fd33c82c5a91744bb02a96a82))
+* **ui:** remove debate bottom bar when debate ends or session replays ([828804b](https://github.com/chadbyte/clay/commit/828804b630ec8b04096d1d76efd2c57711977b9c))
+
+
+### Features
+
+* **mates:** add session delete via right-click context menu ([27e3a58](https://github.com/chadbyte/clay/commit/27e3a5830fb9ac323e96016faaba7bad5df87d29))
+* **mates:** auto-sync primary mates with latest definition on startup ([97eb52b](https://github.com/chadbyte/clay/commit/97eb52b4fe367d707833521865e958599dcab8a3))
+* **mates:** dynamic capabilities injection and primary mate UI ([abed902](https://github.com/chadbyte/clay/commit/abed902515d2c5d9b5df624f5ef9ac39615548e4))
+* **mates:** establish Ally as code-managed primary mate ([e3144e9](https://github.com/chadbyte/clay/commit/e3144e94c8f8237006298d633374828cc37eae45))
+* **mates:** inject team memory summaries into Ally's context ([b255aad](https://github.com/chadbyte/clay/commit/b255aad135631cc629bd25046b995ea6dc670e84))
+* **permissions:** auto-approve read-only tools and safe bash for all sessions ([3401390](https://github.com/chadbyte/clay/commit/340139009adb2fcda52a95554e865e966826674d))
+* **ui:** add right-click context menu to project session items ([9efb61b](https://github.com/chadbyte/clay/commit/9efb61be9b11fe63f64fead50da54578ee0cc156))
+
 # [2.23.0-beta.6](https://github.com/chadbyte/clay/compare/v2.23.0-beta.5...v2.23.0-beta.6) (2026-04-04)
 
 
