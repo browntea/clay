@@ -814,6 +814,52 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
   margin-left: auto;
 }
 
+/* Mate session delete confirm overlay */
+.mate-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mate-confirm-box {
+  background: var(--bg-primary, #fff);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.mate-confirm-text {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.mate-confirm-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.mate-confirm-cancel, .mate-confirm-delete {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  font-size: 13px;
+  cursor: pointer;
+  background: var(--bg-primary);
+  color: var(--text);
+}
+.mate-confirm-delete {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
+}
+.mate-confirm-delete:hover {
+  background: #c0392b;
+}
+
 .mate-sidebar-avatar {
   width: 28px;
   height: 28px;
