@@ -1,3 +1,12 @@
+# [2.23.0-beta.8](https://github.com/chadbyte/clay/compare/v2.23.0-beta.7...v2.23.0-beta.8) (2026-04-04)
+
+
+### Bug Fixes
+
+* **os-users:** fix fsAsUser crash on Node.js v22 due to TypeScript eval parsing ([28715bd](https://github.com/chadbyte/clay/commit/28715bd276189befda3fa658cda938a32802e049))
+* **ui:** clear debate-info-float panel bar on session switch ([18a7656](https://github.com/chadbyte/clay/commit/18a76567196224ddbcb5831040b3a9e2d517c490)), closes [#debate-info-float](https://github.com/chadbyte/clay/issues/debate-info-float)
+* **ui:** reset debate state on session switch ([c098d02](https://github.com/chadbyte/clay/commit/c098d02045dbc90ea14052610550fad16069ef05))
+
 # [2.23.0-beta.7](https://github.com/chadbyte/clay/compare/v2.23.0-beta.6...v2.23.0-beta.7) (2026-04-04)
 
 
