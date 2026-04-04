@@ -1,3 +1,50 @@
+# [2.23.0](https://github.com/chadbyte/clay/compare/v2.22.2...v2.23.0) (2026-04-04)
+
+
+### Bug Fixes
+
+* **config:** preserve all daemon.json settings on restart ([ec32a7b](https://github.com/chadbyte/clay/commit/ec32a7bc63d104b223fbdb7742b6cc11070698fe)), closes [#259](https://github.com/chadbyte/clay/issues/259)
+* isolate user process env from root daemon's process.env ([deda551](https://github.com/chadbyte/clay/commit/deda551143bc21ed79143fc27daab5999024af37))
+* **mates:** close file viewer and terminal when switching to mate DM ([e9b928a](https://github.com/chadbyte/clay/commit/e9b928aa8d2c03bd5ecd55a598c91f849bfbe79f))
+* **mates:** disable context menu for primary mates ([b94c528](https://github.com/chadbyte/clay/commit/b94c52828ae33c4333fee29cb9fd0c0f90a54313))
+* **mates:** fix command whitelist splitting on quoted pipe characters ([2fe0c38](https://github.com/chadbyte/clay/commit/2fe0c384153bdd3d6579df861fc8496f2a629df6))
+* **mates:** hide mate projects from admin Project Access list ([b35429a](https://github.com/chadbyte/clay/commit/b35429a7d21204228bac87d427cde510585ee585))
+* **mates:** hide memory panel when switching between mates ([c432ab9](https://github.com/chadbyte/clay/commit/c432ab9322e235eec9152d6732b7c86d66b42f9d))
+* **mates:** limit auto-favorite to core 3 built-in mates ([e4cfa90](https://github.com/chadbyte/clay/commit/e4cfa90784545d490831fb4c420e9f7ad45d102d))
+* **mates:** prevent circular mate DM restore loops ([bf227bc](https://github.com/chadbyte/clay/commit/bf227bcc010ed5014c40cd0ebfed1eff00409ec2))
+* **mates:** prevent identity wipe with atomic enforce and backup system ([e173087](https://github.com/chadbyte/clay/commit/e17308785c5e4fdf34fd8f70f75adbe7b81f2103))
+* **mates:** prevent infinite warning loop for identity-less mates ([9083425](https://github.com/chadbyte/clay/commit/90834250aa27e06f920b4004b644e60ccc019c28))
+* **mates:** restore dynamic project registry injection ([a1a5e8d](https://github.com/chadbyte/clay/commit/a1a5e8d2b4229c3e30d6805e8cb0b8a99a6aee4d))
+* **mates:** stabilize mate DM UI during project switching ([dffead0](https://github.com/chadbyte/clay/commit/dffead01b210d737aa5382d7848526653a0d65c2))
+* **os-users:** fix fsAsUser crash on Node.js v22 due to TypeScript eval parsing ([28715bd](https://github.com/chadbyte/clay/commit/28715bd276189befda3fa658cda938a32802e049))
+* **permissions:** default fileBrowser permission to true ([565a78a](https://github.com/chadbyte/clay/commit/565a78a3da8d2cdc77e330ddb403bd81de0eee85))
+* **profile:** show saved name instead of placeholder in user island ([4ee9197](https://github.com/chadbyte/clay/commit/4ee919789aa0dc39e01b35e0c076001c62e60c5e)), closes [#260](https://github.com/chadbyte/clay/issues/260)
+* **terminal:** use user's default shell instead of hardcoded bash ([722129c](https://github.com/chadbyte/clay/commit/722129c212f0a5489407823a4499a82e145c1835))
+* **ui:** auto-switch to schedule mode on rate limit rejection ([3a5546d](https://github.com/chadbyte/clay/commit/3a5546dd9d8b522ffc0d4f1e6123a78b0ad4be1f))
+* **ui:** clear debate UI on session switch ([95b2cd4](https://github.com/chadbyte/clay/commit/95b2cd4cb2185a87b56fdcf644d44ca50c442b07))
+* **ui:** clear debate-info-float panel bar on session switch ([18a7656](https://github.com/chadbyte/clay/commit/18a76567196224ddbcb5831040b3a9e2d517c490)), closes [#debate-info-float](https://github.com/chadbyte/clay/issues/debate-info-float)
+* **ui:** increase rate limit schedule buffer from 3s to 3min ([f945852](https://github.com/chadbyte/clay/commit/f9458528f245074fd33c82c5a91744bb02a96a82))
+* **ui:** remove debate bottom bar when debate ends or session replays ([828804b](https://github.com/chadbyte/clay/commit/828804b630ec8b04096d1d76efd2c57711977b9c))
+* **ui:** reset debate state on session switch ([c098d02](https://github.com/chadbyte/clay/commit/c098d02045dbc90ea14052610550fad16069ef05))
+
+
+### Features
+
+* **debate:** support natural debate proposals from DM conversations ([59879d8](https://github.com/chadbyte/clay/commit/59879d81ce32ba7d492664486773e1ced09e10da))
+* **mates:** add dust particle effect on mate removal ([88cd210](https://github.com/chadbyte/clay/commit/88cd210c9b7b822d9827c3473ef2e064eee93dd5))
+* **mates:** add global search for Ally across all mates' sessions ([962f435](https://github.com/chadbyte/clay/commit/962f4350f50626c684fe21bb82916c1189d5fdbf))
+* **mates:** add session delete via right-click context menu ([27e3a58](https://github.com/chadbyte/clay/commit/27e3a5830fb9ac323e96016faaba7bad5df87d29))
+* **mates:** auto-sync primary mates with latest definition on startup ([97eb52b](https://github.com/chadbyte/clay/commit/97eb52b4fe367d707833521865e958599dcab8a3))
+* **mates:** dynamic capabilities injection and primary mate UI ([abed902](https://github.com/chadbyte/clay/commit/abed902515d2c5d9b5df624f5ef9ac39615548e4))
+* **mates:** establish Ally as code-managed primary mate ([e3144e9](https://github.com/chadbyte/clay/commit/e3144e94c8f8237006298d633374828cc37eae45))
+* **mates:** inject project registry into mate CLAUDE.md ([646c411](https://github.com/chadbyte/clay/commit/646c4117d7b9aca4d7aa0ccd1736aa9882585df4))
+* **mates:** inject team memory summaries into Ally's context ([b255aad](https://github.com/chadbyte/clay/commit/b255aad135631cc629bd25046b995ea6dc670e84))
+* **mates:** replace static team section with dynamic roster ([8c10685](https://github.com/chadbyte/clay/commit/8c1068547c5af2a2ac214bf3627e3e3a53e359ae))
+* **permissions:** auto-approve read-only tools and safe bash for all sessions ([3401390](https://github.com/chadbyte/clay/commit/340139009adb2fcda52a95554e865e966826674d))
+* **search:** add multi-language tokenization support ([8a1e8c0](https://github.com/chadbyte/clay/commit/8a1e8c0db9f2bb073a4532f8781aba14534bf961))
+* **search:** add unified BM25 search for session history and Cmd+K ([44ee0a8](https://github.com/chadbyte/clay/commit/44ee0a811b2c4d7bbcdfcb2c04685d062d517600))
+* **ui:** add right-click context menu to project session items ([9efb61b](https://github.com/chadbyte/clay/commit/9efb61be9b11fe63f64fead50da54578ee0cc156))
+
 # [2.23.0-beta.8](https://github.com/chadbyte/clay/compare/v2.23.0-beta.7...v2.23.0-beta.8) (2026-04-04)
 
 
