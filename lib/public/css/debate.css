@@ -331,6 +331,54 @@
   color: var(--text);
 }
 
+/* --- Preparing indicator (shown while brief is being generated) --- */
+.debate-preparing-indicator {
+  max-width: var(--content-width);
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+.debate-preparing-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent2) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent2) 15%, transparent);
+}
+
+.debate-preparing-spinner {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--accent2);
+  animation: spin 1.2s linear infinite;
+}
+
+.debate-preparing-spinner .lucide {
+  width: 20px;
+  height: 20px;
+}
+
+.debate-preparing-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.debate-preparing-dots {
+  animation: blink-dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes blink-dots {
+  0%, 20% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
 /* --- Activity bar inside turns --- */
 .debate-activity-bar {
   margin: 4px 0;
