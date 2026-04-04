@@ -5,6 +5,78 @@
 
 ---
 
+## Progress
+
+| Status | Meaning |
+|--------|---------|
+| done | Merged to dev-2-23 |
+| **next** | **The next PR to work on** |
+| pending | Not started |
+
+**Last completed**: PR-01 (2026-04-04)
+**Next up**: PR-02
+
+| PR | Status | Description | Date |
+|----|--------|-------------|------|
+| PR-01 | done | Extract `project-debate.js` from `project.js` | 2026-04-04 |
+| PR-02 | **next** | Extract `project-memory.js` from `project.js` | |
+| PR-03 | pending | Extract `project-mate-interaction.js` from `project.js` | |
+| PR-04 | pending | Extract `project-loop.js` from `project.js` | |
+| PR-05 | pending | Extract `project-file-watch.js` from `project.js` | |
+| PR-06 | pending | Extract `project-http.js` from `project.js` | |
+| PR-07 | pending | Extract `project-image.js` from `project.js` | |
+| PR-08 | pending | Reduce `project.js` to thin coordinator | |
+| PR-09 | pending | Extract `server-auth.js` from `server.js` | |
+| PR-10 | pending | Extract `server-admin.js` from `server.js` | |
+| PR-11 | pending | Extract `server-skills.js` from `server.js` | |
+| PR-12 | pending | Extract `server-settings.js` from `server.js` | |
+| PR-13 | pending | Reduce `server.js` to thin router | |
+| PR-14 | pending | Extract `app-connection.js` from `app.js` | |
+| PR-15 | pending | Extract `app-messages.js` from `app.js` | |
+| PR-16 | pending | Extract `app-dm.js` from `app.js` | |
+| PR-17 | pending | Extract `app-home-hub.js` from `app.js` | |
+| PR-18 | pending | Extract `app-rate-limit.js` from `app.js` | |
+| PR-19 | pending | Extract `app-cursors.js` from `app.js` | |
+| PR-20 | pending | Reduce `app.js` to bootstrap | |
+| PR-21 | pending | Extract `sidebar-sessions.js` from `sidebar.js` | |
+| PR-22 | pending | Extract `sidebar-projects.js` from `sidebar.js` | |
+| PR-23 | pending | Extract `sidebar-mates.js` from `sidebar.js` | |
+| PR-24 | pending | Extract `sidebar-mobile.js` from `sidebar.js` | |
+| PR-25 | pending | Reduce `sidebar.js` to coordinator | |
+| PR-26 | pending | Extract `scheduler-config.js` from `scheduler.js` | |
+| PR-27 | pending | Extract `scheduler-history.js` from `scheduler.js` | |
+| PR-28 | pending | Reduce `scheduler.js` to coordinator | |
+| PR-29 | pending | Extract `sdk-skill-discovery.js` from `sdk-bridge.js` | |
+| PR-30 | pending | Extract `sdk-message-queue.js` from `sdk-bridge.js` | |
+| PR-31 | pending | Extract `sdk-message-processor.js` from `sdk-bridge.js` | |
+| PR-32 | pending | Reduce `sdk-bridge.js` to connection manager | |
+| PR-33 | pending | Extract `mates-prompts.js` from `mates.js` | |
+| PR-34 | pending | Extract `mates-knowledge.js` from `mates.js` | |
+| PR-35 | pending | Extract `mates-identity.js` from `mates.js` | |
+| PR-36 | pending | Reduce `mates.js` to CRUD + builtins | |
+| PR-37 | pending | Extract `users-auth.js` from `users.js` | |
+| PR-38 | pending | Extract `users-permissions.js` from `users.js` | |
+| PR-39 | pending | Extract `users-preferences.js` from `users.js` | |
+| PR-40 | pending | Reduce `users.js` to CRUD + invites | |
+| PR-41 | pending | Extract `daemon-projects.js` from `daemon.js` | |
+| PR-42 | pending | Define `ws-schema.js` | |
+
+### Current file sizes after completed PRs
+
+| File | Original | Current | Target |
+|------|----------|---------|--------|
+| `lib/project.js` | 7,222 | 5,685 | ~800 |
+| `lib/server.js` | 3,599 | 3,599 | ~500 |
+| `lib/public/app.js` | 8,010 | 8,010 | ~1,500 |
+| `lib/public/modules/sidebar.js` | 4,541 | 4,541 | ~400 |
+| `lib/public/modules/scheduler.js` | 3,166 | 3,166 | ~1,200 |
+| `lib/sdk-bridge.js` | 2,232 | 2,232 | ~800 |
+| `lib/mates.js` | 1,318 | 1,318 | ~500 |
+| `lib/users.js` | 791 | 791 | ~300 |
+| `lib/daemon.js` | 1,490 | 1,490 | ~1,100 |
+
+---
+
 ## How to Read This Document
 
 - Each numbered step (e.g. `PR-01`) is exactly **one pull request**.
@@ -103,7 +175,7 @@ project.js is 7,222 lines with 91 internal functions across 9+ concerns. A bug i
 
 ---
 
-### PR-01: Extract `lib/project-debate.js`
+### PR-01: Extract `lib/project-debate.js` [DONE 2026-04-04]
 
 **Why first**: Debate is the largest concern in project.js (27 functions, ~1,500 lines). It is self-contained: start, stop, comment, conclude, panelist/moderator turns, state persistence.
 
@@ -126,6 +198,14 @@ project.js is 7,222 lines with 91 internal functions across 9+ concerns. A bug i
 **Re-export in project.js**: Wire debate handlers into `handleMessage` switch cases. The message types `debate_start`, `debate_quick_start`, `debate_skill_setup`, `debate_comment`, `debate_confirm_brief`, `debate_stop`, `debate_conclude_response` delegate to `debate.handleXxx()`.
 
 **Verify**: Start a debate in any project. Confirm start, comment, panelist turns, conclude all work.
+
+**Implementation notes** (completed):
+- Merged via PR #265 to `dev-2-23`, squash merged
+- `project.js`: 7,222 -> 5,685 lines. `project-debate.js`: 1,616 lines
+- Used `attachDebate(ctx)` pattern. Context receives: `cwd`, `slug`, `send`, `sendTo`, `sendToSession`, `sm`, `sdk`, `getMateProfile`, `loadMateClaudeMd`, `loadMateDigests`, `hydrateImageRefs`, `onProcessingChanged`, `getLinuxUserForSession`, `getSessionForWs`, `updateMemorySummary`, `initMemorySummary`
+- Shared helpers `escapeRegex`, `getMateProfile`, `loadMateClaudeMd` kept in project.js (used by non-debate code too)
+- `enqueueDigest`/`processDigestQueue` kept in project.js (shared with DM digest). Debate uses its own inline digest in `digestDebateParticipant`
+- 7 re-export vars in project.js: `handleDebateStart`, `handleDebateComment`, `handleDebateStop`, `handleDebateConcludeResponse`, `handleDebateConfirmBrief`, `restoreDebateState`, `checkForDmDebateBrief`
 
 ---
 
@@ -824,56 +904,56 @@ module.exports = { schema }
 
 ## Execution Order Summary
 
-| PR | File Created | Extracted From | Approx Lines Moved |
-|----|-------------|----------------|-------------------|
-| **Phase 1: project.js** | | | |
-| PR-01 | `lib/project-debate.js` | project.js | ~1,500 |
-| PR-02 | `lib/project-memory.js` | project.js | ~400 |
-| PR-03 | `lib/project-mate-interaction.js` | project.js | ~600 |
-| PR-04 | `lib/project-loop.js` | project.js | ~1,200 |
-| PR-05 | `lib/project-file-watch.js` | project.js | ~300 |
-| PR-06 | `lib/project-http.js` | project.js | ~200 |
-| PR-07 | `lib/project-image.js` | project.js | ~150 |
-| PR-08 | (cleanup) | project.js | 0 (reduce to ~800) |
-| **Phase 2: server.js** | | | |
-| PR-09 | `lib/server-auth.js` | server.js | ~800 |
-| PR-10 | `lib/server-admin.js` | server.js | ~900 |
-| PR-11 | `lib/server-skills.js` | server.js | ~300 |
-| PR-12 | `lib/server-settings.js` | server.js | ~400 |
-| PR-13 | (cleanup) | server.js | 0 (reduce to ~500) |
-| **Phase 3: app.js** | | | |
-| PR-14 | `lib/public/modules/app-connection.js` | app.js | ~400 |
-| PR-15 | `lib/public/modules/app-messages.js` | app.js | ~1,300 |
-| PR-16 | `lib/public/modules/app-dm.js` | app.js | ~800 |
-| PR-17 | `lib/public/modules/app-home-hub.js` | app.js | ~500 |
-| PR-18 | `lib/public/modules/app-rate-limit.js` | app.js | ~400 |
-| PR-19 | `lib/public/modules/app-cursors.js` | app.js | ~500 |
-| PR-20 | (cleanup) | app.js | 0 (reduce to ~1,500) |
-| **Phase 4: sidebar.js** | | | |
-| PR-21 | `lib/public/modules/sidebar-sessions.js` | sidebar.js | ~1,200 |
-| PR-22 | `lib/public/modules/sidebar-projects.js` | sidebar.js | ~1,200 |
-| PR-23 | `lib/public/modules/sidebar-mates.js` | sidebar.js | ~700 |
-| PR-24 | `lib/public/modules/sidebar-mobile.js` | sidebar.js | ~800 |
-| PR-25 | (cleanup) | sidebar.js | 0 (reduce to ~400) |
-| **Phase 5: scheduler.js** | | | |
-| PR-26 | `lib/public/modules/scheduler-config.js` | scheduler.js | ~600 |
-| PR-27 | `lib/public/modules/scheduler-history.js` | scheduler.js | ~200 |
-| PR-28 | (cleanup) | scheduler.js | 0 (reduce to ~1,200) |
-| **Phase 6: smaller modules** | | | |
-| PR-29 | `lib/sdk-skill-discovery.js` | sdk-bridge.js | ~200 |
-| PR-30 | `lib/sdk-message-queue.js` | sdk-bridge.js | ~100 |
-| PR-31 | `lib/sdk-message-processor.js` | sdk-bridge.js | ~800 |
-| PR-32 | (cleanup) | sdk-bridge.js | 0 (reduce to ~800) |
-| PR-33 | `lib/mates-prompts.js` | mates.js | ~400 |
-| PR-34 | `lib/mates-knowledge.js` | mates.js | ~200 |
-| PR-35 | `lib/mates-identity.js` | mates.js | ~150 |
-| PR-36 | (cleanup) | mates.js | 0 (reduce to ~500) |
-| PR-37 | `lib/users-auth.js` | users.js | ~200 |
-| PR-38 | `lib/users-permissions.js` | users.js | ~100 |
-| PR-39 | `lib/users-preferences.js` | users.js | ~100 |
-| PR-40 | (cleanup) | users.js | 0 (reduce to ~300) |
-| PR-41 | `lib/daemon-projects.js` | daemon.js | ~200 |
-| PR-42 | `lib/ws-schema.js` | (new) | ~300 |
+| PR | Status | File Created | Extracted From | Approx Lines Moved |
+|----|--------|-------------|----------------|-------------------|
+| **Phase 1: project.js** | | | | |
+| PR-01 | done | `lib/project-debate.js` | project.js | ~1,500 |
+| PR-02 | **next** | `lib/project-memory.js` | project.js | ~400 |
+| PR-03 | pending | `lib/project-mate-interaction.js` | project.js | ~600 |
+| PR-04 | pending | `lib/project-loop.js` | project.js | ~1,200 |
+| PR-05 | pending | `lib/project-file-watch.js` | project.js | ~300 |
+| PR-06 | pending | `lib/project-http.js` | project.js | ~200 |
+| PR-07 | pending | `lib/project-image.js` | project.js | ~150 |
+| PR-08 | pending | (cleanup) | project.js | 0 (reduce to ~800) |
+| **Phase 2: server.js** | | | | |
+| PR-09 | pending | `lib/server-auth.js` | server.js | ~800 |
+| PR-10 | pending | `lib/server-admin.js` | server.js | ~900 |
+| PR-11 | pending | `lib/server-skills.js` | server.js | ~300 |
+| PR-12 | pending | `lib/server-settings.js` | server.js | ~400 |
+| PR-13 | pending | (cleanup) | server.js | 0 (reduce to ~500) |
+| **Phase 3: app.js** | | | | |
+| PR-14 | pending | `lib/public/modules/app-connection.js` | app.js | ~400 |
+| PR-15 | pending | `lib/public/modules/app-messages.js` | app.js | ~1,300 |
+| PR-16 | pending | `lib/public/modules/app-dm.js` | app.js | ~800 |
+| PR-17 | pending | `lib/public/modules/app-home-hub.js` | app.js | ~500 |
+| PR-18 | pending | `lib/public/modules/app-rate-limit.js` | app.js | ~400 |
+| PR-19 | pending | `lib/public/modules/app-cursors.js` | app.js | ~500 |
+| PR-20 | pending | (cleanup) | app.js | 0 (reduce to ~1,500) |
+| **Phase 4: sidebar.js** | | | | |
+| PR-21 | pending | `lib/public/modules/sidebar-sessions.js` | sidebar.js | ~1,200 |
+| PR-22 | pending | `lib/public/modules/sidebar-projects.js` | sidebar.js | ~1,200 |
+| PR-23 | pending | `lib/public/modules/sidebar-mates.js` | sidebar.js | ~700 |
+| PR-24 | pending | `lib/public/modules/sidebar-mobile.js` | sidebar.js | ~800 |
+| PR-25 | pending | (cleanup) | sidebar.js | 0 (reduce to ~400) |
+| **Phase 5: scheduler.js** | | | | |
+| PR-26 | pending | `lib/public/modules/scheduler-config.js` | scheduler.js | ~600 |
+| PR-27 | pending | `lib/public/modules/scheduler-history.js` | scheduler.js | ~200 |
+| PR-28 | pending | (cleanup) | scheduler.js | 0 (reduce to ~1,200) |
+| **Phase 6: smaller modules** | | | | |
+| PR-29 | pending | `lib/sdk-skill-discovery.js` | sdk-bridge.js | ~200 |
+| PR-30 | pending | `lib/sdk-message-queue.js` | sdk-bridge.js | ~100 |
+| PR-31 | pending | `lib/sdk-message-processor.js` | sdk-bridge.js | ~800 |
+| PR-32 | pending | (cleanup) | sdk-bridge.js | 0 (reduce to ~800) |
+| PR-33 | pending | `lib/mates-prompts.js` | mates.js | ~400 |
+| PR-34 | pending | `lib/mates-knowledge.js` | mates.js | ~200 |
+| PR-35 | pending | `lib/mates-identity.js` | mates.js | ~150 |
+| PR-36 | pending | (cleanup) | mates.js | 0 (reduce to ~500) |
+| PR-37 | pending | `lib/users-auth.js` | users.js | ~200 |
+| PR-38 | pending | `lib/users-permissions.js` | users.js | ~100 |
+| PR-39 | pending | `lib/users-preferences.js` | users.js | ~100 |
+| PR-40 | pending | (cleanup) | users.js | 0 (reduce to ~300) |
+| PR-41 | pending | `lib/daemon-projects.js` | daemon.js | ~200 |
+| PR-42 | pending | `lib/ws-schema.js` | (new) | ~300 |
 
 **Total: 42 PRs, ~30 new files created.**
 
