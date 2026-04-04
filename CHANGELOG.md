@@ -1,3 +1,12 @@
+## [2.23.1-beta.1](https://github.com/chadbyte/clay/compare/v2.23.0...v2.23.1-beta.1) (2026-04-04)
+
+
+### Bug Fixes
+
+* prevent session history loss after stop in OS multi-user mode ([53a52af](https://github.com/chadbyte/clay/commit/53a52af570a0e3a2bc0aeab5d141afef96328ded))
+* set HOME and npm_config_cache env for skill-install child process ([a596076](https://github.com/chadbyte/clay/commit/a596076812099039684f1e284bd67217e20658ea))
+* **ui:** show loading indicator during debate preparing phase ([7e7e6e7](https://github.com/chadbyte/clay/commit/7e7e6e7782aed861985f46fd4ac22f93080cb04e))
+
 # [2.23.0](https://github.com/chadbyte/clay/compare/v2.22.2...v2.23.0) (2026-04-04)
 
 
