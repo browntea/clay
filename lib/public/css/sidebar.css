@@ -1348,3 +1348,29 @@
   }
 }
 
+/* --- Skeleton loading placeholders --- */
+.skeleton-session-group {
+  padding: 8px 12px;
+}
+.skeleton-session-label {
+  width: 48px;
+  height: 10px;
+  border-radius: 4px;
+  background: var(--text-muted, #888);
+  margin-bottom: 10px;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+.skeleton-session-item {
+  width: 100%;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--text-muted, #888);
+  margin-bottom: 6px;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.18; }
+  100% { opacity: 0.1; }
+}
+

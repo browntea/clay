@@ -1392,6 +1392,29 @@ select.wt-modal-input {
 
 /* --- Per-project presence avatars --- */
 /* --- Mobile: hide icon strip --- */
+/* --- Skeleton loading placeholders --- */
+@keyframes skeleton-shimmer {
+  0% { opacity: 0.15; }
+  50% { opacity: 0.25; }
+  100% { opacity: 0.15; }
+}
+.skeleton-icon-strip-item {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--text-muted, #888);
+  margin: 5px auto;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+.skeleton-icon-strip-user {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--text-muted, #888);
+  margin: 4px auto;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
 @media (max-width: 768px) {
   #icon-strip {
     display: none;
