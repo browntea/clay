@@ -1,3 +1,10 @@
+## [2.23.2-beta.1](https://github.com/chadbyte/clay/compare/v2.23.1...v2.23.2-beta.1) (2026-04-05)
+
+
+### Bug Fixes
+
+* **os-user:** resolve cold start latency caused by IPv6 timeout in SDK CLI subprocess ([6eb5e9e](https://github.com/chadbyte/clay/commit/6eb5e9eb9eb968d9e17828600c03ae15be619ebc))
+
 ## [2.23.1](https://github.com/chadbyte/clay/compare/v2.23.0...v2.23.1) (2026-04-04)
 
 
