@@ -853,3 +853,50 @@
   outline: none;
   cursor: pointer;
 }
+
+/* --- Layout switcher (Bubble / Channel) --- */
+.layout-switcher {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.layout-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  color: var(--text);
+  font-family: inherit;
+  text-align: center;
+}
+.layout-option:hover {
+  border-color: var(--text-dimmer);
+  background: var(--bg-alt);
+}
+.layout-option:active {
+  transform: scale(0.97);
+}
+.layout-option.selected {
+  border-color: var(--accent);
+  background: var(--accent-8);
+}
+.layout-option-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+.layout-option-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+}
+.layout-option-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}

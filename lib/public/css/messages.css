@@ -1759,4 +1759,61 @@ pre.mermaid-error {
   }
 }
 
+/* ==========================================================================
+   Wide View Mode
+   ========================================================================== */
 
+body.wide-view {
+  --content-width: 100%;
+}
+
+body.wide-view .msg-user,
+body.wide-view .msg-assistant {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+  padding: 4px 16px;
+  margin: 0;
+  border-radius: 0;
+}
+body.wide-view .msg-user:hover,
+body.wide-view .msg-assistant:hover {
+  background: var(--bg-alt);
+}
+
+body.wide-view .msg-user {
+  justify-content: flex-start;
+}
+body.wide-view .msg-user .dm-bubble-avatar-me {
+  order: -1;
+}
+body.wide-view .msg-user .bubble {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  max-width: 100%;
+  font-size: 15px;
+  line-height: 1.46;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+body.wide-view .msg-user .msg-actions {
+  display: none;
+}
+
+body.wide-view .msg-assistant .md-content {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+body.wide-view .thinking-item,
+body.wide-view .tool-item,
+body.wide-view .tool-group {
+  max-width: 100%;
+}
+body.wide-view .turn-meta {
+  max-width: 100%;
+}

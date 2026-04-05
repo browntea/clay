@@ -2143,19 +2143,31 @@ body.mate-dm-active .notes-archive-header button:hover {
   object-fit: cover;
   margin-top: 2px;
 }
-body.mate-dm-active .dm-bubble-avatar {
+body.mate-dm-active .dm-bubble-avatar,
+body.wide-view .dm-bubble-avatar {
   display: block;
 }
 
 /* --- DM bubble header (name + time) --- */
+/* Content wrapper: full width by default so child % sizing works,
+   becomes flex child in DM/wide modes */
 .dm-bubble-content {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 .dm-bubble-header {
-  display: flex;
+  display: none;
   align-items: baseline;
   gap: 8px;
+}
+body.mate-dm-active .dm-bubble-header,
+body.wide-view .dm-bubble-header {
+  display: flex;
+}
+body.mate-dm-active .dm-bubble-content,
+body.wide-view .dm-bubble-content {
+  width: auto;
+  flex: 1;
+  min-width: 0;
 }
 .dm-bubble-name {
   font-weight: 700;
