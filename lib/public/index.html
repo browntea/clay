@@ -476,6 +476,7 @@
       <button class="file-viewer-btn hidden" id="file-viewer-render" title="Toggle rendered view"><i data-lucide="book-open"></i></button>
       <button class="file-viewer-btn hidden" id="file-viewer-pdf" title="Export PDF"><i data-lucide="file-down"></i></button>
       <button class="file-viewer-btn hidden" id="file-viewer-history" title="Edit history"><i data-lucide="clock"></i></button>
+      <button class="file-viewer-btn" id="file-viewer-refresh" title="Refresh"><i data-lucide="refresh-cw"></i></button>
       <button class="file-viewer-btn" id="file-viewer-copy" title="Copy contents"><i data-lucide="copy"></i></button>
       <button class="file-viewer-btn" id="file-viewer-fullscreen" title="Toggle fullscreen"><i data-lucide="maximize-2"></i></button>
       <button class="file-viewer-btn" id="file-viewer-close" title="Close"><i data-lucide="x"></i></button>
@@ -1265,7 +1266,10 @@
   <div class="confirm-dialog paste-modal-dialog">
     <div class="paste-modal-header">
       <span class="paste-modal-title">Pasted content</span>
-      <button class="paste-modal-close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+      <div class="paste-modal-actions">
+        <button class="paste-modal-copy" title="Copy to clipboard"><i data-lucide="copy" style="width:15px;height:15px"></i></button>
+        <button class="paste-modal-close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+      </div>
     </div>
     <pre class="paste-modal-body" id="paste-modal-body"></pre>
   </div>

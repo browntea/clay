@@ -120,6 +120,13 @@
   color: var(--text);
 }
 
+.paste-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.paste-modal-copy,
 .paste-modal-close {
   display: flex;
   align-items: center;
@@ -133,6 +140,7 @@
   transition: color 0.15s, background 0.15s;
 }
 
+.paste-modal-copy:hover,
 .paste-modal-close:hover { color: var(--text); background: rgba(var(--overlay-rgb), 0.06); }
 
 .paste-modal-body {
