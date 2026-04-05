@@ -399,6 +399,7 @@
               <button id="attach-image-btn" type="button" aria-label="Attach image" title="Attach image"><i data-lucide="image"></i></button>
               <button id="stt-btn" type="button" aria-label="Voice input" title="Voice input"><i data-lucide="mic"></i></button>
               <button id="schedule-btn" type="button" aria-label="Schedule message" title="Schedule message"><i data-lucide="clock"></i></button>
+              <button id="ask-mate-btn" type="button" aria-label="Ask Mate"><span class="ask-mate-label">@ Ask Mate</span></button>
             </div>
             <div id="input-bottom-right">
               <div id="config-chip-wrap" class="hidden">
@@ -825,27 +826,32 @@
         <div class="us-section" data-section="us-appearance">
           <h2>Appearance</h2>
           <div class="settings-card">
-            <label class="settings-toggle-row">
-              <div>
-                <span class="settings-label">Light theme</span>
-                <div class="settings-hint">Use a light color scheme instead of dark.</div>
-              </div>
-              <input type="checkbox" id="us-theme-toggle">
-              <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            </label>
+            <div class="settings-label" style="margin-bottom:10px;">Theme</div>
+            <div class="layout-switcher" id="us-theme-switcher">
+              <button class="layout-option" data-theme="light">
+                <span class="layout-option-icon">☀️</span>
+                <span class="layout-option-label">Light</span>
+                <span class="layout-option-desc">For people who open curtains. Bright, clean, productive.</span>
+              </button>
+              <button class="layout-option" data-theme="dark">
+                <span class="layout-option-icon">🌙</span>
+                <span class="layout-option-label">Dark</span>
+                <span class="layout-option-desc">For those who thrive after sunset. Your screen, your cave.</span>
+              </button>
+            </div>
           </div>
           <div class="settings-card">
-            <div class="settings-label" style="margin-bottom:8px;">Chat layout</div>
+            <div class="settings-label" style="margin-bottom:10px;">Chat layout</div>
             <div class="layout-switcher" id="us-layout-switcher">
               <button class="layout-option" data-layout="bubble">
                 <span class="layout-option-icon">💬</span>
                 <span class="layout-option-label">Bubble</span>
-                <span class="layout-option-desc">The classic style. Like ChatGPT or Claude.</span>
+                <span class="layout-option-desc">Centered and quiet. Just you and the AI, no distractions.</span>
               </button>
               <button class="layout-option" data-layout="channel">
                 <span class="layout-option-icon">💻</span>
                 <span class="layout-option-label">Channel</span>
-                <span class="layout-option-desc">Full-width with avatars. Like Slack or Discord.</span>
+                <span class="layout-option-desc">Full-width with faces. Feels like your team is right there.</span>
               </button>
             </div>
           </div>

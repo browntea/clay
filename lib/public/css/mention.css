@@ -43,11 +43,36 @@
   flex-shrink: 0;
 }
 
+.mention-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
 .mention-item-name {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
-  flex: 1;
+}
+.mention-item-bio {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mention-item-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--accent-12, rgba(255,184,108,0.12));
+  color: var(--accent, #ffb86c);
+  vertical-align: middle;
+  margin-left: 5px;
 }
 
 .mention-item-dot {
