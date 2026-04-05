@@ -1146,8 +1146,6 @@
   inset: 0;
   background: rgba(var(--shadow-rgb), 0.6);
   z-index: 99;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
 }
 
 #sidebar-overlay.visible { display: block; }

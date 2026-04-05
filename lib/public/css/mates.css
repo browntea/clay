@@ -63,8 +63,6 @@
   position: absolute;
   inset: 0;
   background: rgba(var(--shadow-rgb, 0,0,0), 0.5);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
 }
 .mate-wizard-card {
   position: relative;
@@ -858,6 +856,103 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
 }
 .mate-confirm-delete:hover {
   background: #c0392b;
+}
+
+/* --- Mate onboarding modal --- */
+.mate-onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+.mate-onboarding-overlay.visible {
+  background: rgba(0,0,0,0.45);
+}
+.mate-onboarding-card {
+  background: var(--bg-primary, #fff);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 32px 36px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+  text-align: center;
+  transform: translateY(20px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.mate-onboarding-overlay.visible .mate-onboarding-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.mate-onboarding-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+.mate-onboarding-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+.mate-onboarding-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+.mate-onboarding-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  text-align: left;
+}
+.mate-onboarding-features li {
+  font-size: 13px;
+  color: var(--text);
+  padding: 8px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+.mate-onboarding-sub {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.mate-onboarding-bullet {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+.mate-onboarding-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0 0 16px;
+}
+.mate-onboarding-btn {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.mate-onboarding-btn:hover {
+  filter: brightness(1.08);
+}
+.mate-onboarding-btn:active {
+  transform: scale(0.98);
 }
 
 .mate-sidebar-avatar {

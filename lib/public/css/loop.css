@@ -239,8 +239,6 @@
   position: absolute;
   inset: 0;
   background: rgba(var(--shadow-rgb, 0,0,0), 0.5);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
 }
 .ralph-wizard-card {
   position: relative;
