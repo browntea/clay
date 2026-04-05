@@ -1,3 +1,29 @@
+# [2.24.0](https://github.com/chadbyte/clay/compare/v2.23.1...v2.24.0) (2026-04-05)
+
+
+### Bug Fixes
+
+* **mate:** load team memory summaries for globalSearch mates regardless of digest count ([535023a](https://github.com/chadbyte/clay/commit/535023a912c224d26aae5799972bd436ffaa695c))
+* **os-user:** force IPv4 on CLI subprocess by patching tls.connect ([c10c965](https://github.com/chadbyte/clay/commit/c10c965947e72c0bb988d2c8bb493d0ff0e30111))
+* **os-user:** resolve cold start latency caused by IPv6 timeout in SDK CLI subprocess ([6eb5e9e](https://github.com/chadbyte/clay/commit/6eb5e9eb9eb968d9e17828600c03ae15be619ebc))
+* **permissions:** set 644 on uploaded files and chown to session owner ([3b9ebe8](https://github.com/chadbyte/clay/commit/3b9ebe81cb0593c8061077a9a59a2522f996678f))
+* **search:** support Cmd+F search in debate sessions ([3990138](https://github.com/chadbyte/clay/commit/399013884778758f5b230dbfaa48590b51aa2c5f))
+* **ui:** force bubble layout on mobile regardless of user setting ([0493a54](https://github.com/chadbyte/clay/commit/0493a54f8943745498399625f257d325e36fcf2e))
+
+
+### Features
+
+* **debate:** add PDF export with avatar support ([d224d51](https://github.com/chadbyte/clay/commit/d224d51ed0542beabbfc3278b79afd07e7119d2c))
+* **mate:** add cross-project search, user observations, and profile synthesis ([39777a9](https://github.com/chadbyte/clay/commit/39777a9fdc338d9ad08b59d8a9b430b79b36b531))
+* **mention:** keep mention chip sticky after sending message ([5ba688a](https://github.com/chadbyte/clay/commit/5ba688a97ab1824860ed39df010864ad5b631564))
+* **ui:** add Ask Mate button with rainbow gradient and improve mention menu ([c5f2ecc](https://github.com/chadbyte/clay/commit/c5f2eccdeb3980f00aef31291867596311dd4d69))
+* **ui:** add Bubble/Channel layout switcher in Appearance settings ([169f889](https://github.com/chadbyte/clay/commit/169f8899012737d87cf4003f94a5861908cf4a09))
+* **ui:** add Claude Code mascot avatar for Channel layout ([e05264d](https://github.com/chadbyte/clay/commit/e05264d40c46427a9f866f75f6444d038bae8bf4))
+* **ui:** add copy button to paste modal and refresh button to file viewer ([113cc82](https://github.com/chadbyte/clay/commit/113cc827823473f0f22518960d47b13e7a724081))
+* **ui:** add one-time mate onboarding modal with server persistence ([e990f14](https://github.com/chadbyte/clay/commit/e990f1450458250e772512f36f7b51bb4cff3f27))
+* **ui:** add skeleton placeholders during initial server loading ([b7523f7](https://github.com/chadbyte/clay/commit/b7523f70a9a6f1289f6431817dc9fa8decd82db1))
+* **ui:** reorganize project menus, add Ask Mate button, polish Appearance settings ([a8dfc66](https://github.com/chadbyte/clay/commit/a8dfc662642312eccf4cb30bda4da6b7e1d5b515))
+
 # [2.24.0-beta.1](https://github.com/chadbyte/clay/compare/v2.23.2-beta.1...v2.24.0-beta.1) (2026-04-05)
 
 
