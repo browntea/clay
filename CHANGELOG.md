@@ -1,3 +1,10 @@
+## [2.24.1-beta.1](https://github.com/chadbyte/clay/compare/v2.24.0...v2.24.1-beta.1) (2026-04-05)
+
+
+### Bug Fixes
+
+* **ui:** correct bubble mode user alignment and show hover icons in channel mode ([8cbde9c](https://github.com/chadbyte/clay/commit/8cbde9ce0e1427383c5fcddffad972463a675323))
+
 # [2.24.0](https://github.com/chadbyte/clay/compare/v2.23.1...v2.24.0) (2026-04-05)
 
 
