@@ -577,6 +577,41 @@
   background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
+/* --- Title bar PDF button (matches find-in-session-btn / terminal-toggle-btn pattern) --- */
+#debate-pdf-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+#debate-pdf-btn .lucide { width: 15px; height: 15px; }
+#debate-pdf-btn:hover { color: var(--text-secondary); background: rgba(var(--overlay-rgb),0.04); border-color: var(--border); }
+#debate-pdf-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* --- Ended banner PDF button --- */
+.debate-ended-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.debate-ended-pdf-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.debate-ended-pdf-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 /* --- Error --- */
 .debate-error {
   padding: 8px 20px;
