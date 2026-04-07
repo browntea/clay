@@ -206,10 +206,6 @@
   color: var(--danger, #e74c3c);
   border-color: var(--danger, #e74c3c);
 }
-.mention-stop-btn svg {
-  width: 12px;
-  height: 12px;
-}
 
 .mention-content {
   font-size: 15px;
