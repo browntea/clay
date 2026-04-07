@@ -1,3 +1,10 @@
+## [2.25.1-beta.1](https://github.com/chadbyte/clay/compare/v2.25.0...v2.25.1-beta.1) (2026-04-07)
+
+
+### Bug Fixes
+
+* **pdf:** strip all external SVG references to prevent tainted canvas ([6540405](https://github.com/chadbyte/clay/commit/6540405e963b469af92ca332c267b64e44d72f9d))
+
 # [2.25.0](https://github.com/chadbyte/clay/compare/v2.24.4...v2.25.0) (2026-04-07)
 
 
