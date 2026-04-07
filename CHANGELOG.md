@@ -1,3 +1,12 @@
+# [2.26.0-beta.2](https://github.com/chadbyte/clay/compare/v2.26.0-beta.1...v2.26.0-beta.2) (2026-04-07)
+
+
+### Bug Fixes
+
+* **cli:** preserve ownerId and all config fields across daemon restarts ([a067478](https://github.com/chadbyte/clay/commit/a0674786d0b3a1a59d360b2ad26346c300f28f27))
+* **os-users:** enable systemd linger for clay users to create XDG_RUNTIME_DIR ([e4a824d](https://github.com/chadbyte/clay/commit/e4a824dd3afb564e87bc181b24dff14da75eb0ba))
+* **terminal:** prevent observers from resizing PTY and causing escape flood ([f5b79fd](https://github.com/chadbyte/clay/commit/f5b79fd71da32c63ccb4edb73309eeae00610ca5))
+
 # [2.26.0-beta.1](https://github.com/chadbyte/clay/compare/v2.25.1-beta.1...v2.26.0-beta.1) (2026-04-07)
 
 
