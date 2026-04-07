@@ -1,3 +1,12 @@
+## [2.24.3-beta.4](https://github.com/chadbyte/clay/compare/v2.24.3-beta.3...v2.24.3-beta.4) (2026-04-07)
+
+
+### Bug Fixes
+
+* add chat layout toggle to mobile settings sheet ([8c8cc8c](https://github.com/chadbyte/clay/commit/8c8cc8c9bd4f7d699a2b6dc2229d2293cb5b840f))
+* apply defaultMode to currentPermissionMode on connect, not after first query ([af2c226](https://github.com/chadbyte/clay/commit/af2c226a92e766e54325e4a0cfc6918b6b706cfe))
+* apply defaultModel to currentModel on connect, not after first query ([cdb668b](https://github.com/chadbyte/clay/commit/cdb668b4925e4731b86d342eeb66e6f1fe1197e6)), closes [#271](https://github.com/chadbyte/clay/issues/271)
+
 ## [2.24.3-beta.3](https://github.com/chadbyte/clay/compare/v2.24.3-beta.2...v2.24.3-beta.3) (2026-04-07)
 
 
