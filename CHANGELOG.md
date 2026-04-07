@@ -1,3 +1,18 @@
+## [2.24.3](https://github.com/chadbyte/clay/compare/v2.24.2...v2.24.3) (2026-04-07)
+
+
+### Bug Fixes
+
+* add chat layout toggle to mobile settings sheet ([8c8cc8c](https://github.com/chadbyte/clay/commit/8c8cc8c9bd4f7d699a2b6dc2229d2293cb5b840f))
+* apply defaultMode to currentPermissionMode on connect, not after first query ([af2c226](https://github.com/chadbyte/clay/commit/af2c226a92e766e54325e4a0cfc6918b6b706cfe))
+* apply defaultModel to currentModel on connect, not after first query ([cdb668b](https://github.com/chadbyte/clay/commit/cdb668b4925e4731b86d342eeb66e6f1fe1197e6)), closes [#271](https://github.com/chadbyte/clay/issues/271)
+* **config:** initialize currentModel from savedDefaultModel on connect ([25dce40](https://github.com/chadbyte/clay/commit/25dce4098757685ade3ad7278a7dcae1c58bd027)), closes [#271](https://github.com/chadbyte/clay/issues/271)
+* **hooks:** surface hook failure errors in UI instead of silent blank ([c5ea03c](https://github.com/chadbyte/clay/commit/c5ea03cd8b37796a8700ea865757d994446b3b52)), closes [#270](https://github.com/chadbyte/clay/issues/270)
+* remove skeleton placeholders from icon-strip-users at startup ([1773bd5](https://github.com/chadbyte/clay/commit/1773bd591e99114992de44038c3a9d5072c4d02a)), closes [#272](https://github.com/chadbyte/clay/issues/272)
+* **ui:** clear icon strip skeleton loaders in single-user mode ([59ec81d](https://github.com/chadbyte/clay/commit/59ec81d7fd3ba74005465e737a797bccf474c4e7)), closes [#272](https://github.com/chadbyte/clay/issues/272)
+* **ui:** move unread badge to rightmost position in session list ([0e96888](https://github.com/chadbyte/clay/commit/0e9688891b5b312dfd00f257f0a412a3b94f3ab2))
+* use /bin/sh as POSIX fallback shell instead of /bin/zsh ([95a25a0](https://github.com/chadbyte/clay/commit/95a25a04c13f097070cf98f81e7e46fd0c6772d5))
+
 ## [2.24.3-beta.5](https://github.com/chadbyte/clay/compare/v2.24.3-beta.4...v2.24.3-beta.5) (2026-04-07)
 
 
