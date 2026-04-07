@@ -65,15 +65,23 @@
 
 | File | Original | Current | Target |
 |------|----------|---------|--------|
-| `lib/project.js` | 7,222 | 5,685 | ~800 |
-| `lib/server.js` | 3,599 | 3,599 | ~500 |
-| `lib/public/app.js` | 8,010 | 8,010 | ~1,500 |
-| `lib/public/modules/sidebar.js` | 4,541 | 4,541 | ~400 |
+| `lib/project.js` | 7,222 | 6,031 | ~800 |
+| `lib/server.js` | 3,599 | 3,702 | ~500 |
+| `lib/public/app.js` | 8,010 | 8,066 | ~1,500 |
+| `lib/public/modules/sidebar.js` | 4,541 | 4,583 | ~400 |
 | `lib/public/modules/scheduler.js` | 3,166 | 3,166 | ~1,200 |
-| `lib/sdk-bridge.js` | 2,232 | 2,232 | ~800 |
+| `lib/sdk-bridge.js` | 2,232 | 2,424 | ~800 |
 | `lib/mates.js` | 1,318 | 1,318 | ~500 |
-| `lib/users.js` | 791 | 791 | ~300 |
-| `lib/daemon.js` | 1,490 | 1,490 | ~1,100 |
+| `lib/users.js` | 791 | 829 | ~300 |
+| `lib/daemon.js` | 1,490 | 1,503 | ~1,100 |
+
+> Updated 2026-04-07. Files grew due to feature additions (OS user mode, chat layout, push notifications, sender attribution, worker lifecycle improvements). Refactoring scope increased accordingly.
+
+---
+
+## State Management
+
+> All module extractions follow the [State Conventions](./STATE_CONVENTIONS.md). Read it before starting any PR.
 
 ---
 
@@ -157,21 +165,21 @@ handleDebateStop: debate.handleDebateStop,
 
 | File | Lines | Top Concerns |
 |------|-------|-------------|
-| `lib/public/app.js` | 8,010 | WS dispatch, connection, UI state, DM, loops, debate, cursors, config |
-| `lib/project.js` | 7,222 | debate(27fn), loop(18fn), mate-interaction(8fn), memory(6fn), file-watch(5fn), HTTP, image |
-| `lib/public/modules/sidebar.js` | 4,541 | sessions, projects/icons, mates/users, mobile sheets |
-| `lib/server.js` | 3,599 | auth(10 routes), admin(17 routes), skills(3 routes), settings(9 routes), infra |
+| `lib/public/app.js` | 8,066 | WS dispatch, connection, UI state, DM, loops, debate, cursors, config, sender attribution |
+| `lib/project.js` | 6,031 | loop(18fn), mate-interaction(8fn), memory(6fn), file-watch(5fn), HTTP, image, OS user mode, presence, scheduled messages |
+| `lib/public/modules/sidebar.js` | 4,583 | sessions, projects/icons, mates/users, mobile sheets (incl. mate tools) |
+| `lib/server.js` | 3,702 | auth(10 routes), admin(17 routes), skills(3 routes), settings(9 routes), infra, push notifications |
 | `lib/public/modules/scheduler.js` | 3,166 | config/create, history, calendar view, detail/sidebar, crafting |
-| `lib/sdk-bridge.js` | 2,232 | skill discovery, message queue, message processing, mention context |
+| `lib/sdk-bridge.js` | 2,424 | skill discovery, message queue, message processing, mention context, worker lifecycle, perf logging |
+| `lib/daemon.js` | 1,503 | worktree scanning, lifecycle, config, IPC, chat layout |
 | `lib/mates.js` | 1,318 | prompts(6 enforcers), knowledge, identity, CRUD, builtins |
-| `lib/daemon.js` | 1,490 | worktree scanning, lifecycle, config, IPC |
-| `lib/users.js` | 791 | auth, CRUD, permissions, preferences, invites |
+| `lib/users.js` | 829 | auth, CRUD, permissions, preferences, invites, chat layout |
 
 ---
 
 ## Phase 1: Decompose `project.js` (PR-01 through PR-08)
 
-project.js is 7,222 lines with 91 internal functions across 9+ concerns. A bug in debate logic requires reading the entire file. Phase 1 extracts each concern into its own file. After Phase 1, project.js becomes a thin coordinator under 800 lines.
+project.js is currently 6,031 lines (down from 7,222 after PR-01 debate extraction, then grew back due to feature additions). It has 90+ internal functions across 8+ concerns. A bug in loop logic requires reading the entire file. Phase 1 extracts each concern into its own file. After Phase 1, project.js becomes a thin coordinator under 800 lines.
 
 ---
 
@@ -229,16 +237,18 @@ project.js is 7,222 lines with 91 internal functions across 9+ concerns. A bug i
 
 **Create**: `lib/project-mate-interaction.js`
 
-**Functions to move** (8+):
+**Functions to move** (9+):
 - `handleMention`, `hasMateInWindow`, `getMateProfile`, `loadMateClaudeMd`
 - `buildMiddleContext`, `buildMentionContext`, `digestMentionSession`, `digestDmTurn`
-- `detectMentions`
+- `maybeSynthesizeUserProfile` (added post-roadmap, ~100 lines, synthesizes user profile for mate context)
+
+> `detectMentions` was listed in the original roadmap but does not exist in project.js. Removed 2026-04-07.
 
 **Context object needs**: `cwd`, `slug`, `send`, `sendTo`, `sm`, `sdk`, `clients`
 
 **Re-export in project.js**: `handleMention` called from message handler. `getMateProfile` and `loadMateClaudeMd` also used by debate (PR-01), so update the debate module's context to receive these from the mate-interaction module.
 
-**Verify**: @mention a mate in a project session. Confirm the mate responds.
+**Verify**: @mention a mate in a project session. Confirm the mate responds. Confirm user profile synthesis works in multi-user mode.
 
 ---
 
@@ -318,10 +328,12 @@ project.js is 7,222 lines with 91 internal functions across 9+ concerns. A bug i
 - Context object creation with all module wiring
 - `handleConnection`, `handleDisconnection` (thin routers)
 - `handleMessage` switch statement (each case is a one-line delegation)
-- `send`, `sendTo`, `sendToSession`, `sendToAdmins`, `broadcastClientCount`, `broadcastPresence`
+- `send`, `sendTo`, `sendToSession`, `sendToSessionOthers`, `sendToAdmins`, `broadcastClientCount`, `broadcastPresence`
 - `getStatus`, `setTitle`, `setIcon`, `setProjectOwner`, `getProjectOwner`
 - `warmup`, `destroy`
-- Helper utilities: `getLinuxUserForSession`, `getRecentTurns`, `escapeRegex`, `scheduleMessage`
+- Helper utilities: `getLinuxUserForSession`, `getLinuxUserForWs`, `getRecentTurns`, `escapeRegex`, `scheduleMessage`, `cancelScheduledMessage`
+- OS user mode: `getOsUserInfoForWs`, `getOsUserInfoForReq`, `getSessionForWs`
+- Digest queue: `enqueueDigest`, `processDigestQueue` (shared by debate and DM)
 
 **What to do**:
 - Remove all re-export boilerplate. Direct the `handleMessage` switch to call module functions directly.
@@ -334,7 +346,7 @@ project.js is 7,222 lines with 91 internal functions across 9+ concerns. A bug i
 
 ## Phase 2: Decompose `server.js` (PR-09 through PR-13)
 
-server.js is 3,599 lines with manual route matching. Auth, admin, skills, and settings are completely independent concerns sharing one handler function.
+server.js is 3,702 lines with manual route matching. Auth, admin, skills, and settings are completely independent concerns sharing one handler function. Push notification routes were added post-roadmap.
 
 ---
 
@@ -438,7 +450,7 @@ server.js is 3,599 lines with manual route matching. Auth, admin, skills, and se
 
 ## Phase 3: Decompose `app.js` (PR-14 through PR-20)
 
-app.js is 8,010 lines with 90+ WebSocket message types in a single `processMessage` function. Phase 3 extracts each UI concern into its own module.
+app.js is 8,066 lines with 90+ WebSocket message types in a single `processMessage` function. Phase 3 extracts each UI concern into its own module.
 
 ---
 
@@ -569,7 +581,7 @@ app.js is 8,010 lines with 90+ WebSocket message types in a single `processMessa
 
 ## Phase 4: Decompose `sidebar.js` (PR-21 through PR-25)
 
-sidebar.js is 4,541 lines rendering three completely independent UI sections: sessions, projects, and mates/users. Plus a full mobile sheet system.
+sidebar.js is 4,583 lines rendering three completely independent UI sections: sessions, projects, and mates/users. Plus a full mobile sheet system (now includes mate tools in mobile sheets).
 
 ---
 
@@ -739,7 +751,7 @@ sidebar.js is 4,541 lines rendering three completely independent UI sections: se
 
 **From**: `lib/sdk-bridge.js`
 
-**Functions to move**: `processSDKMessage`, `sendAndRecord`, all stream event handlers (`message_start`, `content_block_start`, `content_block_delta`, `content_block_stop`), mention context handling, tool use block handling, task tool ID tracking.
+**Functions to move**: `processSDKMessage`, `sendAndRecord`, all stream event handlers (`message_start`, `content_block_start`, `content_block_delta`, `content_block_stop`), mention context handling, tool use block handling, task tool ID tracking. Also includes performance logging added post-roadmap.
 
 **Verify**: Send a message in a session, confirm streaming response with tool use works.
 
@@ -747,7 +759,9 @@ sidebar.js is 4,541 lines rendering three completely independent UI sections: se
 
 ### PR-32: Reduce `sdk-bridge.js` to connection manager (~800 lines)
 
-**What remains**: `createSDKBridge(opts)` factory, connection state, module wiring. `sendPush` for AskUserQuestion.
+**What remains**: `createSDKBridge(opts)` factory, connection state, module wiring, worker lifecycle management (`spawnWorker`, `killSessionWorker`, `startQueryViaWorker`, worker reuse logic). `sendPush` for AskUserQuestion.
+
+> sdk-bridge.js grew from 2,232 to 2,424 lines post-roadmap due to worker lifecycle improvements and perf logging. The extraction targets remain the same but PR-31 scope is larger.
 
 **Verify**: Full SDK interaction works end-to-end.
 
@@ -840,8 +854,10 @@ sidebar.js is 4,541 lines rendering three completely independent UI sections: se
 - `getDmHidden`, `addDmHidden`, `removeDmHidden`
 - `getAutoContinue`, `setAutoContinue`
 - `getDeletedBuiltinKeys`, `addDeletedBuiltinKey`, `removeDeletedBuiltinKey`
+- `getChatLayout`, `setChatLayout` (added post-roadmap, chat layout preference)
+- `setMateOnboarded` (added post-roadmap, mate onboarding state)
 
-**Verify**: Favorite a DM user, toggle auto-continue, delete a builtin mate. Confirm persistence.
+**Verify**: Favorite a DM user, toggle auto-continue, delete a builtin mate, switch chat layout. Confirm persistence.
 
 ---
 
@@ -860,9 +876,10 @@ sidebar.js is 4,541 lines rendering three completely independent UI sections: se
 **Functions to move**:
 - `scanAndRegisterWorktrees`, `rescanWorktrees`, `cleanupWorktreesForParent`, `isWorktreeSlug`
 - `getFilteredRemovedProjects`
+- `onSetChatLayout`, `onSetMateOnboarded` (added post-roadmap, daemon config handlers)
 - Worktree state: `worktreeRegistry`, `worktreeTimers`, `worktreeScanning`
 
-**Verify**: Start daemon with projects that have worktrees. Confirm all detected and registered.
+**Verify**: Start daemon with projects that have worktrees. Confirm all detected and registered. Confirm chat layout and mate onboarding config propagation works.
 
 ---
 
@@ -909,7 +926,7 @@ module.exports = { schema }
 | **Phase 1: project.js** | | | | |
 | PR-01 | done | `lib/project-debate.js` | project.js | ~1,500 |
 | PR-02 | **next** | `lib/project-memory.js` | project.js | ~400 |
-| PR-03 | pending | `lib/project-mate-interaction.js` | project.js | ~600 |
+| PR-03 | pending | `lib/project-mate-interaction.js` | project.js | ~700 |
 | PR-04 | pending | `lib/project-loop.js` | project.js | ~1,200 |
 | PR-05 | pending | `lib/project-file-watch.js` | project.js | ~300 |
 | PR-06 | pending | `lib/project-http.js` | project.js | ~200 |
@@ -942,15 +959,15 @@ module.exports = { schema }
 | **Phase 6: smaller modules** | | | | |
 | PR-29 | pending | `lib/sdk-skill-discovery.js` | sdk-bridge.js | ~200 |
 | PR-30 | pending | `lib/sdk-message-queue.js` | sdk-bridge.js | ~100 |
-| PR-31 | pending | `lib/sdk-message-processor.js` | sdk-bridge.js | ~800 |
-| PR-32 | pending | (cleanup) | sdk-bridge.js | 0 (reduce to ~800) |
+| PR-31 | pending | `lib/sdk-message-processor.js` | sdk-bridge.js | ~1,000 |
+| PR-32 | pending | (cleanup) | sdk-bridge.js | 0 (reduce to ~900) |
 | PR-33 | pending | `lib/mates-prompts.js` | mates.js | ~400 |
 | PR-34 | pending | `lib/mates-knowledge.js` | mates.js | ~200 |
 | PR-35 | pending | `lib/mates-identity.js` | mates.js | ~150 |
 | PR-36 | pending | (cleanup) | mates.js | 0 (reduce to ~500) |
 | PR-37 | pending | `lib/users-auth.js` | users.js | ~200 |
 | PR-38 | pending | `lib/users-permissions.js` | users.js | ~100 |
-| PR-39 | pending | `lib/users-preferences.js` | users.js | ~100 |
+| PR-39 | pending | `lib/users-preferences.js` | users.js | ~150 |
 | PR-40 | pending | (cleanup) | users.js | 0 (reduce to ~300) |
 | PR-41 | pending | `lib/daemon-projects.js` | daemon.js | ~200 |
 | PR-42 | pending | `lib/ws-schema.js` | (new) | ~300 |
