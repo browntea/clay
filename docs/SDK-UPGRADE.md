@@ -1,24 +1,29 @@
 # Claude Agent SDK Upgrade Tracker
 
 Installed: `@anthropic-ai/claude-agent-sdk@0.2.80` (Claude Code 2.1.80)
-Latest: `@anthropic-ai/claude-agent-sdk@0.2.85` (Claude Code 2.1.85, 2026-03-26)
-Updated: 2026-03-28
+Latest: `@anthropic-ai/claude-agent-sdk@0.2.92` (Claude Code 2.1.92, 2026-04-07)
+Updated: 2026-04-07
 
-Covers all unapplied changes from 0.2.80 through 0.2.85.
+Covers all unapplied changes from 0.2.80 through 0.2.92.
 Previous round (0.2.38 through 0.2.76) is archived at the bottom.
 
 
 ---
 
-## New in 0.2.81-0.2.85
+## New in 0.2.81-0.2.92
 
 ### Priority 1 - High (Functional gaps, user-facing impact)
 
-#### 1.1 npm upgrade to 0.2.85
+#### 1.1 npm upgrade to 0.2.92
 - **Status:** Not started
-- **What:** `npm install @anthropic-ai/claude-agent-sdk@0.2.85`
-- **Impact:** Required for all new APIs below. No peer dependency changes (still `zod ^4.0.0`).
-- **Breaking:** `SubscribeMcpResource*` and `SubscribePolling*` tool types removed from sdk-tools.d.ts. Verify no code references them. Grep `head_limit` default changed from unlimited to 250.
+- **What:** `npm install @anthropic-ai/claude-agent-sdk@0.2.92`
+- **Impact:** Required for all new APIs below. No peer dependency changes (still `zod ^4.0.0`). New runtime dependencies added: `@anthropic-ai/sdk` (^0.80.0), `@modelcontextprotocol/sdk` (^1.27.1).
+- **Breaking (all verified safe, no code impact):**
+  - `SubscribeMcpResource*` and `SubscribePolling*` tool types removed (0.2.85). No code references them.
+  - Grep `head_limit` default changed from unlimited to 250 (0.2.83). No code uses `head_limit`.
+  - `SDKStreamlinedTextMessage` and `SDKStreamlinedToolUseSummaryMessage` removed from `StdoutMessage` union (0.2.90). No code references them.
+  - `SDKSystemMessage.session_id` changed from required to optional (0.2.86). Code already uses truthy checks.
+  - `PreToolUseHookSpecificOutput.permissionDecision` type expanded with `'defer'` value (0.2.89). Hooks not used.
 
 #### ~~1.2 `SDKSessionStateChangedMessage` (since 0.2.81+) -- SKIP~~
 - ~~**Status:** Skipped~~
@@ -40,17 +45,50 @@ Previous round (0.2.38 through 0.2.76) is archived at the bottom.
 - **Impact:** Performance optimization for resumed sessions or when relay knows file state.
 - **Where:** `sdk-bridge.js` - call during session resume if file state is cached.
 
-#### 2.3 New hook events: `TaskCreated`, `CwdChanged`, `FileChanged` (since 0.2.83+)
+#### 2.3 `listSubagents()` / `getSubagentMessages()` top-level functions (since 0.2.89+)
+- **Status:** Not started
+- **What:** `listSubagents(sessionId, options?)` lists subagent IDs for a session. `getSubagentMessages(sessionId, agentId, options?)` reads a subagent's conversation transcript.
+- **Impact:** Enables viewing subagent conversation history in UI. Useful for debugging and transparency.
+- **Where:** `project.js` - expose via WebSocket handlers, similar to existing `getSessionMessages()` pattern.
+- **Options:** `ListSubagentsOptions: { dir?: string }`, `GetSubagentMessagesOptions: { dir?: string, limit?: number, offset?: number }`.
+
+#### 2.4 `TerminalReason` on result messages (since 0.2.91+)
+- **Status:** Not started
+- **What:** `SDKResultMessage` gained `terminal_reason?: TerminalReason` field. Values: `'blocking_limit'`, `'rapid_refill_breaker'`, `'prompt_too_long'`, `'image_error'`, `'model_error'`, `'aborted_streaming'`, `'aborted_tools'`, `'stop_hook_prevented'`, `'hook_stopped'`, `'tool_deferred'`, `'max_turns'`, `'completed'`.
+- **Impact:** UI can show why a query ended (e.g., "context too long", "max turns reached") instead of generic "done".
+- **Where:** `sdk-bridge.js` - forward `terminal_reason` in query_done event. Client-side: display in status area.
+
+#### 2.5 `PermissionMode: 'auto'` (since 0.2.91+)
+- **Status:** Not started
+- **What:** New `'auto'` value added to `PermissionMode`. Appears in `SDKControlSetPermissionModeRequest`, `SDKSessionStateChangedMessage`, and settings `defaultMode`.
+- **Impact:** Enables autonomous permission handling mode. Evaluate if/how to expose in UI permission mode selector.
+
+#### 2.6 Agent config: `effort` and `permissionMode` (since 0.2.92+)
+- **Status:** Not started
+- **What:** `AgentDefinition` gained `effort?: ('low' | 'medium' | 'high' | 'max') | number` and `permissionMode?: PermissionMode`.
+- **Impact:** Per-agent effort and permission settings. Enables differentiated agent behavior (e.g., low-effort background agents).
+
+#### 2.7 Agent config: `background` and `memory` (since 0.2.89+)
+- **Status:** Not started
+- **What:** `AgentDefinition` gained `background?: boolean` (fire-and-forget agent) and `memory?: 'user' | 'project' | 'local'` (auto-load memory scope).
+- **Impact:** Background agents run without blocking the main thread. Memory scoping enables agent-specific context loading.
+
+#### 2.8 New hook events: `TaskCreated`, `CwdChanged`, `FileChanged` (since 0.2.83+)
 - **Status:** Not started (no code change needed unless hooks are adopted)
 - **What:** Three new `HookEvent` values. `CwdChanged` fires on working directory change (provides `old_cwd`, `new_cwd`). `FileChanged` fires on file system changes (provides `file_path`, `event: 'change' | 'add' | 'unlink'`). `TaskCreated` fires when a task is created (provides `task_id`, `task_subject`, etc.).
 - **Impact:** Enables reactive hooks (e.g., auto-lint on file save, notify on directory change). `FileChanged` and `CwdChanged` hooks can return `watchPaths` to control which paths are monitored.
 
-#### 2.4 `AgentDefinition.initialPrompt` (since 0.2.83+)
+#### 2.9 `PermissionDenied` hook event (since 0.2.89+)
+- **Status:** Not started (no code change needed unless hooks are adopted)
+- **What:** New hook event fired when a permission is denied. Input includes `tool_name`, `tool_input`, `tool_use_id`, `reason`. Hook output can set `retry?: boolean`.
+- **Impact:** Enables automated recovery from permission denials (e.g., retry with different parameters).
+
+#### 2.10 `AgentDefinition.initialPrompt` (since 0.2.83+)
 - **Status:** Not started
 - **What:** New optional field on `AgentDefinition`. Auto-submitted as the first user turn for main thread agents.
 - **Impact:** Enables pre-configured agent workflows that start automatically without user input.
 
-#### 2.5 `PermissionDecisionClassification` on `PermissionResult` (since 0.2.83+)
+#### 2.11 `PermissionDecisionClassification` on `PermissionResult` (since 0.2.83+)
 - **Status:** Not started
 - **What:** New optional `decisionClassification` field on allow/deny permission results: `'user_temporary'`, `'user_permanent'`, `'user_reject'`.
 - **Impact:** SDK can distinguish between one-time allows and permanent permission grants. Could improve permission UX.
@@ -63,22 +101,26 @@ Previous round (0.2.38 through 0.2.76) is archived at the bottom.
 - **What:** New optional field on task started messages, set when `task_type` is `'local_workflow'`.
 - **Impact:** Better labeling of workflow-originated sub-agents in UI.
 
-#### 3.2 Hook config enhancements: `if` and `shell` fields (since 0.2.85+)
+#### 3.2 Hook config enhancements: `if`, `shell` fields (since 0.2.85+)
 - **Status:** Not started (no code change needed unless hooks are adopted)
 - **What:** Hooks can now have `if` (permission rule syntax filter) and `shell` (`'bash' | 'powershell'`) fields.
 - **Impact:** More flexible hook configuration.
 
-#### 3.3 New Settings fields for Settings UI (since 0.2.83-0.2.85)
+#### 3.3 New Settings fields for Settings UI (since 0.2.83-0.2.92)
 - **Status:** Not started
 - **What:** Expose new SDK settings in the existing project/server settings panels.
 - **Fields to add:**
   - `advisorModel` (string) - model for the advisor tool. Add to model settings section alongside main model selector.
   - `autoDreamEnabled` (boolean) - background memory consolidation toggle. Add as on/off toggle in server settings.
   - `showClearContextOnPlanAccept` (boolean) - show "clear context" option when accepting plans. Add as toggle in project settings.
+  - `autoCompactWindow` (number) - auto-compact window size (since 0.2.89+). Add as numeric input in server settings.
+  - `disableSkillShellExecution` (boolean) - disables inline shell execution in skills (since 0.2.91+). Add as toggle in server settings.
 - **Fields to skip:**
   - `defaultShell` - clay targets macOS/Linux, nearly always bash.
   - `channelsEnabled` / `allowedChannelPlugins` - Teams/Enterprise only.
   - `strictPluginOnlyCustomization` - Enterprise admin feature.
+  - `forceRemoteSettingsRefresh` - managed/enterprise only (since 0.2.89+).
+  - `proactive` - autonomous background operation, needs architectural evaluation (since 0.2.91+).
 - **Where:** `project-settings.js`, `server-settings.js` for UI. `project.js` for WebSocket handlers. Need to read/write via SDK settings API or settings.json.
 
 #### 3.4 `SdkMcpToolDefinition._meta` (since 0.2.83+)
@@ -98,6 +140,33 @@ Previous round (0.2.38 through 0.2.76) is archived at the bottom.
 - **What:** Grep tool `head_limit` now defaults to 250 instead of unlimited. Pass `head_limit: 0` explicitly for unlimited.
 - **Impact:** May affect relay code that relies on grep returning unlimited results without specifying head_limit.
 
+#### ~~3.8 `getContextUsage()` query method (since 0.2.86+) -- DONE~~
+- ~~**Status:** Implemented~~
+- ~~**What:** Returns `SDKControlGetContextUsageResponse` with detailed context window breakdown (tokens per category, model, memory files, MCP tools, agents, skills, auto-compact threshold, etc.).~~
+- ~~**Impact:** Rich context usage popover on header context bar click. Shows stacked category bar, message breakdown, system prompt sections, memory files, and auto-compact threshold.~~
+- ~~**Where:** `sdk-worker.js` calls `getContextUsage()` after query completes. `sdk-bridge.js` relays via `context_usage` message. `app.js` renders popover. `title-bar.css` styles popover.~~
+
+#### 3.9 `tool()` function `alwaysLoad` (since 0.2.92+)
+- **Status:** Available (no code change needed)
+- **What:** Custom tools can set `alwaysLoad: true` to prevent being deferred.
+
+#### 3.10 `'anthropicAws'` API provider (since 0.2.90+)
+- **Status:** Available (no code change needed)
+- **What:** New `apiProvider` value alongside `'firstParty'`, `'bedrock'`, `'vertex'`, `'foundry'`.
+
+#### 3.11 `SDKDeferredToolUse` on `SDKResultMessage` (since 0.2.89+)
+- **Status:** Available (no code change needed)
+- **What:** `SDKResultMessage` gained `deferred_tool_use?: SDKDeferredToolUse` field with `id`, `name`, `input`.
+
+#### 3.12 `includeHookEvents` query option (since 0.2.86+)
+- **Status:** Not started
+- **What:** When `true`, emits `hook_started`, `hook_progress`, and `hook_response` system messages for all hook event types.
+- **Impact:** Visibility into hook execution. Only useful once hooks are adopted.
+
+#### 3.13 `file_unchanged` tool output and `staleReadFileStateHint` (since 0.2.86+)
+- **Status:** Available (no code change needed)
+- **What:** New `file_unchanged` tool output type with `filePath`. `BashOutput` gained `staleReadFileStateHint` field listing read-file-state entries whose mtime changed during a command.
+
 
 ## Deferred (alpha/beta, revisit when stable)
 
@@ -110,16 +179,18 @@ Previous round (0.2.38 through 0.2.76) is archived at the bottom.
 - **What:** Remote session management. External worker attaches to claude.ai sessions via JWT. Bidirectional message/permission relay over SSE/HTTP. Functions: `createCodeSession()`, `fetchRemoteCredentials()`, `attachBridgeSession()`.
 - **Impact:** Could enable relay-as-a-service, multi-device, cloud-hosted sessions.
 - **Why deferred:** @alpha with separate versioning (breaking changes without major bump). Needs architectural evaluation.
+- **0.2.91 update:** `fetchRemoteCredentials()` signature changed (added `trustedDeviceToken` param, return type expanded with `CredentialsFailure`). Still @alpha.
 
 
-## Upgrade Steps (0.2.80 -> 0.2.85)
+## Upgrade Steps (0.2.80 -> 0.2.92)
 
-1. Verify no references to removed `SubscribeMcpResource*` / `SubscribePolling*` types
-2. Check grep usage for implicit `head_limit` reliance
-3. `npm install @anthropic-ai/claude-agent-sdk@0.2.85`
-4. Implement Priority 1 items
-5. Implement Priority 2 items as needed
-6. Priority 3 items can be done incrementally
+1. ~~Verify no references to removed `SubscribeMcpResource*` / `SubscribePolling*` types~~ -- verified, none found
+2. ~~Check grep usage for implicit `head_limit` reliance~~ -- verified, no `head_limit` usage in relay code
+3. ~~Verify no references to `SDKStreamlinedTextMessage` / `SDKStreamlinedToolUseSummaryMessage`~~ -- verified, none found
+4. ~~Verify `session_id` usage handles optional~~ -- verified, already uses truthy checks
+5. `npm install @anthropic-ai/claude-agent-sdk@0.2.92`
+6. Implement Priority 2 items as needed
+7. Priority 3 items can be done incrementally
 
 
 ---
