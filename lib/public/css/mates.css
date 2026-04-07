@@ -732,7 +732,7 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
   right: 12px;
   margin-top: 4px;
   padding: 10px 14px;
-  background: var(--bg-primary, #fff);
+  background: var(--bg);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
@@ -823,7 +823,7 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
   justify-content: center;
 }
 .mate-confirm-box {
-  background: var(--bg-primary, #fff);
+  background: var(--bg);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 20px 24px;
@@ -846,7 +846,7 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
   border: 1px solid var(--border-subtle);
   font-size: 13px;
   cursor: pointer;
-  background: var(--bg-primary);
+  background: var(--bg);
   color: var(--text);
 }
 .mate-confirm-delete {
@@ -873,7 +873,7 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
   background: rgba(0,0,0,0.45);
 }
 .mate-onboarding-card {
-  background: var(--bg-primary, #fff);
+  background: var(--bg);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
   padding: 32px 36px;
