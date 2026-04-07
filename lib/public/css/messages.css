@@ -150,6 +150,21 @@
   text-align: start;
 }
 
+/* Other user's message: left-aligned with flipped bubble */
+.msg-user-other {
+  align-items: flex-start;
+}
+.msg-user-other .bubble {
+  background: var(--bg-elevated, var(--bg-hover));
+  border-radius: 20px 20px 20px 4px;
+}
+.msg-user-other .dm-bubble-avatar-other {
+  display: block;
+}
+.msg-user-other .dm-bubble-header {
+  display: flex;
+}
+
 /* --- User message action bar --- */
 .msg-actions {
   display: flex;
