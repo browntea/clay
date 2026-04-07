@@ -1,3 +1,20 @@
+# [2.25.0](https://github.com/chadbyte/clay/compare/v2.24.4...v2.25.0) (2026-04-07)
+
+
+### Bug Fixes
+
+* **files:** allow cross-project file access in OS user mode via ACL ([4104410](https://github.com/chadbyte/clay/commit/410441000b8133f318ec0998e01b75f675e22492))
+* **mates:** use --bg instead of undefined --bg-primary for dark mode ([de61303](https://github.com/chadbyte/clay/commit/de61303f2ebbee3ab8defd5c042c1ef1153341b7)), closes [#fff](https://github.com/chadbyte/clay/issues/fff)
+* **pdf:** add font loading timeout and tainted canvas fallback ([fd5c4bb](https://github.com/chadbyte/clay/commit/fd5c4bb51102a53825694809f2bc738650c642ba))
+* **pwa:** use absolute path for manifest and update deprecated meta tag ([1c76d2d](https://github.com/chadbyte/clay/commit/1c76d2dec745bc00e56687233f08ab050eec3081))
+* **worker:** force-kill worker after abort timeout during subagent ([1a57ab7](https://github.com/chadbyte/clay/commit/1a57ab711092174650489c0c6c9177148f5747f3))
+
+
+### Features
+
+* **chat:** add sender attribution to user messages in multi-user sessions ([46a63fa](https://github.com/chadbyte/clay/commit/46a63fa1463e491bd1621599d8fa496fc60801c8))
+* **dm:** add push notifications for incoming DM messages ([69bcb5f](https://github.com/chadbyte/clay/commit/69bcb5f23f4f04abe94298ee10d7d87fe3259e6a))
+
 # [2.25.0-beta.2](https://github.com/chadbyte/clay/compare/v2.25.0-beta.1...v2.25.0-beta.2) (2026-04-07)
 
 
