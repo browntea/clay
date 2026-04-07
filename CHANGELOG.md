@@ -1,3 +1,11 @@
+# [2.25.0-beta.2](https://github.com/chadbyte/clay/compare/v2.25.0-beta.1...v2.25.0-beta.2) (2026-04-07)
+
+
+### Bug Fixes
+
+* **pdf:** add font loading timeout and tainted canvas fallback ([fd5c4bb](https://github.com/chadbyte/clay/commit/fd5c4bb51102a53825694809f2bc738650c642ba))
+* **pwa:** use absolute path for manifest and update deprecated meta tag ([1c76d2d](https://github.com/chadbyte/clay/commit/1c76d2dec745bc00e56687233f08ab050eec3081))
+
 # [2.25.0-beta.1](https://github.com/chadbyte/clay/compare/v2.24.4...v2.25.0-beta.1) (2026-04-07)
 
 
