@@ -328,6 +328,12 @@
   white-space: nowrap;
   border: 1px solid var(--border);
   transition: border-color 0.15s;
+  animation: chipIn 0.3s ease-out;
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .context-chip-label {
