@@ -1,3 +1,13 @@
+# [2.26.0-beta.6](https://github.com/chadbyte/clay/compare/v2.26.0-beta.5...v2.26.0-beta.6) (2026-04-08)
+
+
+### Features
+
+* **browser:** add Browser MCP server and extension HTTP bridge ([cbf32f3](https://github.com/chadbyte/clay/commit/cbf32f315ba1ae67c375ccf4a16742f0faec8bf2))
+* **browser:** add tab context injection and context preview cards ([4009368](https://github.com/chadbyte/clay/commit/40093681696578976c95ab179a88c714888d8816))
+* **browser:** switch to in-process MCP server and add watch/unwatch tools ([5322707](https://github.com/chadbyte/clay/commit/5322707fdee172680fd8f2d458ee37eac6136fa7))
+* **extension:** add Chrome extension download and install UI in top bar ([c3a9869](https://github.com/chadbyte/clay/commit/c3a986918ba421fd82ee1a3abd4025dd9d968246))
+
 # [2.26.0-beta.5](https://github.com/chadbyte/clay/compare/v2.26.0-beta.4...v2.26.0-beta.5) (2026-04-08)
 
 
