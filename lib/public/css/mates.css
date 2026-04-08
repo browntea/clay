@@ -2342,7 +2342,9 @@ body.mate-dm-active .turn-meta {
    ========================================================================== */
 
 /* --- Mate Thinking: flex layout matching msg-assistant --- */
-body.mate-dm-active .mate-thinking {
+/* Applies in both Mate DM and channel project chat */
+body.mate-dm-active .mate-thinking,
+body.wide-view .mate-thinking {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -2351,10 +2353,12 @@ body.mate-dm-active .mate-thinking {
   margin: 0;
   max-width: 100%;
 }
-body.mate-dm-active .mate-thinking:hover {
+body.mate-dm-active .mate-thinking:hover,
+body.wide-view .mate-thinking:hover {
   background: var(--bg-alt);
 }
-body.mate-dm-active .mate-thinking > .dm-bubble-avatar {
+body.mate-dm-active .mate-thinking > .dm-bubble-avatar,
+body.wide-view .mate-thinking > .dm-bubble-avatar {
   display: block;
   width: 36px;
   height: 36px;
@@ -2362,7 +2366,8 @@ body.mate-dm-active .mate-thinking > .dm-bubble-avatar {
   flex-shrink: 0;
   margin-top: 2px;
 }
-body.mate-dm-active .mate-thinking > .dm-bubble-content {
+body.mate-dm-active .mate-thinking > .dm-bubble-content,
+body.wide-view .mate-thinking > .dm-bubble-content {
   flex: 1;
   min-width: 0;
 }
@@ -2373,7 +2378,8 @@ body.mate-dm-active .mate-thinking > .dm-bubble-content {
   gap: 4px;
   padding: 4px 0;
 }
-body.mate-dm-active .mate-thinking:not(.done) .mate-thinking-row {
+body.mate-dm-active .mate-thinking:not(.done) .mate-thinking-row,
+body.wide-view .mate-thinking:not(.done) .mate-thinking-row {
   display: flex;
 }
 .mate-thinking-dots {
@@ -2400,10 +2406,16 @@ body.mate-dm-active .mate-thinking:not(.done) .mate-thinking-row {
 }
 
 /* When done, hide mate row (JS does this too), show compact expandable header */
-body.mate-dm-active .mate-thinking.done .mate-thinking-row {
+body.mate-dm-active .mate-thinking.done .mate-thinking-row,
+body.wide-view .mate-thinking.done .mate-thinking-row {
   display: none;
 }
-body.mate-dm-active .mate-thinking.done .thinking-header {
+body.mate-dm-active .mate-thinking.done .mate-thinking-activity,
+body.wide-view .mate-thinking.done .mate-thinking-activity {
+  display: none;
+}
+body.mate-dm-active .mate-thinking.done .thinking-header,
+body.wide-view .mate-thinking.done .thinking-header {
   display: inline-flex !important;
   font-size: 12px;
   padding: 4px 10px;
@@ -2412,16 +2424,19 @@ body.mate-dm-active .mate-thinking.done .thinking-header {
   opacity: 0.7;
   transition: opacity 0.15s;
 }
-body.mate-dm-active .mate-thinking.done .thinking-header:hover {
+body.mate-dm-active .mate-thinking.done .thinking-header:hover,
+body.wide-view .mate-thinking.done .thinking-header:hover {
   opacity: 1;
   background: rgba(var(--overlay-rgb), 0.08);
 }
-body.mate-dm-active .mate-thinking .thinking-content {
+body.mate-dm-active .mate-thinking .thinking-content,
+body.wide-view .mate-thinking .thinking-content {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease;
 }
-body.mate-dm-active .mate-thinking.expanded .thinking-content {
+body.mate-dm-active .mate-thinking.expanded .thinking-content,
+body.wide-view .mate-thinking.expanded .thinking-content {
   max-height: 2000px;
 }
 
