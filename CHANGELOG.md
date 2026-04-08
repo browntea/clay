@@ -1,3 +1,10 @@
+# [2.26.0-beta.7](https://github.com/chadbyte/clay/compare/v2.26.0-beta.6...v2.26.0-beta.7) (2026-04-08)
+
+
+### Bug Fixes
+
+* **ui:** move suggestion chips inside input row ([#287](https://github.com/chadbyte/clay/issues/287)) ([9b01144](https://github.com/chadbyte/clay/commit/9b01144d22484d84613761d6386b2b8d47288606))
+
 # [2.26.0-beta.6](https://github.com/chadbyte/clay/compare/v2.26.0-beta.5...v2.26.0-beta.6) (2026-04-08)
 
 
