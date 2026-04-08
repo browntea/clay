@@ -1,3 +1,10 @@
+# [2.26.0-beta.4](https://github.com/chadbyte/clay/compare/v2.26.0-beta.3...v2.26.0-beta.4) (2026-04-08)
+
+
+### Features
+
+* Context Sources UI + Chat Project plan ([#284](https://github.com/chadbyte/clay/issues/284)) ([a4da2cf](https://github.com/chadbyte/clay/commit/a4da2cfbfd77ca614732b2a5f2c81f29e7e9bcf2))
+
 # [2.26.0-beta.3](https://github.com/chadbyte/clay/compare/v2.26.0-beta.2...v2.26.0-beta.3) (2026-04-08)
 
 
