@@ -1,3 +1,18 @@
+# [2.26.0-beta.9](https://github.com/chadbyte/clay/compare/v2.26.0-beta.8...v2.26.0-beta.9) (2026-04-08)
+
+
+### Bug Fixes
+
+* **auth:** default to private visibility in OS user mode ([7c271a2](https://github.com/chadbyte/clay/commit/7c271a20ec34300b4d86d60204712356e6dc2473))
+* **mention:** maintain chronological order when permission requests interrupt mention stream ([b48d9de](https://github.com/chadbyte/clay/commit/b48d9debcab26d1392ca51e9b051ec0a6d2d5229))
+
+
+### Features
+
+* **browser:** auto-approve watch/unwatch tab MCP tools ([155244e](https://github.com/chadbyte/clay/commit/155244e7c6a2a88863f2aeac148a074d63a541e8))
+* **ui:** improve channel mode scheduled messages, input styling, and permission UX ([3dd7ab7](https://github.com/chadbyte/clay/commit/3dd7ab7eae09e7b40ad1a62d5e60f1342a691c79))
+* **ui:** replace thinking verb text with animated three dots ([235b3db](https://github.com/chadbyte/clay/commit/235b3dbad15725f94fc6fee1aa6a7d83fa2feb04))
+
 # [2.26.0-beta.8](https://github.com/chadbyte/clay/compare/v2.26.0-beta.7...v2.26.0-beta.8) (2026-04-08)
 
 
