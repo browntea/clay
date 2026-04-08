@@ -1,3 +1,10 @@
+# [2.26.0-beta.5](https://github.com/chadbyte/clay/compare/v2.26.0-beta.4...v2.26.0-beta.5) (2026-04-08)
+
+
+### Features
+
+* **context:** add rich context usage popover on header bar hover ([a59194c](https://github.com/chadbyte/clay/commit/a59194c662a8f660e6b2608517c29b8bfd875cf5))
+
 # [2.26.0-beta.4](https://github.com/chadbyte/clay/compare/v2.26.0-beta.3...v2.26.0-beta.4) (2026-04-08)
 
 
