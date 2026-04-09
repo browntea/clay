@@ -873,7 +873,8 @@
 .terminal-tab.active { color: var(--text); border-color: var(--accent); }
 .terminal-tab.exited { opacity: 0.5; }
 
-.terminal-tab-close {
+
+.terminal-tab-more {
   display: none;
   align-items: center;
   justify-content: center;
@@ -888,9 +889,44 @@
   line-height: 1;
 }
 
-.terminal-tab:hover .terminal-tab-close,
-.terminal-tab.active .terminal-tab-close { display: flex; }
-.terminal-tab-close:hover { background: rgba(var(--overlay-rgb),0.1); color: var(--text); }
+.terminal-tab:hover .terminal-tab-more,
+.terminal-tab.active .terminal-tab-more { display: flex; }
+.terminal-tab-more:hover { background: rgba(var(--overlay-rgb),0.1); color: var(--text); }
+
+.terminal-tab-ctx {
+  position: fixed;
+  z-index: 9999;
+  min-width: 120px;
+  background: var(--bg-elevated, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.terminal-tab-ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.terminal-tab-ctx-item:hover {
+  background: rgba(var(--overlay-rgb),0.08);
+  color: var(--text);
+}
+
+.terminal-tab-ctx-danger:hover {
+  color: #e74c3c;
+}
 
 .terminal-tab-label { cursor: default; }
 

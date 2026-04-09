@@ -197,8 +197,13 @@
 }
 
 .context-card-header .context-card-icon {
-  font-size: 13px;
   opacity: 0.7;
+  display: inline-flex;
+  align-items: center;
+}
+.context-card-header .context-card-icon .lucide {
+  width: 14px;
+  height: 14px;
 }
 
 .context-card-screenshot {
@@ -226,10 +231,16 @@
 
 .context-card-meta {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   margin-top: 8px;
-  gap: 12px;
+  gap: 6px;
+}
+.context-card-favicon {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 .context-card-title {
@@ -238,6 +249,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
   flex: 1;
   min-width: 0;
 }
