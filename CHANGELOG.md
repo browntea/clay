@@ -1,3 +1,17 @@
+# [2.26.0-beta.18](https://github.com/chadbyte/clay/compare/v2.26.0-beta.17...v2.26.0-beta.18) (2026-04-09)
+
+
+### Bug Fixes
+
+* **debate:** clear stale debate state on restart instead of restoring dead UI ([868a7e5](https://github.com/chadbyte/clay/commit/868a7e5365a533bda9d50e3f93f7ee4fbf486d9e))
+* **debate:** fix MCP proposal card rendering and debate start ([b99bcfd](https://github.com/chadbyte/clay/commit/b99bcfd89466b7ddc90b92fae7369f0c9134184c))
+* **debate:** show review card for quickStart flow, share tool whitelist with mentions ([1cf1ccd](https://github.com/chadbyte/clay/commit/1cf1ccd2cba716135ae11a4533bf71553dea0dd1))
+
+
+### Features
+
+* **debate:** add propose_debate MCP tool for inline debate proposals ([0298972](https://github.com/chadbyte/clay/commit/0298972b68d74cd648175ef4cb73b19c23e1f8ec))
+
 # [2.26.0-beta.17](https://github.com/chadbyte/clay/compare/v2.26.0-beta.16...v2.26.0-beta.17) (2026-04-09)
 
 
