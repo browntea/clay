@@ -1,3 +1,10 @@
+# [2.26.0-beta.15](https://github.com/chadbyte/clay/compare/v2.26.0-beta.14...v2.26.0-beta.15) (2026-04-09)
+
+
+### Bug Fixes
+
+* **sdk-bridge:** add auto-continue to worker query_done handler ([b0ea29f](https://github.com/chadbyte/clay/commit/b0ea29ff5e33440606f627cb2f361b5a00e8b3ac))
+
 # [2.26.0-beta.14](https://github.com/chadbyte/clay/compare/v2.26.0-beta.13...v2.26.0-beta.14) (2026-04-09)
 
 
