@@ -43,6 +43,37 @@
   color: #e74c3c;
 }
 
+/* --- Debate ended status line --- */
+.debate-ended-status-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.debate-ended-status-line svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+}
+
+/* --- Debate loop group in sidebar --- */
+.session-loop-group.debate {
+  border-left: 2px solid var(--accent);
+}
+
+.session-loop-icon.debate {
+  color: var(--accent);
+}
+
+.session-loop-count.debate {
+  color: var(--accent);
+}
+
 /* --- Debate session icon in sidebar --- */
 .session-debate-icon {
   display: inline-flex;
