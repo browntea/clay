@@ -13,16 +13,16 @@
 | **next** | **The next PR to work on** |
 | pending | Not started |
 
-**Last completed**: PR-03 (2026-04-10)
-**Next up**: PR-04
+**Last completed**: PR-04 (2026-04-10)
+**Next up**: PR-05
 
 | PR | Status | Description | Date |
 |----|--------|-------------|------|
 | PR-01 | done | Extract `project-debate.js` from `project.js` | 2026-04-04 |
 | PR-02 | done | Extract `project-memory.js` from `project.js` | 2026-04-10 |
 | PR-03 | done | Extract `project-mate-interaction.js` from `project.js` | 2026-04-10 |
-| PR-04 | **next** | Extract `project-loop.js` from `project.js` | |
-| PR-05 | pending | Extract `project-file-watch.js` from `project.js` | |
+| PR-04 | done | Extract `project-loop.js` from `project.js` | 2026-04-10 |
+| PR-05 | **next** | Extract `project-file-watch.js` from `project.js` | |
 | PR-06 | pending | Extract `project-http.js` from `project.js` | |
 | PR-07 | pending | Extract `project-image.js` from `project.js` | |
 | PR-08 | pending | Reduce `project.js` to thin coordinator | |
@@ -65,7 +65,7 @@
 
 | File | Original | Current | Target |
 |------|----------|---------|--------|
-| `lib/project.js` | 7,222 | 5,273 | ~800 |
+| `lib/project.js` | 7,222 | 4,197 | ~800 |
 | `lib/server.js` | 3,599 | 3,702 | ~500 |
 | `lib/public/app.js` | 8,010 | 8,066 | ~1,500 |
 | `lib/public/modules/sidebar.js` | 4,541 | 4,583 | ~400 |
