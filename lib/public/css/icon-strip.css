@@ -222,11 +222,13 @@
   animation: permShake 2s ease-in-out infinite;
 }
 
-/* Mate status dot (top-left, same as project icons) */
+/* Mate status dot (bottom-right, matching user online dot) */
 .icon-strip-mate .icon-strip-status {
-  top: -1px;
-  left: -1px;
-  border-color: var(--bg-alt);
+  top: auto;
+  left: auto;
+  bottom: 5px;
+  right: 5px;
+  border-color: var(--sidebar-bg);
   z-index: 3;
 }
 
@@ -824,13 +826,11 @@
   box-shadow: 0 0 0 2px var(--accent);
 }
 
-/* Primary mate: green ring + full opacity */
+/* Primary mate: full color (no desaturate), no ring */
 .icon-strip-primary-mate {
-  opacity: 0.9;
-  box-shadow: 0 0 0 2px #00b894;
-}
-.icon-strip-user:hover .icon-strip-primary-mate {
-  box-shadow: 0 0 0 2px #00b894;
+  opacity: 1;
+  border-radius: 8px;
+  filter: saturate(1) !important;
 }
 
 /* Online status dot (bottom-right on avatar, like project blink dot) */
