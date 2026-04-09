@@ -2752,27 +2752,6 @@ body.mate-dm-active .activity-inline:not(.mention-activity-bar):not(.mate-pre-ac
     -webkit-tap-highlight-color: transparent;
   }
 
-  .mate-mobile-back {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    padding: 0;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .mate-mobile-back svg {
-    width: 22px;
-    height: 22px;
-  }
-
   .mate-mobile-avatar {
     width: 32px;
     height: 32px;

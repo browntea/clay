@@ -342,7 +342,6 @@
     margin-bottom: 4px;
     background: none;
     border: none;
-    border-bottom: 1px solid var(--border-subtle);
     color: var(--accent);
     font-family: "Pretendard", system-ui, sans-serif;
     font-size: 15px;
@@ -350,6 +349,9 @@
     cursor: pointer;
     text-align: left;
     -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-session-new:last-of-type {
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .mobile-session-new:active {
