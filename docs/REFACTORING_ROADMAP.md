@@ -231,6 +231,8 @@ project.js is currently 6,031 lines (down from 7,222 after PR-01 debate extracti
 
 **Verify**: Open a project, trigger memory search, confirm results appear.
 
+> **YOKE note**: `ctx.sdk.createMentionSession()` calls (3). During extraction, keep SDK access via `ctx` rather than direct import. Phase 6 will replace these with an intermediate abstraction layer.
+
 ---
 
 ### PR-03: Extract `lib/project-mate-interaction.js`
@@ -249,6 +251,8 @@ project.js is currently 6,031 lines (down from 7,222 after PR-01 debate extracti
 **Re-export in project.js**: `handleMention` called from message handler. `getMateProfile` and `loadMateClaudeMd` also used by debate (PR-01), so update the debate module's context to receive these from the mate-interaction module.
 
 **Verify**: @mention a mate in a project session. Confirm the mate responds. Confirm user profile synthesis works in multi-user mode.
+
+> **YOKE note**: `ctx.sdk.createMentionSession()` (3) + `checkToolWhitelist` (1). Same principle: access SDK via ctx. Phase 6 will swap these to intermediate functions.
 
 ---
 
@@ -735,6 +739,8 @@ sidebar.js is 4,583 lines rendering three completely independent UI sections: se
 
 **Verify**: Skills discovered and available in project sessions.
 
+> **YOKE prep**: `discoverSkillDirs` and `mergeSkills` are filesystem-based, likely runtime-independent. When extracting, confirm they have no Claude Code SDK dependencies. If clean, they become part of the portable core.
+
 ---
 
 ### PR-30: Extract `lib/sdk-message-queue.js`
@@ -744,6 +750,8 @@ sidebar.js is 4,583 lines rendering three completely independent UI sections: se
 **Functions to move**: `createMessageQueue` (the async iterable queue with `.push()`, `.end()`, `[Symbol.asyncIterator]`)
 
 **Verify**: Messages stream correctly during SDK interaction.
+
+> **YOKE prep**: The message queue is runtime-independent by nature. However, verify whether the message format entering the queue is Claude Code SDK-specific. If so, note where a normalization layer should sit.
 
 ---
 
@@ -755,6 +763,8 @@ sidebar.js is 4,583 lines rendering three completely independent UI sections: se
 
 **Verify**: Send a message in a session, confirm streaming response with tool use works.
 
+> **YOKE prep**: This is the critical PR for SDK extraction readiness. `processSDKMessage` event handlers directly depend on Claude Code SDK stream event formats. While extracting, document all event types handled (message_start, content_block_start, content_block_delta, content_block_stop, etc.). This becomes the event spec that YOKE will need to normalize across runtimes. Also: wrap `createMentionSession` calls from project-debate, project-mate-interaction, and project-memory into meaningful intermediate functions (e.g. `startMentionTurn`) so external modules never call SDK methods directly.
+
 ---
 
 ### PR-32: Reduce `sdk-bridge.js` to connection manager (~800 lines)
@@ -764,6 +774,8 @@ sidebar.js is 4,583 lines rendering three completely independent UI sections: se
 > sdk-bridge.js grew from 2,232 to 2,424 lines post-roadmap due to worker lifecycle improvements and perf logging. The extraction targets remain the same but PR-31 scope is larger.
 
 **Verify**: Full SDK interaction works end-to-end.
+
+> **YOKE prep**: Two additional tasks when reducing to connection manager. (1) Document the Unix domain socket + JSON-line protocol message types used by sdk-worker.js, as constants or comments. This protocol may become the basis for YOKE's message spec. (2) Consolidate SDK access through `getSDK()` factory in this file. Migrate direct `require("@anthropic-ai/claude-agent-sdk")` calls in browser-mcp-server.js and debate-mcp-server.js to use this factory where possible.
 
 ---
 
@@ -993,3 +1005,62 @@ module.exports = { schema }
 7. **Use `var`, not `const`/`let`**: Per project convention.
 
 8. **Server-side: CommonJS (`require`). Client-side: ES modules (`import`)**: Per project convention.
+
+---
+
+## YOKE Preparation (SDK Extraction Readiness)
+
+> Goal: During refactoring, establish boundaries that enable future extraction of a vendor-independent harness abstraction protocol (internally codenamed YOKE). The actual extraction to a separate repo happens when the second runtime adapter is added. For now, the goal is to make the codebase structurally ready.
+
+### Background
+
+SDK-dependent code spans 8 files with 54+ direct calls. The sdk-bridge.js monolith (2,424 lines) mixes connection management, message processing, skill discovery, and queue logic. Drawing abstraction interfaces over this tangled state would produce a bad public API. PR-29~32 decomposes sdk-bridge first, making the correct abstraction boundaries visible.
+
+### Phases
+
+| Phase | Action | When |
+|-------|--------|------|
+| 1 | Decompose sdk-bridge.js (PR-29~32) | Phase 6 of this roadmap |
+| 2 | Wrap direct SDK calls in intermediate functions | During PR-29~32 |
+| 3 | Document sdk-worker.js message protocol | PR-32 |
+| 4 | Define interfaces + extract to separate repo | When adding second runtime (outside this roadmap) |
+
+### Rules During Refactoring
+
+**Rule 1: Wrap direct SDK calls in intermediate functions**
+
+project-debate.js, project-mate-interaction.js, and project-memory.js call `ctx.sdk.createMentionSession()` directly. During refactoring, wrap these in semantically meaningful functions exposed by sdk-bridge. External modules should never call SDK methods directly. These intermediate functions become the future YOKE interface.
+
+```js
+// Before: modules call SDK directly
+ctx.sdk.createMentionSession({ cwd, sessionId, model, ... })
+
+// After: sdk-bridge exposes a meaningful function
+ctx.sdk.startMentionTurn({ cwd, sessionId, model, ... })
+// Internally calls createMentionSession, but callers don't know that
+```
+
+**Rule 2: Document sdk-worker.js message protocol**
+
+The Unix domain socket + JSON-line protocol between sdk-bridge and sdk-worker carries structured messages. During PR-32, enumerate all message types as constants or a schema comment. This protocol may become the foundation for YOKE's cross-runtime message spec.
+
+**Rule 3: Preserve the getSDK() factory pattern**
+
+project.js dynamically imports the SDK via `getSDK()`. This is a natural runtime injection point. Maintain this pattern during refactoring. Where possible, migrate direct `require("@anthropic-ai/claude-agent-sdk")` in browser-mcp-server.js and debate-mcp-server.js to use this factory.
+
+**Rule 4: Isolate MCP server SDK imports**
+
+browser-mcp-server.js and debate-mcp-server.js directly require SDK-specific APIs (createSdkMcpServer, tool). These are inherently vendor-specific. Mark these files as "SDK adapter zone." They will be the first files to get runtime-specific variants when YOKE ships.
+
+### SDK Dependency Map (for tracking)
+
+| File | Dependency Type | Call Count | Wrap Target | Notes |
+|------|----------------|------------|-------------|-------|
+| project.js | ctx.sdk.* | ~25 | PR-04, PR-08 | startQuery, setModel, setPermissionMode, etc. |
+| project-debate.js | ctx.sdk.* | 5 | PR-01 done, update in PR-31 | createMentionSession |
+| project-mate-interaction.js | ctx.sdk.* | 4 | PR-03 | createMentionSession, checkToolWhitelist |
+| project-memory.js | ctx.sdk.* | 3 | PR-02 | createMentionSession |
+| browser-mcp-server.js | require direct | 3 | Isolate | SDK adapter zone |
+| debate-mcp-server.js | require direct | 3 | Isolate | SDK adapter zone |
+| server.js | pushModule | 4 | PR-09~13 | Push notifications |
+| sessions.js | getSDK() | 1 | Keep pattern | renameSession |
