@@ -1,3 +1,13 @@
+# [2.26.0-beta.19](https://github.com/chadbyte/clay/compare/v2.26.0-beta.18...v2.26.0-beta.19) (2026-04-09)
+
+
+### Bug Fixes
+
+* **browser:** prevent redundant MCP calls for context source tabs ([bc88feb](https://github.com/chadbyte/clay/commit/bc88febafbbfbd3d76efe3a8a2c47b07897375b4))
+* **debate:** prevent debate ended banner from persisting across sessions ([75802d6](https://github.com/chadbyte/clay/commit/75802d652da7462b08c49d94b4482d844cde8a6d))
+* **terminal:** add WebGL renderer and fix overflow clipping ([2f2db6d](https://github.com/chadbyte/clay/commit/2f2db6d0054af5bf0bf4f7a8905b946264b4cec9))
+* **terminal:** load WebGL addon after xterm.open() ([56ce8b4](https://github.com/chadbyte/clay/commit/56ce8b4b92188c7afed2518d5537a041e418f5fc))
+
 # [2.26.0-beta.18](https://github.com/chadbyte/clay/compare/v2.26.0-beta.17...v2.26.0-beta.18) (2026-04-09)
 
 
