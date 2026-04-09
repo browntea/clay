@@ -1506,30 +1506,38 @@
   </div>
 </div>
 
-<!-- Debate Modal -->
+<!-- Debate Modal (Wizard) -->
 <div id="debate-modal" class="hidden">
   <div class="debate-modal-backdrop"></div>
   <div class="debate-modal-card">
     <div class="debate-modal-header">
       <span><i data-lucide="mic"></i> New Debate</span>
+      <div class="debate-wizard-steps">
+        <span class="debate-step-dot active" data-step="0"></span>
+        <span class="debate-step-dot" data-step="1"></span>
+      </div>
       <button id="debate-modal-close">&times;</button>
     </div>
-    <div class="debate-modal-body">
-      <label class="debate-field-label" for="debate-topic-input">Topic <span class="debate-field-req">*</span></label>
-      <textarea id="debate-topic-input" rows="2" placeholder="e.g. Should AI development be regulated?"></textarea>
-      <label class="debate-field-label" for="debate-panel-list">Select panelists</label>
-      <div id="debate-panel-list" class="debate-panel-list"></div>
-      <div id="debate-skip-setup-row" class="debate-skip-setup-row hidden">
-        <label class="debate-toggle-label">
-          <input type="checkbox" id="debate-skip-setup-toggle">
-          <span>Skip setup</span>
-          <span class="debate-skip-setup-hint">Moderator generates the brief automatically from conversation context</span>
-        </label>
+    <!-- Step 0: Topic -->
+    <div class="debate-wizard-page active" data-step="0">
+      <div class="debate-modal-body">
+        <label class="debate-field-label" for="debate-topic-input">Topic <span class="debate-field-req">*</span></label>
+        <textarea id="debate-topic-input" rows="2" placeholder="e.g. Should AI development be regulated?"></textarea>
+      </div>
+    </div>
+    <!-- Step 1: Panelists -->
+    <div class="debate-wizard-page" data-step="1">
+      <div class="debate-modal-body">
+        <label class="debate-field-label" for="debate-panel-list">Select panelists</label>
+        <div id="debate-panel-list" class="debate-panel-list"></div>
       </div>
     </div>
     <div class="debate-modal-footer">
       <button id="debate-modal-cancel" class="debate-btn-cancel">Cancel</button>
-      <button id="debate-modal-start" class="debate-btn-start">Start</button>
+      <button id="debate-modal-back" class="debate-btn-back hidden">Back</button>
+      <button id="debate-modal-quick" class="debate-btn-quick hidden">Quick Start</button>
+      <button id="debate-modal-next" class="debate-btn-next hidden">Choose Panel</button>
+      <button id="debate-modal-start" class="debate-btn-start hidden">Design Debate</button>
     </div>
   </div>
 </div>
