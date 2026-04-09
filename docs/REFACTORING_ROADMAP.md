@@ -13,15 +13,15 @@
 | **next** | **The next PR to work on** |
 | pending | Not started |
 
-**Last completed**: PR-01 (2026-04-04)
-**Next up**: PR-02
+**Last completed**: PR-03 (2026-04-10)
+**Next up**: PR-04
 
 | PR | Status | Description | Date |
 |----|--------|-------------|------|
 | PR-01 | done | Extract `project-debate.js` from `project.js` | 2026-04-04 |
-| PR-02 | **next** | Extract `project-memory.js` from `project.js` | |
-| PR-03 | pending | Extract `project-mate-interaction.js` from `project.js` | |
-| PR-04 | pending | Extract `project-loop.js` from `project.js` | |
+| PR-02 | done | Extract `project-memory.js` from `project.js` | 2026-04-10 |
+| PR-03 | done | Extract `project-mate-interaction.js` from `project.js` | 2026-04-10 |
+| PR-04 | **next** | Extract `project-loop.js` from `project.js` | |
 | PR-05 | pending | Extract `project-file-watch.js` from `project.js` | |
 | PR-06 | pending | Extract `project-http.js` from `project.js` | |
 | PR-07 | pending | Extract `project-image.js` from `project.js` | |
@@ -65,7 +65,7 @@
 
 | File | Original | Current | Target |
 |------|----------|---------|--------|
-| `lib/project.js` | 7,222 | 6,031 | ~800 |
+| `lib/project.js` | 7,222 | 5,273 | ~800 |
 | `lib/server.js` | 3,599 | 3,702 | ~500 |
 | `lib/public/app.js` | 8,010 | 8,066 | ~1,500 |
 | `lib/public/modules/sidebar.js` | 4,541 | 4,583 | ~400 |
@@ -75,7 +75,7 @@
 | `lib/users.js` | 791 | 829 | ~300 |
 | `lib/daemon.js` | 1,490 | 1,503 | ~1,100 |
 
-> Updated 2026-04-07. Files grew due to feature additions (OS user mode, chat layout, push notifications, sender attribution, worker lifecycle improvements). Refactoring scope increased accordingly.
+> Updated 2026-04-10. Files grew due to feature additions (OS user mode, chat layout, push notifications, sender attribution, worker lifecycle improvements). Refactoring scope increased accordingly.
 
 ---
 
