@@ -1,3 +1,10 @@
+# [2.26.0-beta.17](https://github.com/chadbyte/clay/compare/v2.26.0-beta.16...v2.26.0-beta.17) (2026-04-09)
+
+
+### Bug Fixes
+
+* show actual send time in scheduled message bubble instead of reset time ([0b13ce0](https://github.com/chadbyte/clay/commit/0b13ce0ce2e6ba6bacd02b201118fa6e063d9b85))
+
 # [2.26.0-beta.16](https://github.com/chadbyte/clay/compare/v2.26.0-beta.15...v2.26.0-beta.16) (2026-04-09)
 
 
