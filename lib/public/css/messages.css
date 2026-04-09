@@ -1798,6 +1798,23 @@ body.wide-view .msg-assistant:hover {
   background: var(--bg-alt);
 }
 
+/* Grouped messages: same sender within same minute, hide avatar + header */
+body.wide-view .msg-user.grouped > .dm-bubble-avatar,
+body.wide-view .msg-assistant.grouped > .dm-bubble-avatar,
+body.mate-dm-active .msg-assistant.grouped > .dm-bubble-avatar {
+  visibility: hidden;
+}
+body.wide-view .msg-user.grouped .dm-bubble-header,
+body.wide-view .msg-assistant.grouped .dm-bubble-header,
+body.mate-dm-active .msg-assistant.grouped .dm-bubble-header {
+  display: none;
+}
+body.wide-view .msg-user.grouped,
+body.wide-view .msg-assistant.grouped,
+body.mate-dm-active .msg-assistant.grouped {
+  padding-top: 1px;
+}
+
 body.wide-view .msg-user {
   justify-content: flex-start;
 }
