@@ -1,3 +1,10 @@
+# [2.26.0-beta.12](https://github.com/chadbyte/clay/compare/v2.26.0-beta.11...v2.26.0-beta.12) (2026-04-09)
+
+
+### Bug Fixes
+
+* **debate:** show bottom bar on mobile during live debate ([2623855](https://github.com/chadbyte/clay/commit/262385522f0d782ee0363aaa45ff4af094390b19))
+
 # [2.26.0-beta.11](https://github.com/chadbyte/clay/compare/v2.26.0-beta.10...v2.26.0-beta.11) (2026-04-09)
 
 
