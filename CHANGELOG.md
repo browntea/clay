@@ -1,3 +1,10 @@
+# [2.27.0-beta.10](https://github.com/chadbyte/clay/compare/v2.27.0-beta.9...v2.27.0-beta.10) (2026-04-10)
+
+
+### Bug Fixes
+
+* **debate:** show visual feedback when stop button is clicked ([75d91a1](https://github.com/chadbyte/clay/commit/75d91a1ef6354bbe7f1e727f37ac6f94c66cf43a))
+
 # [2.27.0-beta.9](https://github.com/chadbyte/clay/compare/v2.27.0-beta.8...v2.27.0-beta.9) (2026-04-10)
 
 
