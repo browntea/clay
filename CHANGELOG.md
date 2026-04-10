@@ -1,3 +1,10 @@
+# [2.27.0-beta.2](https://github.com/chadbyte/clay/compare/v2.27.0-beta.1...v2.27.0-beta.2) (2026-04-10)
+
+
+### Bug Fixes
+
+* pass getOsUserInfoForWs to project-user-message ctx ([ea2fc66](https://github.com/chadbyte/clay/commit/ea2fc66fed07d215212b79b233763764be13e876))
+
 # [2.27.0-beta.1](https://github.com/chadbyte/clay/compare/v2.26.1-beta.1...v2.27.0-beta.1) (2026-04-10)
 
 
