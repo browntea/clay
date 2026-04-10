@@ -45,6 +45,23 @@ Wires all modules, sets up session manager and SDK bridge, dispatches messages.
 | `project-image.js` | `hydrateImageRefs`, `saveImageFile`, image directory setup |
 | `project-file-watch.js` | File and directory fs.watch wrappers |
 
+### Server Modules (lib/server-*.js)
+
+server.js is a thin router. It wires all server modules, sets up HTTP/WS, and dispatches requests.
+
+| Module | Routes | Concern |
+|--------|--------|---------|
+| `server-auth.js` | `/auth`, `/auth/setup`, `/auth/login`, `/auth/request-otp`, `/auth/verify-otp`, `/auth/register`, `/auth/logout`, `/invite/*`, `/recover/*` | PIN auth, multi-user login, OTP, invite registration, admin recovery, rate limiting |
+| `server-admin.js` | `/api/admin/users*`, `/api/admin/invites*`, `/api/admin/smtp*`, `/api/admin/projects/*/visibility`, `/api/admin/projects/*/owner`, `/api/admin/projects/*/users`, `/api/admin/projects/*/access` | User CRUD, permissions, invites, SMTP config, project access control |
+| `server-skills.js` | `/api/skills`, `/api/skills/search`, `/api/skills/detail` | Skills proxy cache, leaderboard, search, detail page scraping |
+| `server-settings.js` | `/api/profile`, `/api/avatar/*`, `/api/mate-avatar/*`, `/api/user/pin`, `/api/user/auto-continue`, `/api/user/chat-layout`, `/api/user/mate-onboarded` | User profile, avatars, user preferences |
+
+### Where to add a new server HTTP endpoint
+
+1. Identify which concern it belongs to (auth? admin? skills? settings?)
+2. Add the handler in the matching module's `handleRequest` function
+3. If no module fits, add it directly in `server.js` appHandler or create a new `server-*.js` module
+
 ### Where to add a new message type
 
 1. Identify which concern it belongs to (session mgmt? filesystem? loop? etc.)
