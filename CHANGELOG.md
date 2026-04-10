@@ -1,3 +1,10 @@
+# [2.27.0-beta.1](https://github.com/chadbyte/clay/compare/v2.26.1-beta.1...v2.27.0-beta.1) (2026-04-10)
+
+
+### Features
+
+* **api:** add GET /api/health endpoint for monitoring ([103513d](https://github.com/chadbyte/clay/commit/103513d4ce9f127ce834ba374e59d99441cf7d96))
+
 ## [2.26.1-beta.1](https://github.com/chadbyte/clay/compare/v2.26.0...v2.26.1-beta.1) (2026-04-09)
 
 
