@@ -72,7 +72,7 @@
 | File | Original | Current | Target |
 |------|----------|---------|--------|
 | `lib/project.js` | 7,222 | 1,191 | ~800 |
-| `lib/server.js` | 3,599 | 1,752 | ~500 |
+| `lib/server.js` | 3,599 | 1,343 | ~500 |
 | `lib/public/app.js` | 8,010 | 8,066 | ~1,500 |
 | `lib/public/modules/sidebar.js` | 4,541 | 4,583 | ~400 |
 | `lib/public/modules/scheduler.js` | 3,166 | 3,166 | ~1,200 |
