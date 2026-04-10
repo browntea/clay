@@ -90,6 +90,7 @@ Bootstraps UI, wires modules, dispatches WebSocket messages via `processMessage`
 | `app-messages.js` | WebSocket message router (`processMessage`). Dispatches all incoming message types to appropriate handlers |
 | `app-dm.js` | DM mode (open/enter/exit), mate project switching, mate onboarding, DM message rendering, typing indicators |
 | `app-home-hub.js` | Home hub rendering, weather, tip rotation, upcoming schedules, project summary |
+| `app-rate-limit.js` | Rate limit UI, countdown timers, scheduled message bubbles, fast mode indicator |
 
 ---
 
