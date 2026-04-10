@@ -1,3 +1,11 @@
+# [2.27.0-beta.8](https://github.com/chadbyte/clay/compare/v2.27.0-beta.7...v2.27.0-beta.8) (2026-04-10)
+
+
+### Bug Fixes
+
+* **debate:** add mate avatars to brief review card ([3170394](https://github.com/chadbyte/clay/commit/3170394cfbf30ef4e6a5deebabcc0157fdad673a))
+* **debate:** share debate state with setup session in quickStart ([e142a77](https://github.com/chadbyte/clay/commit/e142a778fb6576344b9bcd332b3e1316f99382ec))
+
 # [2.27.0-beta.7](https://github.com/chadbyte/clay/compare/v2.27.0-beta.6...v2.27.0-beta.7) (2026-04-10)
 
 
