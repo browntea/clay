@@ -1,3 +1,10 @@
+# [2.27.0-beta.3](https://github.com/chadbyte/clay/compare/v2.27.0-beta.2...v2.27.0-beta.3) (2026-04-10)
+
+
+### Bug Fixes
+
+* pass requestTabContext to project-user-message ctx ([c845ed8](https://github.com/chadbyte/clay/commit/c845ed896d410b84bf32325fb8eaedb2aa224c00))
+
 # [2.27.0-beta.2](https://github.com/chadbyte/clay/compare/v2.27.0-beta.1...v2.27.0-beta.2) (2026-04-10)
 
 
