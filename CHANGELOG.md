@@ -1,3 +1,10 @@
+# [2.27.0-beta.9](https://github.com/chadbyte/clay/compare/v2.27.0-beta.8...v2.27.0-beta.9) (2026-04-10)
+
+
+### Bug Fixes
+
+* **debate:** persist debate_turn and debate_stream to session history ([2e323e8](https://github.com/chadbyte/clay/commit/2e323e84a6c1860f62b44ba299f72d4fb6d9bba2))
+
 # [2.27.0-beta.8](https://github.com/chadbyte/clay/compare/v2.27.0-beta.7...v2.27.0-beta.8) (2026-04-10)
 
 
