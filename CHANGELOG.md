@@ -1,3 +1,10 @@
+# [2.27.0-beta.7](https://github.com/chadbyte/clay/compare/v2.27.0-beta.6...v2.27.0-beta.7) (2026-04-10)
+
+
+### Bug Fixes
+
+* **debate:** send brief_ready to setup session in quickStart flow ([9b93e5a](https://github.com/chadbyte/clay/commit/9b93e5ae4f747e83dc717ce8ce64783c60dfdeb4))
+
 # [2.27.0-beta.6](https://github.com/chadbyte/clay/compare/v2.27.0-beta.5...v2.27.0-beta.6) (2026-04-10)
 
 
