@@ -78,6 +78,18 @@ Add it in `project-http.js` inside the `handleHTTP` function.
 
 ---
 
+## Client-side Modules (lib/public/modules/)
+
+### app.js (coordinator, ~8,600 lines, being decomposed)
+
+Bootstraps UI, wires modules, dispatches WebSocket messages via `processMessage`.
+
+| Module | Concern |
+|--------|---------|
+| `app-connection.js` | WebSocket creation, reconnect with exponential backoff, connection status UI, disconnect/restore notifications |
+
+---
+
 ## Extraction Pattern Reference
 
 ```js
