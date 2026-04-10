@@ -13,8 +13,8 @@
 | **next** | **The next PR to work on** |
 | pending | Not started |
 
-**Last completed**: PR-35 (2026-04-11)
-**Next up**: PR-36
+**Last completed**: PR-36 (2026-04-11)
+**Next up**: PR-37
 
 | PR | Status | Description | Date |
 |----|--------|-------------|------|
@@ -53,7 +53,7 @@
 | PR-33 | done | Extract `app-skills-install.js` from `app.js` | 2026-04-10 |
 | PR-34 | done | Reduce `app.js` to bootstrap (1,680 lines) | 2026-04-10 |
 | PR-35 | done | Extract `sidebar-sessions.js` from `sidebar.js` | 2026-04-11 |
-| PR-36 | pending | Extract `sidebar-projects.js` from `sidebar.js` | |
+| PR-36 | done | Extract `sidebar-projects.js` from `sidebar.js` | 2026-04-11 |
 | PR-37 | pending | Extract `sidebar-mates.js` from `sidebar.js` | |
 | PR-38 | pending | Extract `sidebar-mobile.js` from `sidebar.js` | |
 | PR-39 | pending | Reduce `sidebar.js` to coordinator | |
@@ -82,14 +82,14 @@
 | `lib/project.js` | 7,222 | 1,191 | ~800 |
 | `lib/server.js` | 3,599 | 1,259 | ~1,200 |
 | `lib/public/app.js` | 8,010 | 1,680 | ~1,500 |
-| `lib/public/modules/sidebar.js` | 4,541 | 3,761 | ~400 |
+| `lib/public/modules/sidebar.js` | 4,541 | 2,324 | ~400 |
 | `lib/public/modules/scheduler.js` | 3,166 | 3,166 | ~1,200 |
 | `lib/sdk-bridge.js` | 2,232 | 2,424 | ~800 |
 | `lib/mates.js` | 1,318 | 1,318 | ~500 |
 | `lib/users.js` | 791 | 829 | ~300 |
 | `lib/daemon.js` | 1,490 | 1,503 | ~1,100 |
 
-> Updated 2026-04-10. Files grew due to feature additions (OS user mode, chat layout, push notifications, sender attribution, worker lifecycle improvements). Refactoring scope increased accordingly.
+> Updated 2026-04-11. Files grew due to feature additions (OS user mode, chat layout, push notifications, sender attribution, worker lifecycle improvements). Refactoring scope increased accordingly.
 
 ---
 
@@ -1187,8 +1187,8 @@ module.exports = { schema }
 | PR-33 | done | `lib/public/modules/app-skills-install.js` | app.js | 240 |
 | PR-34 | done | (cleanup) | app.js | 0 (reduced to 1,680) |
 | **Phase 4: sidebar.js** | | | | |
-| PR-35 | pending | `lib/public/modules/sidebar-sessions.js` | sidebar.js | ~1,200 |
-| PR-36 | pending | `lib/public/modules/sidebar-projects.js` | sidebar.js | ~1,200 |
+| PR-35 | done | `lib/public/modules/sidebar-sessions.js` | sidebar.js | 987 |
+| PR-36 | done | `lib/public/modules/sidebar-projects.js` | sidebar.js | 1,449 |
 | PR-37 | pending | `lib/public/modules/sidebar-mates.js` | sidebar.js | ~700 |
 | PR-38 | pending | `lib/public/modules/sidebar-mobile.js` | sidebar.js | ~800 |
 | PR-39 | pending | (cleanup) | sidebar.js | 0 (reduce to ~400) |
