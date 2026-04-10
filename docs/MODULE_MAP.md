@@ -91,6 +91,7 @@ Bootstraps UI, wires modules, dispatches WebSocket messages via `processMessage`
 | `app-dm.js` | DM mode (open/enter/exit), mate project switching, mate onboarding, DM message rendering, typing indicators |
 | `app-home-hub.js` | Home hub rendering, weather, tip rotation, upcoming schedules, project summary |
 | `app-rate-limit.js` | Rate limit UI, countdown timers, scheduled message bubbles, fast mode indicator |
+| `app-cursors.js` | Remote cursor presence, text selection sharing, cursor toggle UI |
 
 ---
 
