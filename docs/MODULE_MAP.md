@@ -89,6 +89,7 @@ Bootstraps UI, wires modules, dispatches WebSocket messages via `processMessage`
 | `app-connection.js` | WebSocket creation, reconnect with exponential backoff, connection status UI, disconnect/restore notifications |
 | `app-messages.js` | WebSocket message router (`processMessage`). Dispatches all incoming message types to appropriate handlers |
 | `app-dm.js` | DM mode (open/enter/exit), mate project switching, mate onboarding, DM message rendering, typing indicators |
+| `app-home-hub.js` | Home hub rendering, weather, tip rotation, upcoming schedules, project summary |
 
 ---
 
