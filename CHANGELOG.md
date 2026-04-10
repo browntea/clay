@@ -1,3 +1,10 @@
+# [2.27.0-beta.5](https://github.com/chadbyte/clay/compare/v2.27.0-beta.4...v2.27.0-beta.5) (2026-04-10)
+
+
+### Bug Fixes
+
+* **api:** restrict health endpoint details to authenticated requests ([08aa2b3](https://github.com/chadbyte/clay/commit/08aa2b39c7590d1d01212ea69a8761f36cdceab8))
+
 # [2.27.0-beta.4](https://github.com/chadbyte/clay/compare/v2.27.0-beta.3...v2.27.0-beta.4) (2026-04-10)
 
 
