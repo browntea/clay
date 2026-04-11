@@ -140,21 +140,13 @@ This is NOT a rewrite. It is **if-condition simplification**. The business logic
 
 **Plan (Step 3d)**: Adapter flattens raw SDK events into `{ yokeType, ...fields }`. processSDKMessage's if-conditions change from nested raw format checks to flat yokeType checks. Claude-specific logic (auth detection, fast_mode_state, block index) stays in processSDKMessage during 3d (zero behavior change), then moves to the adapter in Step 3e (~25 lines, bounded behavior change) before Phase 4 release.
 
-### Worker process: Step 3b (remaining)
+### Worker process: Step 3b (complete)
 
-The worker code (spawnWorker, startQueryViaWorker, IPC handling, ~530 lines) remains in sdk-bridge.js. Only the worker script file moved to `lib/yoke/adapters/claude-worker.js`. The WORKER_SCRIPT path is updated via `adapter.workerScriptPath`.
+Worker management code (~530 lines) moved from sdk-bridge.js into claude.js. `adapter.createQuery()` branches on `adapterOptions.CLAUDE.linuxUser` internally. Clay calls `createQuery()` and does not know whether in-process or worker runs. `createWorkerQueryHandle` wraps IPC into async iterable. Permission/elicitation IPC routed through canUseTool/onElicitation callbacks. Worker reuse via `_adapterState` pattern.
 
-**Problem**: Clay still routes queries itself (`if (linuxUser) startQueryViaWorker()`). The adapter's `createQuery()` should own this decision. Worker management is ADAPTER-internal per Phase 2 classification.
+### QueryHandle abstraction: Step 3c (complete)
 
-**Plan (Step 3b)**: Move spawnWorker, cleanupWorker, startQueryViaWorker, warmupViaWorker, all IPC handling into `adapters/claude.js`. Pass `linuxUser` via `adapterOptions.CLAUDE.linuxUser`. Clay calls `adapter.createQuery()` and does not know whether in-process or worker runs.
-
-### QueryHandle abstraction: Step 3c (remaining)
-
-The current QueryHandle exposes `_rawQuery`, `_messageQueue`, `_pushRaw`. processQueryStream iterates `session.queryInstance` (the raw SDK query), not the QueryHandle.
-
-**Problem**: The QueryHandle is a shell, not an abstraction. Replacing the adapter does nothing because Clay bypasses the handle and reads the raw query directly.
-
-**Plan (Step 3c)**: Remove all underscore-prefixed escape hatches. processQueryStream iterates the QueryHandle. Worker path's IPC events flow through the same async iterator. `session.queryInstance` IS the QueryHandle.
+`_rawQuery`, `_messageQueue`, `_pushRaw` removed from both in-process and worker QueryHandle. `session.queryInstance` IS the QueryHandle. `processQueryStream` iterates it directly. `pushMessage()` routes through the handle for both paths. `rewindFiles()` added as pass-through for Claude SDK rewind support.
 
 ### MCP servers: tool definitions extracted (Step 3a, done)
 
@@ -249,19 +241,19 @@ adapter.createQuery({
 
 **Worker meta events** (model_changed, effort_changed, permission_mode_changed, context_usage, worker_error): Adapter yields these through the QueryHandle async iterator as distinct event objects. processQueryStream must handle them (new code, but small).
 
-### Step 3c: QueryHandle real abstraction
+### Step 3c: QueryHandle real abstraction (complete)
 
-**Remove:**
-- `_rawQuery` property
-- `_messageQueue` property
-- `_pushRaw()` method
+**Removed:** `_rawQuery`, `_messageQueue`, `_pushRaw` from both QueryHandle implementations.
 
-**Change in sdk-bridge.js:**
-- `session.queryInstance = queryHandle` (not `handle._rawQuery`)
-- `processQueryStream` does `for await (var msg of session.queryInstance)` (iterates QueryHandle)
-- `startQuery` pushes first message via `queryHandle.pushMessage(text, images)` (not `_pushRaw`)
-- `createMentionSession` pushes initial message via `queryHandle.pushMessage()`
-- Idle reaper ends the QueryHandle, not the raw message queue
+**Changes applied in sdk-bridge.js:**
+- `session.queryInstance = handle` (was `handle._rawQuery || handle`)
+- `processQueryStream` iterates QueryHandle via `for await (var msg of myQueryInstance)`
+- `startQuery` pushes first message via `handle.pushMessage(text, images)`
+- `pushMessage()` routes through `session.queryInstance.pushMessage()`
+- `createMentionSession` uses `handle.pushMessage()` for initial and follow-up messages
+- `getOrCreateRewindQuery` returns handle directly (not `handle._rawQuery`)
+- Idle reaper uses `queryInstance.close()`
+- `processQueryStream` no longer tracks `myMessageQueue` separately
 
 **Worker QueryHandle:** The async iterator yields events from IPC. `sdk_event` messages become SDK event objects. `query_done` ends the iterator. `query_error` makes the iterator throw.
 
@@ -371,26 +363,7 @@ Steps 3a through 3d follow the principle: **extraction only, no behavior change.
 
 ## 6. Data Flow
 
-### Current state (Step 3a)
-
-```
-startQuery(session, text, images, linuxUser)
-  |
-  +-- (linuxUser) startQueryViaWorker()          // STILL IN sdk-bridge.js
-  |     |-- spawnWorker()                         // STILL IN sdk-bridge.js
-  |     |-- worker IPC handler                    // STILL IN sdk-bridge.js
-  |     '-- processSDKMessage(session, msg.event) // raw SDK events via IPC
-  |
-  +-- (no linuxUser)
-        |-- adapter.createQuery(opts) -> QueryHandle
-        |-- handle._pushRaw(initialMessage)         // HACK: raw message format
-        |-- session.queryInstance = handle._rawQuery  // HACK: bypasses QueryHandle
-        '-- processQueryStream(session)
-              |-- for await (msg of session.queryInstance)  // iterates RAW query
-              '-- processSDKMessage(session, msg)           // raw SDK events
-```
-
-### Target state (after 3b + 3c + 3d)
+### Current state (after 3b + 3c, before 3d)
 
 ```
 startQuery(session, text, images, linuxUser)
@@ -403,7 +376,7 @@ startQuery(session, text, images, linuxUser)
   |     |     '-- IPC: sdk_event -> normalize -> yield through iterator
   |     |
   |     +-- (no linuxUser) adapter calls sdk.query() in-process
-  |           '-- raw SDK events -> normalize -> yield through iterator
+  |           '-- raw SDK events -> yield through iterator
   |
   |-- returns QueryHandle (same interface, both paths)
   |
@@ -411,25 +384,24 @@ startQuery(session, text, images, linuxUser)
   |-- session.queryInstance = queryHandle          // IS the QueryHandle
   '-- processQueryStream(session)
         |-- for await (msg of session.queryInstance)  // iterates QueryHandle
-        '-- processSDKMessage(session, msg)           // normalized events
+        '-- processSDKMessage(session, msg)           // raw SDK events (3d will flatten)
+```
+
+### Target state (after 3d + 3e)
+
+Same as above, but processSDKMessage receives flattened events:
+```
+        '-- processSDKMessage(session, msg)           // flattened events
               |-- msg.yokeType === "text_delta" -> ...
               |-- msg.yokeType === "tool_start" -> ...
               '-- msg.yokeType === "result" -> ...
 ```
 
-### Warmup (current: 3a)
+### Warmup (current, after 3b)
 
 ```
 warmup(linuxUser)
-  |-- (no linuxUser) adapter.init({ cwd, dangerouslySkipPermissions })  // done
-  |-- (linuxUser) warmupViaWorker(linuxUser)   // STILL IN sdk-bridge.js
-```
-
-### Warmup (target: after 3b)
-
-```
-warmup(linuxUser)
-  '-- adapter.init({ cwd, dangerouslySkipPermissions, adapterOptions: { CLAUDE: { linuxUser } } })
+  '-- adapter.init({ cwd, dangerouslySkipPermissions, linuxUser })
         |-- (linuxUser) adapter spawns warmup worker internally
         '-- (no linuxUser) adapter does in-process warmup
 ```
