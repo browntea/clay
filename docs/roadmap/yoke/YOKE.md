@@ -1,0 +1,274 @@
+# YOKE Roadmap
+
+> Vendor-independent harness abstraction protocol for Clay.
+> This file serves as plan, progress tracker, and hand-off document for coding agents.
+
+---
+
+## Context
+
+Clay currently runs exclusively on Claude Code's agent SDK. YOKE extracts all SDK-coupled code behind an interface so Clay can support multiple agent runtimes without changing business logic.
+
+- **Name**: YOKE (Yoke Overrides Known Engines)
+- **Metaphor**: A yoke unifies multiple oxen. YOKE unifies multiple harnesses.
+- **Design principle**: "What to do" stays in Clay. "How to deliver it to the SDK" moves to YOKE.
+- **Architecture**: Interface + Implementation pattern. Clay calls the interface, never the SDK directly.
+- **Extraction trigger**: When the Codex implementation is added, YOKE becomes a separate open-source repo.
+
+### Strategy (two stages)
+
+1. **Stage 1 (now)**: Define YOKE interface inside this project. Build Claude adapter. All SDK calls go through the interface. Claude-only, no multi-runtime concerns. No separate repo yet.
+2. **Stage 2 (multi-runtime)**: Add second adapter. At this point, extract YOKE as a standalone open-source package. Clay depends on it as a library.
+
+### Target runtimes
+
+| Runtime | Priority | Notes |
+|---------|----------|-------|
+| Claude Code (Anthropic) | Stage 1 | Current runtime. First adapter. |
+| OpenCode | Stage 2, first | JS/TS + Python SDK, OpenAPI 3.1 spec. Open-source, stable API. Lowest technical resistance for first multi-runtime proof. |
+| Codex CLI (OpenAI) | Stage 2, second | Name recognition for Show HN impact. Higher API churn risk. |
+| Gemini CLI (Google) | Stage 2, later | |
+| Copilot CLI (GitHub/Microsoft) | Stage 2, later | |
+
+### Adapter sequencing rationale
+
+1. **OpenCode first**: First adapter's job is proving YOKE works, not marketing. OpenCode has the richest SDK surface (JS/TS, Python, OpenAPI 3.1) and lowest integration risk. Open-source aligns with Clay's MIT license. Success here de-risks everything after.
+2. **Codex second**: OpenAI name value makes "3 runtimes supported" the Show HN headline. But API stability risk is higher, and solo maintainer burden matters.
+3. **Others as needed**: Gemini, Copilot follow if community demand exists.
+
+"3 runtimes" is stronger than "2 runtimes." OpenCode first makes that number reachable.
+
+### When to think about other runtimes
+
+| Phase | Multi-runtime awareness | Reason |
+|-------|------------------------|--------|
+| Phase 1 (Audit) | No | Just scanning current code |
+| Phase 2 (Classify) | Yes | The only moment to draw the boundary. Ask "would Codex/Gemini need this?" |
+| Phase 3 (Implement) | No | Claude adapter only |
+| Phase 4 (Protocol Doc) | No | Documenting existing protocol |
+| Phase 5 (Second adapter) | Yes | Actually building it |
+
+### Pre-conditions (completed)
+
+- sdk-bridge.js monolith (2,424 lines) decomposed via PR-29~32
+- SDK calls wrapped in intermediate functions during refactoring
+- getSDK() factory pattern preserved as runtime injection point
+- MCP server SDK imports isolated as "SDK adapter zone"
+
+---
+
+## Architectural Risk Assessment
+
+### Success probability by stage
+
+| Stage | Confidence | Rationale |
+|-------|-----------|-----------|
+| Stage 1 (interface + Claude adapter) | 90% | sdk-bridge decomposition done (PR-29~32). getSDK() injection point alive. This is moving working code behind a wrapper, not building new functionality. Scope is controlled by "zero behavior change" constraint. |
+| Stage 2 (Codex adapter + extraction) | 60% | Second adapter is the real test. Any Claude-specific assumption baked into the interface during Stage 1 will surface here as friction. Success depends entirely on how clean Phase 2 classification was. |
+
+### The 10% risk in Stage 1: abstraction leakage
+
+The single biggest threat is Claude SDK concepts bleeding into the YOKE interface. Three specific leak points:
+
+1. **Session model**. Claude's `createMentionSession()` carries assumptions about how sessions start, resume, and nest. If the interface mirrors this shape, a runtime with a different session model (stateless, or conversation-based) won't fit without hacks.
+2. **Permission handling**. Claude SDK has its own permission grant/deny flow. If YOKE's interface exposes `grantPermission(toolName)` as-is, runtimes that handle permissions differently (or don't have them) get stuck implementing no-ops.
+3. **MCP tool registration**. The current skill-to-tool pipeline is tightly coupled to Claude's MCP format. If tool registration in the interface assumes MCP shape, non-MCP runtimes need a translation layer that should live in the adapter, not in Clay.
+
+### Design guardrail
+
+Phase 2 classification is the make-or-break moment. The rule: **if you can imagine a runtime that would implement a method differently, it belongs in the adapter. If you can imagine a runtime that wouldn't need the method at all, the method shouldn't exist in the interface.**
+
+Ask "would Codex/Gemini/Copilot need this?" for every interface method. If the answer is "probably not," the method is a Clay concern disguised as an interface concern.
+
+---
+
+## Phase 1: SDK Call Audit (scan)
+
+**Goal**: Produce an up-to-date map of every SDK touch point in the post-refactoring codebase.
+
+**Agent instruction**:
+
+```
+Scan the following files and all modules they import:
+- server.js
+- project.js
+- All files under lib/
+
+Search for:
+1. SDK import/require: "@anthropic-ai", "claude-agent-sdk", "sdk-bridge", getSDK()
+2. SDK direct calls: any method on objects imported from above
+3. CLI spawn: spawn/exec calling "claude" binary
+4. HTTP calls: api.anthropic.com or similar endpoints
+5. Claude-specific data injection: CLAUDE.md read/write, .claude/ directory access,
+   mate.yaml loading into sessions, skill registration as tools, permission setting
+
+For each call site, record:
+- file:line
+- SDK method/function name
+- One-line description of what it does
+- Surrounding business context
+
+Output as a markdown table. Do NOT modify any code. Append results to this file under
+"## Phase 1 Results".
+```
+
+**Status**: Complete (2026-04-11). See [PHASE1_SDK_AUDIT.md](./PHASE1_SDK_AUDIT.md).
+
+---
+
+## Phase 2: Interface Design + Classify
+
+**Goal**: Define the YOKE interface based on audit results. Chad reviews and decides what crosses the interface boundary.
+
+### Classification rules
+
+| Decision | Criteria | Examples |
+|----------|----------|---------|
+| INTERFACE | "Would this change if we swapped to a different LLM runtime?" | SDK init, session lifecycle, message send/receive, API transport |
+| CLAY | "Is this Clay's decision, not the SDK's?" | User auth, routing, Mate selection, CLAUDE.md content assembly, skill discovery, business error handling |
+
+### Boundary cases
+
+| Situation | Resolution |
+|-----------|------------|
+| Assemble CLAUDE.md then inject into session | Assembly (CLAY), injection call (INTERFACE) |
+| Define permission policy then pass to SDK | Policy definition (CLAY), SDK permission call (INTERFACE) |
+| Load/parse skills then register as tools | Loading/parsing (CLAY), tool registration call (INTERFACE) |
+
+After classification, the INTERFACE items define YOKE's contract. Update the Phase 1 table with an INTERFACE/CLAY column.
+
+**Status**: Not started
+
+---
+
+## Phase 3: Implement (Claude adapter)
+
+**Goal**: Create the YOKE interface and Claude implementation. Rewire all call sites.
+
+**Structure** (repo-ready: `lib/yoke/` can be copied as-is to become the standalone YOKE repo):
+
+```
+lib/yoke/
+  package.json          # name: "yoke", ready for npm publish
+  README.md             # YOKE (Yoke Overrides Known Engines)
+  index.js              # public API entry point
+  interface.js          # the contract: what adapters must implement
+  adapters/
+    claude.js           # Claude Code SDK implementation
+```
+
+**Agent instruction**:
+
+```
+Read the Phase 1 Results table in this file. For every row marked INTERFACE:
+
+1. Define the corresponding function signature in lib/yoke/interface.js.
+2. Implement it in lib/yoke/adapters/claude.js using the current SDK calls.
+3. Replace the original call site to go through the YOKE interface.
+
+Rules:
+- Zero behavior change. Existing functionality must be identical.
+- Interface signatures reflect what Clay needs, not SDK internals.
+  e.g. startSession(opts) not sdk.createMentionSession(opts).
+- Claude adapter maps interface calls to SDK-specific implementation.
+- SDK-level try/catch moves into the adapter. Business error handling stays in place.
+- After extraction, NO file outside lib/yoke/adapters/ should directly import
+  "@anthropic-ai", "claude-agent-sdk", or call getSDK().
+
+When done, append verification results to this file under "## Phase 3 Verification".
+```
+
+**Status**: Not started
+
+---
+
+## Phase 4: Protocol Documentation
+
+**Goal**: Document the message protocol between sdk-bridge modules and sdk-worker.js.
+
+This Unix domain socket + JSON-line protocol is the candidate foundation for YOKE's
+cross-runtime message spec. Enumerate all message types, payloads, and response formats.
+
+**Status**: Not started
+
+---
+
+## Phase 5: OpenCode Adapter (second runtime proof)
+
+**Goal**: Build the OpenCode adapter to prove YOKE's multi-runtime abstraction works.
+
+```
+lib/yoke/
+  adapters/
+    claude.js           # existing
+    opencode.js         # new
+```
+
+This is the real test of the interface designed in Phase 2. If the interface needs breaking changes to accommodate OpenCode, the Phase 2 classification was wrong.
+
+**Status**: Deferred
+
+---
+
+## Phase 6: Codex Adapter + Open-source Extraction
+
+**Goal**: Add Codex adapter. Extract YOKE as a standalone open-source package. "3 runtimes" becomes the headline.
+
+```
+lib/yoke/                   -->  yoke (standalone repo)
+  package.json
+  README.md
+  index.js
+  interface.js
+  adapters/
+    claude.js
+    opencode.js
+    codex.js              # new
+```
+
+At this point, copy lib/yoke/ to its own repo and publish. Clay replaces the directory with an npm dependency.
+
+**Status**: Deferred
+
+---
+
+## Hand-off Log
+
+Record agent hand-offs here. Each entry: date, agent/mate, what was done, what's next.
+
+| Date | Agent | Done | Next |
+|------|-------|------|------|
+| 2026-04-11 | Claude | Phase 1 SDK Audit complete. 5 import sites, 6 query() calls, 22 query options, 18 IPC message types mapped. | Phase 1 arch review feedback applied. Ready for Phase 2. |
+| 2026-04-11 | Arch (review) | Flagged 3 issues: MCP require() inconsistency, Section 4 pre-classification bias, CLAUDE.md sub-classification needed. | 2 of 3 applied to audit doc. Section 4 bias noted for Phase 2 start. |
+
+---
+
+## Phase 1 Results
+
+Full audit in [PHASE1_SDK_AUDIT.md](./PHASE1_SDK_AUDIT.md). Key findings:
+
+### SDK surface area
+
+- **SDK import sites**: 5 (2x `getSDK()` factory, 2x direct `require()` in MCP servers, 1x package.json)
+- **SDK methods used**: 5 (`query`, `supportedModels`, `setPermissionMode`, `stopTask`, `createSdkMcpServer`)
+- **`sdk.query()` call sites**: 6 (4 in sdk-bridge.js, 2 in sdk-worker.js). All share the same `{ prompt: messageQueue, options }` shape.
+- **Query option parameters**: 22 total, ~14 Claude-specific
+
+### Structural observations
+
+1. **Single entry point**: All SDK interaction funnels through `sdk.query()`. This is favorable for YOKE -- one method to abstract.
+2. **MCP server inconsistency**: browser-mcp-server.js and debate-mcp-server.js use `require()` directly instead of the `getSDK()` factory. Phase 3 must unify this.
+3. **CLAUDE.md sites**: 15 total. Sub-classified into ASSEMBLY (content composition), I/O (file read/write), and INJECTION (SDK session delivery). **Only 1 of 15 is INJECTION** (MD-10: `createMentionSession()` receives `claudeMd` as `systemPrompt`). The other 14 are pure Clay concerns.
+4. **Worker IPC**: 17 message types (9 daemon->worker, 8 worker->daemon). This protocol is the candidate foundation for YOKE's cross-runtime message spec (Phase 4).
+5. **sdk-bridge exported API**: 14 methods form the current de facto interface. This is the starting point for Phase 2 classification.
+
+---
+
+## Phase 3 Verification
+
+(Agent appends verification results here)
+
+- [ ] No direct SDK import in any file outside yoke-harness.js
+- [ ] All yoke-harness.js exports are actually called (no dead functions)
+- [ ] No Clay business logic inside yoke-harness.js
+- [ ] Manual test: Mate session create, message exchange, skill execution all work
