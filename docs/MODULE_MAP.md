@@ -161,4 +161,4 @@ module.exports = { attachExample: attachExample };
 ## See Also
 
 - [STATE_CONVENTIONS.md](./STATE_CONVENTIONS.md) for state management rules
-- [REFACTORING_ROADMAP.md](./REFACTORING_ROADMAP.md) for remaining extraction work
+- [REFACTORING_ROADMAP.md](./roadmap/REFACTORING_ROADMAP.md) for remaining extraction work
