@@ -57,10 +57,10 @@
 | PR-37 | done | Extract `sidebar-mates.js` from `sidebar.js` | 2026-04-11 |
 | PR-38 | done | Extract `sidebar-mobile.js` from `sidebar.js` | 2026-04-11 |
 | PR-39 | done | Reduce `sidebar.js` to coordinator | 2026-04-11 |
-| PR-40 | **next** | Extract `scheduler-config.js` from `scheduler.js` | |
-| PR-41 | pending | Extract `scheduler-history.js` from `scheduler.js` | |
-| PR-42 | pending | Reduce `scheduler.js` to coordinator | |
-| PR-43 | pending | Extract `sdk-skill-discovery.js` from `sdk-bridge.js` | |
+| PR-40 | done | Extract `scheduler-config.js` from `scheduler.js` | 2026-04-10 |
+| PR-41 | done | Extract `scheduler-history.js` from `scheduler.js` | 2026-04-10 |
+| PR-42 | done | Reduce `scheduler.js` to coordinator | 2026-04-10 |
+| PR-43 | **next** | Extract `sdk-skill-discovery.js` from `sdk-bridge.js` | |
 | PR-44 | pending | Extract `sdk-message-queue.js` from `sdk-bridge.js` | |
 | PR-45 | pending | Extract `sdk-message-processor.js` from `sdk-bridge.js` | |
 | PR-46 | pending | Reduce `sdk-bridge.js` to connection manager | |
@@ -83,7 +83,7 @@
 | `lib/server.js` | 3,599 | 1,259 | ~1,200 |
 | `lib/public/app.js` | 8,010 | 1,714 | ~1,500 |
 | `lib/public/modules/sidebar.js` | 4,541 | 303 | ~400 |
-| `lib/public/modules/scheduler.js` | 3,166 | 3,166 | ~1,200 |
+| `lib/public/modules/scheduler.js` | 3,166 | 1,645 | ~1,200 |
 | `lib/sdk-bridge.js` | 2,232 | 2,424 | ~800 |
 | `lib/mates.js` | 1,318 | 1,318 | ~500 |
 | `lib/users.js` | 791 | 829 | ~300 |
@@ -1193,9 +1193,9 @@ module.exports = { schema }
 | PR-38 | pending | `lib/public/modules/sidebar-mobile.js` | sidebar.js | ~800 |
 | PR-39 | pending | (cleanup) | sidebar.js | 0 (reduce to ~400) |
 | **Phase 5: scheduler.js** | | | | |
-| PR-40 | pending | `lib/public/modules/scheduler-config.js` | scheduler.js | ~600 |
-| PR-41 | pending | `lib/public/modules/scheduler-history.js` | scheduler.js | ~200 |
-| PR-42 | pending | (cleanup) | scheduler.js | 0 (reduce to ~1,200) |
+| PR-40 | done | `lib/public/modules/scheduler-config.js` | scheduler.js | 1,532 |
+| PR-41 | done | `lib/public/modules/scheduler-history.js` | scheduler.js | 79 |
+| PR-42 | done | (cleanup) | scheduler.js | 0 (reduced to 1,645) |
 | **Phase 6: sdk-bridge.js** | | | | |
 | PR-43 | pending | `lib/sdk-skill-discovery.js` | sdk-bridge.js | ~200 |
 | PR-44 | pending | `lib/sdk-message-queue.js` | sdk-bridge.js | ~100 |
