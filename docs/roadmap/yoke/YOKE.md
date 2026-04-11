@@ -13,30 +13,28 @@ Clay currently runs exclusively on Claude Code's agent SDK. YOKE extracts all SD
 - **Metaphor**: A yoke unifies multiple oxen. YOKE unifies multiple harnesses.
 - **Design principle**: "What to do" stays in Clay. "How to deliver it to the SDK" moves to YOKE.
 - **Architecture**: Interface + Implementation pattern. Clay calls the interface, never the SDK directly.
-- **Extraction trigger**: When the Codex implementation is added, YOKE becomes a separate open-source repo.
+- **Extraction trigger**: After Phase 4. YOKE becomes a separate repo and Clay depends on it as a library. Second and third adapters are post-release work (by us or community).
 
-### Strategy (two stages)
+### Strategy (revised)
 
-1. **Stage 1 (now)**: Define YOKE interface inside this project. Build Claude adapter. All SDK calls go through the interface. Claude-only, no multi-runtime concerns. No separate repo yet.
-2. **Stage 2 (multi-runtime)**: Add second adapter. At this point, extract YOKE as a standalone open-source package. Clay depends on it as a library.
+1. **Stage 1 (now)**: Define YOKE interface inside Clay. Build Claude adapter. All SDK calls go through the interface. Extract as standalone package. Open-source.
+2. **Stage 2 (post-release)**: Community or us builds additional adapters (OpenCode, Codex, etc.). Interface is stable. Claude-specific assumptions documented for adapter authors.
+
+Original plan required a second adapter before extraction ("prove the interface works"). Revised because:
+- Phase 2 already validated the interface against multiple runtimes ("would Codex/OpenCode need this?")
+- Phase 3 Section 7-8 identified all Claude-specific assumptions in processSDKMessage (3 items, documented)
+- Open-sourcing with one adapter invites community contribution. Waiting for three adapters delays feedback.
+- Separating the library early is technically cleaner: Clay depends on YOKE via npm link, not inline code.
 
 ### Target runtimes
 
 | Runtime | Priority | Notes |
 |---------|----------|-------|
-| Claude Code (Anthropic) | Stage 1 | Current runtime. First adapter. |
-| OpenCode | Stage 2, first | JS/TS + Python SDK, OpenAPI 3.1 spec. Open-source, stable API. Lowest technical resistance for first multi-runtime proof. |
-| Codex CLI (OpenAI) | Stage 2, second | Name recognition for Show HN impact. Higher API churn risk. |
-| Gemini CLI (Google) | Stage 2, later | |
-| Copilot CLI (GitHub/Microsoft) | Stage 2, later | |
-
-### Adapter sequencing rationale
-
-1. **OpenCode first**: First adapter's job is proving YOKE works, not marketing. OpenCode has the richest SDK surface (JS/TS, Python, OpenAPI 3.1) and lowest integration risk. Open-source aligns with Clay's MIT license. Success here de-risks everything after.
-2. **Codex second**: OpenAI name value makes "3 runtimes supported" the Show HN headline. But API stability risk is higher, and solo maintainer burden matters.
-3. **Others as needed**: Gemini, Copilot follow if community demand exists.
-
-"3 runtimes" is stronger than "2 runtimes." OpenCode first makes that number reachable.
+| Claude Code (Anthropic) | Stage 1 (included) | Current runtime. Ships with YOKE. |
+| OpenCode | Stage 2, community or us | JS/TS + Python SDK, OpenAPI 3.1 spec. Open-source, stable API. Lowest technical resistance. |
+| Codex CLI (OpenAI) | Stage 2, community or us | Name recognition. Higher API churn risk. |
+| Gemini CLI (Google) | Stage 2, if demand | |
+| Copilot CLI (GitHub/Microsoft) | Stage 2, if demand | |
 
 ### When to think about other runtimes
 
@@ -44,9 +42,9 @@ Clay currently runs exclusively on Claude Code's agent SDK. YOKE extracts all SD
 |-------|------------------------|--------|
 | Phase 1 (Audit) | No | Just scanning current code |
 | Phase 2 (Classify) | Yes | The only moment to draw the boundary. Ask "would Codex/Gemini need this?" |
-| Phase 3 (Implement) | No | Claude adapter only |
-| Phase 4 (Protocol Doc) | No | Documenting existing protocol |
-| Phase 5 (Second adapter) | Yes | Actually building it |
+| Phase 3 (Implement) | No | Claude adapter only. Extraction, no behavior change. |
+| Phase 4 (Extract + Release) | Docs only | Protocol doc, README for adapter authors. No new adapter code. |
+| Post-release | Yes | Community or us builds adapters. Claude assumptions addressed when needed. |
 
 ### Pre-conditions (completed)
 
@@ -63,8 +61,8 @@ Clay currently runs exclusively on Claude Code's agent SDK. YOKE extracts all SD
 
 | Stage | Confidence | Rationale |
 |-------|-----------|-----------|
-| Stage 1 (interface + Claude adapter) | 90% | sdk-bridge decomposition done (PR-29~32). getSDK() injection point alive. This is moving working code behind a wrapper, not building new functionality. Scope is controlled by "zero behavior change" constraint. |
-| Stage 2 (Codex adapter + extraction) | 60% | Second adapter is the real test. Any Claude-specific assumption baked into the interface during Stage 1 will surface here as friction. Success depends entirely on how clean Phase 2 classification was. |
+| Stage 1 (interface + Claude adapter + extraction) | 90% | sdk-bridge decomposition done (PR-29~32). getSDK() injection point alive. This is moving working code behind a wrapper, not building new functionality. Scope is controlled by "zero behavior change" constraint. Library separation (Phase 4a) validates decoupling before publish. |
+| Stage 2 (second adapter, post-release) | 70% | Was 60%. Increased because Phase 3 Section 7-8 identified all Claude-specific assumptions in advance (3 items, documented). Interface validated against multiple runtimes during Phase 2 design. Risk is known and bounded. |
 
 ### The 10% risk in Stage 1: abstraction leakage
 
@@ -170,10 +168,10 @@ Full classification in [PHASE2_CLASSIFICATION.md](./PHASE2_CLASSIFICATION.md). R
 
 7. **Lifecycle sequence**: Strict order enforced: `init()` -> `createToolServer()` -> `createQuery()`. Documented in Section 10.4.
 
-**High-risk items for Phase 5 validation**:
+**High-risk items for post-release validation** (when a second adapter is built):
 - `systemPrompt` for main sessions (Claude auto-reads CLAUDE.md, other runtimes may not)
 - `onElicitation` (optional, kept in interface because same pattern as `canUseTool`)
-- Event normalization (mitigated by `runtime_specific` passthrough)
+- Claude-specific logic in processSDKMessage: auth detection, fast_mode_state, block index tracking (documented in PHASE3 Section 7)
 
 ---
 
@@ -223,57 +221,88 @@ When done, append verification results to this file under "## Phase 3 Verificati
 | 3a | Scaffold `lib/yoke/`, create adapter shell, rewire all `getSDK` call sites | Complete |
 | 3b | Move worker management code (~530 lines) from sdk-bridge.js into adapter. `createQuery()` owns both in-process and worker paths. Clay does not know which path runs. | Not started |
 | 3c | Make QueryHandle the real abstraction. Remove `_rawQuery`/`_messageQueue`/`_pushRaw`. `processQueryStream` iterates QueryHandle, not raw SDK query. Worker and in-process yield the same event shape. | Not started |
-| 3d | Event normalization. Adapter translates raw SDK events to Phase 2's 20 normalized event types. `processSDKMessage` rewritten to consume normalized events. Gradual approach: `{ yokeType, raw }` envelope first, then migrate field by field. | Not started |
+| 3d | Event flattening. Adapter flattens nested SDK events into `{ yokeType, ...fields }`. processSDKMessage if-conditions simplify (not a rewrite). Claude-specific logic stays in place for now. See PHASE3 Section 7-8 for analysis. | Not started |
+| 3e | Claude assumption cleanup (~25 lines). Move auth detection, fast_mode_state, block index tracking from processSDKMessage into Claude adapter. Runs AFTER 3d is stable. Small, bounded behavior change. Must be done before Phase 4 release. | Not started |
 
 ---
 
-## Phase 4: Protocol Documentation
+## Phase 4: Extract, Document, Release
 
-**Goal**: Document the message protocol between sdk-bridge modules and sdk-worker.js.
+**Goal**: Separate YOKE from Clay as a standalone package. Document the protocol. Open-source.
 
-This Unix domain socket + JSON-line protocol is the candidate foundation for YOKE's
-cross-runtime message spec. Enumerate all message types, payloads, and response formats.
+### 4a. Library separation
+
+Extract `lib/yoke/` to its own repo. Clay replaces the directory with an npm dependency.
+
+```
+Before:
+  clay/lib/yoke/          # inline code
+
+After:
+  yoke/                   # standalone repo (MIT license)
+    package.json
+    index.js
+    interface.js
+    adapters/
+      claude.js
+      claude-worker.js
+
+  clay/
+    package.json          # "yoke": "file:../yoke" or npm link
+    lib/sdk-bridge.js     # require("yoke") instead of require("./yoke")
+```
+
+Clay develops against a local link (`npm link yoke` or `file:` dependency). This validates that YOKE is truly decoupled before publishing. If Clay needs to reach into YOKE internals, the boundary is wrong and must be fixed before release.
+
+### 4b. Protocol documentation
+
+Document the worker IPC protocol (Unix domain socket + JSON lines). This is the candidate foundation for YOKE's cross-runtime message spec.
+
+Enumerate all message types, payloads, and response formats currently used between the adapter and claude-worker.js.
+
+### 4c. Adapter author documentation
+
+README and DEVELOPER_GUIDE for adapter authors:
+- How to implement a new adapter (the 11 interface methods)
+- Event flattening map (yokeType reference)
+- Capability declaration
+- adapterOptions vendor namespace
+- Known Claude-specific assumptions in processSDKMessage (Phase 5 cleanup backlog)
+
+### 4d. Publish
+
+Create standalone repo. npm publish. Clay switches to npm dependency.
 
 **Status**: Not started
 
 ---
 
-## Phase 5: OpenCode Adapter (second runtime proof)
+## Post-release: Additional Adapters
 
-**Goal**: Build the OpenCode adapter to prove YOKE's multi-runtime abstraction works.
+Additional adapters are built after YOKE is published. By us or by the community.
 
-```
-lib/yoke/
-  adapters/
-    claude.js           # existing
-    opencode.js         # new
-```
+### Candidate adapters
 
-This is the real test of the interface designed in Phase 2. If the interface needs breaking changes to accommodate OpenCode, the Phase 2 classification was wrong.
+| Runtime | Likely builder | Notes |
+|---------|---------------|-------|
+| OpenCode | Community or us | JS/TS + Python SDK, OpenAPI 3.1. Lowest resistance. Good first community contribution. |
+| Codex CLI (OpenAI) | Community or us | Name recognition. Higher API churn risk. |
+| Gemini CLI (Google) | Community, if demand | |
+| Copilot CLI (GitHub/Microsoft) | Community, if demand | |
 
-**Status**: Deferred
+### When a second adapter lands
 
----
+That is the real test of the interface. If it needs breaking changes, the Phase 2 classification was wrong. At that point:
+- Claude-specific assumptions in processSDKMessage (auth detection, fast_mode_state, block index) get addressed
+- Interface may get minor additions (new yokeType events, new capability flags)
+- YOKE publishes a major version bump if breaking
 
-## Phase 6: Codex Adapter + Open-source Extraction
+### What "open-source YOKE" enables for Clay
 
-**Goal**: Add Codex adapter. Extract YOKE as a standalone open-source package. "3 runtimes" becomes the headline.
-
-```
-lib/yoke/                   -->  yoke (standalone repo)
-  package.json
-  README.md
-  index.js
-  interface.js
-  adapters/
-    claude.js
-    opencode.js
-    codex.js              # new
-```
-
-At this point, copy lib/yoke/ to its own repo and publish. Clay replaces the directory with an npm dependency.
-
-**Status**: Deferred
+- **Show HN headline**: "Clay: collaborative AI coding, works with any agent runtime"
+- **Reduced vendor risk**: Users are not locked to Anthropic
+- **Community growth**: Adapter contributions bring users from other ecosystems
+- **Technical clarity**: Library boundary forces clean architecture
 
 ---
 
@@ -292,7 +321,10 @@ Record agent hand-offs here. Each entry: date, agent/mate, what was done, what's
 | 2026-04-11 | Claude | Final CLAY classification review: found 3 missing data flows (message_uuid, early session_id, fast_mode_state) that reach UI but weren't documented. Added as runtime_specific passthrough examples. Total changes: 10. | Phase 2 classification done. |
 | 2026-04-11 | Claude | DEVELOPER_GUIDE.md created. 4 strategies (MAP/POLYFILL/DEGRADE/HIDE), capability-based UI, adapterOptions usage rules, user-supplied polyfill registry pattern. init() capabilities added to Phase 2 interface. | Phase 2 fully complete. Ready for Phase 3. |
 | 2026-04-11 | Claude | Phase 3a complete: scaffold + rewire. Created lib/yoke/ (4 new files), rewired 9 existing files. SDK imports isolated to lib/yoke/adapters/. | Review identified 3 gaps: worker code not moved, QueryHandle is a shallow wrapper (_rawQuery leak), event normalization skipped. |
-| 2026-04-11 | Chad | Review: 3a is only 70%. Worker code in sdk-bridge (#2), _rawQuery hack (#3), no event normalization (#1) are all real problems. Core issue: QueryHandle is not a real abstraction. OK with deprecated sdk-worker.js (#4) and Zod inputSchema (#5). | Steps 3b, 3c, 3d defined. Order: worker move -> QueryHandle real abstraction -> event normalization (gradual). |
+| 2026-04-11 | Chad | Review: 3a is only 70%. Worker code in sdk-bridge (#2), _rawQuery hack (#3), no event normalization (#1) are all real problems. Core issue: QueryHandle is not a real abstraction. OK with deprecated sdk-worker.js (#4) and Zod inputSchema (#5). | Steps 3b, 3c, 3d defined. Order: worker move -> QueryHandle real abstraction -> event flattening. |
+| 2026-04-11 | Claude | processSDKMessage analysis (568 lines): 99% Clay business logic, ~0% translation. Adapter job is event flattening (nested -> flat), not logic rewrite. 3 Claude-specific items identified (auth, fast_mode, block index), deferred to post-release. | Step 3d scope reduced: flattening only, no behavior change. |
+| 2026-04-11 | Chad | Phase 3 principle: extraction only, no behavior change. Also: open-source after Phase 4, not after Phase 6. Separate YOKE as library early, Clay depends via npm link. | Roadmap restructured: Phase 4 = extract + doc + release. Phase 5/6 collapsed to post-release community work. |
+| 2026-04-11 | Chad | But if releasing after Phase 4, Claude assumptions must be resolved before release, not after. Added Step 3e: move auth detection, fast_mode_state, block index into adapter (~25 lines). Runs after 3d is stable, before Phase 4. | Step 3e added. Dependency chain: 3d (flatten, no behavior change) -> 3e (cleanup, ~25 lines behavior change) -> Phase 4 (release). |
 
 ---
 
@@ -349,10 +381,19 @@ Full audit in [PHASE1_SDK_AUDIT.md](./PHASE1_SDK_AUDIT.md). Key findings:
 
 ### Step 3d checks (pending)
 
-- [ ] Adapter yields `{ yokeType, raw }` envelope for every event
-- [ ] processSDKMessage routes on `yokeType` (not raw SDK event type)
-- [ ] All 20 Phase 2 normalized event types mapped
-- [ ] `raw` field removed after all event types migrated
+- [ ] Adapter flattens all SDK events into `{ yokeType, ...fields }` format
+- [ ] processSDKMessage routes on `yokeType` (not nested raw SDK event paths)
+- [ ] Flattened events include both `blockIndex` (compat) and `blockId` (future)
+- [ ] Auth detection, fast_mode_state, block index logic: unchanged in 3d
+- [ ] All 20 Phase 2 normalized event types covered in flattening map
+
+### Step 3e checks (pending)
+
+- [ ] Auth detection heuristic moved from processSDKMessage to Claude adapter (adapter emits `auth_required` event)
+- [ ] fast_mode_state handled inside adapter (emitted as field on `init`/`result` or as `runtime_specific`)
+- [ ] Block tracking uses `blockId` (not integer index). Adapter assigns ID, processSDKMessage tracks by ID.
+- [ ] processSDKMessage has zero Claude-specific format assumptions
+- [ ] All manual tests pass after 3e (confirms behavior change is safe)
 
 ### Manual tests (pending, after all steps)
 

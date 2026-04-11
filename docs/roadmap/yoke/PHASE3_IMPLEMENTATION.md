@@ -14,13 +14,15 @@ Phase 3 is split into 4 sub-steps after review identified gaps in the initial im
 | **3a** | Scaffold `lib/yoke/`, create adapter shell, rewire all `getSDK` call sites, isolate SDK imports | Complete |
 | **3b** | Move worker management code (~530 lines) from sdk-bridge.js into claude.js adapter. `adapter.createQuery()` owns both in-process and worker paths. `linuxUser` becomes an adapter option. Clay never decides how to run the query. | Not started |
 | **3c** | Make QueryHandle the real abstraction. Remove `_rawQuery`, `_messageQueue`, `_pushRaw`. `processQueryStream` iterates the QueryHandle. Worker QueryHandle yields events from IPC. Both paths produce the same event shape. | Not started |
-| **3d** | Event normalization. Adapter translates raw SDK events to Phase 2's 20 normalized types. Gradual approach: adapter yields `{ yokeType, raw }` envelope. processSDKMessage reads from `raw` initially, migrates to normalized fields over time. | Not started |
+| **3d** | Event flattening. Adapter flattens deeply nested Claude SDK events into `{ yokeType, ...fields }`. processSDKMessage if-conditions simplify from 3-level nesting to flat yokeType checks. Not a rewrite. Claude-specific logic stays in place for now. | Not started |
+| **3e** | Claude assumption cleanup. Move auth detection (~20 lines), fast_mode_state (~5 lines), block index tracking (~10 lines) from processSDKMessage into Claude adapter. Small, bounded behavior change. Runs AFTER 3d is verified stable. Must complete before Phase 4 release. | Not started |
 
 ### Why this order
 
 - **3b before 3c**: QueryHandle cannot hide the worker path until the adapter owns the worker code. Otherwise Clay still has to route `linuxUser` queries to a separate code path in sdk-bridge.
-- **3c before 3d**: The iterator must go through QueryHandle before we can normalize events. If processQueryStream still reads `session.queryInstance._rawQuery`, normalizing events in the adapter has no effect.
-- **3d is gradual**: `{ yokeType, raw }` envelope lets processSDKMessage migrate one event type at a time without big-bang rewrite. Each event type is a small, testable change.
+- **3c before 3d**: The iterator must go through QueryHandle before we can flatten events. If processQueryStream still reads `session.queryInstance._rawQuery`, flattening events in the adapter has no effect.
+- **3d before 3e**: Flatten first (no behavior change), then move Claude-specific logic (behavior change). If something breaks after 3d, it is the flattening. If something breaks after 3e, it is the Claude assumption removal. Blast radius is isolated.
+- **3e before Phase 4**: YOKE must be runtime-neutral before open-source release. An adapter author hitting Claude assumptions on day one is a bad first impression.
 
 ### Dependency graph
 
@@ -28,7 +30,9 @@ Phase 3 is split into 4 sub-steps after review identified gaps in the initial im
 3a (done)
   '-- 3b (worker into adapter)
         '-- 3c (QueryHandle real abstraction)
-              '-- 3d (event normalization, gradual)
+              '-- 3d (event flattening, no behavior change)
+                    '-- 3e (Claude assumptions cleanup, ~25 lines behavior change)
+                          '-- Phase 4 (library extract + release)
 ```
 
 ---
@@ -107,7 +111,34 @@ Phase 2 designed 20 normalized event types. Step 3a does NOT normalize events. T
 
 **Problem**: Without normalization, swapping to a second adapter is impossible. processSDKMessage is hardcoded to Claude's event format (content_block_start, content_block_delta, etc.). This MUST be fixed in Phase 3.
 
-**Plan (Step 3d)**: Gradual migration via `{ yokeType, raw }` envelope. Adapter yields `{ yokeType: "text_delta", raw: originalSdkEvent }`. processSDKMessage reads `msg.raw` initially (zero behavior change), then migrates to normalized fields one event type at a time. Each migration is a small, testable diff.
+**Key insight (from processSDKMessage analysis)**: processSDKMessage is 568 lines, but 99% is Clay business logic (session state, UI messages, push notifications, rate limit handling). There is almost no "translation" code. The Claude-specific part is the **deeply nested if-conditions** that read the raw SDK event format:
+
+```js
+// Claude raw: 3-level nesting
+if (parsed.type === "stream_event" && parsed.event) {
+  if (parsed.event.type === "content_block_delta" && parsed.event.delta) {
+    if (parsed.event.delta.type === "text_delta") {
+      text = parsed.event.delta.text;
+    }
+  }
+}
+```
+
+The adapter's job is to **flatten** this into:
+```js
+{ yokeType: "text_delta", text: "hello" }
+```
+
+Then processSDKMessage becomes:
+```js
+if (msg.yokeType === "text_delta") {
+  text = msg.text;
+}
+```
+
+This is NOT a rewrite. It is **if-condition simplification**. The business logic (what happens with `text`) stays identical.
+
+**Plan (Step 3d)**: Adapter flattens raw SDK events into `{ yokeType, ...fields }`. processSDKMessage's if-conditions change from nested raw format checks to flat yokeType checks. Claude-specific logic (auth detection, fast_mode_state, block index) stays in processSDKMessage during 3d (zero behavior change), then moves to the adapter in Step 3e (~25 lines, bounded behavior change) before Phase 4 release.
 
 ### Worker process: Step 3b (remaining)
 
@@ -234,35 +265,107 @@ adapter.createQuery({
 
 **Worker QueryHandle:** The async iterator yields events from IPC. `sdk_event` messages become SDK event objects. `query_done` ends the iterator. `query_error` makes the iterator throw.
 
-### Step 3d: Event normalization (gradual)
+### Step 3d: Event flattening
 
-**Phase 1: Envelope.** Adapter wraps every event:
-```js
-{ yokeType: "text_delta", raw: originalSdkEvent }
-```
-processSDKMessage reads `msg.yokeType` for routing, `msg.raw` for data. Zero behavior change.
+Not a rewrite. The adapter flattens raw SDK events; processSDKMessage if-conditions simplify.
 
-**Phase 2: Migrate per event type.** One event at a time, processSDKMessage reads normalized fields instead of `msg.raw`:
+**What the adapter does** (inside claude.js, in the QueryHandle's async iterator):
+
 ```js
-// Before
-if (msg.raw.type === "stream_event" && msg.raw.event.delta.type === "text_delta") {
-  text = msg.raw.event.delta.text;
-}
-// After
-if (msg.yokeType === "text_delta") {
-  text = msg.text;   // normalized field
-}
+// Raw SDK event:
+// { type: "stream_event", event: { type: "content_block_delta", index: 0,
+//   delta: { type: "text_delta", text: "hello" } } }
+//
+// Adapter yields:
+// { yokeType: "text_delta", blockId: "block_0", text: "hello" }
 ```
 
-**Phase 3: Remove `raw`.** When all event types are migrated, `raw` field is dropped. processSDKMessage consumes only normalized events. Second adapter can now plug in.
+**Full flattening map** (Claude raw -> YOKE normalized):
+
+| Claude raw event path | yokeType | Extracted fields |
+|-----------------------|----------|-----------------|
+| `stream_event > content_block_start (text)` | `text_start` | `blockId` |
+| `stream_event > content_block_delta (text_delta)` | `text_delta` | `blockId`, `text` |
+| `stream_event > content_block_start (thinking)` | `thinking_start` | `blockId` |
+| `stream_event > content_block_delta (thinking_delta)` | `thinking_delta` | `blockId`, `text` |
+| `stream_event > content_block_stop` (thinking) | `thinking_stop` | `blockId` |
+| `stream_event > content_block_start (tool_use)` | `tool_start` | `blockId`, `toolId`, `toolName` |
+| `stream_event > content_block_delta (input_json_delta)` | `tool_input_delta` | `blockId`, `partialJson` |
+| `stream_event > content_block_stop` (tool_use) | `tool_executing` | `blockId` |
+| `stream_event > message_start` | `turn_start` | `inputTokens` (optional) |
+| `user > tool_result` | `tool_result` | `toolId`, `content`, `isError`, `images` |
+| `result` | `result` | `cost`, `duration`, `usage`, `sessionId`, `fastModeState` |
+| `system (init)` | `init` | `model`, `skills`, `slashCommands`, `fastModeState` |
+| `system (status)` | `status` | `status` |
+| `system (task_started)` | `task_started` | `parentToolId`, `taskId`, `description` |
+| `system (task_progress)` | `task_progress` | `parentToolId`, `taskId`, `usage`, `summary` |
+| `task_notification` | `task_notification` | `parentToolId`, `status`, `summary`, `usage` |
+| `tool_progress` | `subagent_activity` | `parentToolId`, `text` |
+| `assistant/user` with `parent_tool_use_id` | `subagent_message` | `parentToolId`, `content` |
+| `rate_limit_event` | `rate_limit` | `status`, `resetsAt`, `rateLimitType`, `utilization`, `isUsingOverage` |
+| `prompt_suggestion` | `prompt_suggestion` | `suggestion` |
+| any with `session_id` | (field on any event) | `sessionId` |
+| any with `uuid` | (field on any event) | `uuid`, `messageType` |
+
+**What changes in processSDKMessage**:
+- if-conditions flatten: `if (parsed.type === "stream_event" && parsed.event.type === "content_block_delta" && ...)` becomes `if (msg.yokeType === "text_delta")`
+- `session.blocks[idx]` changes to `session.blocks[msg.blockId]` (ID-based, not index-based)
+- Business logic stays identical
+
+**What stays in processSDKMessage during Step 3d** (extraction only, no behavior change):
+- Auth detection heuristic: stays as-is. Adapter passes the `result` event with enough data for the existing check to work.
+- fast_mode_state: stays as-is. Adapter includes `fastModeState` field on `init` and `result` events.
+- Block index tracking: stays as `session.blocks[idx]`. Adapter's flattened events include both `blockId` (new, for 3e) and `blockIndex` (current, for 3d compat).
+
+These items move to the adapter in Step 3e (see Section 5).
+
+### Step 3e: Claude assumption cleanup
+
+Prerequisite: Step 3d complete and verified stable.
+
+**Auth detection** (~20 lines):
+```js
+// 3d state: processSDKMessage still checks text pattern on result event
+// 3e target: Claude adapter detects the pattern and emits { yokeType: "auth_required" }
+//            processSDKMessage handles auth_required as a generic event
+```
+
+**fast_mode_state** (~5 lines):
+```js
+// 3d state: processSDKMessage reads fastModeState from init/result events
+// 3e target: Claude adapter emits { yokeType: "runtime_specific", vendor: "claude",
+//            eventType: "fast_mode_state", ... } per Phase 2 design
+//            processSDKMessage handles runtime_specific generically
+```
+
+**Block index tracking** (~10 lines):
+```js
+// 3d state: session.blocks[blockIndex], adapter provides both blockIndex and blockId
+// 3e target: session.blocks[blockId], blockIndex dropped from events
+//            Adapter assigns blockId = "block_" + index (Claude) or native ID (other runtimes)
+```
 
 ### Accepted deferrals (OK to leave for later)
 
 | Item | Deferred to | Rationale |
 |------|------------|-----------|
-| Remove deprecated `lib/sdk-worker.js` | After testing | Safety net for running workers. No functional impact. |
-| `createToolServer` inputSchema as JSON Schema instead of Zod | Phase 5 | Only matters when a non-Claude adapter needs tool registration. Zod works for now. |
-| Remove `adapter._loadSDK()` | After 3b/3c/3d | May be needed during transition. |
+| Remove deprecated `lib/sdk-worker.js` | After 3b | Safety net until worker code is fully moved into adapter. |
+| `createToolServer` inputSchema as JSON Schema instead of Zod | Post-release | Only matters when a non-Claude adapter needs tool registration. Zod works for Claude. |
+| Remove `adapter._loadSDK()` | After 3e | May be needed during transition. |
+
+### Claude-specific logic in processSDKMessage: Step 3e (after 3d is stable)
+
+Steps 3a through 3d follow the principle: **extraction only, no behavior change.** The following Claude assumptions stay in processSDKMessage through 3d, then move to the adapter in Step 3e.
+
+| Item | Lines | Claude assumption | Step 3e action |
+|------|-------|-------------------|----------------|
+| Auth detection heuristic | 348-389 | Checks response text for "not logged in" pattern | Adapter emits `{ yokeType: "auth_required" }` event. Each adapter detects auth failure its own way. processSDKMessage handles `auth_required` generically. |
+| fast_mode_state | 137-139, 370-372 | Anthropic billing concept, no equivalent elsewhere | Adapter includes as field on `init`/`result` events, or emits `runtime_specific`. processSDKMessage forwards if present. |
+| Block index tracking | 150-217 | `session.blocks[idx]` uses Claude's integer content block index | Adapter assigns `blockId` per block. processSDKMessage tracks `session.blocks[blockId]`. |
+
+**Why separate from 3d**: 3d is event flattening (zero behavior change). 3e is behavior change (~25 lines). If 3d breaks something, it is the flattening. If 3e breaks something, it is the Claude assumption removal. Isolating these into separate steps makes debugging trivial.
+
+**Why before Phase 4**: YOKE will be open-sourced after Phase 4. An adapter author hitting Claude-specific assumptions in processSDKMessage on day one is a bad first impression. These must be resolved before release.
 
 ---
 
@@ -330,3 +433,107 @@ warmup(linuxUser)
         |-- (linuxUser) adapter spawns warmup worker internally
         '-- (no linuxUser) adapter does in-process warmup
 ```
+
+---
+
+## 7. processSDKMessage Analysis
+
+568 lines analyzed. The code is 99% Clay business logic, not SDK format translation.
+
+### What processSDKMessage actually does
+
+| Line range | yokeType (after 3d) | What happens | Nature |
+|------------|---------------------|-------------|--------|
+| 76-93 | (all) | PERF timing logs | Clay infra |
+| 96-102 | (sessionId field) | Extract session_id, save to session | Clay state |
+| 104-113 | (uuid field) | Capture message UUIDs for rewind | Clay state |
+| 116-140 | `init` | Cache slash_commands, model, skills, broadcast | Clay state |
+| 142-148 | `turn_start` | Record input token count | Clay state |
+| 150-163 | `text_start`, `thinking_start`, `tool_start` | Track content blocks, send to client | Clay state + UI |
+| 165-183 | `text_delta`, `thinking_delta`, `tool_input_delta` | Stream text/input, accumulate preview | Clay state + UI |
+| 186-217 | `tool_executing`, `thinking_stop` | Parse tool input, send to client, push notification | Clay business + UI |
+| 219-303 | `tool_result`, `subagent_message` | Process tool results, sub-agent messages | Clay business + UI |
+| 305-411 | `result` | Cleanup, context usage, auth check, done signal, push notification | Clay business + UI |
+| 412-418 | `status` | Compacting indicator | Clay UI |
+| 420-476 | `task_started`, `task_progress`, `task_notification`, `subagent_activity` | Sub-agent lifecycle | Clay UI |
+| 478-533 | `rate_limit` | Rate limit handling, auto-continue scheduling | Clay business |
+| 535-539 | `prompt_suggestion` | Forward suggestion to client | Clay UI |
+| 541-556 | `error` (catch-all system) | Surface unhandled system errors | Clay UI |
+
+### Claude-specific code that moves to the adapter (~25 lines)
+
+**1. Auth detection heuristic (lines 348-389)**
+
+```js
+// CURRENT: Clay checks response text for "not logged in"
+var isLoginPrompt = isZeroCost && previewTrimmed.length < 100
+  && /not logged in/i.test(previewTrimmed) && /\/login/i.test(previewTrimmed);
+```
+
+Moves to adapter. When Claude adapter detects this pattern in the result event, it emits `{ yokeType: "auth_required", linuxUser: ... }` instead. processSDKMessage just handles `auth_required` as a generic event. Other adapters emit `auth_required` based on their own error patterns.
+
+**2. fast_mode_state (lines 137-139, 370-372)**
+
+```js
+if (parsed.fast_mode_state) {
+  sendAndRecord(session, { type: "fast_mode_state", state: parsed.fast_mode_state });
+}
+```
+
+Anthropic billing specific. Adapter includes it as a field in `init` and `result` events. processSDKMessage checks for the field and forwards if present. Or use `runtime_specific` passthrough per Phase 2 design.
+
+**3. Block index tracking (lines 150-217)**
+
+```js
+session.blocks[idx] = { type: "tool_use", id: block.id, ... };
+// ...
+var block = session.blocks[idx];
+```
+
+Claude SDK uses integer index for content blocks. The adapter maps these to stable `blockId` strings. processSDKMessage tracks `session.blocks[blockId]` instead of `session.blocks[idx]`. The mapping is trivial (adapter does `blockId = "block_" + evt.index`), but it removes the Claude-specific assumption that blocks are tracked by integer position.
+
+---
+
+## 8. Multi-runtime Compatibility Assessment
+
+Analysis of whether the flattened event model supports OpenCode/Codex integration.
+
+### Will work without changes (~90% of processSDKMessage)
+
+| Business logic | Why it works |
+|---------------|-------------|
+| Text streaming (`text_delta`) | Every LLM runtime streams text. Adapter produces `{ yokeType: "text_delta", text }`. |
+| Tool execution (`tool_start`, `tool_executing`, `tool_result`) | Tool use is universal. Adapters produce the same events. |
+| Query completion (`result`) | Every runtime signals completion. Cost/duration fields are nullable for runtimes that lack them. |
+| Rate limiting (`rate_limit`) | Most runtimes have rate limits. Fields like `resetsAt` are nullable. |
+| Session state (blocks, streamedText, responsePreview) | Driven by normalized events, not raw format. |
+| UI messages (sendAndRecord) | Consumes normalized fields only after Step 3d. |
+
+### Needs adapter mapping but no Clay changes
+
+| Feature | Claude | OpenCode/Codex | Adapter handles |
+|---------|--------|---------------|-----------------|
+| Thinking/reasoning | `thinking_start/delta/stop` | Different event name or absent | Adapter maps to same yokeType, or simply does not emit |
+| Sub-agents | `task_started/progress`, `task_notification` | May not exist | processSDKMessage code does not trigger if events never arrive |
+| Prompt suggestions | `prompt_suggestion` | Likely absent | Same: no event, no trigger |
+| Context compacting | `status: "compacting"` | May have equivalent | Adapter maps or does not emit |
+
+### Resolved in Step 3e (before Phase 4 release)
+
+These Claude assumptions are moved from processSDKMessage into the Claude adapter in Step 3e, before YOKE is open-sourced.
+
+| Item | Lines | Step 3e resolution |
+|------|-------|--------------------|
+| Auth detection | ~20 | Adapter emits `auth_required` event. processSDKMessage handles it generically. |
+| fast_mode_state | ~5 | Adapter emits `runtime_specific`. processSDKMessage forwards if present. |
+| Block index tracking | ~10 | Adapter assigns `blockId`. processSDKMessage tracks by ID. |
+
+After 3e, processSDKMessage has zero Claude-specific format assumptions. A second adapter author will not hit any walls.
+
+### Does NOT need changes
+
+| Concern | Why |
+|---------|-----|
+| "processSDKMessage is 568 lines of battle-tested code" | 99% is Clay business logic that stays. Only if-conditions change (nested -> flat). Logic stays identical. |
+| "Rewriting processSDKMessage is risky" | Not a rewrite. The adapter flattens events; processSDKMessage simplifies its conditions. Each yokeType change is a small, isolated diff. |
+| "Second adapter will break processSDKMessage" | processSDKMessage reads yokeType + flat fields. Any adapter that produces the same yokeType events will work. Runtime-specific events use `runtime_specific` passthrough. |
