@@ -56,6 +56,8 @@ Wires all modules, sets up session manager and SDK bridge, dispatches messages.
 | `users-auth.js` | Authentication, PIN hashing, auth tokens, multi-user mode, setup codes |
 | `users-permissions.js` | RBAC permissions, project/session access control |
 | `users-preferences.js` | DM favorites/hidden, auto-continue, chat layout, deleted builtin keys, mate onboarding |
+| `daemon-projects.js` | Worktree tracking (scan, rescan, cleanup), removed project filtering |
+| `ws-schema.js` | WebSocket message type registry (328 message types, informational) |
 
 ### Server Modules (lib/server-*.js)
 

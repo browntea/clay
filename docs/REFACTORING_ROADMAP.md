@@ -72,8 +72,8 @@
 | PR-52 | done | Extract `users-permissions.js` from `users.js` | 2026-04-11 |
 | PR-53 | done | Extract `users-preferences.js` from `users.js` | 2026-04-11 |
 | PR-54 | done | Reduce `users.js` to CRUD + invites | 2026-04-11 |
-| PR-55 | **next** | Extract `daemon-projects.js` from `daemon.js` | |
-| PR-56 | pending | Define `ws-schema.js` | |
+| PR-55 | done | Extract `daemon-projects.js` from `daemon.js` | 2026-04-11 |
+| PR-56 | done | Define `ws-schema.js` | 2026-04-11 |
 
 ### Current file sizes after completed PRs
 
@@ -87,7 +87,7 @@
 | `lib/sdk-bridge.js` | 2,232 | 1,892 | ~800 |
 | `lib/mates.js` | 1,318 | 747 | ~500 |
 | `lib/users.js` | 791 | 479 | ~300 |
-| `lib/daemon.js` | 1,490 | 1,503 | ~1,100 |
+| `lib/daemon.js` | 1,490 | 1,390 | ~1,100 |
 
 > Updated 2026-04-11. Files grew due to feature additions (OS user mode, chat layout, push notifications, sender attribution, worker lifecycle improvements). Refactoring scope increased accordingly.
 
@@ -1212,9 +1212,9 @@ module.exports = { schema }
 | PR-53 | done | `lib/users-preferences.js` | users.js | 210 |
 | PR-54 | done | (cleanup) | users.js | 0 (reduced to 479) |
 | **Phase 9: daemon.js** | | | | |
-| PR-55 | pending | `lib/daemon-projects.js` | daemon.js | ~200 |
+| PR-55 | done | `lib/daemon-projects.js` | daemon.js | 164 |
 | **Phase 10: ws-schema** | | | | |
-| PR-56 | pending | `lib/ws-schema.js` | (new) | ~300 |
+| PR-56 | done | `lib/ws-schema.js` | (new) | 498 |
 
 **Total: 56 PRs, ~41 new files created.**
 
