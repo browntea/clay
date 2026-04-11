@@ -80,6 +80,10 @@ Phase 2 classification is the make-or-break moment. The rule: **if you can imagi
 
 Ask "would Codex/Gemini/Copilot need this?" for every interface method. If the answer is "probably not," the method is a Clay concern disguised as an interface concern.
 
+### Multi-runtime feature strategy
+
+When a feature exists in one runtime but not another, the answer is NOT always "hide it." See [DEVELOPER_GUIDE.md](./DEVELOPER_GUIDE.md) for the 4 strategies: MAP (adapter maps equivalent APIs), POLYFILL (Clay implements at a higher level), DEGRADE (reduced UX), HIDE (last resort). Adapters declare capabilities via `init()`, and Clay adapts its UI accordingly.
+
 ---
 
 ## Phase 1: SDK Call Audit (scan)
@@ -137,7 +141,39 @@ Output as a markdown table. Do NOT modify any code. Append results to this file 
 
 After classification, the INTERFACE items define YOKE's contract. Update the Phase 1 table with an INTERFACE/CLAY column.
 
-**Status**: Not started
+**Status**: Complete (2026-04-11). See [PHASE2_CLASSIFICATION.md](./PHASE2_CLASSIFICATION.md).
+
+### Phase 2 Results Summary
+
+Full classification in [PHASE2_CLASSIFICATION.md](./PHASE2_CLASSIFICATION.md). Revised after Arch/아키 review (9 changes applied).
+
+**Three-way classification applied**: INTERFACE (crosses YOKE boundary), ADAPTER (runtime-specific, hidden inside adapter), CLAY (Clay's own concern, never touches YOKE).
+
+**YOKE interface surface: 11 methods across 3 concerns**:
+- Adapter lifecycle: `init()`, `supportedModels()`
+- Query lifecycle: `createQuery()`, `pushMessage()`, `setModel()`, `setEffort()`, `setToolPolicy()`, `stopTask()`, `getContextUsage()`, `abort()`, `close()`
+- Tool server: `createToolServer()`
+
+**Critical design decisions**:
+
+1. **Permission model**: `setPermissionMode()` is ADAPTER-internal. YOKE uses `canUseTool` callback (universal) + `setToolPolicy("ask" | "allow-all")` (2 values only). Claude's intermediate policies ("acceptEdits") handled via `canUseTool` callback + `adapterOptions.CLAUDE.permissionMode`.
+
+2. **Event normalization**: YOKE normalizes runtime-specific events into 20 stable event types. Includes `runtime_specific` passthrough for unmapped events. `message_start` renamed to `turn_start` (signal only, no usage payload). Usage data flows through `getContextUsage()` single path.
+
+3. **Session model**: YOKE does NOT manage sessions. It manages queries. Session state is Clay's concern. `resumeSessionId` is an opaque string the adapter maps to its runtime's persistence mechanism.
+
+4. **MCP tool servers**: `createToolServer()` accepts runtime-agnostic tool definitions (name, schema, handler). Claude adapter wraps via `createSdkMcpServer()` + `sdk.tool()`. MCP server files (browser-mcp-server.js, debate-mcp-server.js) must stop importing SDK directly.
+
+5. **Worker process**: Adapter-internal. Clay calls `createQuery()` and doesn't know whether the adapter runs in-process or in a worker.
+
+6. **adapterOptions with vendor namespace**: `adapterOptions[adapter.vendor].{option}` passthrough ensures Clay never loses access to runtime-specific features (thinking, betas, promptSuggestions, resumeSessionAt, etc.). Vendor namespace is explicit and collision-free. No central vendor enum; each adapter self-identifies via `adapter.vendor`. Features in adapterOptions are candidates for promotion to YOKE standard when a second adapter needs the same concept (see DEVELOPER_GUIDE.md).
+
+7. **Lifecycle sequence**: Strict order enforced: `init()` -> `createToolServer()` -> `createQuery()`. Documented in Section 10.4.
+
+**High-risk items for Phase 5 validation**:
+- `systemPrompt` for main sessions (Claude auto-reads CLAUDE.md, other runtimes may not)
+- `onElicitation` (optional, kept in interface because same pattern as `canUseTool`)
+- Event normalization (mitigated by `runtime_specific` passthrough)
 
 ---
 
@@ -240,6 +276,12 @@ Record agent hand-offs here. Each entry: date, agent/mate, what was done, what's
 |------|-------|------|------|
 | 2026-04-11 | Claude | Phase 1 SDK Audit complete. 5 import sites, 6 query() calls, 22 query options, 18 IPC message types mapped. | Phase 1 arch review feedback applied. Ready for Phase 2. |
 | 2026-04-11 | Arch (review) | Flagged 3 issues: MCP require() inconsistency, Section 4 pre-classification bias, CLAUDE.md sub-classification needed. | 2 of 3 applied to audit doc. Section 4 bias noted for Phase 2 start. |
+| 2026-04-11 | Claude | Phase 2 Classification initial draft. 3-way classification, 11 interface methods. | Sent to Arch/아키 review. |
+| 2026-04-11 | Arch + 아키 | Review: 4 issues each. Key: supportedModels() call order, setToolPolicy value count, event extensibility, lifecycle diagram. | 9 changes identified. |
+| 2026-04-11 | Chad | Raised practical concern: abstraction must not kill Clay's Claude-specific features. Led to adapterOptions.VENDOR namespace design. | adapterOptions added. setToolPolicy kept at 3 values initially, then reduced to 2 with adapterOptions covering intermediate policies. |
+| 2026-04-11 | Claude | Phase 2 revised: all 9 changes applied. adapterOptions.CLAUDE passthrough, vendor constants, lifecycle diagram, turn_start event, runtime_specific event, supportedModels moved to adapter level. | Final CLAY review requested. |
+| 2026-04-11 | Claude | Final CLAY classification review: found 3 missing data flows (message_uuid, early session_id, fast_mode_state) that reach UI but weren't documented. Added as runtime_specific passthrough examples. Total changes: 10. | Phase 2 classification done. |
+| 2026-04-11 | Claude | DEVELOPER_GUIDE.md created. 4 strategies (MAP/POLYFILL/DEGRADE/HIDE), capability-based UI, adapterOptions usage rules, user-supplied polyfill registry pattern. init() capabilities added to Phase 2 interface. | Phase 2 fully complete. Ready for Phase 3. |
 
 ---
 
