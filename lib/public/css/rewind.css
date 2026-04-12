@@ -409,10 +409,10 @@
 .ask-user-other {
   display: flex;
   gap: 8px;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.ask-user-other input {
+.ask-user-other textarea {
   flex: 1;
   background: var(--input-bg);
   border: 1px solid var(--border);
@@ -423,10 +423,14 @@
   padding: 10px 14px;
   outline: none;
   transition: border-color 0.2s;
+  resize: none;
+  overflow: hidden;
+  min-height: 40px;
+  line-height: 1.4;
 }
 
-.ask-user-other input:focus { border-color: var(--text-dimmer); }
-.ask-user-other input::placeholder { color: var(--text-muted); }
+.ask-user-other textarea:focus { border-color: var(--text-dimmer); }
+.ask-user-other textarea::placeholder { color: var(--text-muted); }
 
 .ask-user-submit {
   background: var(--accent);
@@ -467,7 +471,7 @@
 
 .ask-user-container.answered .ask-user-option { cursor: default; opacity: 0.5; }
 .ask-user-container.answered .ask-user-option.selected { opacity: 1; }
-.ask-user-container.answered .ask-user-other input { opacity: 0.5; pointer-events: none; }
+.ask-user-container.answered .ask-user-other textarea { opacity: 0.5; pointer-events: none; }
 .ask-user-container.answered .ask-user-submit { display: none; }
 
 /* Answer summary (shown after answering and during replay) */
