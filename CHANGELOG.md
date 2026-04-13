@@ -1,3 +1,10 @@
+# [2.27.0-beta.16](https://github.com/chadbyte/clay/compare/v2.27.0-beta.15...v2.27.0-beta.16) (2026-04-13)
+
+
+### Bug Fixes
+
+* **mobile:** add import session button to mobile chat sheet ([406f40d](https://github.com/chadbyte/clay/commit/406f40dfd87c2398c1bcdaf9480c1bff6f2dd081)), closes [#312](https://github.com/chadbyte/clay/issues/312)
+
 # [2.27.0-beta.15](https://github.com/chadbyte/clay/compare/v2.27.0-beta.14...v2.27.0-beta.15) (2026-04-12)
 
 
