@@ -32,6 +32,7 @@ Wires all modules, sets up session manager and SDK bridge, dispatches messages.
 | `project-filesystem.js` | `fs_list`, `fs_read`, `fs_write`, `fs_watch`, `fs_unwatch`, `fs_file_history`, `fs_git_diff`, `fs_file_at`, `get_project_env`, `set_project_env`, `read_global_claude_md`, `write_global_claude_md`, `get_shared_env`, `set_shared_env` | File browser, file history, project env/settings |
 | `project-user-message.js` | `message`, `note_*`, `term_*`, `context_sources_save`, `browser_tab_list`, `extension_result`, `loop_*` (delegation), `schedule_*`, `send_scheduled_now`, `cancel_scheduled_message` | User message dispatch, sticky notes, terminals, context sources, browser extension |
 | `project-loop.js` | `loop_start`, `loop_stop`, `ralph_wizard_complete`, `ralph_wizard_cancel`, `ralph_cancel_crafting`, `ralph_preview_files`, `loop_registry_*`, `schedule_create`, `hub_schedules_list`, `delete_loop_group` | Loop/Ralph engine, loop registry, scheduling |
+| `project-notifications.js` | `notification_mark_read`, `notification_mark_all_read`, `notification_delete`, `notification_clear_all` | Notification center persistence and CRUD |
 | `project-debate.js` | (called from project.js) `debate_start`, `debate_stop`, `debate_comment`, `debate_conclude_response`, `debate_confirm_brief`, `debate_hand_raise`, `debate_user_floor_response` | Multi-agent debate engine |
 | `project-mate-interaction.js` | (called from project.js) `mention`, `mention_stop` | @mention handling, DM digests |
 | `project-memory.js` | `memory_list`, `memory_search`, `memory_delete` | Session digest memory |
@@ -111,6 +112,7 @@ Bootstraps UI, wires modules, dispatches WebSocket messages via `processMessage`
 | `app-panels.js` | Config chip (model/mode/effort/thinking/beta), usage panel, status panel, context panel, context popover |
 | `app-loop-ui.js` | Ralph Loop UI: bars, banners, preview modal, execution modal |
 | `app-loop-wizard.js` | Ralph Loop wizard: step navigation, mode/authorship selection, data collection |
+| `app-notifications.js` | Notification center panel, badge, rendering, click-to-navigate |
 | `app-debate-ui.js` | Debate sticky banner, floor/conclude/ended modes, bottom bar, hand raise |
 | `app-skills-install.js` | Skill install dialog, requireSkills, requireClayMateInterview |
 | `app-favicon.js` | Dynamic favicon, IO blink, urgent blink, send button mode, activity indicator |
