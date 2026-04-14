@@ -122,6 +122,12 @@
   transition: color 0.15s;
 }
 
+.rewind-timeline-marker .marker-date {
+  font-size: 10px;
+  color: var(--text-dimmer);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
 .rewind-timeline-marker .marker-text {
   font-size: 11px;
   color: var(--text-muted);
