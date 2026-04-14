@@ -201,12 +201,26 @@
   gap: 2px;
 }
 
+.cmd-palette-item-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .cmd-palette-item-title {
   font-size: 13px;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.cmd-palette-item-date {
+  font-size: 11px;
+  color: var(--text-dimmer);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .cmd-palette-item-meta {
