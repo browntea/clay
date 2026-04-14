@@ -1,3 +1,10 @@
+# [2.27.0-beta.18](https://github.com/chadbyte/clay/compare/v2.27.0-beta.17...v2.27.0-beta.18) (2026-04-14)
+
+
+### Performance Improvements
+
+* **ui:** skip redundant re-renders of mate icon strip and presence bars ([dd0cd2f](https://github.com/chadbyte/clay/commit/dd0cd2f2cab5517098f9b5cb70835dadbda410e7))
+
 # [2.27.0-beta.17](https://github.com/chadbyte/clay/compare/v2.27.0-beta.16...v2.27.0-beta.17) (2026-04-14)
 
 
