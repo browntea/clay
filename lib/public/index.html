@@ -1937,25 +1937,28 @@
       <div class="sched-create-task-list hidden" id="sched-create-task-list"></div>
     </div>
   </div>
-  <!-- Description -->
+  <!-- Run mode (below task) -->
   <div class="sched-create-row">
+    <div class="sched-create-run-mode">
+      <button type="button" class="sched-run-mode-btn active" data-mode="single" title="Run once without iteration"><i data-lucide="play"></i> Single run</button>
+      <button type="button" class="sched-run-mode-btn" data-mode="multi" title="Run multiple iterations with a judge reviewing each round"><i data-lucide="repeat"></i> Multi-round</button>
+      <label class="sched-create-iter-label hidden" id="sched-create-iter-group">
+        <input type="number" id="sched-create-iterations" min="2" max="100" value="3" class="sched-create-iter-input">
+        <span class="sched-create-iter-hint">rounds</span>
+      </label>
+    </div>
+  </div>
+  <!-- Description (hidden by default, shown only when editing a record that has one) -->
+  <div class="sched-create-row hidden" id="sched-create-desc-row">
     <i data-lucide="align-left" class="sched-create-row-icon"></i>
     <textarea class="sched-create-row-textarea" id="sched-create-desc" rows="3" placeholder="Description"></textarea>
   </div>
   <!-- Bottom bar -->
   <div class="sched-create-bottom">
     <div class="sched-create-bottom-left">
-      <div class="sched-create-run-mode">
-        <button type="button" class="sched-run-mode-btn active" data-mode="single" title="Run once without iteration"><i data-lucide="play"></i> Single run</button>
-        <button type="button" class="sched-run-mode-btn" data-mode="multi" title="Run multiple iterations with a judge reviewing each round"><i data-lucide="repeat"></i> Multi-round</button>
-        <label class="sched-create-iter-label hidden" id="sched-create-iter-group">
-          <input type="number" id="sched-create-iterations" min="2" max="100" value="3" class="sched-create-iter-input">
-          <span class="sched-create-iter-hint">rounds</span>
-        </label>
-      </div>
+      <button class="sched-create-delete-btn hidden" id="sched-create-delete" title="Delete"><i data-lucide="trash-2"></i></button>
     </div>
     <div class="sched-create-bottom-right">
-      <button class="sched-create-delete-btn hidden" id="sched-create-delete" title="Delete"><i data-lucide="trash-2"></i></button>
       <button class="sched-create-save-btn" id="sched-create-submit">Save</button>
     </div>
   </div>
