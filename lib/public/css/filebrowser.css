@@ -306,6 +306,96 @@
   width: 14px;
   height: 14px;
 }
+.mcp-install-cmd-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  max-width: 100%;
+}
+.mcp-install-cmd {
+  flex: 1;
+  padding: 8px 10px;
+  background: var(--bg-deep, rgba(0,0,0,0.25));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+  font-size: 12px;
+  color: var(--text);
+  overflow-x: auto;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.mcp-install-copy-btn {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  background: var(--bg-hover, rgba(255,255,255,0.06));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mcp-install-copy-btn:hover {
+  background: var(--bg-active, rgba(255,255,255,0.1));
+}
+.mcp-install-copy-btn .lucide {
+  width: 14px;
+  height: 14px;
+}
+.mcp-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mcp-step {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  transition: opacity 0.15s;
+}
+.mcp-step.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.mcp-step-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  color: var(--text-muted);
+}
+.mcp-step-icon.done {
+  color: var(--green, #2ecc71);
+}
+.mcp-step-icon .lucide {
+  width: 20px;
+  height: 20px;
+}
+.mcp-step-body {
+  flex: 1;
+  min-width: 0;
+}
+.mcp-step-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.mcp-step-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.mcp-step.done .mcp-step-desc {
+  color: var(--green, #2ecc71);
+}
+.mcp-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
 .mcp-server-row {
   display: flex;
   align-items: center;
