@@ -228,6 +228,7 @@
 }
 
 /* MCP Servers Modal */
+#mcp-modal.hidden { display: none; }
 .mcp-dialog {
   width: 480px;
   max-height: 70vh;
