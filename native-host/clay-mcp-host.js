@@ -531,3 +531,15 @@ function shutdown() {
 
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
+
+// ---------- Auto-start servers from config ----------
+
+(function autoStart() {
+  var result = getAllServers();
+  var servers = result.servers || [];
+  for (var i = 0; i < servers.length; i++) {
+    if (servers[i].transport === "stdio" && servers[i].command) {
+      spawnServer(servers[i].name);
+    }
+  }
+})();
