@@ -592,6 +592,9 @@
               <option value="instructions">Instructions</option>
               <option value="environment">Environment</option>
             </optgroup>
+            <optgroup label="Tools">
+              <option value="mcp-servers">MCP Servers</option>
+            </optgroup>
           </select>
           <div class="server-settings-nav-items">
             <div class="settings-nav-category">General</div>
@@ -601,6 +604,9 @@
             <div class="settings-nav-category">Config</div>
             <button class="settings-nav-item" data-section="instructions"><span>Instructions</span></button>
             <button class="settings-nav-item" data-section="environment"><span>Environment</span></button>
+            <div class="settings-nav-separator"></div>
+            <div class="settings-nav-category">Tools</div>
+            <button class="settings-nav-item" data-section="mcp-servers"><span>MCP Servers</span></button>
           </div>
         </div>
       </div>
@@ -744,6 +750,14 @@
               <div class="ps-env-list" id="ps-shared-env-list">
                 <!-- rows rendered by JS -->
               </div>
+            </div>
+          </div>
+          <!-- MCP Servers -->
+          <div class="ps-section" data-section="mcp-servers">
+            <h2>MCP Servers</h2>
+            <p class="ps-section-desc">Local MCP servers connected via Chrome Extension. Toggle which servers this project can access.</p>
+            <div class="settings-card" id="mcp-servers-list">
+              <p class="mcp-no-servers">No MCP servers detected. Configure in Clay Chrome Extension.</p>
             </div>
           </div>
         </div>

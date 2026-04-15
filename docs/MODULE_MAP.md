@@ -36,6 +36,7 @@ Wires all modules, sets up session manager and SDK bridge, dispatches messages.
 | `project-debate.js` | (called from project.js) `debate_start`, `debate_stop`, `debate_comment`, `debate_conclude_response`, `debate_confirm_brief`, `debate_hand_raise`, `debate_user_floor_response` | Multi-agent debate engine |
 | `project-mate-interaction.js` | (called from project.js) `mention`, `mention_stop` | @mention handling, DM digests |
 | `project-memory.js` | `memory_list`, `memory_search`, `memory_delete` | Session digest memory |
+| `project-mcp.js` | `mcp_servers_available`, `mcp_tool_result`, `mcp_tool_error`, `mcp_toggle_server` | Remote MCP server bridge via Chrome Extension |
 
 ### Infrastructure Modules
 

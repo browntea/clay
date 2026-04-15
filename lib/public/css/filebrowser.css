@@ -227,6 +227,47 @@
   margin: -8px 0 20px;
 }
 
+/* MCP Servers */
+.mcp-no-servers {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 8px 0;
+}
+.mcp-server-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 14px;
+}
+.mcp-server-row:last-child { border-bottom: none; }
+.mcp-server-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  cursor: pointer;
+}
+.mcp-server-name {
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+.mcp-server-tools {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.mcp-server-transport {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-dim);
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* Beta toggle row inside settings card */
 .ps-beta-toggle-row,
 .ss-beta-toggle-row {
