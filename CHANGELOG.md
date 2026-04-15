@@ -1,3 +1,10 @@
+## [2.29.2-beta.1](https://github.com/chadbyte/clay/compare/v2.29.1...v2.29.2-beta.1) (2026-04-15)
+
+
+### Bug Fixes
+
+* **clone:** set user HOME env and pre-create target directory for multi-user clone ([d3a9cdd](https://github.com/chadbyte/clay/commit/d3a9cddfe96d4c25ebab402cea751a0b00841095))
+
 ## [2.29.1](https://github.com/chadbyte/clay/compare/v2.29.0...v2.29.1) (2026-04-15)
 
 
