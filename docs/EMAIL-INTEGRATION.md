@@ -276,8 +276,10 @@ Email accounts appear in the Context Sources picker alongside Browser Tabs and T
 └── EMAIL ACCOUNTS
     ☑ chad@gmail.com (5 unread)
     ☐ chad@company.com (12 unread)
-    + Add email account
+    Manage in User Settings
 ```
+
+Context Sources only controls check/uncheck (which accounts the Mate can access). Account management (add/remove/edit) lives in User Settings.
 
 **Behavior when checked**:
 - On each user message, Mate receives a summary of recent unread emails from checked accounts
@@ -296,15 +298,35 @@ Email accounts appear in the Context Sources picker alongside Browser Tabs and T
 3. ...
 ```
 
-### "Add email account" flow
+### Account Management in User Settings
 
-Clicking "+ Add email account" in Context Sources opens an inline form or modal:
+Email account CRUD lives in User Settings, not Context Sources.
+
+```
+User Settings
+├── Profile
+├── Theme
+├── Email Accounts
+│   ┌────────────────────────────────────────┐
+│   │ chad@gmail.com              [Remove]   │
+│   │ Gmail . Connected                      │
+│   ├────────────────────────────────────────┤
+│   │ chad@company.com            [Remove]   │
+│   │ Custom . Connected                     │
+│   └────────────────────────────────────────┘
+│   [+ Add Account]
+└── ...
+```
+
+**Add account flow** (in User Settings):
 
 1. Select provider: Gmail / Outlook / Yahoo / Custom
 2. Enter email address
 3. Enter App Password (with link to provider's app password guide)
 4. Test connection (IMAP + SMTP)
 5. Save
+
+**Context Sources** only shows the accounts with check/uncheck toggles and a "Manage in User Settings" link for adding/removing.
 
 ---
 
@@ -376,10 +398,12 @@ Each provider preset shows a help link:
 - Reuse existing nodemailer infrastructure
 - Per-account SMTP transport management
 
-**PR-E3: Send UI + Account setup**
-- Email section in Context Sources picker
+**PR-E3: Account setup UI + Context Sources**
+- Email Accounts section in User Settings (add/remove/test)
 - Account setup form (provider, email, app password)
 - Test connection button with status feedback
+- Email section in Context Sources picker (check/uncheck only)
+- "Manage in User Settings" link from Context Sources
 
 ### Phase 2: Read + Context (3 PRs)
 
@@ -419,7 +443,7 @@ Each provider preset shows a help link:
 |----|-------|-------------|-----------|----------------|
 | E1 | Account | Email account storage + test | `email-accounts.js` | `server.js` |
 | E2 | Account | SMTP sending tool | `project-email.js` | `project.js`, `sdk-bridge.js` |
-| E3 | Account | Setup UI | `context-email.js` | `context-sources.js` |
+| E3 | Account | Setup UI (User Settings + Context Sources) | `context-email.js` | `context-sources.js`, user settings UI |
 | E4 | Read | IMAP reading tools | none | `project-email.js` |
 | E5 | Read | Search + reply tools | none | `project-email.js` |
 | E6 | Read | Context source integration | none | `context-sources.js`, `project-user-message.js` |
