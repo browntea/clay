@@ -308,23 +308,179 @@ function getStatus() {
   return result;
 }
 
+// ---------- Clay Config Management (~/.clay/mcp.json) ----------
+
+var CLAY_CONFIG_PATH = path.join(os.homedir(), ".clay", "mcp.json");
+
+function ensureClayConfig() {
+  var dir = path.dirname(CLAY_CONFIG_PATH);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  if (!fs.existsSync(CLAY_CONFIG_PATH)) {
+    fs.writeFileSync(CLAY_CONFIG_PATH, JSON.stringify({ mcpServers: {}, include: [] }, null, 2));
+  }
+}
+
+function readClayConfig() {
+  ensureClayConfig();
+  try {
+    return JSON.parse(fs.readFileSync(CLAY_CONFIG_PATH, "utf8"));
+  } catch (e) {
+    return { mcpServers: {}, include: [] };
+  }
+}
+
+function writeClayConfig(config) {
+  ensureClayConfig();
+  fs.writeFileSync(CLAY_CONFIG_PATH, JSON.stringify(config, null, 2));
+}
+
+function addServer(name, command, args, env) {
+  var config = readClayConfig();
+  config.mcpServers = config.mcpServers || {};
+  config.mcpServers[name] = { command: command, args: args || [], env: env || {} };
+  writeClayConfig(config);
+  // Also update in-memory cache
+  _configCache = _configCache || {};
+  _configCache[name] = config.mcpServers[name];
+  return { ok: true };
+}
+
+function removeServer(name) {
+  var config = readClayConfig();
+  if (config.mcpServers && config.mcpServers[name]) {
+    delete config.mcpServers[name];
+    writeClayConfig(config);
+  }
+  // Kill if running
+  if (_processes[name]) killServer(name);
+  if (_configCache) delete _configCache[name];
+  return { ok: true };
+}
+
+function getAllServers() {
+  var config = readClayConfig();
+  var merged = Object.assign({}, config.mcpServers || {});
+
+  // Merge included configs
+  var includes = config.include || [];
+  for (var i = 0; i < includes.length; i++) {
+    var resolved = includes[i].replace(/^~/, os.homedir());
+    try {
+      var ext = JSON.parse(fs.readFileSync(resolved, "utf8"));
+      var extServers = ext.mcpServers || {};
+      var names = Object.keys(extServers);
+      for (var j = 0; j < names.length; j++) {
+        if (!merged[names[j]]) merged[names[j]] = extServers[names[j]];
+      }
+    } catch (e) {
+      // Skip unreadable files
+    }
+  }
+
+  // Update cache
+  _configCache = merged;
+
+  var servers = [];
+  var allNames = Object.keys(merged);
+  for (var k = 0; k < allNames.length; k++) {
+    var n = allNames[k];
+    var cfg = merged[n];
+    servers.push({
+      name: n,
+      transport: cfg.url ? "http" : "stdio",
+      command: cfg.command || null,
+      url: cfg.url || null,
+      running: !!(_processes[n] && _processes[n].ready)
+    });
+  }
+  return { servers: servers };
+}
+
+function importConfig(filePath) {
+  var resolved = filePath.replace(/^~/, os.homedir());
+  try {
+    var ext = JSON.parse(fs.readFileSync(resolved, "utf8"));
+    var count = Object.keys(ext.mcpServers || {}).length;
+    if (count === 0) return { error: "No mcpServers found in " + filePath };
+
+    var config = readClayConfig();
+    config.include = config.include || [];
+    if (config.include.indexOf(filePath) === -1) {
+      config.include.push(filePath);
+      writeClayConfig(config);
+    }
+    return { ok: true, count: count };
+  } catch (e) {
+    return { error: "Cannot read file: " + e.message };
+  }
+}
+
+function getImports() {
+  var config = readClayConfig();
+  return { paths: config.include || [] };
+}
+
+function removeImport(filePath) {
+  var config = readClayConfig();
+  config.include = (config.include || []).filter(function (p) { return p !== filePath; });
+  writeClayConfig(config);
+  return { ok: true };
+}
+
 // ---------- Message Router ----------
 
 function handleMessage(msg) {
   switch (msg.type) {
-    case "read_config":
-      var configResult = readConfig(msg.path);
-      sendMessage({ type: "config_result", requestId: msg.requestId, data: configResult });
+    case "ping":
+      sendMessage({ callId: msg.callId, type: "pong" });
       break;
 
+    // Config management
+    case "add_server":
+      var addResult = addServer(msg.name, msg.command, msg.args, msg.env);
+      sendMessage({ callId: msg.callId, ok: addResult.ok, error: addResult.error });
+      break;
+
+    case "remove_server":
+      var removeResult = removeServer(msg.name);
+      sendMessage({ callId: msg.callId, ok: removeResult.ok, error: removeResult.error });
+      break;
+
+    case "get_servers":
+      var serversResult = getAllServers();
+      sendMessage({ callId: msg.callId, servers: serversResult.servers });
+      break;
+
+    case "import_config":
+      var importResult = importConfig(msg.path);
+      sendMessage({ callId: msg.callId, ok: importResult.ok, count: importResult.count, error: importResult.error });
+      break;
+
+    case "get_imports":
+      var importsResult = getImports();
+      sendMessage({ callId: msg.callId, paths: importsResult.paths });
+      break;
+
+    case "remove_import":
+      var removeImpResult = removeImport(msg.path);
+      sendMessage({ callId: msg.callId, ok: removeImpResult.ok });
+      break;
+
+    // Legacy: read external config directly
+    case "read_config":
+      var configResult = readConfig(msg.path);
+      sendMessage({ type: "config_result", callId: msg.callId, data: configResult });
+      break;
+
+    // Process management
     case "spawn_server":
       var spawnResult = spawnServer(msg.name);
-      sendMessage({ type: "spawn_result", requestId: msg.requestId, server: msg.name, data: spawnResult });
+      sendMessage({ type: "spawn_result", callId: msg.callId, server: msg.name, data: spawnResult });
       break;
 
     case "kill_server":
       var killResult = killServer(msg.name);
-      sendMessage({ type: "kill_result", requestId: msg.requestId, server: msg.name, data: killResult });
+      sendMessage({ type: "kill_result", callId: msg.callId, server: msg.name, data: killResult });
       break;
 
     case "mcp_request":
@@ -332,15 +488,11 @@ function handleMessage(msg) {
       break;
 
     case "status":
-      sendMessage({ type: "status_result", requestId: msg.requestId, servers: getStatus() });
-      break;
-
-    case "ping":
-      sendMessage({ type: "pong" });
+      sendMessage({ type: "status_result", callId: msg.callId, servers: getStatus() });
       break;
 
     default:
-      sendMessage({ type: "error", error: "Unknown message type: " + msg.type });
+      sendMessage({ callId: msg.callId, error: "Unknown message type: " + msg.type });
   }
 }
 
