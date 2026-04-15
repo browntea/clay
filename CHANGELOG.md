@@ -1,3 +1,19 @@
+# [2.28.0-beta.1](https://github.com/chadbyte/clay/compare/v2.27.1...v2.28.0-beta.1) (2026-04-15)
+
+
+### Bug Fixes
+
+* **mates:** support single-user mode by synthesizing default userId ([66d3759](https://github.com/chadbyte/clay/commit/66d37596fede13f914ce616bca6e88e2c78a75be)), closes [#315](https://github.com/chadbyte/clay/issues/315)
+* **scheduler:** queue deferred triggers instead of dropping them ([a383926](https://github.com/chadbyte/clay/commit/a38392673b871d63d2649858badaed8db6f64029)), closes [#254](https://github.com/chadbyte/clay/issues/254)
+
+
+### Features
+
+* **loop:** add Model tab to preview modal for pre-launch settings ([81089d8](https://github.com/chadbyte/clay/commit/81089d8229a0592e32597d190c120dfaae02cd66))
+* **loop:** support per-loop SDK settings overrides via LOOP.json ([159196a](https://github.com/chadbyte/clay/commit/159196a4cd6aa4356a46db51a9026a2687161a0a)), closes [#248](https://github.com/chadbyte/clay/issues/248)
+* **loop:** unlock coder session for interaction after loop finishes ([184a7a3](https://github.com/chadbyte/clay/commit/184a7a3fe8e8f3febffcad24a4ed33f0838d584c)), closes [#314](https://github.com/chadbyte/clay/issues/314)
+* **scheduler:** add inline editing for PROMPT.md and JUDGE.md ([261a955](https://github.com/chadbyte/clay/commit/261a955cb165cedb4cf8d864efa98f1f6ea47a4e)), closes [#313](https://github.com/chadbyte/clay/issues/313)
+
 ## [2.27.1](https://github.com/chadbyte/clay/compare/v2.27.0...v2.27.1) (2026-04-14)
 
 
