@@ -191,6 +191,7 @@
             <button id="file-browser-btn"><i data-lucide="folder-tree"></i> <span>File browser</span></button>
             <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span><span id="terminal-sidebar-count" class="sidebar-badge hidden"></span></button>
             <button id="sticky-notes-sidebar-btn"><i data-lucide="sticky-note"></i> <span>Sticky Notes</span><span id="sticky-notes-sidebar-count" class="sidebar-badge hidden"></span></button>
+            <button id="mcp-btn"><i data-lucide="cable"></i> <span>MCP Servers</span><span id="mcp-sidebar-count" class="sidebar-badge hidden"></span></button>
             <button id="skills-btn"><i data-lucide="puzzle"></i> <span>Skills</span></button>
             <button id="scheduler-btn"><i data-lucide="calendar-clock"></i> <span>Scheduled Tasks</span></button>
           </div>
@@ -255,6 +256,7 @@
         <button id="mate-memory-btn"><i data-lucide="brain"></i> <span>Memory</span><span id="mate-memory-count" class="sidebar-badge hidden"></span></button>
         <button id="mate-knowledge-btn"><i data-lucide="book-open"></i> <span>Knowledge</span><span id="mate-knowledge-count" class="sidebar-badge hidden"></span></button>
         <button id="mate-sticky-notes-btn"><i data-lucide="sticky-note"></i> <span>Sticky Notes</span></button>
+        <button id="mate-mcp-btn"><i data-lucide="cable"></i> <span>MCP Servers</span><span id="mate-mcp-sidebar-count" class="sidebar-badge hidden"></span></button>
         <button id="mate-skills-btn"><i data-lucide="puzzle"></i> <span>Skills</span></button>
         <button id="mate-scheduler-btn"><i data-lucide="calendar-clock"></i> <span>Scheduled Tasks</span></button>
       </div>
@@ -592,9 +594,6 @@
               <option value="instructions">Instructions</option>
               <option value="environment">Environment</option>
             </optgroup>
-            <optgroup label="Tools">
-              <option value="mcp-servers">MCP Servers</option>
-            </optgroup>
           </select>
           <div class="server-settings-nav-items">
             <div class="settings-nav-category">General</div>
@@ -604,9 +603,6 @@
             <div class="settings-nav-category">Config</div>
             <button class="settings-nav-item" data-section="instructions"><span>Instructions</span></button>
             <button class="settings-nav-item" data-section="environment"><span>Environment</span></button>
-            <div class="settings-nav-separator"></div>
-            <div class="settings-nav-category">Tools</div>
-            <button class="settings-nav-item" data-section="mcp-servers"><span>MCP Servers</span></button>
           </div>
         </div>
       </div>
@@ -750,14 +746,6 @@
               <div class="ps-env-list" id="ps-shared-env-list">
                 <!-- rows rendered by JS -->
               </div>
-            </div>
-          </div>
-          <!-- MCP Servers -->
-          <div class="ps-section" data-section="mcp-servers">
-            <h2>MCP Servers</h2>
-            <p class="ps-section-desc">Local MCP servers connected via Chrome Extension. Toggle which servers this project can access.</p>
-            <div class="settings-card" id="mcp-servers-list">
-              <p class="mcp-no-servers">No MCP servers detected. Configure in Clay Chrome Extension.</p>
             </div>
           </div>
         </div>
@@ -1517,6 +1505,20 @@
     </div>
     <div class="skills-content" id="skills-content">
       <div class="skills-loading"><div class="skills-spinner"></div> Loading skills...</div>
+    </div>
+  </div>
+</div>
+
+<!-- MCP Servers Modal -->
+<div id="mcp-modal" class="hidden">
+  <div class="confirm-backdrop"></div>
+  <div class="confirm-dialog mcp-dialog">
+    <div class="mcp-header">
+      <span class="mcp-title"><i data-lucide="cable"></i> MCP Servers</span>
+      <button class="skills-close" id="mcp-modal-close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="mcp-content" id="mcp-content">
+      <p class="mcp-no-servers">No MCP servers detected. Configure in Clay Chrome Extension.</p>
     </div>
   </div>
 </div>

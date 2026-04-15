@@ -227,45 +227,91 @@
   margin: -8px 0 20px;
 }
 
-/* MCP Servers */
-.mcp-no-servers {
-  color: var(--text-muted);
+/* MCP Servers Modal */
+.mcp-dialog {
+  width: 480px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+.mcp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.mcp-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.mcp-title .lucide { width: 18px; height: 18px; }
+.mcp-content {
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+.mcp-desc {
   font-size: 13px;
-  padding: 8px 0;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+.mcp-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-muted);
+}
+.mcp-empty .lucide { width: 32px; height: 32px; margin-bottom: 12px; opacity: 0.4; }
+.mcp-empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 6px;
+}
+.mcp-empty-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
 }
 .mcp-server-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 0;
+  gap: 12px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
-  font-size: 14px;
+  transition: background 0.1s;
 }
 .mcp-server-row:last-child { border-bottom: none; }
+.mcp-server-row:hover { background: var(--bg-dim); margin: 0 -20px; padding: 10px 20px; }
 .mcp-server-row input[type="checkbox"] {
   width: 16px;
   height: 16px;
   margin: 0;
   cursor: pointer;
+  flex-shrink: 0;
+}
+.mcp-server-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
 .mcp-server-name {
+  font-size: 14px;
   font-weight: 500;
   color: var(--text);
-  flex: 1;
 }
-.mcp-server-tools {
+.mcp-server-meta {
   font-size: 12px;
   color: var(--text-muted);
-}
-.mcp-server-transport {
-  font-size: 11px;
-  color: var(--text-muted);
-  background: var(--bg-dim);
-  padding: 2px 6px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Beta toggle row inside settings card */
