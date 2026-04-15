@@ -1899,8 +1899,6 @@
     <div class="sched-create-date-chips">
       <input type="date" class="sched-create-date-input" id="sched-create-date-picker" value="">
       <input type="time" class="sched-create-time-input" id="sched-create-time" value="09:00">
-      <button class="sched-create-recurrence-btn" id="sched-create-recurrence-btn" title="Recurrence"><i data-lucide="repeat"></i></button>
-      <button class="sched-create-interval-btn" id="sched-create-interval-btn" title="Interval"><i data-lucide="timer"></i></button>
     </div>
     <button class="sched-create-close-btn" id="sched-create-cancel" title="Close"><i data-lucide="x"></i></button>
   </div>
@@ -1925,7 +1923,7 @@
     </div>
     <input type="text" class="sched-create-title-input" id="sched-create-title" placeholder="Schedule Title" maxlength="80" spellcheck="false" autocomplete="off">
   </div>
-  <!-- Task + rounds -->
+  <!-- Task -->
   <div class="sched-create-row">
     <i data-lucide="list-todo" class="sched-create-row-icon"></i>
     <div class="sched-create-task-dropdown" id="sched-create-task-wrap">
@@ -1936,28 +1934,41 @@
       <input type="hidden" id="sched-create-task" value="">
       <div class="sched-create-task-list hidden" id="sched-create-task-list"></div>
     </div>
-    <label class="sched-create-iter-row">
-      <input type="number" id="sched-create-iterations" min="1" max="100" value="1" class="sched-create-iter-input">
-      <span class="sched-create-iter-hint">rounds</span>
+  </div>
+  <!-- Review toggle -->
+  <div class="sched-create-row">
+    <div class="sched-create-row-icon-spacer"></div>
+    <label class="sched-review-toggle">
+      <input type="checkbox" id="sched-review-check">
+      <span class="sched-review-label">Review multiple times</span>
+      <span class="sched-review-count hidden" id="sched-review-count">
+        <input type="number" id="sched-create-iterations" min="2" max="100" value="3" class="sched-create-iter-input">
+        <span class="sched-create-iter-hint">x</span>
+      </span>
     </label>
   </div>
-  <!-- Description (hidden by default, shown only when editing a record that has one) -->
+  <!-- Description (shown only when editing a record that has one) -->
   <div class="sched-create-row hidden" id="sched-create-desc-row">
     <i data-lucide="align-left" class="sched-create-row-icon"></i>
-    <textarea class="sched-create-row-textarea" id="sched-create-desc" rows="3" placeholder="Description"></textarea>
+    <textarea class="sched-create-row-textarea" id="sched-create-desc" rows="2" placeholder="Description"></textarea>
   </div>
-  <!-- Bottom bar -->
-  <div class="sched-create-bottom">
-    <div class="sched-create-bottom-left">
-      <button class="sched-create-delete-btn hidden" id="sched-create-delete" title="Delete"><i data-lucide="trash-2"></i></button>
-    </div>
-    <div class="sched-create-bottom-right">
-      <button class="sched-create-save-btn" id="sched-create-submit">Save</button>
-    </div>
-  </div>
-  <!-- Recurrence dropdown -->
-  <div class="sched-create-recurrence-dropdown hidden" id="sched-create-recurrence-dropdown">
-    <div class="sched-custom-repeat-panel" id="sched-custom-repeat-panel">
+  <!-- Repeat accordion -->
+  <div class="sched-accordion" id="sched-accordion-repeat">
+    <div class="sched-accordion-divider"></div>
+    <button class="sched-accordion-header" id="sched-accordion-repeat-header" type="button">
+      <div class="sched-accordion-header-left">
+        <i data-lucide="repeat" class="sched-accordion-icon"></i>
+        <div class="sched-accordion-text">
+          <span class="sched-accordion-title">Repeat</span>
+          <span class="sched-accordion-subtitle" id="sched-accordion-repeat-subtitle">Which days to run</span>
+        </div>
+      </div>
+      <div class="sched-accordion-header-right">
+        <span class="sched-accordion-clear hidden" id="sched-accordion-repeat-clear" title="Clear"><i data-lucide="x"></i></span>
+        <i data-lucide="chevron-right" class="sched-accordion-chevron"></i>
+      </div>
+    </button>
+    <div class="sched-accordion-body hidden" id="sched-accordion-repeat-body">
       <div class="sched-custom-row">
         <span class="sched-custom-label">Every</span>
         <input type="number" class="sched-custom-interval" id="sched-custom-interval" value="1" min="1" max="99">
@@ -2002,7 +2013,6 @@
           <span class="sched-custom-end-after-suffix">times</span>
         </div>
       </div>
-      <!-- Inline calendar for "Until" date picking -->
       <div class="sched-custom-end-calendar hidden" id="sched-custom-end-calendar">
         <div class="sched-cal-header">
           <span class="sched-cal-title" id="sched-cal-title">April 2026</span>
@@ -2016,48 +2026,65 @@
         </div>
         <div class="sched-cal-grid" id="sched-cal-grid"></div>
       </div>
-      <div class="sched-custom-actions">
-        <button class="sched-btn sched-btn-cancel" id="sched-custom-cancel">Cancel</button>
-        <button class="sched-btn sched-btn-save" id="sched-custom-ok">OK</button>
+    </div>
+  </div>
+  <!-- Interval accordion -->
+  <div class="sched-accordion" id="sched-accordion-interval">
+    <div class="sched-accordion-divider"></div>
+    <button class="sched-accordion-header" id="sched-accordion-interval-header" type="button">
+      <div class="sched-accordion-header-left">
+        <i data-lucide="timer" class="sched-accordion-icon"></i>
+        <div class="sched-accordion-text">
+          <span class="sched-accordion-title">Interval</span>
+          <span class="sched-accordion-subtitle" id="sched-accordion-interval-subtitle">How often within each day</span>
+        </div>
+      </div>
+      <div class="sched-accordion-header-right">
+        <span class="sched-accordion-clear hidden" id="sched-accordion-interval-clear" title="Clear"><i data-lucide="x"></i></span>
+        <i data-lucide="chevron-right" class="sched-accordion-chevron"></i>
+      </div>
+    </button>
+    <div class="sched-accordion-body hidden" id="sched-accordion-interval-body">
+      <div class="sched-interval-custom-row">
+        <span class="sched-custom-label">Every</span>
+        <input type="number" class="sched-custom-interval" id="sched-interval-custom-value" value="10" min="1" max="999">
+        <div class="sched-interval-unit-toggle" id="sched-interval-custom-unit">
+          <button type="button" class="sched-interval-seg active" data-unit="minute">min</button><button type="button" class="sched-interval-seg" data-unit="hour">hrs</button>
+        </div>
+      </div>
+      <div class="sched-interval-end-section hidden" id="sched-interval-end-section">
+        <div class="sched-interval-end-divider"></div>
+        <div class="sched-interval-end-options">
+          <button class="sched-interval-end-opt active" data-iend="allday">All day</button>
+          <button class="sched-interval-end-opt" data-iend="after">Stop after</button>
+          <button class="sched-interval-end-opt" data-iend="until">Stop at</button>
+        </div>
+        <div class="sched-interval-end-after hidden" id="sched-interval-end-after-row">
+          <input type="number" class="sched-interval-end-input" id="sched-interval-end-after" value="5" min="1" max="999">
+          <span class="sched-interval-end-label">runs</span>
+        </div>
+        <div class="sched-interval-end-until hidden" id="sched-interval-end-until-row">
+          <input type="time" class="sched-interval-end-time" id="sched-interval-end-time" value="18:00">
+        </div>
+      </div>
+      <div class="sched-skip-running-row" id="sched-skip-running-row">
+        <label class="sched-switch-label" for="sched-skip-running">
+          <div class="sched-switch">
+            <input type="checkbox" id="sched-skip-running" checked>
+            <span class="sched-switch-slider"></span>
+          </div>
+          <span class="sched-switch-text">Skip if previous run still active</span>
+        </label>
       </div>
     </div>
   </div>
-  <!-- Interval dropdown -->
-  <div class="sched-create-interval-dropdown hidden" id="sched-create-interval-dropdown">
-    <div class="sched-interval-custom-row">
-      <span class="sched-custom-label">Every</span>
-      <input type="number" class="sched-custom-interval" id="sched-interval-custom-value" value="10" min="1" max="999">
-      <div class="sched-interval-unit-toggle" id="sched-interval-custom-unit">
-        <button type="button" class="sched-interval-seg active" data-unit="minute">min</button><button type="button" class="sched-interval-seg" data-unit="hour">hrs</button>
-      </div>
+  <!-- Bottom bar -->
+  <div class="sched-create-bottom">
+    <div class="sched-create-bottom-left">
+      <button class="sched-create-delete-btn hidden" id="sched-create-delete" title="Delete"><i data-lucide="trash-2"></i></button>
     </div>
-    <div class="sched-interval-end-section hidden" id="sched-interval-end-section">
-      <div class="sched-interval-end-divider"></div>
-      <div class="sched-interval-end-options">
-        <button class="sched-interval-end-opt active" data-iend="allday">All day</button>
-        <button class="sched-interval-end-opt" data-iend="after">Stop after</button>
-        <button class="sched-interval-end-opt" data-iend="until">Stop at</button>
-      </div>
-      <div class="sched-interval-end-after hidden" id="sched-interval-end-after-row">
-        <input type="number" class="sched-interval-end-input" id="sched-interval-end-after" value="5" min="1" max="999">
-        <span class="sched-interval-end-label">runs</span>
-      </div>
-      <div class="sched-interval-end-until hidden" id="sched-interval-end-until-row">
-        <input type="time" class="sched-interval-end-time" id="sched-interval-end-time" value="18:00">
-      </div>
-    </div>
-    <div class="sched-skip-running-row" id="sched-skip-running-row">
-      <label class="sched-switch-label" for="sched-skip-running">
-        <div class="sched-switch">
-          <input type="checkbox" id="sched-skip-running" checked>
-          <span class="sched-switch-slider"></span>
-        </div>
-        <span class="sched-switch-text">Skip if previous run still active</span>
-      </label>
-    </div>
-    <div class="sched-custom-actions">
-      <button class="sched-btn sched-btn-cancel" id="sched-interval-cancel">Cancel</button>
-      <button class="sched-btn sched-btn-save" id="sched-interval-ok">OK</button>
+    <div class="sched-create-bottom-right">
+      <button class="sched-create-save-btn" id="sched-create-submit">Save</button>
     </div>
   </div>
 </div>
