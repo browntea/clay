@@ -1186,6 +1186,15 @@
 .scheduler-file-editor:focus {
   border-color: var(--accent);
 }
+
+.scheduler-model-settings {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.scheduler-model-settings .settings-card {
+  margin-bottom: 16px;
+}
 .scheduler-detail-meta {
   display: grid;
   grid-template-columns: auto 1fr;
