@@ -1,3 +1,10 @@
+## [2.29.1-beta.1](https://github.com/chadbyte/clay/compare/v2.29.0...v2.29.1-beta.1) (2026-04-15)
+
+
+### Bug Fixes
+
+* **sdk:** resolve circular reference error when sending MCP servers to worker via IPC ([067a85e](https://github.com/chadbyte/clay/commit/067a85e4b7167ad897bdeb2111fef61df578b934))
+
 # [2.29.0](https://github.com/chadbyte/clay/compare/v2.28.0...v2.29.0) (2026-04-15)
 
 
