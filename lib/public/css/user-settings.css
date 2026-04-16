@@ -319,3 +319,88 @@
     padding: 16px;
   }
 }
+
+/* --- Email settings --- */
+.us-email-empty {
+  color: var(--text-dimmer);
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 0;
+}
+.us-email-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+.us-email-row + .us-email-row {
+  border-top: 1px solid var(--border-subtle);
+}
+.us-email-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+.us-email-provider-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+.us-email-provider-icon-fallback {
+  width: 20px;
+  height: 20px;
+  color: var(--text-dimmer);
+}
+.us-email-info {
+  flex: 1;
+  min-width: 0;
+}
+.us-email-addr {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.us-email-provider {
+  font-size: 12px;
+  color: var(--text-dimmer);
+  margin-top: 1px;
+}
+.us-email-remove-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.us-email-remove-btn:hover {
+  color: var(--error);
+  border-color: var(--error);
+}
+.us-email-add-btn {
+  margin-top: 10px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.us-email-add-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}

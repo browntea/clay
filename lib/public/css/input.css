@@ -479,6 +479,202 @@
   object-fit: contain;
 }
 
+.context-picker-unread-badge {
+  margin-left: auto;
+  margin-right: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--accent, #DA7756);
+  color: #fff;
+  border-radius: 8px;
+  padding: 1px 6px;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.context-picker-add-item {
+  color: var(--text-dimmer);
+  font-size: 13px;
+  opacity: 0.8;
+}
+.context-picker-add-item:hover {
+  opacity: 1;
+}
+
+/* --- Email setup modal --- */
+#email-defaults-modal { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; }
+#email-defaults-modal.hidden { display: none; }
+
+.email-setup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.email-setup-dialog {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: var(--text);
+}
+.email-setup-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.email-setup-field {
+  margin-bottom: 12px;
+}
+.email-setup-label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+.email-setup-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.email-setup-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.email-setup-port {
+  width: 70px;
+  flex: none !important;
+}
+.email-setup-row {
+  display: flex;
+  gap: 8px;
+}
+.email-setup-email-wrap {
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  overflow: hidden;
+}
+.email-setup-email-wrap .email-setup-input {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  flex: 1;
+  min-width: 0;
+}
+.email-setup-email-wrap .email-setup-input:focus {
+  outline: none;
+  border: none;
+}
+.email-setup-email-wrap:focus-within {
+  border-color: var(--accent);
+}
+.email-setup-domain {
+  padding: 8px 10px 8px 0;
+  font-size: 14px;
+  color: var(--text-dimmer);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+.email-setup-password-wrap {
+  position: relative;
+}
+.email-setup-password-wrap .email-setup-input {
+  padding-right: 36px;
+}
+.email-setup-password-eye {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.email-setup-password-eye:hover {
+  color: var(--text);
+}
+.email-setup-password-eye .lucide {
+  width: 15px;
+  height: 15px;
+}
+.email-setup-help {
+  font-size: 12px;
+  color: var(--accent);
+  display: inline-block;
+  margin-top: 4px;
+}
+.email-setup-help:hover {
+  text-decoration: underline;
+}
+.email-setup-status {
+  margin-bottom: 12px;
+  font-size: 13px;
+  display: none;
+}
+.email-setup-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.email-setup-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+.email-setup-btn-primary {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.email-setup-btn-primary:hover {
+  background: var(--accent-hover);
+}
+.email-setup-btn-secondary {
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  color: var(--text);
+}
+.email-setup-btn-secondary:hover {
+  background: var(--input-bg);
+}
+.email-setup-btn-ghost {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+}
+.email-setup-btn-ghost:hover {
+  color: var(--text);
+  background: rgba(var(--overlay-rgb), 0.05);
+}
+
 /* ==========================================================================
    Input Area — Claude-style unified container
    ========================================================================== */
