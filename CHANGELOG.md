@@ -1,3 +1,16 @@
+# [2.30.0](https://github.com/chadbyte/clay/compare/v2.29.5...v2.30.0) (2026-04-16)
+
+
+### Bug Fixes
+
+* **dm:** allow DM and mate chat in single-user mode ([75c34e6](https://github.com/chadbyte/clay/commit/75c34e655b9bd79d020fc19b9741910e210f39c8))
+* **projects:** pass IGNORED_DIRS and onCreateWorktree to attachSessions ([3aaa062](https://github.com/chadbyte/clay/commit/3aaa0625d34d9c0e1dfa406005a3e07903034000))
+
+
+### Features
+
+* **ui:** allow icon change for worktree projects in icon strip ([46a8f00](https://github.com/chadbyte/clay/commit/46a8f00ee5c351cb44354ac21db42258ac48d48b))
+
 # [2.30.0-beta.2](https://github.com/chadbyte/clay/compare/v2.30.0-beta.1...v2.30.0-beta.2) (2026-04-16)
 
 
