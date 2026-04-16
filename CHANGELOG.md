@@ -1,3 +1,16 @@
+## [2.29.5](https://github.com/chadbyte/clay/compare/v2.29.4...v2.29.5) (2026-04-16)
+
+
+### Bug Fixes
+
+* **mcp:** queue extension messages until WS is ready and clean up on disconnect ([f150f78](https://github.com/chadbyte/clay/commit/f150f7840624adfaba30af0960d07088130c4e44)), closes [hi#latency](https://github.com/hi/issues/latency)
+* **ui:** show all mates in strip for single-user mode ([71c5978](https://github.com/chadbyte/clay/commit/71c5978589c982cd2952c788d3787bcf6449a55b))
+
+
+### Performance Improvements
+
+* **ui:** add fingerprint guard to renderUserStrip ([808bf65](https://github.com/chadbyte/clay/commit/808bf656b53d72ec6cd0b1a1a5a8cab0bcf7bbee))
+
 ## [2.29.5-beta.3](https://github.com/chadbyte/clay/compare/v2.29.5-beta.2...v2.29.5-beta.3) (2026-04-16)
 
 
