@@ -1,3 +1,21 @@
+## [2.29.4](https://github.com/chadbyte/clay/compare/v2.29.3...v2.29.4) (2026-04-16)
+
+
+### Bug Fixes
+
+* **terminal:** dispose WebGL addon before xterm to prevent _isDisposed error ([811a95c](https://github.com/chadbyte/clay/commit/811a95cef10ed1b740066f0e401e9eb1c473e9f9))
+* **ui:** clear stale connected/processing dots from inactive project icons ([32e8215](https://github.com/chadbyte/clay/commit/32e8215cf2c8f815a7ee7382437f57ef06368134))
+
+
+### Performance Improvements
+
+* **ui:** skip redundant re-renders in updateProjectList ([435f1f9](https://github.com/chadbyte/clay/commit/435f1f971e5131b011bb8a9088f16eb78d6f552c))
+
+
+### Reverts
+
+* **ui:** remove icon strip DOM rebuild optimization and stale dot clearing ([c60a5a9](https://github.com/chadbyte/clay/commit/c60a5a987590020643fcc974c0cbc38fa98ad323))
+
 ## [2.29.4-beta.3](https://github.com/chadbyte/clay/compare/v2.29.4-beta.2...v2.29.4-beta.3) (2026-04-16)
 
 
