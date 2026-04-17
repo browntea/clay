@@ -1,6 +1,6 @@
 # Mate Canvas
 
-> The V in Mate MVC. Each Mate owns visual canvases that display data from its Datastore. Canvases live in the Mate, visible in DM. Users promote canvases to Home Hub for an at-a-glance dashboard.
+> The V in Mate MVC. Each Mate owns visual canvases that display data from its Datastore. A canvas is a single self-contained `.canvas` file with markup, style, logic, and data schema. Canvases live in the Mate, visible in DM. Users promote canvases to Home Hub.
 
 **Created**: 2026-04-17
 **Status**: Planning
@@ -11,7 +11,7 @@
 
 ```
 M  Mate Datastore    Per-Mate SQLite DB. Structured data persistence.
-V  Mate Canvas       Visual templates owned by the Mate. Renders Datastore data.
+V  Mate Canvas       Single-file visual components. Renders Datastore data.
 C  Mate AI           Collects data, writes to Datastore, creates/updates Canvases.
 ```
 
@@ -19,126 +19,298 @@ The Mate is a self-contained unit: it owns its data, its views, and the intellig
 
 ---
 
-## How It Works
+## Canvas File Format
 
-### 1. Mate Creates a Canvas
-
-During conversation, the Mate creates a canvas using an SDK tool:
+A canvas is a single `.canvas` file (HTML-based) that contains everything needed to render, connect to data, and be shared:
 
 ```
-User: "Show me my monthly spending trend"
-
-Moneta (Mate):
-  1. Reads from Datastore: clay_data_find("expenses", {})
-  2. Creates canvas: clay_canvas_create({
-       title: "Monthly Spending Trend",
-       html: "<div class='clay-chart-container'>...</div>",
-       data_bindings: { expenses: { collection: "expenses" } }
-     })
+~/.clay/mates/{userId}/{mateId}/canvases/monthly-expense.canvas
 ```
 
-The canvas appears in the Mate's DM view.
+### Complete Example
 
-### 2. Canvas Lives in the Mate
+```html
+<clay-canvas>
+  <!-- Metadata -->
+  <meta name="title" content="Monthly Spending Trend">
+  <meta name="size" content="medium">
+  <meta name="description" content="Visualizes monthly expenses with trend chart and category breakdown">
 
-Each canvas is stored with the Mate:
+  <!-- Data Schema: declares what data this canvas needs -->
+  <!-- This is the contract between M (Datastore) and V (Canvas) -->
+  <clay-schema collection="expenses">
+    {
+      "description": "Monthly expense records",
+      "fields": {
+        "date": { "type": "string", "description": "YYYY-MM format" },
+        "total": { "type": "number", "description": "Total amount spent" },
+        "currency": { "type": "string", "default": "KRW" },
+        "categories": {
+          "type": "array",
+          "items": {
+            "name": { "type": "string" },
+            "amount": { "type": "number" }
+          }
+        }
+      },
+      "example": {
+        "date": "2026-04",
+        "total": 320000,
+        "currency": "KRW",
+        "categories": [{ "name": "Food", "amount": 150000 }]
+      }
+    }
+  </clay-schema>
+
+  <clay-schema collection="budgets">
+    {
+      "description": "Monthly budget targets",
+      "fields": {
+        "month": { "type": "string" },
+        "limit": { "type": "number" }
+      },
+      "example": { "month": "2026-04", "limit": 500000 }
+    }
+  </clay-schema>
+
+  <!-- Styles (scoped to this canvas) -->
+  <style>
+    .total { font-size: 32px; font-weight: 700; color: var(--text); }
+    .label { font-size: 13px; color: var(--text-dimmer); margin-top: 4px; }
+    .chart { width: 100%; height: 200px; margin-top: 16px; }
+    .over-budget { color: var(--error); }
+  </style>
+
+  <!-- Markup -->
+  <div class="total" id="total">--</div>
+  <div class="label">Total spending this month</div>
+  <canvas class="chart" id="chart"></canvas>
+
+  <!-- Logic -->
+  <script>
+    // Clay runtime is auto-injected. Provides Clay.on(), Clay.query(), Clay.resize()
+
+    Clay.on("data", function (bindings) {
+      // Called on initial load and whenever bound data changes
+      // bindings = { expenses: [...docs], budgets: [...docs] }
+      var expenses = bindings.expenses || [];
+      var budgets = bindings.budgets || [];
+
+      var currentMonth = expenses.find(function (e) { return e.data.date === "2026-04"; });
+      var budget = budgets.find(function (b) { return b.data.month === "2026-04"; });
+
+      var totalEl = document.getElementById("total");
+      if (currentMonth) {
+        totalEl.textContent = currentMonth.data.total.toLocaleString() + " " + (currentMonth.data.currency || "KRW");
+        if (budget && currentMonth.data.total > budget.data.limit) {
+          totalEl.classList.add("over-budget");
+        }
+      }
+    });
+
+    Clay.on("theme", function (vars) {
+      // vars = { "--bg": "#282a36", "--text": "#f0f1f4", "--accent": "#ffb86c", ... }
+      // CSS variables are already injected into :root, but available here for JS use
+    });
+
+    Clay.resize(280);
+  </script>
+</clay-canvas>
+```
+
+### File Structure
+
+| Element | Required | Purpose |
+|---------|----------|---------|
+| `<clay-canvas>` | Yes | Root wrapper |
+| `<meta name="title">` | Yes | Display name |
+| `<meta name="size">` | No | `small` / `medium` / `large` (default: medium) |
+| `<meta name="description">` | No | Human-readable description |
+| `<clay-schema>` | No | Data contract per collection (enables sharing) |
+| `<style>` | No | Scoped CSS (can use Clay CSS variables) |
+| HTML body | Yes | Markup |
+| `<script>` | No | Logic (Clay runtime API available) |
+
+A canvas without `<clay-schema>` and `<script>` is just static HTML. That is valid. Complexity is opt-in.
+
+---
+
+## Clay Runtime Protocol
+
+Canvases run inside an `<iframe sandbox="allow-scripts">`. The Clay runtime (`clay-canvas-runtime.js`) is auto-injected and provides the communication bridge via postMessage.
+
+### Parent -> Canvas Messages
+
+| Type | Payload | When |
+|------|---------|------|
+| `clay:data` | `{ bindings: { collection: [...docs] } }` | Initial load + on Datastore change |
+| `clay:theme` | `{ vars: { "--bg": "...", "--text": "...", ... } }` | Initial load + on theme change |
+
+### Canvas -> Parent Messages
+
+| Type | Payload | When |
+|------|---------|------|
+| `clay:ready` | `{}` | Canvas finished loading, ready for data |
+| `clay:resize` | `{ height: 300 }` | Canvas requests container height change |
+| `clay:query` | `{ requestId, collection, query }` | Canvas actively queries Datastore |
+| `clay:navigate` | `{ collection }` | Request to open Data Inspector for this collection |
+
+### Parent -> Canvas (Query Response)
+
+| Type | Payload | When |
+|------|---------|------|
+| `clay:query-result` | `{ requestId, data: [...docs] }` | Response to `clay:query` |
+
+### Clay Runtime API (available inside canvas `<script>`)
+
+```js
+// Receive data (push-based, automatic from bindings)
+Clay.on("data", function (bindings) { ... });
+
+// Receive theme updates
+Clay.on("theme", function (vars) { ... });
+
+// Request container resize
+Clay.resize(heightInPx);
+
+// Active query (pull-based, for interactive filtering)
+Clay.query("expenses", { date: "2026-04" }).then(function (docs) { ... });
+
+// Open data inspector for a collection
+Clay.inspect("expenses");
+```
+
+### Data Flow
 
 ```
-~/.clay/mates/{userId}/{mateId}/canvases/{canvasId}.json
-```
-
-```json
-{
-  "id": "cv_abc123",
-  "title": "Monthly Spending Trend",
-  "size": "medium",
-  "html": "<div class='clay-stat-card'>...</div>",
-  "data_bindings": {
-    "expenses": { "collection": "expenses", "query": {} }
-  },
-  "created_at": 1712700000,
-  "updated_at": 1712700000
-}
-```
-
-Canvases are visible when chatting with the Mate (in DM sidebar or inline).
-
-### 3. Promote to Home Hub
-
-User sees a useful canvas in a Mate DM and promotes it:
-
-```
-Canvas header: [Monthly Spending Trend]  [Pin to Home Hub]
-```
-
-Home Hub layout stores references, not copies:
-
-```json
-{
-  "widgets": [
-    { "mateId": "mate_moneta", "canvasId": "cv_abc123", "position": { "col": 0, "row": 0 } },
-    { "mateId": "mate_weather", "canvasId": "cv_def456", "position": { "col": 2, "row": 0 } }
-  ]
-}
-```
-
-Home Hub fetches canvas HTML + data from the owning Mate's datastore at render time. When the Mate updates its data, the Home Hub canvas updates too.
-
-### 4. Mate Updates Canvas
-
-The Mate can update a canvas anytime (during conversation, via schedule, via Ralph loop):
-
-```
-Moneta (scheduled daily):
-  1. Fetches bank data
-  2. Updates Datastore: clay_data_insert("expenses", {...})
-  3. Canvas auto-refreshes (data bindings pull new data)
-```
-
-Or the Mate can update the canvas HTML itself:
-
-```
-clay_canvas_update({ canvas_id: "cv_abc123", html: "..." })
+┌─────────────────────────────────────────────────────────┐
+│ Push (automatic):                                       │
+│                                                         │
+│ Datastore change -> Clay checks canvas bindings         │
+│                  -> clay:data sent to matching canvases  │
+│                  -> Canvas re-renders                    │
+│                                                         │
+├─────────────────────────────────────────────────────────┤
+│ Pull (interactive):                                     │
+│                                                         │
+│ User clicks filter in Canvas                            │
+│   -> Canvas sends clay:query                            │
+│   -> Clay queries Datastore                             │
+│   -> clay:query-result sent back                        │
+│   -> Canvas re-renders with filtered data               │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Canvas Rendering
+## iframe Sandbox
 
-### Restricted HTML (same as HOME-HUB widget spec)
-
-Canvases use restricted HTML with Clay CSS classes. No scripts, no external resources. Server-side sanitization.
-
-**Allowed**: `div, span, p, h1-h4, ul, ol, li, table, thead, tbody, tr, th, td, img, svg, canvas, strong, em, code, pre, br, hr`
-
-**Blocked**: `script, style, link, iframe, form, input`, event handlers, `javascript:` URLs
-
-### Clay CSS Classes
-
-All `clay-*` prefixed classes for consistent theming:
-
-```css
-.clay-stat-card, .clay-stat-value, .clay-stat-label, .clay-stat-delta
-.clay-list, .clay-list-item, .clay-list-label, .clay-list-value
-.clay-table, .clay-chart-container
-.clay-badge, .clay-progress, .clay-progress-fill
-.clay-row, .clay-col, .clay-grid-2, .clay-grid-3
-.clay-text-sm/md/lg, .clay-text-muted/success/warning/danger
-```
-
-Auto-respects light/dark theme via CSS variables.
-
-### Data Binding
+Each canvas renders in a sandboxed iframe:
 
 ```html
-<div class="clay-stat-value" data-bind="expenses.total"></div>
+<iframe
+  sandbox="allow-scripts"
+  srcdoc="
+    <html>
+    <head>
+      <style>:root { ${themeVarsAsCss} }</style>
+      <script src='clay-canvas-runtime.js'></script>
+    </head>
+    <body>
+      ${canvasBodyContent}
+    </body>
+    </html>
+  "
+></iframe>
 ```
 
-The renderer:
-1. Parses `data-bind` attributes
-2. Fetches referenced collections from the Mate's Datastore
-3. Injects values into DOM
-4. Re-renders on `mate_data_change` WebSocket messages
+**Sandboxed** (blocked by `sandbox="allow-scripts"` without other flags):
+- No parent DOM access
+- No cookies, localStorage
+- No form submissions
+- No popups, navigation
+- No top-level navigation
+
+**Allowed**:
+- JavaScript execution (for charts, interactivity)
+- Canvas 2D/WebGL (for Chart.js, D3, etc.)
+- CSS animations
+- postMessage communication (Clay protocol only)
+
+---
+
+## Data Schema as Contract
+
+`<clay-schema>` serves three purposes:
+
+### 1. Mate Instructions
+
+When a Mate adopts a canvas (e.g., imported from someone else), it reads the schema to understand what data to produce:
+
+```
+Mate reads canvas file
+  -> Finds <clay-schema collection="expenses">
+  -> Understands: "I need to create an 'expenses' collection with date, total, currency, categories fields"
+  -> Starts collecting and storing data in the right shape
+```
+
+### 2. Validation
+
+Clay can validate Datastore writes against the schema:
+- Warn (not block) if a document is missing required fields
+- Auto-fill defaults from schema
+
+### 3. Sharing
+
+When a user shares a `.canvas` file:
+
+```
+Share monthly-expense.canvas
+  -> Recipient's Mate reads <clay-schema>
+  -> Mate knows exactly what data to produce
+  -> Canvas works immediately once data flows in
+```
+
+No external documentation needed. The schema is inline.
+
+---
+
+## Usage Scenarios
+
+### 1. Start without canvas, add later
+
+```
+Week 1: User asks Moneta to track expenses
+  -> Moneta stores data in Datastore (no canvas yet)
+
+Week 3: User asks "show me a chart of my spending"
+  -> Moneta reads existing Datastore structure
+  -> Creates a .canvas file with matching <clay-schema>
+  -> Canvas renders with existing data immediately
+```
+
+### 2. Simple static canvas, then add data
+
+```
+User asks Mate to create a simple status display
+  -> Mate creates .canvas with just HTML + CSS (no schema, no script)
+  -> Static content displayed
+
+Later, user wants live data
+  -> Mate adds <clay-schema> + <script> with Clay.on("data")
+  -> Canvas becomes data-driven
+```
+
+### 3. Import someone else's canvas
+
+```
+User downloads budget-tracker.canvas from a friend
+  -> Drops it into Mate's canvases directory (or imports via UI)
+  -> Mate reads <clay-schema>: needs "expenses" and "budgets" collections
+  -> Mate starts collecting data in the declared shape
+  -> Canvas renders as data comes in
+  -> Example data from schema can be used for preview before real data exists
+```
 
 ---
 
@@ -146,23 +318,25 @@ The renderer:
 
 ```
 Tool: clay_canvas_create
-  title: "Monthly Spending Trend"
-  size: "small" | "medium" | "large"
-  html: "<div class='clay-stat-card'>...</div>"
-  data_bindings: { expenses: { collection: "expenses", query: {} } }
+  filename: "monthly-expense"
+  content: "<clay-canvas>...</clay-canvas>"
 
 Tool: clay_canvas_update
-  canvas_id: "cv_abc123"
-  title: "..."           (optional)
-  html: "..."            (optional)
-  data_bindings: {...}   (optional)
+  filename: "monthly-expense"
+  content: "<clay-canvas>...</clay-canvas>"
 
 Tool: clay_canvas_delete
-  canvas_id: "cv_abc123"
+  filename: "monthly-expense"
 
 Tool: clay_canvas_list
-  (lists all canvases owned by this Mate)
+  (lists all .canvas files owned by this Mate)
+
+Tool: clay_canvas_read
+  filename: "monthly-expense"
+  (returns full .canvas file content)
 ```
+
+The Mate writes the entire `.canvas` file as a single unit. No partial updates. This keeps the file always self-consistent.
 
 ---
 
@@ -171,37 +345,55 @@ Tool: clay_canvas_list
 | Location | What shows | How |
 |----------|-----------|-----|
 | Mate DM | All canvases owned by this Mate | Sidebar panel or inline in chat |
-| Home Hub | Only promoted canvases | User picks which to pin |
-| Mate Settings | Canvas list with edit/delete | Management UI |
+| Home Hub | Only promoted canvases | User pins from Mate DM |
+| Mate Settings | Canvas list with preview/edit/delete | Management UI |
+
+### Promote to Home Hub
+
+```
+Canvas header in Mate DM: [Monthly Spending Trend]  [Pin to Home Hub]
+```
+
+Home Hub layout stores references, not copies:
+
+```json
+{
+  "canvases": [
+    { "mateId": "mate_moneta", "filename": "monthly-expense", "position": { "col": 0, "row": 0 } },
+    { "mateId": "mate_weather", "filename": "forecast", "position": { "col": 2, "row": 0 } }
+  ]
+}
+```
 
 ---
 
 ## Home Hub Simplification
 
-With Mate Canvas, Home Hub becomes:
-
 ```
 Home Hub = Greeting + Notifications + Promoted Canvases
 ```
 
-No widget system. No widget picker. No widget CRUD. Just:
-- A list of canvas references (mateId + canvasId)
-- A grid layout with drag-and-drop reorder
-- Promote/demote actions
-
-The complexity lives in the Mate (where it belongs). Home Hub is just a view aggregator.
+No widget system. No widget CRUD. Home Hub just:
+- Reads the user's promoted canvas list
+- Loads each `.canvas` file from the owning Mate
+- Renders in iframe sandbox
+- Pipes Datastore data through the protocol
 
 ---
 
 ## Implementation Order
 
-1. Canvas storage (JSON files per Mate)
-2. SDK tools (create/update/delete/list)
-3. Canvas renderer (restricted HTML + data binding)
-4. `clay-widgets.css` class library
+1. `.canvas` file format parser (extract meta, schema, style, html, script)
+2. `clay-canvas-runtime.js` (postMessage protocol, Clay API)
+3. iframe sandbox renderer
+4. SDK tools (create/update/delete/list/read)
 5. Canvas display in Mate DM sidebar
-6. Promote/demote to Home Hub
-7. Home Hub grid layout with promoted canvases
+6. Push data pipeline (Datastore change -> canvas re-render)
+7. Pull query pipeline (clay:query / clay:query-result)
+8. `clay-canvas.css` base class library
+9. Promote/demote to Home Hub
+10. Home Hub grid layout with promoted canvases
+11. Canvas sharing (import/export `.canvas` files)
 
 ---
 
@@ -211,15 +403,16 @@ The complexity lives in the Mate (where it belongs). Home Hub is just a view agg
 Mate Datastore (M) ──> Mate Canvas (V) ──> Home Hub (aggregator)
 ```
 
-Mate Datastore must exist first. Canvas reads from it.
+Mate Datastore must exist first. Canvas reads from it. But a canvas without `<clay-schema>` (static HTML only) can work without Datastore.
 
 ---
 
 ## Open Questions
 
-1. **Canvas size limits?** Max HTML size per canvas. Recommendation: 50KB.
+1. **Canvas size limits?** Max file size per canvas. Recommendation: 100KB.
 2. **How many canvases per Mate?** Recommendation: No hard limit, but UI shows latest 20 in sidebar.
 3. **Can a canvas reference another Mate's data?** Recommendation: No. Keep it scoped. One Mate, one Datastore, one set of canvases.
-4. **Live charts?** Allow `<canvas>` element for chart.js or similar? Recommendation: Yes, inject a lightweight chart lib into the sandbox.
+4. **Chart libraries?** Allow importing Chart.js/D3 inside canvas? Recommendation: Provide a bundled lightweight chart lib in `clay-canvas-runtime.js`.
 5. **Canvas versioning?** Recommendation: No. Mate overwrites. Old versions not kept.
-6. **Can users create canvases manually?** Recommendation: Defer. Mates create them. Users can edit HTML in settings if they want.
+6. **Schema enforcement?** Recommendation: Warn on mismatch, do not block writes. Flexibility over strictness.
+7. **Canvas marketplace?** Community-shared canvases. Defer to post-v1, but the file format is designed for it.
