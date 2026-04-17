@@ -7,15 +7,37 @@
 
 ---
 
-## Architecture: Mate MVC
+## Architecture: ABCD Pattern
+
+**AI Binding for Canvas and Datastore**
 
 ```
-M  Mate Datastore    Per-Mate SQLite DB. Structured data persistence.
-V  Mate Canvas       Single-file visual components. Renders Datastore data.
-C  Mate AI           Collects data, writes to Datastore, creates/updates Canvases.
+A  AI           Mate. Collects data, creates/updates Canvases.
+B  Binding      Clay Protocol. postMessage bridge between Canvas and Datastore.
+C  Canvas       Single-file visual components (.canvas files).
+D  Datastore    Per-Mate SQLite DB. Structured data persistence.
 ```
 
-The Mate is a self-contained unit: it owns its data, its views, and the intelligence to manage both. Home Hub is not a separate system. It is a curated collection of promoted canvases from across the user's Mates.
+Data flow follows ABCD:
+
+```
+A (Mate collects data)
+  -> D (Datastore stores it)
+  -> B (Binding detects change, delivers via protocol)
+  -> C (Canvas renders)
+```
+
+Reverse flow (user interaction in Canvas):
+
+```
+C (user clicks filter in Canvas)
+  -> B (clay:query protocol)
+  -> D (Datastore query)
+  -> B (clay:query-result)
+  -> C (re-render)
+```
+
+The Mate is a self-contained unit: it owns its data (D), its views (C), and the intelligence to manage both (A). The Binding (B) is the glue. Home Hub is not a separate system. It is a curated collection of promoted canvases from across the user's Mates.
 
 ---
 

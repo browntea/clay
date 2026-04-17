@@ -139,17 +139,18 @@ In Mate sidebar or Mate settings:
 
 ---
 
-## Mate MVC
+## ABCD Pattern
 
-Mate Datastore is the M in the Mate MVC pattern:
+Mate Datastore is the **D** in the ABCD pattern (AI Binding for Canvas and Datastore):
 
 ```
-M  Mate Datastore    This document. Per-Mate SQLite DB.
-V  Mate Canvas       See MATE-CANVAS.md. Visual templates that render Datastore data.
-C  Mate AI           The Mate itself. Collects data, manages views.
+A  AI           Mate. Collects data, creates/updates Canvases.
+B  Binding      Clay Protocol. postMessage bridge between Canvas and Datastore.
+C  Canvas       See MATE-CANVAS.md. Single-file visual components.
+D  Datastore    This document. Per-Mate SQLite DB.
 ```
 
-Canvases read from the Datastore via data bindings. Users promote canvases to Home Hub. Home Hub is just an aggregator of promoted canvases, not a separate widget system.
+Canvases (C) read from the Datastore (D) via Bindings (B). Users promote canvases to Home Hub. Home Hub is just an aggregator of promoted canvases, not a separate widget system.
 
 ---
 
