@@ -275,44 +275,53 @@
    Context Sources — chips above input
    ========================================================================== */
 
-#context-sources-bar {
+/* --- Context Sources (button in toolbar, chips in input-row) --- */
+
+#context-sources-btn-wrap {
+  position: relative;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 0 8px 4px;
-  position: relative;
 }
 
 #context-sources-add {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px dashed var(--border);
+  gap: 3px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 18px;
+  border: none;
   background: transparent;
-  color: var(--text-dimmer);
+  color: var(--text-muted);
   font-family: inherit;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
 }
 
-#context-sources-add .lucide { width: 12px; height: 12px; }
+#context-sources-add .lucide { width: 20px; height: 20px; flex-shrink: 0; }
 
 #context-sources-add:hover {
-  color: var(--text-secondary);
-  border-color: var(--text-dimmer);
-  background: var(--sidebar-hover);
+  background: rgba(var(--overlay-rgb), 0.06);
+  color: var(--text);
 }
 
-#context-sources-chips {
-  display: flex;
+/* Badge count when sources are active */
+#context-sources-add .ctx-badge {
+  display: inline-flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .context-chip {
@@ -371,9 +380,9 @@
 
 #context-sources-picker {
   position: absolute;
-  bottom: calc(100% + 4px);
+  bottom: calc(100% + 8px);
   left: 0;
-  min-width: 200px;
+  min-width: 220px;
   max-height: 320px;
   overflow-y: auto;
   background: var(--sidebar-bg);
