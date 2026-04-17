@@ -35,10 +35,13 @@ if (s.dmMode && s.dmTargetUser) { ... }
 store.set({ connected: true });
 store.set({ dmMode: false, dmTargetUser: null });
 
-// Subscribe (reactive updates)
+// Subscribe (reactive UI sync)
+// Use when a state change should always trigger specific UI updates.
+// See app-connection.js for a real example (connected/processing -> status dot, overlay, sendBtn).
 store.subscribe(function (state, prev) {
   if (state.connected !== prev.connected) {
-    // react to connection change
+    document.getElementById("connect-overlay")
+      .classList.toggle("hidden", state.connected);
   }
 });
 ```
