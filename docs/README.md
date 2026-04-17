@@ -10,9 +10,9 @@ docs/
 ├── roadmaps/
 │   ├── completed/
 │   │   ├── REFACTORING_ROADMAP.md      Codebase decomposition (PR-01~42)
-│   │   └── MCP-BRIDGE-DESIGN.md        Original MCP design (now implemented)
+│   │   ├── MCP-BRIDGE-DESIGN.md        Original MCP design (now implemented)
+│   │   └── CTX-ELIMINATION-ROADMAP.md  Client-side _ctx removal (done, 0 refs)
 │   ├── in-progress/
-│   │   ├── CTX-ELIMINATION-ROADMAP.md  Client-side _ctx removal (20 modules left)
 │   │   └── SDK-UPGRADE.md              Claude Agent SDK version tracking
 │   └── planned/
 │       ├── EMAIL-INTEGRATION.md        Built-in email (IMAP/SMTP, 8 PRs)
