@@ -139,15 +139,17 @@ In Mate sidebar or Mate settings:
 
 ---
 
-## Relation to Home Hub
+## Mate MVC
 
-Home Hub widgets read from Mate datastores:
+Mate Datastore is the M in the Mate MVC pattern:
 
 ```
-Mate (writes data) -> Mate Datastore -> Widget (reads and displays)
+M  Mate Datastore    This document. Per-Mate SQLite DB.
+V  Mate Canvas       See MATE-CANVAS.md. Visual templates that render Datastore data.
+C  Mate AI           The Mate itself. Collects data, manages views.
 ```
 
-The HOME-HUB-ROADMAP Phase 2 (Project Data Store) should be replaced with this Mate Datastore. Phase 3 (Widget System) reads from Mate datastores instead of project datastores. The widget `data-bind` attribute references `{mateId}:{key}` instead of just `{key}`.
+Canvases read from the Datastore via data bindings. Users promote canvases to Home Hub. Home Hub is just an aggregator of promoted canvases, not a separate widget system.
 
 ---
 
