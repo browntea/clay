@@ -66,26 +66,26 @@ session.permissions = { pending: null };
 
 **Rule**: Apply this incrementally. When extracting a module, namespace the session properties that module uses. Do not refactor session properties belonging to other modules.
 
-### 3. Client-side state moves with its module
+### 3. Client-side state lives in store.js
 
-When app.js and sidebar.js are split (Phase 3, Phase 4), each extracted module takes its related globals.
+All mutable UI state goes into `store.js`, a zustand-like vanilla store (single object, shallow-merge setState, subscribe). Modules import store directly instead of receiving state through a context bag.
 
 ```js
-// Before: app.js top-level
+// Before: app.js top-level globals, passed via ctx bag
 var cachedDmConversations = null;
-var cachedDmUnread = {};
-var currentDmUserId = null;
+var dmMode = false;
+// ... initDm(ctx) { _ctx = ctx; } ... _ctx.dmMode ...
 
-// After: app-dm.js owns these
-function initDm(ctx) {
-  var conversations = null;
-  var unread = {};
-  var currentUserId = null;
-  // ...
-}
+// After: store.js owns the state, modules import directly
+import { store } from './store.js';
+var s = store.getState();
+if (s.dmMode) { /* ... */ }
+store.setState({ dmMode: true, dmTargetUser: user });
 ```
 
-**Rule**: Do not touch app.js globals until Phase 3. When Phase 3 starts, each extracted module owns the globals it needs.
+Functions stay in their owning modules. Only data lives in store.
+
+**Rule**: New client state always goes in store. Never create `var _ctx = null` / `initXxx(ctx)` patterns. See [CLIENT_MODULE_DEPS.md](./CLIENT_MODULE_DEPS.md) for the full guide.
 
 ---
 
@@ -122,7 +122,8 @@ Track which module owns which session properties. Update this table as modules a
 
 ## What NOT to do
 
-- **Do not introduce a state management library or framework.** The closure + ctx pattern is sufficient for this codebase size.
+- **Do not introduce a heavy state management library or framework.** store.js (zustand-like vanilla store) is sufficient for this codebase size.
+- **Do not use `var _ctx = null` / `initXxx(ctx)` context-bag injection on the client.** This pattern is being eliminated. Use store.js + direct imports instead. See [CLIENT_MODULE_DEPS.md](./CLIENT_MODULE_DEPS.md).
 - **Do not refactor state across module boundaries in one PR.** Each PR only touches state for the functions it extracts.
 - **Do not rename existing session properties until the owning module is extracted.** Renaming before extraction creates unnecessary churn.
-- **Do not add getter/setter wrappers around state.** Direct property access is fine. The goal is ownership clarity, not access control.
+- **Do not put functions in store.** Store is for data only. Functions stay in their owning modules and are imported directly.

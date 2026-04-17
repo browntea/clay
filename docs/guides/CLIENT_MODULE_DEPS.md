@@ -1,0 +1,115 @@
+# Client-Side State & Dependency Guide
+
+> How client modules (`lib/public/modules/`) manage state, access dependencies, and communicate.
+
+---
+
+## Architecture overview
+
+Clay's client follows a **zustand-like vanilla store** pattern:
+
+```
+store.js          -- single source of truth for all mutable UI state
+ws-ref.js         -- WebSocket singleton (getWs/setWs)
+each module       -- imports store + ws-ref + peer modules directly
+app.js            -- bootstraps everything: createStore(), connects WS, wires DOM
+```
+
+There is no framework. There is no context bag. Every module is a plain ES module that imports what it needs at the top of the file.
+
+---
+
+## store.js API
+
+```js
+import { store } from './store.js';
+
+// Read
+var slug = store.getState().currentSlug;
+var s = store.getState();  // grab snapshot when you need multiple fields
+if (s.dmMode && s.dmTargetUser) { ... }
+
+// Write
+store.setState({ connected: true });
+store.setState({ dmMode: false, dmTargetUser: null });  // multiple fields at once
+
+// Subscribe (reactive updates)
+store.subscribe(function (state, prev) {
+  if (state.connected !== prev.connected) {
+    // react to connection change
+  }
+});
+```
+
+Key points:
+- `setState` does a shallow merge (like zustand/React setState), not a full replacement.
+- `subscribe` fires on every `setState` call. Compare prev vs current to filter.
+- Only **data** lives in store. Functions stay in their owning modules.
+
+---
+
+## Dependency resolution cheat sheet
+
+| I need... | I get it from... | Example |
+|-----------|-----------------|---------|
+| Mutable UI state (dmMode, connected, currentSlug, ...) | `store.js` | `store.getState().dmMode` |
+| Update UI state | `store.js` | `store.setState({ processing: true })` |
+| WebSocket | `ws-ref.js` | `import { getWs } from './ws-ref.js'` |
+| Send a WS message | `ws-ref.js` | `getWs().send(JSON.stringify({ type: 'foo' }))` |
+| Function from another module | That module | `import { getCachedProjects } from './app-projects.js'` |
+| DOM element | Query locally or import from creator | `document.getElementById('messages')` |
+| basePath, wsPath | `store.js` | `store.getState().basePath` |
+| React to state changes | `store.subscribe` | See subscribe example above |
+
+---
+
+## Writing a new module (complete example)
+
+```js
+// app-example.js
+import { store } from './store.js';
+import { getWs } from './ws-ref.js';
+import { escapeHtml } from './render-utils.js';
+
+var exampleEl = null;
+
+export function handleExampleMessage(msg) {
+  if (!exampleEl) exampleEl = document.getElementById('example-panel');
+  var s = store.getState();
+  if (s.dmMode) return;  // skip in DM
+
+  exampleEl.innerHTML = escapeHtml(msg.text);
+  getWs().send(JSON.stringify({ type: 'example-ack', id: msg.id }));
+  store.setState({ lastExampleId: msg.id });
+}
+```
+
+Notice:
+- No `var _ctx = null`. No `export function initExample(ctx)`.
+- State read/write through store.
+- WS through ws-ref.
+- Peer functions through direct import.
+- DOM queried lazily on first use.
+
+---
+
+## Adding features to modules that still have _ctx
+
+Some modules still use the legacy `var _ctx = null` / `initXxx(ctx)` pattern (see [CTX-ELIMINATION-ROADMAP](../roadmaps/in-progress/CTX-ELIMINATION-ROADMAP.md) for the full list).
+
+When adding new code to these modules:
+- **Never add new `_ctx.xxx` references.** Use `store.getState()`, `store.setState()`, `getWs()`, or direct imports.
+- Existing `_ctx` code is fine until the module is fully migrated.
+- If you need a value that does not exist in store yet, add it to the `createStore()` call in app.js.
+
+---
+
+## What NOT to do
+
+| Bad | Why | Good |
+|-----|-----|------|
+| `var _ctx = null; initFoo(ctx) { _ctx = ctx; }` | Hidden coupling, untraceable data flow | Direct imports from store/ws-ref/peer modules |
+| `_ctx.ws.send(...)` | WS buried inside context bag | `getWs().send(...)` |
+| `_ctx.cachedProjects` | Reaching into another module's data via bag | `import { getCachedProjects } from './app-projects.js'` |
+| Putting functions in store | Store is for data only | Export function from owning module |
+| `localStorage.setItem('setting', ...)` | Settings must persist across devices | Send via WS, store server-side |
