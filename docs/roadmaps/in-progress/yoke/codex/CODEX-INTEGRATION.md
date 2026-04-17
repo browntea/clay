@@ -4,33 +4,23 @@
 
 ---
 
-## Current State (2026-04-17)
+## Current State (2026-04-18)
 
-### What's done
-- Codex adapter exists at `lib/yoke/adapters/codex.js` (602 lines)
-- Uses `@openai/codex-sdk` package (already in package.json)
-- Implements full YOKE interface: Adapter + QueryHandle
-- Event flattening: Codex ThreadEvent -> yokeType normalized events
-- Multi-turn conversation loop via `thread.runStreamed()`
-- Model list updated to current Codex models
+### What works
+- Codex adapter at `lib/yoke/adapters/codex.js` - fully functional
+- Basic prompt-response via `codex exec --json` (gpt-5.4)
+- Event flattening handles `item.completed`-only events from CLI
+- Per-session vendor selection via split toggle UI
+- Vendor-specific config panel (APPROVAL, SANDBOX, WEB SEARCH)
+- Cross-vendor instruction injection (reads CLAUDE.md for Codex sessions)
+- Auth detection and singleton adapter creation
+- Per-mate vendor selection with persist
 
-### What's broken
-- **First test failed** with `o4-mini` model (not supported on ChatGPT Pro accounts)
-- Fixed default model to `gpt-5.4`, but untested
-- `Reading prompt from stdin...` error suggests possible issue with how messages are passed to `thread.runStreamed()`
-- Need to verify `runStreamed` API signature matches installed SDK version
-
-### How to test
-1. Ensure `codex login` is done (auth token at `~/.codex/auth.json`)
-2. In `lib/project.js` line 163, change vendor:
-   ```js
-   var adapter = yoke.createAdapter({ vendor: "codex", cwd: cwd });
-   ```
-3. Restart server, open new session, send a message
-4. Watch server console for `[yoke/codex]` logs
-
-### Current vendor switch (temporary)
-`lib/project.js:163` is currently set to `vendor: "codex"` for testing. Change back to `"claude"` when done.
+### Known limitations
+- **No streaming**: `codex exec --json` emits complete items only, no incremental text deltas
+- **No Clay MCP tools**: Codex runs as separate process, cannot access in-process MCP (email, browser, debate)
+- **No session resume across vendors**: Claude sessions cannot be continued with Codex and vice versa
+- **Image support**: Text-only. Codex supports `local_image` with path, not base64
 
 ---
 
@@ -54,52 +44,60 @@ Two methods:
 1. **ChatGPT sign-in** (for Pro/Plus/Enterprise users): `codex login` -> browser OAuth -> token saved to `~/.codex/auth.json`
 2. **API key** (for pay-per-use): Set `OPENAI_API_KEY` env var or pass via `adapterOptions.CODEX.apiKey`
 
-ChatGPT sign-in gives access to "fast mode" and ChatGPT credit features. API key uses standard API pricing.
+Auth check: `yoke.checkAuth()` runs CLI commands, cached globally.
+- Claude: `claude auth status` -> JSON with `loggedIn: true`
+- Codex: `codex login status` -> exit code 0
 
 ---
 
-## SDK API Reference (from docs + source)
+## SDK Details
 
-```js
-// Create instance
-var Codex = require("@openai/codex-sdk").Codex;
-var codex = new Codex();
+### How it works internally
+The `@openai/codex-sdk` TypeScript SDK:
+1. Spawns `codex exec --experimental-json` as a child process
+2. Writes prompt to stdin
+3. Reads JSONL from stdout (one JSON object per line)
+4. Each line is parsed and yielded as a `ThreadEvent`
 
-// Start thread
-var thread = codex.startThread({ model: "gpt-5.4", workingDirectory: "/path" });
-
-// Resume thread
-var thread2 = codex.resumeThread(threadId, opts);
-
-// Run (blocking)
-var result = await thread.run("prompt text");
-
-// Run streamed (returns async iterable of events)
-var streamResult = await thread.runStreamed("prompt text", { signal: abortController.signal });
-for await (var evt of streamResult.events) {
-  // evt.type: thread.started, turn.started, turn.completed, turn.failed,
-  //           item.started, item.updated, item.completed, error
-  // evt.item.type: agent_message, reasoning, command_execution, file_change,
-  //               mcp_tool_call, web_search, todo_list, error
-}
+### ThreadEvent types (from SDK)
+```
+thread.started   -> { thread_id }
+turn.started     -> {}
+turn.completed   -> { usage }
+turn.failed      -> { error }
+item.started     -> { item: ThreadItem }  // NOT emitted by codex exec --json
+item.updated     -> { item: ThreadItem }  // NOT emitted by codex exec --json
+item.completed   -> { item: ThreadItem }  // ONLY this one is emitted
+error            -> { message }
 ```
 
----
+### ThreadItem types
+```
+agent_message      -> { id, type, text }
+reasoning          -> { id, type, text }
+command_execution  -> { id, type, command, aggregated_output, exit_code, status }
+file_change        -> { id, type, changes: [{path, kind}], status }
+mcp_tool_call      -> { id, type, server, tool, arguments, result, error, status }
+web_search         -> { id, type, query }
+todo_list          -> { id, type, items: [{text, completed}] }
+error              -> { id, type, message }
+```
 
-## Known Issues to Investigate
-
-1. **stdin prompt error**: `Codex Exec exited with code 1: Reading prompt from stdin...`
-   - Might be that `runStreamed` first arg needs to be a string, not an object
-   - Check what `pushMessage` passes as `initialMessage` to `runQueryLoop`
-   - The adapter's `pushMessage` sends either a string or array of objects depending on images
-
-2. **Thread options**: SDK docs show `startThread()` with no args in TS, but `thread_start(model="gpt-5.4")` in Python. Verify which options `startThread` actually accepts in the JS SDK.
-
-3. **Approval flow**: Codex uses `approvalPolicy` ("never", "on-failure", "always") instead of Claude's tool permission model. The adapter maps `toolPolicy: "allow-all"` -> `approvalPolicy: "never"`. Need to verify "on-failure" is correct default.
-
-4. **Image support**: Currently text-only. Comment in code: `// Codex supports local_image with path, not base64`
-
-5. **Session management**: `getSessionInfo`, `listSessions` return null/empty. Codex stores sessions in `~/.codex/sessions` but no programmatic API to query.
+### ThreadOptions
+```js
+{
+  model: string,                    // "gpt-5.4"
+  sandboxMode: "read-only" | "workspace-write" | "danger-full-access",
+  workingDirectory: string,
+  skipGitRepoCheck: boolean,        // always true for Clay
+  modelReasoningEffort: "minimal" | "low" | "medium" | "high" | "xhigh",
+  networkAccessEnabled: boolean,
+  webSearchMode: "disabled" | "cached" | "live",
+  webSearchEnabled: boolean,
+  approvalPolicy: "never" | "on-request" | "on-failure" | "untrusted",
+  additionalDirectories: string[],
+}
+```
 
 ---
 
@@ -107,34 +105,47 @@ for await (var evt of streamResult.events) {
 
 ```
 lib/yoke/
-  index.js              - createAdapter({ vendor: "codex" })
+  index.js              - createAdapters() singleton factory, checkAuth(), wrapCreateQuery()
+  instructions.js       - Cross-vendor instruction scanner (CLAUDE.md, AGENTS.md, .cursorrules)
   interface.js          - Adapter / QueryHandle contract
   adapters/
-    codex.js            - Codex adapter (this file)
-    claude.js           - Claude adapter (1,418 lines, reference implementation)
-    gemini.js           - Gemini adapter (668 lines)
+    codex.js            - Codex adapter
+    claude.js           - Claude adapter (reference implementation)
+    gemini.js           - Gemini adapter
 
-lib/sdk-bridge.js       - Uses adapter.createQuery(), iterates yokeType events
+lib/project.js          - Multi-adapter map, defaultVendor, get_vendor_models
+lib/sdk-bridge.js       - Per-session adapter selection via session.vendor
 lib/sdk-message-processor.js - Processes yokeType events into Clay WS messages
-lib/project.js:163      - vendor selection (hardcoded for now)
+lib/sessions.js         - vendor field on sessions
+lib/project-sessions.js - Codex config handlers (approval, sandbox, webSearch)
+lib/server-dm.js        - vendor in mate DM targetUser
 ```
 
 ### Event flow
 ```
-Codex SDK ThreadEvent
-  -> codex.js flattenEvent() -> yokeType events
-    -> sdk-bridge.js processQueryStream()
-      -> sdk-message-processor.js -> Clay WebSocket messages
-        -> browser
+Codex CLI (codex exec --json)
+  -> JSONL stdout
+    -> SDK parses to ThreadEvent
+      -> codex.js flattenEvent() -> yokeType events
+        -> sdk-bridge.js processQueryStream()
+          -> sdk-message-processor.js -> Clay WebSocket messages
+            -> browser
+```
+
+### Vendor selection flow
+```
+Client: vendor toggle -> store.currentVendor
+  -> first message payload includes vendor
+    -> server: session.vendor = msg.vendor
+      -> startQuery: adapters[session.vendor].createQuery()
 ```
 
 ---
 
 ## Next Steps
 
-1. Fix the `Reading prompt from stdin` error (likely message format issue)
-2. Get a basic prompt-response working
-3. Test tool use (file edits, bash commands)
-4. Test multi-turn conversation
-5. Add vendor selection to UI (currently hardcoded in project.js)
-6. Handle Codex-specific capabilities (sandbox mode, approval policy)
+1. **MCP for Codex**: Investigate exposing Clay MCP tools as standalone server for Codex CLI
+2. **Streaming**: Investigate if Codex app-server protocol provides streaming deltas (vs CLI batch)
+3. **Image support**: Map base64 images to temp files for Codex `local_image` support
+4. **Gemini vendor**: Add auth check and toggle support for Gemini (currently `gemini: false`)
+5. **Vendor-specific mode mapping**: Map Claude's MODE (Plan, Auto-accept) to Codex's approvalPolicy
