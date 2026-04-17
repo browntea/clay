@@ -1,8 +1,9 @@
-# Chat Project Plan
+# Chat and Forum
 
-> Goal: Add a "chat" project type to Clay where external users can join via invite link and communicate in Slack/Discord-style channels. No Claude Code access needed. Dogfooding Clay as our own community/feedback tool.
->
-> Prerequisite: Refactoring Roadmap (PR-01 through PR-42) is complete. All files are decomposed into thin coordinators + focused modules.
+> Add "chat" and "forum" project types to Clay. Chat provides Slack/Discord-style real-time channels. Forum provides threaded discussion boards. Both allow external users via invite link. Long-term vision: Mates become aware of chat and forum content as context, enabling AI that understands community discussions.
+
+**Created**: 2026-04-10
+**Status**: Planning
 
 ---
 
@@ -537,20 +538,105 @@ Chat projects render in the same icon strip. Clicking switches context just like
 
 ---
 
-## Out of Scope (Future)
+## Forum Project Type
 
-These are intentionally excluded from the initial implementation:
+In addition to real-time chat, a "forum" project type for threaded, persistent discussions.
 
-- **Threads** (reply to specific message): Adds complexity. Start with flat chat.
-- **File/image upload in channels**: Reuse later from code project image system.
-- **Reactions/emoji**: Nice to have, not MVP.
-- **Message pinning**: Later.
-- **Channel topics**: Later (use description for now).
-- **Voice/video**: Way later.
-- **Bot integration**: Later (but mates could post in channels eventually).
-- **Channel-level permissions**: Explicitly excluded. Project access = all channel access.
-- **Message search**: Later. Would benefit from SQLite migration.
-- **Federation/external API**: Later.
+### Forum vs Chat
+
+| | Chat | Forum |
+|---|---|---|
+| Type | `"chat"` | `"forum"` |
+| Structure | Channels with flat messages | Categories with threaded posts |
+| Pace | Real-time, ephemeral | Async, persistent |
+| Sidebar | `#channel-list` | Category list |
+| Data unit | Channel message (JSONL) | Thread (JSONL per thread) |
+| Best for | Quick coordination, social | Knowledge sharing, Q&A, feedback |
+
+### Forum Structure
+
+```
+Forum Project
+├── Category: Announcements
+│   ├── Thread: "v2.31 Release Notes"  (12 replies, pinned)
+│   └── Thread: "Maintenance Window April 20"  (3 replies)
+├── Category: Feature Requests
+│   ├── Thread: "Email integration for Mates"  (24 replies, closed)
+│   └── Thread: "Calendar sync would be nice"  (8 replies)
+└── Category: Bugs
+    └── Thread: "Sidebar resize handle disappears"  (5 replies, resolved)
+```
+
+### Thread Format
+
+Each thread is a JSONL file: `~/.clay/forums/{projectSlug}/{categorySlug}/{threadId}.jsonl`
+
+```js
+// First line is the opening post
+{ type: "post", id: "uuid", ts: 1712500000, from: "user-id", title: "v2.31 Release Notes", text: "..." }
+// Subsequent lines are replies
+{ type: "reply", id: "uuid", ts: 1712500100, from: "user-id", text: "...", replyTo: "parent-id" }
+```
+
+### Forum-specific Features
+
+- **Threaded replies**: Replies nest under posts (unlike flat chat)
+- **Rich text**: Markdown with image embeds
+- **Pinned threads**: Pin important threads to top of category
+- **Thread status**: Open / Closed / Resolved
+- **Voting**: Upvote threads and replies (useful for feature requests, Q&A)
+- **Tags/labels**: Cross-category tagging
+
+---
+
+## Mate Awareness (Long-term Vision)
+
+The strategic goal: Mates become aware of chat and forum content. This turns community discussions into AI-accessible context.
+
+### How It Works
+
+```
+Community discusses in Chat/Forum
+  -> Content indexed and summarized
+  -> Mate can search and reference discussions
+  -> Mate understands community sentiment, common issues, feature requests
+```
+
+### Use Cases
+
+| Scenario | How Mate Uses It |
+|----------|-----------------|
+| User asks "what are people requesting?" | Mate searches forum Feature Requests category, summarizes top threads |
+| User asks "any known issues with email?" | Mate searches forum Bugs + chat history for "email" |
+| Mate drafts release notes | Mate reads resolved threads since last release |
+| Mate triages a bug report | Mate checks if similar thread exists in forum |
+| Mate responds to DM | Mate references relevant forum discussion for context |
+
+### Implementation Approach
+
+1. **Indexing**: Chat messages and forum threads indexed into searchable store (SQLite FTS or similar)
+2. **Context Source**: Chat/Forum as a context source type (like email, terminal, browser tabs)
+3. **SDK Tools**: `clay_search_discussions(query)`, `clay_read_thread(threadId)`
+4. **Digest**: Periodic summaries of active discussions stored in Mate memory
+
+### Privacy Considerations
+
+- Mate only accesses projects it has been granted access to
+- Guest messages in public channels are searchable by Mates with project access
+- DMs are never indexed for Mate access (private)
+- Users can opt-out specific channels/categories from Mate indexing
+
+---
+
+## Out of Scope (Initial)
+
+- **File/image upload in channels**: Reuse later from code project image system
+- **Reactions/emoji**: Nice to have, not MVP
+- **Message pinning in chat**: Later (forum has it from start)
+- **Voice/video**: Way later
+- **Channel-level permissions**: Project access = all channel access
+- **Message search**: Later (comes with Mate Awareness indexing)
+- **Federation/external API**: Later
 
 ---
 
@@ -560,13 +646,19 @@ These are intentionally excluded from the initial implementation:
    Recommendation: Yes. Unified sidebar. Different icon distinguishes them.
 
 2. **Can a code project also have channels?**
-   Recommendation: Not initially. Keep types separate. Mixing adds complexity. Revisit after MVP is validated.
+   Recommendation: Not initially. Keep types separate. Mixing adds complexity. Revisit after MVP.
 
 3. **Should guests be able to DM each other?**
    Recommendation: Yes. DM system already exists and works for all users regardless of role.
 
-4. **Maximum channels per chat project?**
-   Recommendation: No hard limit initially. Practical limit around 50 before sidebar gets unwieldy.
+4. **Forum and Chat in one project?**
+   Recommendation: No. Keep them as separate project types. A community might have both a chat project and a forum project. Simpler than hybrid.
 
 5. **Message edit/delete?**
-   Recommendation: Include in MVP. Users expect this in chat. Implementation is straightforward: mark message with `editedAt` or `deletedAt` timestamp, broadcast update.
+   Recommendation: Include in MVP. Users expect this. Implementation: mark with `editedAt` or `deletedAt` timestamp.
+
+6. **How does Mate Awareness affect performance?**
+   Recommendation: Indexing is async and background. Search is on-demand. No impact on chat/forum performance.
+
+7. **Should Mates be able to post in channels/forums?**
+   Recommendation: Yes, eventually. A Mate could post daily summaries, answer questions, or moderate. But defer to post-MVP.
