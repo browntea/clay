@@ -144,8 +144,55 @@ Client: vendor toggle -> store.currentVendor
 
 ## Next Steps
 
-1. **MCP for Codex**: Investigate exposing Clay MCP tools as standalone server for Codex CLI
-2. **Streaming**: Investigate if Codex app-server protocol provides streaming deltas (vs CLI batch)
-3. **Image support**: Map base64 images to temp files for Codex `local_image` support
-4. **Gemini vendor**: Add auth check and toggle support for Gemini (currently `gemini: false`)
-5. **Vendor-specific mode mapping**: Map Claude's MODE (Plan, Auto-accept) to Codex's approvalPolicy
+### 1. MCP for Codex (stdio MCP server)
+
+**Decision**: Expose Clay's in-process MCP tools as stdio MCP servers that Codex CLI can connect to natively.
+
+**Why stdio MCP server (not in-process bridge)**:
+- Clay's MCP tools already use `@modelcontextprotocol/sdk`. MCP is designed for inter-process communication.
+- In-process bridge is impossible anyway. Codex runs as a child process (`codex exec`), so IPC is required regardless.
+- stdio MCP server is the standard approach. No custom bridge protocol needed.
+- Vendor-agnostic. Any future vendor that supports MCP (Gemini, etc.) can connect the same way.
+- Codex CLI already supports MCP server connections natively via config.
+
+**Implementation plan**:
+1. Create `lib/yoke/mcp-bridge-server.js` that spawns as a child process and proxies tool calls back to Clay's in-process MCP tool handlers via IPC (parent<->child message passing).
+2. In Codex adapter's `init()` or `createQuery()`, spawn the bridge server process.
+3. Inject MCP server config into Codex via `CodexOptions.config`:
+   ```js
+   new Codex({
+     config: {
+       mcp_servers: {
+         "clay-tools": {
+           command: "node",
+           args: ["/path/to/mcp-bridge-server.js"],
+         }
+       }
+     }
+   });
+   ```
+4. Bridge server receives MCP tool calls from Codex CLI via stdio, forwards to parent process (Clay) via IPC, returns results.
+5. Existing Clay MCP tools (email, browser, debate, custom) work without modification.
+
+**Flow**:
+```
+Codex CLI (child process)
+  -> MCP tool call via stdio
+    -> mcp-bridge-server.js (child of Clay)
+      -> IPC to Clay parent process
+        -> Clay in-process MCP tool handler
+          -> result back via IPC
+            -> stdio response to Codex CLI
+```
+
+### 2. Streaming
+Investigate if Codex app-server protocol provides streaming deltas (vs CLI batch `item.completed` only).
+
+### 3. Image support
+Map base64 images to temp files for Codex `local_image` support.
+
+### 4. Gemini vendor
+Add auth check and toggle support for Gemini (currently `gemini: false`).
+
+### 5. Vendor-specific mode mapping
+Map Claude's MODE (Plan, Auto-accept) to Codex's approvalPolicy.
