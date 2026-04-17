@@ -31,8 +31,8 @@
 #session-actions button.active { background: var(--sidebar-hover); color: var(--text); }
 
 .sidebar-badge {
-  background: var(--accent);
-  color: #fff;
+  background: rgba(var(--overlay-rgb), 0.1);
+  color: var(--text-dimmer);
   font-size: 10px;
   font-weight: 700;
   min-width: 16px;
@@ -46,6 +46,32 @@
   line-height: 1;
 }
 .sidebar-badge.hidden { display: none; }
+
+#sticky-notes-sidebar-count {
+  cursor: pointer;
+  overflow: hidden;
+  transition: padding 0.2s ease, background 0.15s ease, color 0.15s ease;
+}
+#sticky-notes-sidebar-count::after {
+  content: "Open Archive";
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-left: 0;
+  opacity: 0;
+  transition: max-width 0.2s ease, margin-left 0.2s ease, opacity 0.15s ease;
+}
+#sticky-notes-sidebar-count:hover {
+  background: var(--accent);
+  color: #fff;
+}
+#sticky-notes-sidebar-count:hover::after {
+  max-width: 80px;
+  margin-left: 4px;
+  opacity: 1;
+}
 
 /* --- Panels --- */
 .sidebar-panel { flex: 1; overflow-y: auto; min-height: 0; }
