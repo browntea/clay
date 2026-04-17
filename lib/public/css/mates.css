@@ -616,6 +616,43 @@
   font-weight: 600;
 }
 
+/* Vendor toggle in mate header */
+.mate-vendor-toggle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.mate-vendor-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.5;
+  transition: opacity 0.15s, background 0.15s;
+}
+.mate-vendor-btn.active {
+  opacity: 1;
+  background: rgba(255,255,255,0.3);
+}
+.mate-vendor-btn.disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+.mate-vendor-btn:hover:not(.disabled) {
+  background: rgba(255,255,255,0.35);
+}
+.mate-vendor-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+
 /* Collapse button inside mate header: white to match header style */
 .mate-sidebar-header .sidebar-collapse-btn {
   color: rgba(255,255,255,0.7);
