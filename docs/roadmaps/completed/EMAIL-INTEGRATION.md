@@ -3,7 +3,8 @@
 > Clay built-in email module. Two modes: server SMTP (admin-managed, auditable) and personal email accounts (user-managed, private). Mates read/send/search emails as a context source and via SDK tools.
 
 **Created**: 2026-04-16
-**Status**: In Progress (Phase 1-2 implemented)
+**Status**: Completed
+**Completed**: 2026-04-17
 
 ---
 
