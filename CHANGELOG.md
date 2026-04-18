@@ -1,3 +1,12 @@
+# [2.32.0-beta.4](https://github.com/chadbyte/clay/compare/v2.32.0-beta.3...v2.32.0-beta.4) (2026-04-18)
+
+
+### Bug Fixes
+
+* **debate:** pass mate vendor to createMentionSession calls ([2558314](https://github.com/chadbyte/clay/commit/255831419ec011dbee9e7535424669c9bfa9b3f9))
+* **markdown:** normalize smart quotes before parsing ([33b272b](https://github.com/chadbyte/clay/commit/33b272b17ec5343ba95099aa34cd2d9483671a17))
+* **mention:** use mate's vendor adapter for mention sessions ([04e657e](https://github.com/chadbyte/clay/commit/04e657e2a81279cabfe9de392d0212ae5cce54af))
+
 # [2.32.0-beta.3](https://github.com/chadbyte/clay/compare/v2.32.0-beta.2...v2.32.0-beta.3) (2026-04-18)
 
 
