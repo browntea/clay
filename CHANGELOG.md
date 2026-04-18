@@ -1,3 +1,65 @@
+# [2.32.0-beta.1](https://github.com/chadbyte/clay/compare/v2.31.0...v2.32.0-beta.1) (2026-04-18)
+
+
+### Bug Fixes
+
+* **codex:** abort ends iterator immediately like Claude pattern ([87af5f0](https://github.com/chadbyte/clay/commit/87af5f0f7047cdcf2646cc5f93950200ae078abd))
+* **codex:** allow turn/completed through after abort ([3b1d864](https://github.com/chadbyte/clay/commit/3b1d8643fc8e1cffb96577197a62da7c39314994))
+* **codex:** clear typing indicator on abort and prevent duplicate message text ([1411807](https://github.com/chadbyte/clay/commit/1411807f6d73be811ff9506b8e91c8057b01441d))
+* **codex:** filter events by threadId to prevent session crosstalk ([b27b495](https://github.com/chadbyte/clay/commit/b27b495710195fe10ed48d5d1e22e1169964feef))
+* **codex:** listen for abortController signal to trigger handle.abort ([e978352](https://github.com/chadbyte/clay/commit/e97835207b8dc045f820f3bbcfa3ca410e746a7b))
+* **codex:** proper abort handling with turn/completed flow ([68b3c13](https://github.com/chadbyte/clay/commit/68b3c1394a15df6a1eec550862c2b68822fc131f))
+* **codex:** route MCP approval through canUseTool instead of auto-accept ([34d6501](https://github.com/chadbyte/clay/commit/34d650144beb7141e0d9ae5b8f5b35b595e8293a))
+* **codex:** send turn/interrupt as request instead of notification ([a9240f3](https://github.com/chadbyte/clay/commit/a9240f348737265fc18ee036b1087534a6667ec2))
+* **codex:** show interrupted message and reset UI on abort ([6cade75](https://github.com/chadbyte/clay/commit/6cade75607bc37787c43e81096084d51dd349f1f))
+* **mcp:** cache extension state and resend on WS reconnect ([9035de3](https://github.com/chadbyte/clay/commit/9035de39c44cb03e56a156a954483e6952ba7403))
+* **mcp:** global bridge endpoint, tool cache refresh, codex 0.121.0 ([b3d125c](https://github.com/chadbyte/clay/commit/b3d125c76101ab93c2e43e2f2d25cffc6c12e228))
+* send done before interrupted message and use vendor name ([3639c85](https://github.com/chadbyte/clay/commit/3639c85f7c817206b84d9aa96141f38f46734390))
+* send info before done so typing indicator clears properly ([9b07ce8](https://github.com/chadbyte/clay/commit/9b07ce8154a80f3bd568c9c90acbb077e7367a8a))
+* send status+thinking_stop before done to clear typing indicator ([c194274](https://github.com/chadbyte/clay/commit/c194274a3dd63e442f8ae2845f2a2aefe2dab140))
+* **session:** include vendor in session_switched on reconnect ([5714dc6](https://github.com/chadbyte/clay/commit/5714dc6e069ecaa8f4559f273b14903a91f4016a))
+* **session:** reset vendor to claude when switching to non-vendor session ([6491ac0](https://github.com/chadbyte/clay/commit/6491ac031e17d0370b333eedecbbb9f02dfdf3a7))
+* **session:** resolve sm reference error in switchSession ([6cf21bf](https://github.com/chadbyte/clay/commit/6cf21bfe2921cf8ab1c42db9672a554113d6d8bf))
+* set taskStopRequested on stop message for proper abort handling ([bd77eb5](https://github.com/chadbyte/clay/commit/bd77eb51db2be424787c58bc04679aaa1f814a87))
+* **ui:** remove orphan closing brace in sidebar-mates mate context menu ([b4a56eb](https://github.com/chadbyte/clay/commit/b4a56eb6265030acd7517224b37440722fd583f5))
+* **ui:** remove undefined dismissOnboarding call in sticky-notes ([7ddac57](https://github.com/chadbyte/clay/commit/7ddac576130d1e9a1a2525041b5db2587b0620b8))
+* **ui:** show vendor name in permission requests instead of hardcoded Claude Code ([c697f86](https://github.com/chadbyte/clay/commit/c697f8628596eb9dd0ff7f48949b475414acebf3))
+* **ui:** skip addRewindButton when vendor capability is false ([7425947](https://github.com/chadbyte/clay/commit/742594746cd04fd63a365314cb9f56ad2fdf8fc1))
+* **ui:** use getWsRef for fork button click handler ([632b16a](https://github.com/chadbyte/clay/commit/632b16a8a0966d439d3a37310f44140126cf6ba1))
+* **ui:** use vendor-specific avatar in permission requests ([055f986](https://github.com/chadbyte/clay/commit/055f986feb4804a40150ae9d5ba8fb8e46c60143))
+* use correct interrupted message text ([61dda55](https://github.com/chadbyte/clay/commit/61dda551dc5d7d266edf0658a8cceb0725fedb33))
+* vendor-specific interrupted message (Claude vs Codex) ([fc8e7de](https://github.com/chadbyte/clay/commit/fc8e7de6dcf8319e0f0b7caa6d641b731eb80bc6))
+* **yoke:** convert mention session stream loop to yokeType events ([7bb1757](https://github.com/chadbyte/clay/commit/7bb175743bdcae867ba0248f280e154be55552b9))
+* **yoke:** remove hardcoded API key from Gemini adapter, add debug logging ([b6e624e](https://github.com/chadbyte/clay/commit/b6e624ebc7e6bb32c56ea55315343d5f1754bed0))
+
+
+### Features
+
+* **codex:** add context usage bar and rate limit display ([1810fa4](https://github.com/chadbyte/clay/commit/1810fa486d3b2ce77036c0be96c7cdc28c89d48f))
+* **codex:** add fork and rewind support via app-server API ([fd16e47](https://github.com/chadbyte/clay/commit/fd16e47fe575b1d1837a90126f18d31fd0774f07))
+* **codex:** migrate to app-server protocol with MCP approval support ([58350b4](https://github.com/chadbyte/clay/commit/58350b433653b22c266bf467ad49661d925102d6))
+* **filebrowser:** add window-style titlebar and file search ([5d25c8a](https://github.com/chadbyte/clay/commit/5d25c8a528efe5e21bb2a94c4fc10903f6302c36))
+* **input:** add rotating mate avatar overlay on @ button ([b8a6c40](https://github.com/chadbyte/clay/commit/b8a6c40ff4aec18a79d177b61acacb69e373e341))
+* **input:** replace prompt suggestion chips with ghost text pattern ([0753833](https://github.com/chadbyte/clay/commit/0753833bd96e433b40dbed4a084d546766e6e327))
+* **mates:** add per-mate vendor selection and vendor badge on strip ([108708a](https://github.com/chadbyte/clay/commit/108708a431ac3edf6d07837862125ee4b329d4c3))
+* **mates:** persist vendor, vendor badges in mention menu, and UI polish ([10907a6](https://github.com/chadbyte/clay/commit/10907a66cd4e9110ebf5b0f3d03cee402da3ae2b))
+* **mcp:** enable MCP tool support in Codex sessions via stdio bridge ([45f3d17](https://github.com/chadbyte/clay/commit/45f3d171e8d52f8d409ec143573c66e1924695be))
+* **session:** send vendor capabilities to client, hide rewind for Codex ([dfbf77d](https://github.com/chadbyte/clay/commit/dfbf77da1fc46dc8fed3a7d7dc9cbf9e9dc08664))
+* **vendor:** allow vendor selection before auth, login flow on send ([fa29580](https://github.com/chadbyte/clay/commit/fa2958061607cfb0339278f2624ba865f854a9f2))
+* **yoke:** add Codex adapter fixes, cross-vendor instruction injection, and vendor UI ([60ec23d](https://github.com/chadbyte/clay/commit/60ec23d54dee9e6cd7491d7fd3513f6240ce7fba))
+* **yoke:** add Codex adapter, restore Claude as default ([483dd28](https://github.com/chadbyte/clay/commit/483dd28a0d56b1277f121c9a61598302a629c9dc))
+* **yoke:** add Gemini adapter (Phase 4a) ([068bd2a](https://github.com/chadbyte/clay/commit/068bd2a78e43831271aef2d288497038969cebc6))
+* **yoke:** add multi-vendor adapter map, vendor toggle UI, and per-session vendor binding ([8b37ce2](https://github.com/chadbyte/clay/commit/8b37ce28e5f38dd10de349edf666716b9356142b))
+* **yoke:** add vendor-specific config panel, fix model switching, and polish UI ([72246c4](https://github.com/chadbyte/clay/commit/72246c4fb6188fb732597cf08699f80398be6770))
+* **yoke:** Gemini adapter working in Clay ([48164d0](https://github.com/chadbyte/clay/commit/48164d0322b2a67abb3ca88fa2d6b4cc12c1be26))
+* **yoke:** merge YOKE adapter abstraction layer ([49ebc2c](https://github.com/chadbyte/clay/commit/49ebc2c7602d4b20ff4375181a96545490d57943))
+
+
+### Performance Improvements
+
+* **skills:** cache skill update checks with 5-minute TTL ([9370407](https://github.com/chadbyte/clay/commit/93704074f36d459d8e464bf78e9434f0f81a7f2a))
+* **yoke:** cache Codex adapter init and reduce warmup log noise ([edddca5](https://github.com/chadbyte/clay/commit/edddca5fc0886ee6a3312c9e25f85003f10a55d8))
+
 # [2.31.0](https://github.com/chadbyte/clay/compare/v2.30.0...v2.31.0) (2026-04-17)
 
 
