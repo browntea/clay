@@ -1,3 +1,10 @@
+# [2.32.0-beta.2](https://github.com/chadbyte/clay/compare/v2.32.0-beta.1...v2.32.0-beta.2) (2026-04-18)
+
+
+### Bug Fixes
+
+* **ui:** suppress update banner re-show within 1 hour of dismiss ([f23488d](https://github.com/chadbyte/clay/commit/f23488df1b69e9527a94f4c21615e165c0eb2787))
+
 # [2.32.0-beta.1](https://github.com/chadbyte/clay/compare/v2.31.0...v2.32.0-beta.1) (2026-04-18)
 
 
