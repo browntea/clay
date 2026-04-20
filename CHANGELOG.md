@@ -1,3 +1,10 @@
+# [2.32.0-beta.11](https://github.com/chadbyte/clay/compare/v2.32.0-beta.10...v2.32.0-beta.11) (2026-04-20)
+
+
+### Bug Fixes
+
+* **scroll:** scroll to bottom when returning to app after backgrounding ([#324](https://github.com/chadbyte/clay/issues/324)) ([70a6751](https://github.com/chadbyte/clay/commit/70a675120189f22f591b097c9238348a472e6101))
+
 # [2.32.0-beta.10](https://github.com/chadbyte/clay/compare/v2.32.0-beta.9...v2.32.0-beta.10) (2026-04-20)
 
 
