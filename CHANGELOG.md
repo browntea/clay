@@ -1,3 +1,10 @@
+# [2.32.0-beta.10](https://github.com/chadbyte/clay/compare/v2.32.0-beta.9...v2.32.0-beta.10) (2026-04-20)
+
+
+### Bug Fixes
+
+* **input:** let context picker escape attach-wrap overflow ([0177849](https://github.com/chadbyte/clay/commit/0177849d726e856cbe5193bcb2e2b804df9f4e62)), closes [#attach-wrap](https://github.com/chadbyte/clay/issues/attach-wrap)
+
 # [2.32.0-beta.9](https://github.com/chadbyte/clay/compare/v2.32.0-beta.8...v2.32.0-beta.9) (2026-04-20)
 
 
