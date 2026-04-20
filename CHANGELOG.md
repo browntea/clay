@@ -1,3 +1,10 @@
+# [2.32.0-beta.9](https://github.com/chadbyte/clay/compare/v2.32.0-beta.8...v2.32.0-beta.9) (2026-04-20)
+
+
+### Bug Fixes
+
+* **input:** keep send button fixed and collapse vendor labels earlier ([1dd7a36](https://github.com/chadbyte/clay/commit/1dd7a367b6f1e07b922bef8ca41245a29ef4c8cd))
+
 # [2.32.0-beta.8](https://github.com/chadbyte/clay/compare/v2.32.0-beta.7...v2.32.0-beta.8) (2026-04-20)
 
 
