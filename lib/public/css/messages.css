@@ -1503,69 +1503,6 @@ pre.mermaid-error {
 .context-overflow-btn:hover { background: var(--accent-hover); }
 
 /* ==========================================================================
-   Auth Required Message
-   ========================================================================== */
-
-.auth-required-msg {
-  max-width: 420px;
-  margin: 12px auto;
-  padding: 14px 18px;
-  background: color-mix(in srgb, var(--warning) 8%, var(--bg));
-  border: 1px solid color-mix(in srgb, var(--warning) 30%, transparent);
-  border-radius: 12px;
-  font-size: 13px;
-}
-
-.auth-required-header {
-  font-weight: 600;
-  color: var(--warning);
-  margin-bottom: 4px;
-}
-
-.auth-required-hint {
-  color: var(--text-muted);
-  font-size: 12px;
-  line-height: 1.5;
-  margin-bottom: 4px;
-}
-
-.auth-required-guide {
-  color: var(--text-muted);
-  font-size: 11px;
-  line-height: 1.4;
-  margin-bottom: 8px;
-  opacity: 0.8;
-}
-
-.auth-required-cmd {
-  display: block;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  background: var(--input-bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text);
-  user-select: all;
-}
-
-.auth-required-btn {
-  padding: 8px 20px;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.auth-required-btn:hover { background: var(--accent-hover); }
-
-/* ==========================================================================
    Rate Limit Message
    ========================================================================== */
 
