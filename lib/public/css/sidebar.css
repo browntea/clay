@@ -810,18 +810,10 @@
   box-shadow: 0 0 4px var(--success);
 }
 
-.session-item .session-item-text {
-  padding-right: 58px;
-}
-
 .session-bookmark-btn {
-  position: absolute;
-  right: 30px;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 6px;
   border: none;
   background: transparent;
@@ -830,19 +822,33 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  margin-right: 2px;
+  flex-shrink: 0;
   opacity: 0;
   transition: opacity 0.2s ease, color 0.15s, background 0.15s;
 }
 
+.session-bookmark-btn.hover {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.session-bookmark-btn.inline {
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+
 .session-bookmark-btn .lucide,
 .session-bookmark-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   display: block;
 }
 
-.session-item:hover .session-bookmark-btn,
-.session-item:focus-within .session-bookmark-btn,
+.session-item:hover .session-bookmark-btn.hover,
+.session-item:focus-within .session-bookmark-btn.hover,
 .session-bookmark-btn.bookmarked {
   opacity: 1;
 }
@@ -882,6 +888,10 @@
   line-height: 18px;
   text-align: center;
   z-index: 2;
+}
+
+.session-item .session-item-text {
+  padding-right: 28px;
 }
 
 .session-unread-badge.has-unread {
