@@ -1,3 +1,30 @@
+# [2.33.0-beta.3](https://github.com/chadbyte/clay/compare/v2.33.0-beta.2...v2.33.0-beta.3) (2026-04-22)
+
+
+### Bug Fixes
+
+* **codex:** forward direct tool events to UI ([b25abe6](https://github.com/chadbyte/clay/commit/b25abe61a00ec52ed98fc4add36a92d44021d21c))
+* **codex:** initialize adapter after runtime login ([6703e95](https://github.com/chadbyte/clay/commit/6703e95ce69229642fbf11a1c95997765e8812bf))
+* **codex:** preserve bash commands across approval ([9978465](https://github.com/chadbyte/clay/commit/9978465466cf62aa28e1d5d01b491d67510e0317))
+* **codex:** route requestUserInput through elicitation UI ([a261c76](https://github.com/chadbyte/clay/commit/a261c768900f1dc9f4cfed347f10b3487e10026f))
+* **codex:** surface file change diffs in UI ([f5585a8](https://github.com/chadbyte/clay/commit/f5585a86ec98a8840a42437e066e10e9473299ea))
+* **codex:** use app-server thread sandbox params ([b9569c9](https://github.com/chadbyte/clay/commit/b9569c99dfa4364418454e2dc24fe815c66d5b42))
+* **models:** send vendor-specific model lists ([f6df875](https://github.com/chadbyte/clay/commit/f6df8753499698617bd5ee9bf36a85799418168e))
+* **rate-limit:** clear Claude schedule mode on vendor switch ([fa0df6d](https://github.com/chadbyte/clay/commit/fa0df6dbbaf289d4ed7f0b1cde81cb3807d07319))
+* **ui:** clear stale models on vendor switch ([1862b9b](https://github.com/chadbyte/clay/commit/1862b9be543695bc5ab2d33498c6d5d481fe2e61))
+* **ui:** detect hunk-only patch diffs ([6ee5970](https://github.com/chadbyte/clay/commit/6ee5970e0a779fd4faffdb646482537fc299b21c))
+* **ui:** show vendor icon on usage pill ([cff7a60](https://github.com/chadbyte/clay/commit/cff7a60fdda8e7f10f41098de6bbe890f5b91181))
+
+
+### Features
+
+* add session bookmarks ([54018d8](https://github.com/chadbyte/clay/commit/54018d867d8ee61a6b46ca631497083b558f01aa))
+* **codex:** surface compaction status in Clay UI ([dead00c](https://github.com/chadbyte/clay/commit/dead00c5266b212eb32594be6019600c393f06e5))
+* **codex:** surface plan updates in Clay UI ([b4d4f19](https://github.com/chadbyte/clay/commit/b4d4f196729c2e544e89096f0fd29c3ff0ebb267))
+* **codex:** surface prompt suggestions in Clay UI ([1d3d5a4](https://github.com/chadbyte/clay/commit/1d3d5a4dd408522e13b164211fa3c962b2acf186))
+* improve session bookmark interactions ([8f862dc](https://github.com/chadbyte/clay/commit/8f862dc6a44285214ed7f7262c58a92153a8a064))
+* refine session bookmark icon placement ([33dbf98](https://github.com/chadbyte/clay/commit/33dbf98ec594ebdb7e42b2bcbbe2e9abc03450ad))
+
 # [2.33.0-beta.2](https://github.com/chadbyte/clay/compare/v2.33.0-beta.1...v2.33.0-beta.2) (2026-04-22)
 
 
