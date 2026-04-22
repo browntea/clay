@@ -1233,6 +1233,29 @@ pre.mermaid-error {
 .plan-card-body strong { font-weight: 600; }
 .plan-card-body blockquote { border-left: 3px solid var(--border); padding-left: 12px; color: var(--text-muted); margin: 8px 0; }
 
+.todo-widget.todo-widget-plan .todo-header {
+  background: linear-gradient(180deg, rgba(var(--overlay-rgb), 0.04), rgba(var(--overlay-rgb), 0.015));
+}
+
+.todo-widget.todo-widget-plan .todo-header-icon,
+.todo-widget.todo-widget-plan .todo-header-title {
+  color: var(--accent);
+}
+
+.todo-widget.todo-widget-plan .todo-header-count {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.todo-widget.todo-widget-plan .todo-item.pending .todo-item-icon {
+  opacity: 0.75;
+}
+
+.todo-widget.todo-widget-plan .todo-item.in-progress .todo-item-text {
+  color: var(--text);
+  font-weight: 500;
+}
+
 /* --- Plan permission (ExitPlanMode) --- */
 .plan-permission-header {
   background: var(--success-8) !important;
