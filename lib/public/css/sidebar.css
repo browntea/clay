@@ -810,19 +810,56 @@
   box-shadow: 0 0 4px var(--success);
 }
 
-.session-bookmark-icon {
-  display: inline-flex;
-  align-items: center;
-  color: var(--accent);
-  margin-right: 6px;
-  vertical-align: middle;
+.session-item .session-item-text {
+  padding-right: 58px;
 }
 
-.session-bookmark-icon .lucide,
-.session-bookmark-icon svg {
-  width: 12px;
-  height: 12px;
+.session-bookmark-btn {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-dimmer);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.15s, background 0.15s;
+}
+
+.session-bookmark-btn .lucide,
+.session-bookmark-btn svg {
+  width: 14px;
+  height: 14px;
   display: block;
+}
+
+.session-item:hover .session-bookmark-btn,
+.session-item:focus-within .session-bookmark-btn,
+.session-bookmark-btn.bookmarked {
+  opacity: 1;
+}
+
+.session-bookmark-btn:hover {
+  color: var(--accent);
+  background: rgba(var(--overlay-rgb), 0.06);
+}
+
+.session-bookmark-btn.bookmarked {
+  color: var(--accent);
+}
+
+.session-bookmark-btn.bookmarked .lucide,
+.session-bookmark-btn.bookmarked svg {
+  fill: currentColor;
+  stroke: currentColor;
 }
 
 /* Session unread badge */
