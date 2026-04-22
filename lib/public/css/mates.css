@@ -588,6 +588,15 @@
   border-right: none;
   overflow: hidden;
   flex-shrink: 0;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* Inputs inside the mate sidebar remain selectable. */
+#mate-sidebar-column input,
+#mate-sidebar-column textarea,
+#mate-sidebar-column [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 #mate-sidebar-column.hidden {
@@ -1015,38 +1024,18 @@ body.mate-dm-active #layout.sidebar-collapsed .mate-collapsed-info {
   text-overflow: ellipsis;
 }
 
-#mate-sidebar-tools {
-  display: flex;
-  flex-direction: column;
-  padding: 8px 8px 4px;
+/* Mate sidebar tools: icon+caption grid, matches #session-actions.
+   Tile styling comes from .palette-tile in sidebar.css. */
+#mate-sidebar-tools-wrap {
   flex-shrink: 0;
   border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 4px;
 }
-
-#mate-sidebar-tools button {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 10px;
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 600;
-  font-family: inherit;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-#mate-sidebar-tools button:hover {
-  background: var(--sidebar-hover);
-  color: var(--text-secondary);
-}
-
-#mate-sidebar-tools button svg {
-  width: 16px;
-  height: 16px;
+#mate-sidebar-tools {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 0 8px 4px;
 }
 
 /* Knowledge editor panel (overlays main content) */

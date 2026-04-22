@@ -99,12 +99,16 @@
       <img class="icon-strip-logo" src="icon-banded-76.png" width="38" height="38" alt="Clay">
     </div>
     <div class="icon-strip-separator"></div>
+    <button type="button" class="icon-strip-hint" id="icon-strip-hint-project" data-switcher-mode="project" aria-label="Switch project"></button>
     <div class="icon-strip-projects" id="icon-strip-projects">
       <div class="skeleton-icon-strip-item"></div>
       <div class="skeleton-icon-strip-item"></div>
     </div>
     <button class="icon-strip-add" id="icon-strip-add" title="Add project"><i data-lucide="plus"></i></button>
-    <div class="icon-strip-users hidden" id="icon-strip-users"></div>
+    <div class="icon-strip-mate-section" id="icon-strip-mate-section">
+      <button type="button" class="icon-strip-hint hidden" id="icon-strip-hint-mate" data-switcher-mode="mate" aria-label="Switch mate"></button>
+      <div class="icon-strip-users hidden" id="icon-strip-users"></div>
+    </div>
     <div class="icon-strip-me" id="icon-strip-me"></div>
   </div>
 
@@ -183,21 +187,13 @@
       </div>
       <div id="sidebar">
         <div id="sidebar-tools">
-          <button id="sidebar-tools-toggle" type="button">
+          <div class="sidebar-tools-header">
             <span class="sidebar-section-label">Tools</span>
-            <i data-lucide="chevron-down" class="sidebar-tools-chevron"></i>
-          </button>
-          <div id="session-actions">
-            <button id="file-browser-btn"><i data-lucide="folder-tree"></i> <span>File browser</span></button>
-            <button id="terminal-sidebar-btn"><i data-lucide="square-terminal"></i> <span>Terminal</span><span id="terminal-sidebar-count" class="sidebar-badge hidden"></span></button>
-            <button id="sticky-notes-sidebar-btn"><i data-lucide="sticky-note"></i> <span>Sticky Notes</span><span id="sticky-notes-sidebar-count" class="sidebar-badge hidden"></span></button>
-            <div class="sidebar-tools-divider"></div>
-            <button id="email-sidebar-btn"><i data-lucide="mail"></i> <span>Email</span></button>
-            <button id="mcp-btn"><i data-lucide="cable"></i> <span>MCP Servers</span><span id="mcp-sidebar-count" class="sidebar-badge hidden"></span></button>
-            <button id="skills-btn"><i data-lucide="puzzle"></i> <span>Skills</span></button>
-            <div class="sidebar-tools-divider"></div>
-            <button id="scheduler-btn"><i data-lucide="calendar-clock"></i> <span>Scheduled Tasks</span></button>
+            <span class="sidebar-tools-hint" data-palette="session" title="Show keyboard hotkeys"></span>
+            <button type="button" class="tool-palette-edit-btn" data-palette="session" aria-label="Edit tool palette" title="Edit palette"><i data-lucide="pencil"></i></button>
           </div>
+          <div id="session-actions"></div>
+          <div id="session-actions-hidden" class="tool-palette-hidden-section hidden"></div>
         </div>
         <div id="sidebar-sessions-header">
           <div id="sessions-header-content">
@@ -257,14 +253,14 @@
         <div id="mate-sidebar-seed-tooltip" class="mate-seed-tooltip hidden"></div>
         <button id="mate-sidebar-toggle-btn" class="sidebar-collapse-btn" title="Collapse sidebar"><i data-lucide="panel-left-close"></i></button>
       </div>
-      <div id="mate-sidebar-tools">
-        <button id="mate-memory-btn"><i data-lucide="brain"></i> <span>Memory</span><span id="mate-memory-count" class="sidebar-badge hidden"></span></button>
-        <button id="mate-knowledge-btn"><i data-lucide="book-open"></i> <span>Knowledge</span><span id="mate-knowledge-count" class="sidebar-badge hidden"></span></button>
-        <button id="mate-sticky-notes-btn"><i data-lucide="sticky-note"></i> <span>Sticky Notes</span></button>
-        <button id="mate-email-btn"><i data-lucide="mail"></i> <span>Email</span></button>
-        <button id="mate-mcp-btn"><i data-lucide="cable"></i> <span>MCP Servers</span><span id="mate-mcp-sidebar-count" class="sidebar-badge hidden"></span></button>
-        <button id="mate-skills-btn"><i data-lucide="puzzle"></i> <span>Skills</span></button>
-        <button id="mate-scheduler-btn"><i data-lucide="calendar-clock"></i> <span>Scheduled Tasks</span></button>
+      <div id="mate-sidebar-tools-wrap">
+        <div class="sidebar-tools-header">
+          <span class="sidebar-section-label">Tools</span>
+          <span class="sidebar-tools-hint" data-palette="mate" title="Show keyboard hotkeys"></span>
+          <button type="button" class="tool-palette-edit-btn" data-palette="mate" aria-label="Edit tool palette" title="Edit palette"><i data-lucide="pencil"></i></button>
+        </div>
+        <div id="mate-sidebar-tools"></div>
+        <div id="mate-sidebar-tools-hidden" class="tool-palette-hidden-section hidden"></div>
       </div>
       <div id="mate-sidebar-conversations">
         <div class="mate-sidebar-sessions-header">
