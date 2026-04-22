@@ -1,3 +1,23 @@
+# [2.33.0-beta.1](https://github.com/chadbyte/clay/compare/v2.32.1-beta.2...v2.33.0-beta.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* **mcp:** gate clay-browser MCP on Chrome extension connection ([dd6ba2d](https://github.com/chadbyte/clay/commit/dd6ba2d8c501e6db551a28131c0bed48fe7e28da))
+* **mcp:** gate clay-email MCP on email capability being configured ([0497a92](https://github.com/chadbyte/clay/commit/0497a92034b0234749bb58c8eb7ca84cfb9614c0)), closes [#325](https://github.com/chadbyte/clay/issues/325)
+* **ui:** quiet the mate avatar overlay on the @ button ([e1b6b44](https://github.com/chadbyte/clay/commit/e1b6b446da10961a3421256b7fee6a7d9e117971)), closes [#325](https://github.com/chadbyte/clay/issues/325)
+
+
+### Features
+
+* **filebrowser:** arrow-key navigation with auto-focus on open ([3362969](https://github.com/chadbyte/clay/commit/3362969f0d05a3c412ac6186480307b8f425503f))
+* **notifications:** Clear-all pill on the banner stack ([928809c](https://github.com/chadbyte/clay/commit/928809c290a0bad507905f8b1873c11a7ae2c604))
+
+
+### Reverts
+
+* **main:** remove unrelated changes from [#330](https://github.com/chadbyte/clay/issues/330) ([5eadb24](https://github.com/chadbyte/clay/commit/5eadb24208a88cd612dff3e0f948b6a2ed205465))
+
 ## [2.32.1-beta.2](https://github.com/chadbyte/clay/compare/v2.32.1-beta.1...v2.32.1-beta.2) (2026-04-22)
 
 
