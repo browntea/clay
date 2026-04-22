@@ -1,3 +1,45 @@
+# [2.33.0](https://github.com/chadbyte/clay/compare/v2.32.0...v2.33.0) (2026-04-22)
+
+
+### Bug Fixes
+
+* **codex:** forward direct tool events to UI ([b25abe6](https://github.com/chadbyte/clay/commit/b25abe61a00ec52ed98fc4add36a92d44021d21c))
+* **codex:** initialize adapter after runtime login ([6703e95](https://github.com/chadbyte/clay/commit/6703e95ce69229642fbf11a1c95997765e8812bf))
+* **codex:** prefer device auth in login prompts ([b0bcd2b](https://github.com/chadbyte/clay/commit/b0bcd2b2308485b8b129669284869f12a9f61f25))
+* **codex:** preserve bash commands across approval ([9978465](https://github.com/chadbyte/clay/commit/9978465466cf62aa28e1d5d01b491d67510e0317))
+* **codex:** route requestUserInput through elicitation UI ([a261c76](https://github.com/chadbyte/clay/commit/a261c768900f1dc9f4cfed347f10b3487e10026f))
+* **codex:** surface file change diffs in UI ([f5585a8](https://github.com/chadbyte/clay/commit/f5585a86ec98a8840a42437e066e10e9473299ea))
+* **codex:** use app-server thread sandbox params ([b9569c9](https://github.com/chadbyte/clay/commit/b9569c99dfa4364418454e2dc24fe815c66d5b42))
+* **mcp:** gate clay-browser MCP on Chrome extension connection ([dd6ba2d](https://github.com/chadbyte/clay/commit/dd6ba2d8c501e6db551a28131c0bed48fe7e28da))
+* **mcp:** gate clay-email MCP on email capability being configured ([0497a92](https://github.com/chadbyte/clay/commit/0497a92034b0234749bb58c8eb7ca84cfb9614c0)), closes [#325](https://github.com/chadbyte/clay/issues/325)
+* **models:** send vendor-specific model lists ([f6df875](https://github.com/chadbyte/clay/commit/f6df8753499698617bd5ee9bf36a85799418168e))
+* open external links in new tab via marked renderer ([#326](https://github.com/chadbyte/clay/issues/326)) ([2011da9](https://github.com/chadbyte/clay/commit/2011da99dd7ed7d13b426884c234b078b8908648))
+* **rate-limit:** clear Claude schedule mode on vendor switch ([fa0df6d](https://github.com/chadbyte/clay/commit/fa0df6dbbaf289d4ed7f0b1cde81cb3807d07319))
+* **session,permissions:** trim migration titles + inherit bypassPermissions in scheduled tasks ([#328](https://github.com/chadbyte/clay/issues/328)) ([492d310](https://github.com/chadbyte/clay/commit/492d31031b5b1e12874075928ffb13e908293a62))
+* **ui,sdk-bridge:** 'codex --login' -> 'codex login' in loginCommand prompts ([#329](https://github.com/chadbyte/clay/issues/329)) ([2519403](https://github.com/chadbyte/clay/commit/2519403f77e9d75294d7c3db728702c377d6bef6)), closes [#327](https://github.com/chadbyte/clay/issues/327) [#327](https://github.com/chadbyte/clay/issues/327)
+* **ui:** clear stale models on vendor switch ([1862b9b](https://github.com/chadbyte/clay/commit/1862b9be543695bc5ab2d33498c6d5d481fe2e61))
+* **ui:** detect hunk-only patch diffs ([6ee5970](https://github.com/chadbyte/clay/commit/6ee5970e0a779fd4faffdb646482537fc299b21c))
+* **ui:** quiet the mate avatar overlay on the @ button ([e1b6b44](https://github.com/chadbyte/clay/commit/e1b6b446da10961a3421256b7fee6a7d9e117971)), closes [#325](https://github.com/chadbyte/clay/issues/325)
+* **ui:** show vendor icon on usage pill ([cff7a60](https://github.com/chadbyte/clay/commit/cff7a60fdda8e7f10f41098de6bbe890f5b91181))
+* **yoke:** use findCodexPath() instead of hardcoded darwin-arm64 path ([#330](https://github.com/chadbyte/clay/issues/330)) ([f2de390](https://github.com/chadbyte/clay/commit/f2de3900391596ab97efc3ae433d4e1af57906c7)), closes [#325](https://github.com/chadbyte/clay/issues/325) [#file-tree](https://github.com/chadbyte/clay/issues/file-tree) [#share-pill](https://github.com/chadbyte/clay/issues/share-pill) [#327](https://github.com/chadbyte/clay/issues/327)
+
+
+### Features
+
+* add session bookmarks ([54018d8](https://github.com/chadbyte/clay/commit/54018d867d8ee61a6b46ca631497083b558f01aa))
+* **codex:** surface compaction status in Clay UI ([dead00c](https://github.com/chadbyte/clay/commit/dead00c5266b212eb32594be6019600c393f06e5))
+* **codex:** surface plan updates in Clay UI ([b4d4f19](https://github.com/chadbyte/clay/commit/b4d4f196729c2e544e89096f0fd29c3ff0ebb267))
+* **codex:** surface prompt suggestions in Clay UI ([1d3d5a4](https://github.com/chadbyte/clay/commit/1d3d5a4dd408522e13b164211fa3c962b2acf186))
+* **filebrowser:** arrow-key navigation with auto-focus on open ([3362969](https://github.com/chadbyte/clay/commit/3362969f0d05a3c412ac6186480307b8f425503f))
+* improve session bookmark interactions ([8f862dc](https://github.com/chadbyte/clay/commit/8f862dc6a44285214ed7f7262c58a92153a8a064))
+* **notifications:** Clear-all pill on the banner stack ([928809c](https://github.com/chadbyte/clay/commit/928809c290a0bad507905f8b1873c11a7ae2c604))
+* refine session bookmark icon placement ([33dbf98](https://github.com/chadbyte/clay/commit/33dbf98ec594ebdb7e42b2bcbbe2e9abc03450ad))
+
+
+### Reverts
+
+* **main:** remove unrelated changes from [#330](https://github.com/chadbyte/clay/issues/330) ([5eadb24](https://github.com/chadbyte/clay/commit/5eadb24208a88cd612dff3e0f948b6a2ed205465))
+
 # [2.33.0-beta.3](https://github.com/chadbyte/clay/compare/v2.33.0-beta.2...v2.33.0-beta.3) (2026-04-22)
 
 
