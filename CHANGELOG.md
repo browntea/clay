@@ -1,3 +1,10 @@
+# [2.34.0-beta.9](https://github.com/chadbyte/clay/compare/v2.34.0-beta.8...v2.34.0-beta.9) (2026-04-23)
+
+
+### Performance Improvements
+
+* **project:** defer owner acl work until query start ([9887a1f](https://github.com/chadbyte/clay/commit/9887a1f9e1870cebef87d9dfec3abb6beab1fd46))
+
 # [2.34.0-beta.8](https://github.com/chadbyte/clay/compare/v2.34.0-beta.7...v2.34.0-beta.8) (2026-04-23)
 
 
