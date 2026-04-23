@@ -1,3 +1,10 @@
+# [2.34.0-beta.5](https://github.com/chadbyte/clay/compare/v2.34.0-beta.4...v2.34.0-beta.5) (2026-04-23)
+
+
+### Bug Fixes
+
+* **claude:** restore worker queries in os user mode ([ac09780](https://github.com/chadbyte/clay/commit/ac09780acd8648cb9fcc109601782b866ebfc838))
+
 # [2.34.0-beta.4](https://github.com/chadbyte/clay/compare/v2.34.0-beta.3...v2.34.0-beta.4) (2026-04-23)
 
 
