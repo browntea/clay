@@ -1,3 +1,10 @@
+# [2.34.0-beta.2](https://github.com/chadbyte/clay/compare/v2.34.0-beta.1...v2.34.0-beta.2) (2026-04-23)
+
+
+### Bug Fixes
+
+* **adapter:** forward per-loop settings to SDK query options ([#335](https://github.com/chadbyte/clay/issues/335)) ([6fd740f](https://github.com/chadbyte/clay/commit/6fd740f02317b95015da68f07627846ee70e26a4))
+
 # [2.34.0-beta.1](https://github.com/chadbyte/clay/compare/v2.33.1...v2.34.0-beta.1) (2026-04-23)
 
 
