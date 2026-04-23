@@ -1,3 +1,11 @@
+# [2.34.0-beta.3](https://github.com/chadbyte/clay/compare/v2.34.0-beta.2...v2.34.0-beta.3) (2026-04-23)
+
+
+### Bug Fixes
+
+* **sdk-bridge:** clear acceptEditsAfterStart in all permission-mode paths ([750055e](https://github.com/chadbyte/clay/commit/750055ea10bad83b16bd9cc8a5ad114b9c6c3e3e))
+* **yoke:** support third-party provider auth modes ([185b6d1](https://github.com/chadbyte/clay/commit/185b6d15080660dcf88d6e5d563c137f7be3aa90)), closes [#331](https://github.com/chadbyte/clay/issues/331)
+
 # [2.34.0-beta.2](https://github.com/chadbyte/clay/compare/v2.34.0-beta.1...v2.34.0-beta.2) (2026-04-23)
 
 
