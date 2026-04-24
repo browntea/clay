@@ -645,13 +645,15 @@
   color: var(--text-dimmer);
   cursor: pointer;
   padding: 0;
-  transition: color 0.15s, background 0.15s;
+  opacity: 0.45;
+  transition: color 0.15s, background 0.15s, opacity 0.15s;
 }
 
 .sidebar-sessions-header-row > #session-header-search-btn.active,
 .sidebar-sessions-header-row > #session-header-search-btn:hover {
   color: var(--text);
   background: var(--sidebar-hover);
+  opacity: 1;
 }
 
 .sidebar-sessions-header-row > #session-header-search-btn .lucide,
@@ -916,6 +918,10 @@
   padding-right: 28px;
 }
 
+.session-item:has(.session-presence) .session-item-text {
+  padding-right: 54px;
+}
+
 .session-close-btn {
   position: absolute;
   right: 8px;
@@ -958,6 +964,27 @@
   background: rgba(var(--overlay-rgb), 0.08);
 }
 
+.session-close-btn.armed {
+  opacity: 1;
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  background: rgba(220, 38, 38, 0.92);
+  box-shadow: 0 2px 8px rgba(var(--shadow-rgb), 0.18);
+}
+
+.session-close-btn.armed:hover {
+  color: #fff;
+  background: rgba(220, 38, 38, 1);
+}
+
+.session-close-btn.armed .lucide,
+.session-close-btn.armed svg {
+  width: 13px;
+  height: 13px;
+}
+
 .session-item:hover .session-unread-badge,
 .session-item:focus-within .session-unread-badge {
   opacity: 0;
@@ -968,7 +995,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2px;
-  padding: 0;
+  padding: 0 0 2px;
 }
 
 .session-top-action {
@@ -988,7 +1015,8 @@
   cursor: pointer;
   text-align: left;
   min-width: 0;
-  transition: background 0.15s, color 0.15s;
+  opacity: 0.62;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
 }
 
 .session-top-action .lucide,
@@ -1001,6 +1029,7 @@
 .session-top-action:hover {
   background: var(--sidebar-hover);
   color: var(--text);
+  opacity: 1;
 }
 
 .session-favorites-section {
@@ -1117,6 +1146,14 @@
   align-items: center;
   flex-shrink: 0;
   margin-right: 2px;
+}
+
+.session-item .session-presence {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 0;
 }
 
 .session-presence-avatar {
