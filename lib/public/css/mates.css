@@ -3106,11 +3106,41 @@ body.mate-dm-active .activity-inline:not(.mention-activity-bar):not(.mate-pre-ac
 }
 
 /* === Mates UI gate === */
-/* Set body.mates-disabled when the user has flipped the Mates UI toggle
-   off in User Settings → Mates. We hide every Mates surface from the
-   chrome without removing data; flipping back on restores everything. */
-body.mates-disabled #icon-strip-mate-section,
-body.mates-disabled #home-hub-mates,
-body.mates-disabled .dm-picker-mates-only {
+/* body.mates-disabled is set when the user flips the Mates toggle off in
+   User Settings → Mates. body.is-multi-user is set when the deploy hosts
+   more than one user. Single-user collapses the whole Mates surface;
+   multi-user keeps Mates-adjacent containers visible (they still host
+   other users) but greys out and disables the Mates-specific bits. */
+
+/* Always hide pure-Mates UI: rotating switch hint, individual mate
+   avatars in the icon strip, and the home-hub mates strip. These never
+   contain anything but mates, so they collapse in both modes. */
+body.mates-disabled .icon-strip-mate,
+body.mates-disabled #icon-strip-hint-mate,
+body.mates-disabled #home-hub-mates {
   display: none !important;
+}
+
+/* Single-user only: collapse the whole icon-strip mate wrapper since it
+   shares space with the user-strip but has no other users to display in
+   single-user mode, and collapse the picker's Mates portion entirely. */
+body.mates-disabled:not(.is-multi-user) #icon-strip-mate-section,
+body.mates-disabled:not(.is-multi-user) .dm-picker-mates-only {
+  display: none !important;
+}
+
+/* Multi-user: keep the Mates portion of the DM picker visible but
+   visually disabled. JS injects a hint asking the user to re-enable
+   in settings if they want to use Mates again. */
+body.mates-disabled.is-multi-user .dm-picker-mates-only {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.dm-user-picker-mates-disabled-hint {
+  font-size: 11px;
+  color: var(--text-dimmer, #888);
+  padding: 6px 12px 8px;
+  font-style: italic;
+  line-height: 1.4;
 }
