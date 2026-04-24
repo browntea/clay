@@ -3133,47 +3133,82 @@ body.mates-disabled:not(.is-multi-user) #icon-strip-mate-section {
   display: none !important;
 }
 
-/* DM picker (both modes) when Mates is off: grey out and disable the
-   Mates portion (label, list, divider). The hint above and the
-   "Open User Settings" button below stay legible and clickable since
-   they intentionally don't carry `dm-picker-mates-only`. */
-body.mates-disabled .dm-picker-mates-only {
-  opacity: 0.5;
-  pointer-events: none;
+/* === Mates discovery promo (DM picker, disabled state) === */
+/* Shown in both modes when Mates is off. Replaces the old "greyed mate
+   list with trash icons" pattern with a softer invitation: section
+   label, an animated avatar marquee that loops left, a value-prop
+   sentence, and a CTA that deep-links into User Settings → Mates. */
+
+.dm-picker-mates-promo {
+  padding: 4px 12px 12px;
 }
 
-.dm-user-picker-mates-disabled-hint {
-  font-size: 11px;
-  color: var(--text-dimmer, #888);
-  padding: 6px 12px 4px;
-  font-style: italic;
-  line-height: 1.4;
+.dm-picker-mates-promo .dm-user-picker-section {
+  margin-top: 0;
 }
 
-/* "Open User Settings" deep-link in the disabled-Mates picker. Mirrors
-   .dm-user-picker-create-mate's layout so the section feels coherent,
-   but flagged as a button (full opacity, hover affordance) since it's
-   the user's path back to the toggle. */
-.dm-user-picker-open-settings {
+.dm-picker-mates-marquee {
+  position: relative;
+  height: 44px;
+  margin: 8px -12px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.dm-picker-mates-marquee-track {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  width: max-content;
+  height: 100%;
+  padding: 0 12px;
+  animation: dm-picker-mates-marquee-flow 22s linear infinite;
+}
+
+.dm-picker-mates-marquee-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.85;
+  background: var(--bg-alt, rgba(255, 255, 255, 0.04));
+}
+
+@keyframes dm-picker-mates-marquee-flow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.dm-picker-mates-promo-text {
+  font-size: 12px;
+  color: var(--text-dimmer, #888);
+  line-height: 1.55;
+  margin: 4px 0 12px;
+}
+
+.dm-picker-mates-promo-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   width: 100%;
   padding: 8px 12px;
-  border: none;
-  background: transparent;
+  border: 1px solid var(--border, #2a2a2a);
+  background: var(--bg-alt, rgba(255, 255, 255, 0.04));
   color: var(--text);
-  font-size: 13px;
-  text-align: left;
+  font-size: 12px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: background 0.15s, border-color 0.15s;
 }
 
-.dm-user-picker-open-settings:hover {
-  background: var(--bg-hover, rgba(255, 255, 255, 0.05));
+.dm-picker-mates-promo-cta:hover {
+  background: var(--bg-hover, rgba(255, 255, 255, 0.08));
+  border-color: var(--accent, #6366f1);
 }
 
-.dm-user-picker-open-settings i {
+.dm-picker-mates-promo-cta i {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
