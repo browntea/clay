@@ -909,12 +909,14 @@
           <option value="us-account" selected>Account</option>
           <option value="us-appearance">Appearance</option>
           <option value="us-chat">Chat</option>
+          <option value="us-mates">Mates</option>
           <option value="us-email">Email</option>
         </select>
         <div class="us-modal-nav-items">
           <button class="us-nav-item active" data-section="us-account"><span>Account</span></button>
           <button class="us-nav-item" data-section="us-appearance"><span>Appearance</span></button>
           <button class="us-nav-item" data-section="us-chat"><span>Chat</span></button>
+          <button class="us-nav-item" data-section="us-mates"><span>Mates</span></button>
           <button class="us-nav-item" data-section="us-email"><span>Email</span></button>
           <div class="us-nav-separator"></div>
           <button class="us-nav-item us-nav-danger" data-section="us-logout"><span>Log Out</span></button>
@@ -1032,6 +1034,22 @@
                 <div class="settings-hint">Automatically resume the conversation when a rate limit clears.</div>
               </div>
               <input type="checkbox" id="us-auto-continue">
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Mates section -->
+        <div class="us-section" data-section="us-mates">
+          <h2>Mates</h2>
+          <p class="settings-hint">Mates are the built-in AI personas Clay seeds in your sidebar (Ally, Arch, Rush, Ward, Pixel, Buzz). Turn this off to hide the entire Mates surface — sidebar avatars, the "Create a Mate" entry in the DM picker, and the home hub strip.</p>
+          <div class="settings-card">
+            <label class="settings-toggle-row">
+              <div>
+                <span class="settings-label">Show Mates</span>
+                <div class="settings-hint">When off, no Mates UI is shown anywhere. Existing Mates are not deleted; turning this back on restores everything.</div>
+              </div>
+              <input type="checkbox" id="us-mates-enabled">
               <span class="toggle-track"><span class="toggle-thumb"></span></span>
             </label>
           </div>

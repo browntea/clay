@@ -3104,3 +3104,13 @@ body.mate-dm-active .activity-inline:not(.mention-activity-bar):not(.mate-pre-ac
     flex: 1;
   }
 }
+
+/* === Mates UI gate === */
+/* Set body.mates-disabled when the user has flipped the Mates UI toggle
+   off in User Settings → Mates. We hide every Mates surface from the
+   chrome without removing data; flipping back on restores everything. */
+body.mates-disabled #icon-strip-mate-section,
+body.mates-disabled #home-hub-mates,
+body.mates-disabled .dm-picker-mates-only {
+  display: none !important;
+}
