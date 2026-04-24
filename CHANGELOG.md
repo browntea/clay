@@ -1,3 +1,40 @@
+# [2.34.0](https://github.com/chadbyte/clay/compare/v2.33.1...v2.34.0) (2026-04-24)
+
+
+### Bug Fixes
+
+* **adapter:** forward per-loop settings to SDK query options ([#335](https://github.com/chadbyte/clay/issues/335)) ([6fd740f](https://github.com/chadbyte/clay/commit/6fd740f02317b95015da68f07627846ee70e26a4))
+* **claude:** correct worker ipv4 preload path ([fbc70b2](https://github.com/chadbyte/clay/commit/fbc70b2f30c56f5fb14bbd478e68d3f0d7330d02))
+* **claude:** restore worker queries in os user mode ([ac09780](https://github.com/chadbyte/clay/commit/ac09780acd8648cb9fcc109601782b866ebfc838))
+* **claude:** sanitize worker ipc payloads ([6867c79](https://github.com/chadbyte/clay/commit/6867c79eb3a94bdf483a5c65fc692c63d0df89f4))
+* **codex:** preserve content array when prepending system prompt ([eae322c](https://github.com/chadbyte/clay/commit/eae322c6b3fe145225bf4c7b4a23fcc6ab1fe77f))
+* render codex plans as plan variants ([5e2a4e9](https://github.com/chadbyte/clay/commit/5e2a4e9b2e7c10b830c9d4ad7c3d5aa3424cc485))
+* **sdk-bridge:** clear acceptEditsAfterStart in all permission-mode paths ([750055e](https://github.com/chadbyte/clay/commit/750055ea10bad83b16bd9cc8a5ad114b9c6c3e3e))
+* **sdk-bridge:** prevent cross-vendor model leak across sessions ([1f62af8](https://github.com/chadbyte/clay/commit/1f62af822c52506fd1d091b33a62d05063663fd1))
+* **search:** return all query occurrences per assistant turn ([21b0081](https://github.com/chadbyte/clay/commit/21b008111369abac9b28d2cac9577ee2b66f0ada))
+* **security:** harden shell command execution ([a2540c2](https://github.com/chadbyte/clay/commit/a2540c24f0ec634c6eb26ee314478a21fc6a0562)), closes [#334](https://github.com/chadbyte/clay/issues/334)
+* **sw:** bump cache version to evict stale connection-lost notification ([c91c6ff](https://github.com/chadbyte/clay/commit/c91c6ff60d5cd2dfe107ece213af9ae7e31f96b9))
+* **ui:** hide expand affordance for empty thinking blocks ([35bc428](https://github.com/chadbyte/clay/commit/35bc4282c79a09ad7673300bb0cc4c941deceb9c))
+* **ui:** restore notification contrast in light mode ([c51f870](https://github.com/chadbyte/clay/commit/c51f87016ad68dab0135a35d371754bdd2c86b72))
+* **yoke:** support third-party provider auth modes ([185b6d1](https://github.com/chadbyte/clay/commit/185b6d15080660dcf88d6e5d563c137f7be3aa90)), closes [#331](https://github.com/chadbyte/clay/issues/331)
+
+
+### Features
+
+* **mates:** add Mate SQLite datastore and inspector ([24bf2f9](https://github.com/chadbyte/clay/commit/24bf2f978f096b497272011b2c53e2e56ba76921))
+* **mates:** replace autonomy step with vendor choice in wizard ([f8b4f34](https://github.com/chadbyte/clay/commit/f8b4f3471ffb265ccff5e2d8b45217825683e39e))
+* refine session favorites sidebar ([3bc6bb8](https://github.com/chadbyte/clay/commit/3bc6bb898d3651524a1fdfcadd2dfe8e1a48fd75))
+* **sidebar:** two-click arm to delete session and polish presence layout ([af66342](https://github.com/chadbyte/clay/commit/af66342fcdbcff3a38fea4419fc5f9ddcc1a5a63))
+* **tools:** render codex patch diffs with filename header and split toggle ([1c6ebe2](https://github.com/chadbyte/clay/commit/1c6ebe2f3240fe3f986562e2a80d3325c0f755bd))
+
+
+### Performance Improvements
+
+* **os-users:** reduce project switch overhead ([96fd254](https://github.com/chadbyte/clay/commit/96fd2540f4e5217fa52240bdd74cbfddf5ce6865))
+* **project:** defer owner acl work until query start ([9887a1f](https://github.com/chadbyte/clay/commit/9887a1f9e1870cebef87d9dfec3abb6beab1fd46))
+* **yoke:** cache checkInstalled result at module scope ([1ba9bff](https://github.com/chadbyte/clay/commit/1ba9bff1a8c31e54329b311f472ad4aadd24a7de))
+* **yoke:** defer adapter warmup to first websocket connection ([26ede6e](https://github.com/chadbyte/clay/commit/26ede6e7847f123ec848142452b70df24ea9718e))
+
 # [2.34.0-beta.10](https://github.com/chadbyte/clay/compare/v2.34.0-beta.9...v2.34.0-beta.10) (2026-04-24)
 
 
