@@ -1,3 +1,10 @@
+## [2.34.1-beta.3](https://github.com/chadbyte/clay/compare/v2.34.1-beta.2...v2.34.1-beta.3) (2026-04-24)
+
+
+### Bug Fixes
+
+* **mates:** stop skill-install modal from firing on every reconnect ([183e50e](https://github.com/chadbyte/clay/commit/183e50e8386607ceb380b73e03b7de551414ac7f)), closes [#1](https://github.com/chadbyte/clay/issues/1)
+
 ## [2.34.1-beta.2](https://github.com/chadbyte/clay/compare/v2.34.1-beta.1...v2.34.1-beta.2) (2026-04-24)
 
 
