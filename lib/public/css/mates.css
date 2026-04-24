@@ -3123,16 +3123,19 @@ body.mates-disabled #home-hub-mates {
 
 /* Single-user only: collapse the whole icon-strip mate wrapper since it
    shares space with the user-strip but has no other users to display in
-   single-user mode, and collapse the picker's Mates portion entirely. */
-body.mates-disabled:not(.is-multi-user) #icon-strip-mate-section,
-body.mates-disabled:not(.is-multi-user) .dm-picker-mates-only {
+   single-user mode. The DM picker stays visible in both modes so the
+   user always has a way to discover the toggle (single-user can't reach
+   the picker today since the + button lives inside the wrapper, but if
+   that ever changes the same disabled UX applies). */
+body.mates-disabled:not(.is-multi-user) #icon-strip-mate-section {
   display: none !important;
 }
 
-/* Multi-user: keep the Mates portion of the DM picker visible but
-   visually disabled. JS injects a hint asking the user to re-enable
-   in settings if they want to use Mates again. */
-body.mates-disabled.is-multi-user .dm-picker-mates-only {
+/* DM picker (both modes) when Mates is off: grey out and disable the
+   Mates portion (label, list, divider). The hint above and the
+   "Open User Settings" button below stay legible and clickable since
+   they intentionally don't carry `dm-picker-mates-only`. */
+body.mates-disabled .dm-picker-mates-only {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -3140,7 +3143,36 @@ body.mates-disabled.is-multi-user .dm-picker-mates-only {
 .dm-user-picker-mates-disabled-hint {
   font-size: 11px;
   color: var(--text-dimmer, #888);
-  padding: 6px 12px 8px;
+  padding: 6px 12px 4px;
   font-style: italic;
   line-height: 1.4;
+}
+
+/* "Open User Settings" deep-link in the disabled-Mates picker. Mirrors
+   .dm-user-picker-create-mate's layout so the section feels coherent,
+   but flagged as a button (full opacity, hover affordance) since it's
+   the user's path back to the toggle. */
+.dm-user-picker-open-settings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dm-user-picker-open-settings:hover {
+  background: var(--bg-hover, rgba(255, 255, 255, 0.05));
+}
+
+.dm-user-picker-open-settings i {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
