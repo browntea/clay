@@ -197,17 +197,14 @@
         </div>
         <div id="sidebar-sessions-header">
           <div id="sessions-header-content">
-            <div class="session-list-header">
-              <span>Sessions</span>
-              <div class="session-list-header-actions">
-                <button id="new-session-btn" type="button" data-tip="New session"><i data-lucide="plus"></i></button>
-                <button id="resume-session-btn" type="button" data-tip="Import CLI session"><i data-lucide="import"></i></button>
-                <button id="search-session-btn" type="button" data-tip="Search sessions"><i data-lucide="search"></i></button>
+            <div class="sidebar-sessions-header-row">
+              <span class="sidebar-section-label">Sessions</span>
+              <span id="session-filter-count" class="session-filter-count hidden"></span>
+              <div id="session-header-search-inline" class="sidebar-sessions-search-inline hidden">
+                <input id="session-header-search-input" type="text" placeholder="Search sessions..." autocomplete="off" spellcheck="false" />
+                <button id="session-header-search-clear" type="button" aria-label="Clear search"><i data-lucide="x"></i></button>
               </div>
-            </div>
-            <div id="session-search" class="hidden">
-              <input id="session-search-input" type="text" placeholder="Search sessions..." autocomplete="off" spellcheck="false" />
-              <button id="session-search-clear" type="button" aria-label="Clear search"><i data-lucide="x"></i></button>
+              <button id="session-header-search-btn" type="button" aria-label="Search sessions" title="Search sessions"><i data-lucide="search"></i></button>
             </div>
           </div>
           <div id="files-header-content" class="hidden"></div>

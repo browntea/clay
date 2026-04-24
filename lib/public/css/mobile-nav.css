@@ -526,20 +526,6 @@
     white-space: nowrap;
   }
 
-  .mobile-session-bookmark {
-    display: inline-flex;
-    align-items: center;
-    color: var(--accent, #ff7b54);
-    flex-shrink: 0;
-  }
-
-  .mobile-session-bookmark .lucide,
-  .mobile-session-bookmark svg {
-    width: 13px;
-    height: 13px;
-    display: block;
-  }
-
   .mobile-session-processing {
     width: 7px;
     height: 7px;
