@@ -2,8 +2,8 @@
   <img src="media/logo/icon-full-banded-256-transparent.png" alt="Clay" />
 </p>
 
-<h2 align="center">The power layer for Claude Code and Codex.</h2>
-<h4 align="center">A team workspace, self-hosted on your machine. One toggle between vendors. No lock-in.</h4>
+<h2 align="center">Use Claude Code and Codex in a browser, with your whole team.</h2>
+<h4 align="center">Self-hosted on your machine. One toggle between vendors. No lock-in.</h4>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/clay-server"><img src="https://img.shields.io/npm/v/clay-server" alt="npm version" /></a>
@@ -173,30 +173,44 @@ That's the principle. The rest of the README is what it makes possible.
 
 ## Architecture
 
-Clay drives Claude Code through the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) and Codex through the Codex app-server protocol, then streams both to the browser over WebSocket.
+Clay is a self-hosted daemon. It drives Claude Code (via the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk)) and Codex (via the `codex app-server` JSON-RPC protocol) through a vendor-agnostic adapter layer (**YOKE**), and serves a multi-user web workspace over HTTP/WS. Sessions, Mates, and knowledge live as plain JSONL/Markdown on disk.
 
 ```mermaid
 graph LR
-    Browser["Browser<br/>(Phone / Desktop)"]
-    WS["WebSocket"]
-    Server["HTTP Server<br/>lib/server.js"]
-    Project["Project Context<br/>lib/project.js"]
-    Yoke["YOKE Adapter Layer<br/>lib/yoke"]
-    Claude["Claude Agent SDK"]
-    Codex["Codex app-server"]
-    Push["Push Service"]
+    subgraph Clients
+      B1["Browser<br/>User A"]
+      B2["Browser<br/>User B"]
+      Phone["Phone PWA<br/>+ Push"]
+    end
 
-    Browser <-->|Real time stream| WS
-    WS <--> Server
-    Server -->|slug routing| Project
-    Project <-->|vendor-agnostic| Yoke
-    Yoke <--> Claude
-    Yoke <--> Codex
-    Project -->|Approval request| Push
-    Push -->|Notification| Browser
+    subgraph Daemon["Clay Daemon (your machine)"]
+      Auth["Auth + RBAC"]
+      Server["HTTP / WS Server"]
+      Project["Project Context"]
+      YOKE["YOKE Adapter Layer"]
+      MCP["Built-in MCP servers<br/>ask-user / browser /<br/>debate / email"]
+      Push["Push (VAPID)"]
+    end
+
+    subgraph Vendors["Agent runtimes"]
+      Claude["Claude Agent SDK"]
+      Codex["codex app-server<br/>(JSON-RPC stdio)"]
+    end
+
+    B1 <-->|WS| Server
+    B2 <-->|WS| Server
+    Phone <-->|WS + push| Server
+    Server --> Auth
+    Server --> Project
+    Project --> YOKE
+    Project --> MCP
+    Project --> Push
+    YOKE --> Claude
+    YOKE --> Codex
+    Push -.-> Phone
 ```
 
-For detailed sequence diagrams, daemon architecture, and design decisions, see [docs/architecture.md](docs/architecture.md).
+For sequence diagrams, OS-level isolation, daemon IPC, and key design decisions, see [docs/guides/architecture.md](docs/guides/architecture.md).
 
 ## Community Projects
 
