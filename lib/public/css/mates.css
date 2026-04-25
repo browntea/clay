@@ -3207,9 +3207,3 @@ body.mates-disabled:not(.is-multi-user) #icon-strip-mate-section {
   background: var(--bg-hover, rgba(255, 255, 255, 0.08));
   border-color: var(--accent, #6366f1);
 }
-
-.dm-picker-mates-promo-cta i {
-  width: 12px;
-  height: 12px;
-  flex-shrink: 0;
-}
