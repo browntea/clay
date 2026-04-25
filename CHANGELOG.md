@@ -1,3 +1,21 @@
+# [2.35.0-beta.1](https://github.com/chadbyte/clay/compare/v2.34.1-beta.4...v2.35.0-beta.1) (2026-04-25)
+
+
+### Bug Fixes
+
+* **mates:** expose set/getMatesEnabled through users module ([4dc55ed](https://github.com/chadbyte/clay/commit/4dc55ed507c63d7fed94d6d6675ea1304e12f30f))
+* **mates:** hide Ask Mate button in chat input when Mates is disabled ([d2ff010](https://github.com/chadbyte/clay/commit/d2ff0102c2ce0a1e2915d22de0d2473971efb88a)), closes [#ask-mate-btn](https://github.com/chadbyte/clay/issues/ask-mate-btn)
+* **mates:** preserve other-user UI when Mates is disabled in multi-user ([fd31753](https://github.com/chadbyte/clay/commit/fd31753dc5a73d09dd7a0e8550bbb38c163ede1e)), closes [#icon-strip-mate-section](https://github.com/chadbyte/clay/issues/icon-strip-mate-section)
+* **mates:** show CTA icon and reframe promo around long-term memory ([2aaa340](https://github.com/chadbyte/clay/commit/2aaa3407fc6f60e4ba9e4c2ee585928c785435b4))
+* **mates:** suppress @-mention dropdown when Mates is disabled ([83b4c95](https://github.com/chadbyte/clay/commit/83b4c9564435cbd76d35e6a828566e95fcdc3efd))
+
+
+### Features
+
+* **mates:** add Open User Settings button to disabled-Mates picker ([20585ad](https://github.com/chadbyte/clay/commit/20585ad4c30b42f78d345884ba81d14db4f1553f))
+* **mates:** redesign disabled-picker as discovery promo with marquee ([528cbf8](https://github.com/chadbyte/clay/commit/528cbf8ca7bccb3617f3c636f5c9a6f228a48504))
+* **settings:** add per-user Mates UI toggle in User Settings ([d766e10](https://github.com/chadbyte/clay/commit/d766e10d4bbe86ea9f272ca0f83facc609cf9fda)), closes [#341](https://github.com/chadbyte/clay/issues/341) [#325](https://github.com/chadbyte/clay/issues/325)
+
 ## [2.34.1-beta.4](https://github.com/chadbyte/clay/compare/v2.34.1-beta.3...v2.34.1-beta.4) (2026-04-24)
 
 
