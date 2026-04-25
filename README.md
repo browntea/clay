@@ -2,129 +2,109 @@
   <img src="media/logo/icon-full-banded-256-transparent.png" alt="Clay" />
 </p>
 
-<h3 align="center">Claude Code for your whole team. No team? Build one with AI.</h3>
+<h2 align="center">The power layer for Claude Code and Codex.</h2>
+<h4 align="center">A team workspace, self-hosted on your machine. One toggle between vendors. No lock-in.</h4>
 
-[![npm version](https://img.shields.io/npm/v/clay-server)](https://www.npmjs.com/package/clay-server) [![npm downloads](https://img.shields.io/npm/dw/clay-server)](https://www.npmjs.com/package/clay-server) [![GitHub stars](https://img.shields.io/github/stars/chadbyte/clay)](https://github.com/chadbyte/clay) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/chadbyte/clay/blob/main/LICENSE)
+<p align="center">
+  <a href="https://www.npmjs.com/package/clay-server"><img src="https://img.shields.io/npm/v/clay-server" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/clay-server"><img src="https://img.shields.io/npm/dw/clay-server" alt="npm downloads" /></a>
+  <a href="https://github.com/chadbyte/clay"><img src="https://img.shields.io/github/stars/chadbyte/clay" alt="GitHub stars" /></a>
+  <a href="https://github.com/chadbyte/clay/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+</p>
 
 <p align="center"><img src="media/hero.png" alt="Clay workspace" /></p>
 
-Everything Claude Code does, in your browser and on your phone. Multi-session, multi-user, self-hosted. No cloud relay, no middleman.
+Clay is a team workspace for Claude Code and Codex, self-hosted on your machine. Onboard your team to one tool, share sessions live, switch vendors with a toggle. Your code, your Mates, your decisions, all on disk.
 
 ```bash
 npx clay-server
 # Scan the QR code to connect from any device
 ```
 
----
+## Why Clay
 
-## What you get
+**One workspace, many people.** Your whole team logs into the same workspace, not a personal editor with billing settings bolted on. Multi-user from day one, with OS-level isolation on Linux.
 
-### Drop-in replacement for the CLI
+**Many projects at once.** If you bounce between repos all day, keep them all loaded in one place and run agents in parallel across them. Permission requests and completed jobs surface as notifications so nothing goes silent in a tab you forgot to check.
 
-Your CLI sessions, your CLAUDE.md rules, your MCP servers. **All of it works in Clay as-is.** Pick up a CLI session in the browser, or continue a browser session in the CLI.
+**Self-hosted.** Clay is a daemon on your machine. Your code, your sessions, your AI teammates' memory all live on disk in plain JSONL and Markdown. No proprietary database. No cloud relay. No middleman.
+
+**Vendor-agnostic.** Run Claude Code and Codex in the same workspace. Toggle vendors per session. When Anthropic raises prices or OpenAI changes terms, your workflow keeps moving. Same Mates, same projects, same memory, different model.
+
+**No lock-in.** Plain files you can grep, version, and back up. Standard cron expressions. MCP servers you already use. CLAUDE.md, AGENTS.md, .cursorrules, all loaded automatically across vendors. Walk away whenever you want, your data walks with you.
+
+## Built for Teams
+
+Clay is the workspace your team logs into, not a private editor with billing settings bolted on. Provision a server, invite your team, work in one place.
+
+- **Multi-user on a single server.** One Clay daemon hosts everyone on your team. No per-seat SaaS, no separate installs. Add users, they log in, they're in.
+- **OS-level isolation on Linux.** Opt in to provision each Clay user as a real Linux account. File ACLs are enforced via `setfacl`. Processes spawn under the right UID/GID. The isolation guarantees come from the OS, not from a promise in our docs.
+- **Each member brings their own login.** Share one org-wide API key, or let each user sign in with their own Claude Code or Codex account. Costs route to whoever ran the model.
+- **Drop into a teammate's session to help.** When someone gets stuck, jump into their project and pair in real time. Shared control, full history, no screen-share theater.
+- **@mention a teammate when you're stuck.** Ping them right inside the session. Their notification center lights up, their phone buzzes. No teammate around? @mention a Mate instead, same gesture, same place.
+- **Non-developers welcome.** PMs, designers, support engineers can log in to ask questions about the codebase, create issues, or read what the team built, without ever opening an editor.
+
+## What it does
+
+### Run Claude Code and Codex in one workspace
+
+Open a session, pick a vendor. Switch sessions, pick the other. Clay's adapter layer (YOKE) speaks the Claude Agent SDK and the Codex app-server protocol natively. Cross-vendor instruction loading: Codex reads AGENTS.md, Claude reads CLAUDE.md, Clay merges the rest into the system prompt automatically.
 
 <p align="center">
   <img src="media/split.gif" alt="split-screen workflow" width="700">
 </p>
 
-### Claude Code on steroids
+### Every project on one dashboard
 
-**Multiple agents, multiple projects, at the same time.** Switch between them in the sidebar. Browse project files live while the agent works, with syntax highlighting for 180+ languages. Mermaid diagrams render as diagrams. Tables render as tables.
+All your projects live in the sidebar. Jump between them in one click, see live status across each, run agents in several at once. No more `cd ~/work/foo && tmux attach && ...`. One Clay daemon hosts every repo on your machine and gives you a single pane of glass over all of them.
 
-**Schedule agents with cron**, or let them run autonomously with **Ralph Loop**. Close your laptop, sessions keep running.
+### Mates: AI teammates with persistent memory
 
-**Push notifications on mobile.** Your phone buzzes when Claude needs approval, finishes a task, or hits an error. Install as a PWA on iOS or Android, review and approve from anywhere.
+Mates are AI personas with their own CLAUDE.md, knowledge files, and memory that compounds across sessions. They learn your stack, your conventions, your decision history. @mention them mid-session, DM them directly, or drop them into a debate. **They don't flatter you. They push back.**
+
+### Debate: structured multi-Mate decisions
+
+Stuck on REST vs GraphQL? Monorepo or split? Surface the question to a debate. Pick panelists, set the format, let your Mates argue both sides with moderated turns. You walk away with a recorded decision, not a vibe check.
+
+### Parallel worktrees
+
+Detect existing git worktrees, spin up new ones from the sidebar, and run agents in each one independently. No more "wait, I have uncommitted changes." Each worktree is an isolated session with its own history.
+
+### Ralph Loop: autonomous coding while you sleep
+
+Write a `PROMPT.md`, optionally a `JUDGE.md`, hit go. Clay iterates: code, evaluate, retry, until the judge approves or you cap the loop. Run it once, or schedule it on standard Unix cron. Wake up to a finished feature or a clean failure trace.
+
+### Web UI, mobile, push notifications
+
+Installable PWA on iOS and Android. Push notifications for approvals, errors, and completed tasks. Service worker keeps the app responsive offline. When Claude needs approval, your phone buzzes, you tap approve, the agent keeps going.
 
 <p align="center">
   <img src="media/phone.gif" alt="Clay on phone" width="280">
 </p>
 
-### Your machine, your server, your data
-
-**Fully local.** Clay runs as a daemon on your machine. Your code and conversations never leave your machine except to reach the AI provider's API.
-
-**Plain files.** Sessions are JSONL. Settings are JSON. Knowledge is Markdown. Everything lives on your machine in formats you can read, move, and back up. No proprietary database, no cloud lock-in.
-
-**Secure by default.** PIN authentication, per-project permissions, and HTTPS are built in.
-
-### Bring your whole team
-
-**One API key runs the whole workspace.** Invite teammates, set permissions per person, per project, per session. Share one key across the org, or let each member use their own Claude Code login.
-
-**OS-level isolation.** On Linux, Clay maps each user to an OS-level account. File permissions and process isolation just work.
-
-**Shared sessions.** Your PM describes a bug in plain language, your senior joins the same session, and the fix ships together. If someone gets stuck, **jump into their session** to help in real time.
-
-### Build your AI team
-
-**Mates.** AI teammates with persistent memory across sessions. They learn your stack, your conventions, and your decision history. @mention them for a quick review, DM them directly, or bring multiple into the same conversation. **They don't flatter you. They push back.**
-
-<!-- TODO: mates.gif -->
-
-**Debate.** Your Mates argue both sides before you commit. "REST vs GraphQL?" "Monorepo or separate repos?" "This migration plan won't survive production. Here's why."
-
-<!-- TODO: debate.gif -->
-
----
-
 ## Who is Clay for
 
-- **Solo dev who needs a second opinion.** Architecture review, dependency decisions, refactor tradeoffs. Build reviewers as Mates instead of asking the void.
-- **Small team sharing one Claude Code setup.** One API key, everyone in the browser, no terminal knowledge required.
-- **Dev lead running agents overnight.** Schedule tasks with cron, get push notifications on your phone, review in the morning.
+- **Teams that want one shared workspace, not one editor each.** Onboard your whole team to a single tool, share sessions, set permissions per person, keep code on your own infrastructure.
+- **Teams hedging vendor risk.** You want Claude today, Codex tomorrow, and the freedom to flip without rewriting your workflow.
+- **Self-hosting developers who won't put their code in someone else's cloud.** You run the server, you own the data, you pick the model.
+- **Codex users tired of CLI-only workflows.** Clay treats Codex as a first-class citizen, not a Claude afterthought.
+- **Solo developers building an AI team.** Mates, Debate, and Ralph Loop give you reviewers, decision-makers, and an autonomous coding partner. Your team grows when you're ready.
 
 ## Getting Started
 
-**Requirements:** Node.js 20+, Claude Code CLI (authenticated).
+**Requirements:** Node.js 20+. Authenticated Claude Code CLI, Codex CLI, or both.
 
 ```bash
 npx clay-server
 ```
 
-On first run, it asks for a port number and whether you're using it solo or with a team.
-Open the browser URL or scan the QR code to connect from your phone instantly.
+On first run, Clay asks for a port and whether you're solo or with a team. Open the URL or scan the QR code from your phone.
 
 For remote access, use a VPN like Tailscale.
 
 <p align="center">
   <img src="media/start.gif" alt="Clay starting from CLI" width="600">
 </p>
-
-## FAQ
-
-**"Is this just a Claude Code wrapper?"**
-Clay uses the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) directly. It doesn't wrap terminal output. It adds multi-session orchestration, persistent AI teammates (Mates), structured debates, scheduled agents, multi-user collaboration, and a full browser UI.
-
-**"Does my code leave my machine?"**
-Clay is fully self-hosted. The server runs on your machine, files stay local. Only API calls go out, same as using the CLI directly.
-
-**"Can I continue a CLI session in the browser?"**
-Yes. Pick up a CLI session in the browser, or continue a browser session in the CLI.
-
-**"Does my existing CLAUDE.md work?"**
-Yes. If your project has a CLAUDE.md, it works in Clay as-is.
-
-**"Does each teammate need their own API key?"**
-No. Teammates can share one org-wide API key. On Linux with OS-level isolation, each member can also use their own Claude Code login. You can assign different API keys per project for billing isolation.
-
-**"Does it work with MCP servers?"**
-Yes. MCP configurations from the CLI carry over as-is.
-
-**"Can I use it on my phone?"**
-Yes. Clay works as a PWA on iOS and Android. You get push notifications for approvals, errors, and completed tasks. No app store required.
-
-**"What is d.clay.studio in my browser URL?"**
-It's a DNS-only service that resolves to your local IP for HTTPS certificate validation. No data passes through it. All traffic stays between your browser and your machine. See [clay-dns](clay-dns/) for details.
-
-## Why I built Clay
-
-Claude Code is the best coding agent I've found. I wanted to turn it into a team, not just a single-player tool.
-
-That started as a browser interface so I could access it from anywhere. Then I added multi-user so my team could use it too. Then I started building the AI teammates themselves.
-
-Most AI agent projects go for full autonomy. Let the AI loose, give it all the permissions, let it run. I wanted the opposite: **AI that works as part of a team.** Visible, controllable, accountable. Your teammates can see what the agent is doing, jump in when it needs help, and set the rules it operates under.
-
-That's Clay now. A workspace where AI teammates have names, persistent memory, and their own perspective. Not "act like an expert" prompting. Actual colleagues who remember last week and sit in your sidebar next to the human ones.
 
 ## CLI Options
 
@@ -144,9 +124,56 @@ npx clay-server --dangerously-skip-permissions
 
 Run `npx clay-server --help` for all options.
 
+## FAQ
+
+**"Is this a Claude Code wrapper?"**
+No. Clay drives Claude Code through the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) and Codex through the Codex app-server protocol. Both are first-class. Clay adds multi-session orchestration, persistent Mates, structured debates, scheduled agents, multi-user collaboration, built-in MCP servers, and a full browser UI on top.
+
+**"Can I run Claude Code and Codex in the same workspace?"**
+Yes. Pick a vendor when you open a session. Switch per session. Same projects, same Mates, same memory.
+
+**"Does my code leave my machine?"**
+Only as model API calls (the same as using the CLI directly). Sessions, Mates, knowledge, and settings all stay on disk.
+
+**"Does my existing CLAUDE.md / AGENTS.md / .cursorrules work?"**
+Yes. Clay loads native instruction files for each vendor and merges the rest into the system prompt automatically.
+
+**"Can I continue a CLI session in the browser?"**
+Yes. CLI sessions show up in the sidebar. Browser sessions can be picked up in the CLI.
+
+**"Does each teammate need their own API key?"**
+No. Share one org-wide key, or let each user bring their own. On Linux with OS-level isolation, each member can also use their own Claude Code or Codex login.
+
+**"What does OS-level isolation actually do?"**
+On Linux, opt in and Clay provisions each user as a real Linux account. File ACLs are enforced via `setfacl`, agent processes spawn under the user's UID/GID, and the kernel handles the rest. One teammate can't read another's project files, even by accident. The guarantee comes from the OS, not from a promise in our code.
+
+**"Does it work with MCP servers?"**
+Yes. User-configured MCPs from `~/.clay/mcp.json` plus built-in browser, email, ask-user, and debate servers. All work in both Claude and Codex sessions.
+
+**"Can I use it on my phone?"**
+Yes. Install as a PWA on iOS or Android. Push notifications for approvals, errors, and task completion.
+
+**"What is d.clay.studio in my browser URL?"**
+A DNS-only service that resolves to your local IP for HTTPS certificate validation. No data passes through it. All traffic stays between your browser and your machine. See [clay-dns](clay-dns/) for details.
+
+## Our Philosophy
+
+One idea: **user experience sovereignty**.
+
+Not a grand statement. A simple wish: not to have your thinking, your work, and your data locked in the moment a vendor changes a price or rewrites a ToS.
+
+That shows up in the technical choices we made:
+
+- **Your machine is the server.** Browser → your daemon → model API. That's the full chain. No vendor cloud, no relay server, no middle tier syncing your sessions through someone else's infrastructure.
+- **One toggle between vendors.** The adapter layer (YOKE) speaks the Claude Agent SDK and the Codex app-server protocol natively. Switching is a setting, not a migration.
+- **Plain text on disk.** Sessions, Mates, knowledge, and settings live as JSONL and Markdown. No proprietary database. You can `cat`, `grep`, version, and back up everything yourself.
+- **Standard formats only.** CLAUDE.md, AGENTS.md, `.cursorrules`, MCP, Unix cron. If you walk away from Clay, your data walks with you in formats every other tool already understands.
+
+That's the principle. The rest of the README is what it makes possible.
+
 ## Architecture
 
-Clay drives agent execution through the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) and streams it to the browser over WebSocket.
+Clay drives Claude Code through the [Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk) and Codex through the Codex app-server protocol, then streams both to the browser over WebSocket.
 
 ```mermaid
 graph LR
@@ -154,15 +181,17 @@ graph LR
     WS["WebSocket"]
     Server["HTTP Server<br/>lib/server.js"]
     Project["Project Context<br/>lib/project.js"]
-    SDK["Claude Agent SDK"]
-    Claude["Claude Code<br/>Process"]
+    Yoke["YOKE Adapter Layer<br/>lib/yoke"]
+    Claude["Claude Agent SDK"]
+    Codex["Codex app-server"]
     Push["Push Service"]
 
     Browser <-->|Real time stream| WS
     WS <--> Server
     Server -->|slug routing| Project
-    Project <-->|async iterable| SDK
-    SDK <-->|Prompt / Response| Claude
+    Project <-->|vendor-agnostic| Yoke
+    Yoke <--> Claude
+    Yoke <--> Codex
     Project -->|Approval request| Push
     Push -->|Notification| Browser
 ```
@@ -195,7 +224,7 @@ If you're using Clay, let us know how in Discussions:
 
 ## Disclaimer
 
-Not affiliated with Anthropic. Claude is a trademark of Anthropic. Provided "as is" without warranty. Users are responsible for complying with their AI provider's terms of service.
+Not affiliated with Anthropic or OpenAI. Claude is a trademark of Anthropic. Codex is a trademark of OpenAI. Provided "as is" without warranty. Users are responsible for complying with their AI provider's terms of service.
 
 ## License
 
