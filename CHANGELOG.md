@@ -1,3 +1,30 @@
+# [2.35.0](https://github.com/chadbyte/clay/compare/v2.34.0...v2.35.0) (2026-04-25)
+
+
+### Bug Fixes
+
+* **input:** prevent ghost-text suggestion from swallowing pasted content on Enter ([a657a09](https://github.com/chadbyte/clay/commit/a657a091a0d6557f94651e4a0c4e5797a6ac3ce9))
+* **mates:** expose set/getMatesEnabled through users module ([4dc55ed](https://github.com/chadbyte/clay/commit/4dc55ed507c63d7fed94d6d6675ea1304e12f30f))
+* **mates:** hide Ask Mate button in chat input when Mates is disabled ([d2ff010](https://github.com/chadbyte/clay/commit/d2ff0102c2ce0a1e2915d22de0d2473971efb88a)), closes [#ask-mate-btn](https://github.com/chadbyte/clay/issues/ask-mate-btn)
+* **mates:** persist deletedBuiltinKeys in single-user mode ([3986088](https://github.com/chadbyte/clay/commit/3986088f4bf79181095799e39d59253e09726e86))
+* **mates:** preserve other-user UI when Mates is disabled in multi-user ([fd31753](https://github.com/chadbyte/clay/commit/fd31753dc5a73d09dd7a0e8550bbb38c163ede1e)), closes [#icon-strip-mate-section](https://github.com/chadbyte/clay/issues/icon-strip-mate-section)
+* **mates:** show CTA icon and reframe promo around long-term memory ([2aaa340](https://github.com/chadbyte/clay/commit/2aaa3407fc6f60e4ba9e4c2ee585928c785435b4))
+* **mates:** stop skill-install modal from firing on every reconnect ([183e50e](https://github.com/chadbyte/clay/commit/183e50e8386607ceb380b73e03b7de551414ac7f)), closes [#1](https://github.com/chadbyte/clay/issues/1)
+* **mates:** suppress @-mention dropdown when Mates is disabled ([83b4c95](https://github.com/chadbyte/clay/commit/83b4c9564435cbd76d35e6a828566e95fcdc3efd))
+* **messages:** stop vendor flapping under high-latency connections ([d15afbe](https://github.com/chadbyte/clay/commit/d15afbea8d37ce51b25b57a54e2459034d9a1c55)), closes [hi#latency](https://github.com/hi/issues/latency)
+* normalize model ids across session switching ([dae5344](https://github.com/chadbyte/clay/commit/dae5344ed34fbfbb3d0553a9dfa06f4014006872))
+* preserve session vendor on reconnect ([5b061ae](https://github.com/chadbyte/clay/commit/5b061ae16c6b06fca3db5ecd18c047fd38f508b6))
+* **settings:** persist single-user preference writes ([7fb2dd5](https://github.com/chadbyte/clay/commit/7fb2dd54d520eb4dcb8bcb7b4d89b2aceeb3e360))
+* **sidebar:** render worktree icon when set ([43292ab](https://github.com/chadbyte/clay/commit/43292ab6f63598a0c30ce9479ddc798809dd1517))
+* **skills:** make outdated-skill prompt skippable instead of silently ignored ([b612a91](https://github.com/chadbyte/clay/commit/b612a915592f00f356935560e5418d239c45985a))
+
+
+### Features
+
+* **mates:** add Open User Settings button to disabled-Mates picker ([20585ad](https://github.com/chadbyte/clay/commit/20585ad4c30b42f78d345884ba81d14db4f1553f))
+* **mates:** redesign disabled-picker as discovery promo with marquee ([528cbf8](https://github.com/chadbyte/clay/commit/528cbf8ca7bccb3617f3c636f5c9a6f228a48504))
+* **settings:** add per-user Mates UI toggle in User Settings ([d766e10](https://github.com/chadbyte/clay/commit/d766e10d4bbe86ea9f272ca0f83facc609cf9fda)), closes [#341](https://github.com/chadbyte/clay/issues/341) [#325](https://github.com/chadbyte/clay/issues/325)
+
 # [2.35.0-beta.2](https://github.com/chadbyte/clay/compare/v2.35.0-beta.1...v2.35.0-beta.2) (2026-04-25)
 
 
