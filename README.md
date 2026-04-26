@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="media/logo/icon-full-banded-256-transparent.png" alt="Clay" />
+  <img src="media/logo/icon-full-banded-256-transparent.png" alt="Clay - self-hosted team workspace for Claude Code and Codex" />
 </p>
 
 <h2 align="center">Use Claude Code and Codex in a browser, with your whole team.</h2>
@@ -12,37 +12,23 @@
   <a href="https://github.com/chadbyte/clay/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
 </p>
 
-<p align="center"><img src="media/hero.png" alt="Clay workspace" /></p>
-
 Clay is a team workspace for Claude Code and Codex, self-hosted on your machine. Onboard your team to one tool, share sessions live, switch vendors with a toggle. Your code, your Mates, your decisions, all on disk.
+
+*The browser GUI for Claude Code and Codex CLIs — and the team layer they don't ship.*
 
 ```bash
 npx clay-server
 # Scan the QR code to connect from any device
 ```
 
-## Why Clay
+## What's Clay?
 
-**One workspace, many people.** Your whole team logs into the same workspace, not a personal editor with billing settings bolted on. Multi-user from day one, with OS-level isolation on Linux.
-
-**Many projects at once.** If you bounce between repos all day, keep them all loaded in one place and run agents in parallel across them. Permission requests and completed jobs surface as notifications so nothing goes silent in a tab you forgot to check.
-
-**Self-hosted.** Clay is a daemon on your machine. Your code, your sessions, your AI teammates' memory all live on disk in plain JSONL and Markdown. No proprietary database. No cloud relay. No middleman.
-
-**Vendor-agnostic.** Run Claude Code and Codex in the same workspace. Toggle vendors per session. When Anthropic raises prices or OpenAI changes terms, your workflow keeps moving. Same Mates, same projects, same memory, different model.
-
-**No lock-in.** Plain files you can grep, version, and back up. Standard cron expressions. MCP servers you already use. CLAUDE.md, AGENTS.md, .cursorrules, all loaded automatically across vendors. Walk away whenever you want, your data walks with you.
-
-## Built for Teams
-
-Clay is the workspace your team logs into, not a private editor with billing settings bolted on. Provision a server, invite your team, work in one place.
-
-- **Multi-user on a single server.** One Clay daemon hosts everyone on your team. No per-seat SaaS, no separate installs. Add users, they log in, they're in.
-- **OS-level isolation on Linux.** Opt in to provision each Clay user as a real Linux account. File ACLs are enforced via `setfacl`. Processes spawn under the right UID/GID. The isolation guarantees come from the OS, not from a promise in our docs.
-- **Each member brings their own login.** Share one org-wide API key, or let each user sign in with their own Claude Code or Codex account. Costs route to whoever ran the model.
-- **Drop into a teammate's session to help.** When someone gets stuck, jump into their project and pair in real time. Shared control, full history, no screen-share theater.
-- **@mention a teammate when you're stuck.** Ping them right inside the session. Their notification center lights up, their phone buzzes. No teammate around? @mention a Mate instead, same gesture, same place.
-- **Non-developers welcome.** PMs, designers, support engineers can log in to ask questions about the codebase, create issues, or read what the team built, without ever opening an editor.
+- **A browser-based workspace for Claude Code and Codex.** Open it on any device, alone or with your whole team.
+- **A place where your team collaborates across projects.** Engineers, PMs, designers, and domain experts share one workspace, hop between projects, drop into each other's sessions.
+- **Your virtual team.** Mates with names, memory, and roles — architect, reviewer, designer, whoever you need. They learn your codebase, push back on bad ideas, and don't reset between sessions.
+- **A multi-project dashboard.** Every repo on your machine in one sidebar. Run agents across several in parallel; permission requests and completions surface as notifications.
+- **A self-hosted dev server.** Runs on your machine in plain JSONL and Markdown. No proprietary database, no cloud relay, no lock-in. Walk away whenever — your data walks with you.
+- **A work-automation system.** Ralph Loop iterates a feature overnight; cron schedules agents while you're away. Wake up to results, or a clean failure trace.
 
 ## What it does
 
@@ -51,7 +37,7 @@ Clay is the workspace your team logs into, not a private editor with billing set
 Open a session, pick a vendor. Switch sessions, pick the other. Clay's adapter layer (YOKE) speaks the Claude Agent SDK and the Codex app-server protocol natively. Cross-vendor instruction loading: Codex reads AGENTS.md, Claude reads CLAUDE.md, Clay merges the rest into the system prompt automatically.
 
 <p align="center">
-  <img src="media/split.gif" alt="split-screen workflow" width="700">
+  <img src="media/split.gif" alt="Toggle between Claude Code and Codex in one click" width="700">
 </p>
 
 ### Every project on one dashboard
@@ -61,6 +47,10 @@ All your projects live in the sidebar. Jump between them in one click, see live 
 ### Mates: AI teammates with persistent memory
 
 Mates are AI personas with their own CLAUDE.md, knowledge files, and memory that compounds across sessions. They learn your stack, your conventions, your decision history. @mention them mid-session, DM them directly, or drop them into a debate. **They don't flatter you. They push back.**
+
+<p align="center">
+  <img src="media/mates.gif" alt="An AI teammate (Mate) pushing back on a bad design pitch in Clay" width="640">
+</p>
 
 ### Debate: structured multi-Mate decisions
 
@@ -78,17 +68,23 @@ Write a `PROMPT.md`, optionally a `JUDGE.md`, hit go. Clay iterates: code, evalu
 
 Installable PWA on iOS and Android. Push notifications for approvals, errors, and completed tasks. Service worker keeps the app responsive offline. When Claude needs approval, your phone buzzes, you tap approve, the agent keeps going.
 
-<p align="center">
-  <img src="media/phone.gif" alt="Clay on phone" width="280">
-</p>
-
 ## Who is Clay for
 
-- **Teams that want one shared workspace, not one editor each.** Onboard your whole team to a single tool, share sessions, set permissions per person, keep code on your own infrastructure.
-- **Teams hedging vendor risk.** You want Claude today, Codex tomorrow, and the freedom to flip without rewriting your workflow.
-- **Self-hosting developers who won't put their code in someone else's cloud.** You run the server, you own the data, you pick the model.
-- **Codex users tired of CLI-only workflows.** Clay treats Codex as a first-class citizen, not a Claude afterthought.
-- **Solo developers building an AI team.** Mates, Debate, and Ralph Loop give you reviewers, decision-makers, and an autonomous coding partner. Your team grows when you're ready.
+### Small teams (3–10)
+
+Engineers, PMs, designers, and domain experts in one workspace. Non-devs read the codebase and ask questions without ever opening an editor. Engineers @mention each other or drop into a teammate's session to help in real time. Share one org-wide API key or let each member bring their own, with costs routing to whoever ran the model.
+
+### Larger teams (10+)
+
+Per-user, per-project, per-session permissions. On Linux, opt in to OS-level isolation: each Clay user maps to a real Linux account, file ACLs enforced via `setfacl`, processes spawn under the right UID/GID. Per-project API keys for billing separation. Plain JSONL sessions give you an audit trail you can grep.
+
+### Solopreneurs and indie developers
+
+You don't have a team yet, so Mates are your team. A persistent architect, a reviewer, a designer — each with their own memory, ready to push back on bad ideas. Run Ralph Loop overnight to ship while you sleep. Toggle Claude and Codex per session to balance cost and capability.
+
+### Self-hosting developers
+
+Your code stays on your machine. Sessions are JSONL, knowledge is Markdown, settings are JSON. No proprietary database, no cloud relay, no middleman. CLAUDE.md, AGENTS.md, `.cursorrules` are all loaded automatically across vendors. Walk away whenever, your data walks with you.
 
 ## Getting Started
 
@@ -103,7 +99,7 @@ On first run, Clay asks for a port and whether you're solo or with a team. Open 
 For remote access, use a VPN like Tailscale.
 
 <p align="center">
-  <img src="media/start.gif" alt="Clay starting from CLI" width="600">
+  <img src="media/start.gif" alt="Starting Clay daemon from the CLI with npx clay-server" width="600">
 </p>
 
 ## CLI Options
