@@ -2,8 +2,12 @@
   <img src="media/logo/icon-full-banded-256-transparent.png" alt="Clay - self-hosted team workspace for Claude Code and Codex" />
 </p>
 
-<h2 align="center">Use Claude Code and Codex in a browser, with your whole team.</h2>
-<h4 align="center">Self-hosted on your machine. One toggle between vendors. No lock-in.</h4>
+<h2 align="center">Multiplayer Claude Code and Codex.</h2>
+<h4 align="center">
+Drop into a teammate's session live.<br>
+Or pair with AI mates that remember and push back.<br>
+Self-hosted, one toggle between vendors.
+</h4>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/clay-server"><img src="https://img.shields.io/npm/v/clay-server" alt="npm version" /></a>
@@ -12,9 +16,11 @@
   <a href="https://github.com/chadbyte/clay/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
 </p>
 
-Clay is a team workspace for Claude Code and Codex, self-hosted on your machine. Onboard your team to one tool, share sessions live, switch vendors with a toggle. Your code, your Mates, your decisions, all on disk.
+The browser tab your whole team lives in. Humans, AI agents, projects, sessions, decisions.
 
-*The browser GUI for Claude Code and Codex CLIs — and the team layer they don't ship.*
+Afraid of locking your personal or team knowledge into one vendor? With Clay, your conventions, sessions, and decisions live on your disk. Switch when you want.
+
+*A team-shared, self-hosted GUI for Claude Code and Codex CLIs.*
 
 ```bash
 npx clay-server
