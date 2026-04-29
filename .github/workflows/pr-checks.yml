@@ -32,6 +32,18 @@ jobs:
           # On push events, github.event.pull_request is null and this
           # falls back to the default ref (the pushed commit).
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          # Need history so we can fetch and read files from main below.
+          fetch-depth: 0
+
+      - name: Restore trusted check tooling from base
+        # PRs that predate this workflow don't have scripts/check-client-imports.js
+        # at their head — without restoring from main, the run fails on missing
+        # file rather than on real import issues. Also defends against a PR
+        # replacing the script with a no-op: we always run the version from main.
+        if: github.event_name == 'pull_request_target'
+        run: |
+          git fetch origin main --depth=1
+          git checkout origin/main -- scripts/check-client-imports.js
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
