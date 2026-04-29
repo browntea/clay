@@ -1,11 +1,13 @@
 # Claude Agent SDK Upgrade Tracker
 
-Installed: `@anthropic-ai/claude-agent-sdk@0.2.92` (Claude Code 2.1.92)
-Latest: `@anthropic-ai/claude-agent-sdk@0.2.112` (Claude Code 2.1.112, 2026-04-17)
-Updated: 2026-04-17
+Installed: `@anthropic-ai/claude-agent-sdk@0.2.112` (Claude Code 2.1.112)
+Latest: `@anthropic-ai/claude-agent-sdk@0.2.123` (Claude Code 2.1.123, 2026-04-29)
+Updated: 2026-04-30
 
-Covers all unapplied changes from 0.2.80 through 0.2.112 (two rounds merged).
+Covers all unapplied changes from 0.2.80 through 0.2.123.
 Codex multi-provider expansion planned. Items marked with Codex support are worth building as platform-common features.
+
+**Deliberate parity divergences** (decisions that go beyond per-API skip judgments) are tracked at the bottom of this file under "Parity Divergences" so the rationale is preserved alongside the upgrade trail.
 
 
 ---
@@ -13,7 +15,7 @@ Codex multi-provider expansion planned. Items marked with Codex support are wort
 
 ## Master Item Table
 
-43 items total. Action: **Do** = implement, **Skip** = not needed. Codex: **x** = reusable for Codex (build as platform-common).
+59 items total. Action: **Do** = implement, **Skip** = not needed. Codex: **x** = reusable for Codex (build as platform-common).
 
 ### P1 - High (functional gaps, user-facing impact)
 
@@ -79,6 +81,50 @@ Codex multi-provider expansion planned. Items marked with Codex support are wort
 | 43 | `taskBudget` query option | Defer | | alpha, beta header required | -- |
 
 
+### New in 0.2.113-0.2.123 (added 2026-04-30)
+
+#### Breaking (verify before bumping)
+
+| # | Item | Action | Codex | Current status | Where |
+|---|------|--------|:-----:|----------------|-------|
+| 44 | `settingSources` default change (0.2.119) | **Verify** | | `query()` now defaults to loading ALL sources when omitted (was empty). Pass `settingSources: []` explicitly to preserve isolation if needed | `sdk-bridge.js` query options |
+
+#### P1 - High
+
+| # | Item | Action | Codex | Current status | Where |
+|---|------|--------|:-----:|----------------|-------|
+| 45 | `Options.title` (0.2.113) | **Do** | | Set custom session title at creation, skip auto-generation | `sdk-bridge.js` query options |
+| 46 | `Options.forwardSubagentText` (0.2.119) | **Do** | x | Forward subagent text/thinking blocks (not just tool use). Pairs with #9 | `sdk-bridge.js` query options |
+| 47 | `Options.skills` (0.2.120) | **Do** | | Canonical skill enabler (`'all' \| string[]`). Replaces ad-hoc allowedTools `'Skill'` plumbing | `sdk-bridge.js` query options |
+
+#### P2 - Medium
+
+| # | Item | Action | Codex | Current status | Where |
+|---|------|--------|:-----:|----------------|-------|
+| 48 | `Options.planModeInstructions` (0.2.116) | **Do** | | Replace default plan-mode workflow body. Useful per-Mate customization | `sdk-bridge.js`, mate config |
+| 49 | `SDKControlMcpCallRequest` (0.2.116) | **Do** | x | Silent MCP tool invocation via control channel (no model turn). Enables relay-side server queries | `sdk-bridge.js` |
+| 50 | `SDKControlReadFileRequest` + `readFile()` (0.2.114, 0.2.121 added encoding) | **Do** | | Gated file reads (default 1MB, encoding utf-8/base64). Relay-controlled file viewer | `sdk-bridge.js`, client viewer |
+| 51 | `SDKControlGetSessionCostRequest` (0.2.116) | **Do** | x | Formatted cost summary text. Useful for thin clients showing remote cost | `sdk-bridge.js` |
+| 52 | Tool `duration_ms` (0.2.119) | **Do** | x | Feeds #30 toolStats. Per-tool wall time | `sdk-message-processor.js` |
+| 53 | MCP `alwaysLoad?: boolean` (0.2.121) | **Do** | x | Bypass tool-search deferral for hot MCP servers | `project-mcp.js` UI |
+| 54 | `UserPromptExpansion` hook (0.2.114) | Skip | | Hooks not adopted | -- |
+| 55 | `PostToolBatch` hook (0.2.117) | Skip | | Hooks not adopted | -- |
+
+#### P3 - Low
+
+| # | Item | Action | Codex | Current status | Where |
+|---|------|--------|:-----:|----------------|-------|
+| 56 | `SDKControlFileSuggestionsRequest` (0.2.113) | Skip | | At-mention autocomplete, relay has its own | -- |
+| 57 | Settings: `deniedDomains`, `voice`, `autoUpdatesChannel: 'rc'`, `wslInheritsWindowsSettings`, `disableBackgroundAgents` | Skip | | Niche or platform-specific (WSL/voice) or relay manages own auto-update | -- |
+
+#### Defer
+
+| # | Item | Action | Codex | Current status | Where |
+|---|------|--------|:-----:|----------------|-------|
+| 58 | `SessionStore` + `InMemorySessionStore` (0.2.113, alpha) | Defer | | Pluggable transcript mirror. Large surface, alpha API | -- |
+| 59 | `foldSessionSummary()` (0.2.117, alpha) | Defer | | Sidecar summary index for SessionStore. Revisit when #58 lands | -- |
+
+
 ---
 
 
@@ -87,10 +133,11 @@ Codex multi-provider expansion planned. Items marked with Codex support are wort
 | | Count | Items |
 |--|-------|-------|
 | **Done** | 4 | ~~#1-4~~ |
-| **Do** | 16 | #6-12, #14-18, #28, #30, #32-33 |
-| of which **Codex-reusable** | 9 | #7, #8, #10, #12, #15-18, #30 |
-| Skip | 19 | #5, #13, #19-27, #29, #31, #34-39 |
-| Defer | 4 | #40-43 |
+| **Do** | 25 | #6-12, #14-18, #28, #30, #32-33, #45-53 |
+| of which **Codex-reusable** | 13 | #7, #8, #10, #12, #15-18, #30, #46, #49, #51-53 |
+| **Verify** | 1 | #44 |
+| Skip | 23 | #5, #13, #19-27, #29, #31, #34-39, #54-57 |
+| Defer | 6 | #40-43, #58-59 |
 
 
 ---
@@ -98,13 +145,20 @@ Codex multi-provider expansion planned. Items marked with Codex support are wort
 
 ## Upgrade Steps
 
-1. Verify `SDKSessionInfo.systemPrompt` handling works with `string[]` (was `string`)
-2. Verify `EditFileOutput.originalFile` null handling
-3. Verify no references to removed `proactive` settings block or `SDKControlSetProactiveRequest`
-4. `npm install @anthropic-ai/claude-agent-sdk@0.2.112`
-5. Add `'xhigh'` to effort selector UI
-6. Handle new message types: `task_updated`, `notification`, `plugin_install`
-7. Implement remaining items
+### 0.2.92 -> 0.2.112 (done)
+1. ~~Verify `SDKSessionInfo.systemPrompt` handling works with `string[]`~~
+2. ~~Verify `EditFileOutput.originalFile` null handling~~
+3. ~~Verify no references to removed `proactive` settings block~~
+4. ~~`npm install @anthropic-ai/claude-agent-sdk@0.2.112`~~
+5. ~~Add `'xhigh'` to effort selector UI~~
+6. ~~Handle new message types: `task_updated`, `notification`, `plugin_install`~~
+
+### 0.2.112 -> 0.2.123 (next)
+1. **Verify** `query()` `settingSources` behavior (#44). Pass explicit `settingSources: ["user", "project", "local"]` already (relay does this) — confirm no regression.
+2. `npm install @anthropic-ai/claude-agent-sdk@0.2.123`
+3. Implement P1 quick wins: `Options.title` (#45), `forwardSubagentText` (#46), `Options.skills` (#47).
+4. Implement #6-12, #14-18 backlog as bandwidth allows.
+5. Tool `duration_ms` (#52) feeds #30 toolStats — implement together.
 
 
 ---
@@ -296,6 +350,29 @@ Permission/elicitation gained `title?`, `display_name?`/`displayName?`, `descrip
 Better permission dialog UX with human-readable labels instead of raw tool names.
 
 **Where:** Client permission dialog rendering. Extract and display these fields.
+
+
+---
+
+
+## Parity Divergences
+
+Decisions where Clay deliberately deviates from the Claude Code reference, beyond the per-API "Skip" judgments above. Captured here because the reasoning is product-level, not SDK-version-bound, and easy to forget. Add new rows when divergences are made; don't delete entries even if they later converge.
+
+| Area | Claude Code behavior | Clay behavior | Why |
+|------|---------------------|---------------|-----|
+| Session tagging | SDK supports 1 tag per session (`tagSession()`) | Multi-tag system (GitHub-style labels with colors), stored in relay metadata. SDK tag used as auxiliary sync only | Single tag is too restrictive for multi-axis organization (project + status + priority) |
+| Session rename | `SDKControlRenameSessionRequest` | Clay's own rename system, syncs back to SDK via `renameSession()` | Predates SDK API. Already integrated into relay session model |
+| AskUserQuestion preview | `ToolConfig` HTML mode option | Always monospace `<pre>` rendering | HTML mode adds XSS risk and Claude compliance is best-effort. Monospace is clean for ASCII diagrams/code |
+| Permission UX | SDK permission classification (`user_temporary`/`user_permanent`) | Relay handles permission UX itself | Relay tracks permission lifecycle independently. SDK classification adds no actionable signal |
+| Sub-agent type selection | `supportedAgents()` exposes list | Not surfaced in UI | Sub-agent type is chosen by Claude, not user. Listing it would be informational only |
+| Native dialogs | `alert()`/`confirm()`/`prompt()` allowed in browser hosts | All dialogs are custom JS modals (CLAUDE.md rule) | Consistent styling, mobile-friendly, theme-aware |
+| User settings storage | Per-browser via `localStorage` for client preferences | All user settings server-side via WebSocket/REST (CLAUDE.md rule) | Persists across devices and browsers |
+| Session state messages | `SDKSessionStateChangedMessage` (idle/running/requires_action) | Not consumed | Relay tracks state more accurately via Socket.IO. SDK notification lags behind relay's own tracking |
+| Context usage popover | SDK exposes `getContextUsage()` raw data | Custom hover popover over header bar | Hides "Free space"/"Autocompact buffer" categories (noise, not actionable). Disambiguates duplicate basenames (e.g. multiple `CLAUDE.md`) by parent dir. Grayscale emoji that color on hover for legibility |
+| `defaultShell` setting | User-configurable shell | Not exposed | Clay targets macOS/Linux, bash always. Reduces config surface |
+| Channel/teams settings | `channelsEnabled`, `allowedChannelPlugins`, `strictPluginOnlyCustomization` | Not exposed | Teams/Enterprise admin features. Out of scope for Clay |
+| Hook events | Various HookEvent types (`TaskCreated`, `CwdChanged`, `FileChanged`, `PostToolBatch`, etc.) | Hooks not adopted | Relay does its own observability. Hook adoption is a larger architectural decision deferred until concrete need |
 
 
 ---
