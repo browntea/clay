@@ -1,3 +1,10 @@
+## [2.36.1-beta.3](https://github.com/chadbyte/clay/compare/v2.36.1-beta.2...v2.36.1-beta.3) (2026-04-29)
+
+
+### Bug Fixes
+
+* **input:** gate stop branch on live processing state; never send ghost suggestion on stop click ([6722ef5](https://github.com/chadbyte/clay/commit/6722ef5d0c1c9e2a0218526e36743bcf2c754d34)), closes [#337](https://github.com/chadbyte/clay/issues/337)
+
 ## [2.36.1-beta.2](https://github.com/chadbyte/clay/compare/v2.36.1-beta.1...v2.36.1-beta.2) (2026-04-29)
 
 
