@@ -1,3 +1,10 @@
+## [2.36.1-beta.2](https://github.com/chadbyte/clay/compare/v2.36.1-beta.1...v2.36.1-beta.2) (2026-04-29)
+
+
+### Bug Fixes
+
+* preserve model selection on browser refresh ([5313879](https://github.com/chadbyte/clay/commit/5313879e9e74c4e346a7629d60c400697ed9d8b4))
+
 ## [2.36.1-beta.1](https://github.com/chadbyte/clay/compare/v2.36.0...v2.36.1-beta.1) (2026-04-29)
 
 
