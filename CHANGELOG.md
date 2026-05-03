@@ -1,3 +1,10 @@
+## [2.36.1-beta.4](https://github.com/chadbyte/clay/compare/v2.36.1-beta.3...v2.36.1-beta.4) (2026-05-03)
+
+
+### Bug Fixes
+
+* **sdk:** use session vendor adapter for auto title generation ([d476ef1](https://github.com/chadbyte/clay/commit/d476ef1e0004b27648921c0764b99de9c01a4575)), closes [#344](https://github.com/chadbyte/clay/issues/344)
+
 ## [2.36.1-beta.3](https://github.com/chadbyte/clay/compare/v2.36.1-beta.2...v2.36.1-beta.3) (2026-04-29)
 
 
