@@ -1346,6 +1346,38 @@ pre.mermaid-error {
   padding: 0 20px;
 }
 
+/* Dead-session compaction: when a session is resumed without a live SDK
+   process and the todo widget still has pending/in_progress items, the
+   item list is hidden so the widget doesn't anchor visual position
+   mid-page. Click the header to toggle the .todo-widget-dead-expanded
+   override class which restores the full view. */
+.todo-widget-dead-compact .todo-header {
+  cursor: pointer;
+  border-radius: 12px;
+}
+.todo-widget-dead-compact .todo-header::after {
+  content: "paused";
+  font-size: 10px;
+  color: var(--text-muted);
+  background: rgba(var(--overlay-rgb), 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.todo-widget-dead-compact .todo-progress,
+.todo-widget-dead-compact .todo-items {
+  display: none;
+}
+.todo-widget-dead-compact.todo-widget-dead-expanded .todo-header {
+  border-radius: 12px 12px 0 0;
+}
+.todo-widget-dead-compact.todo-widget-dead-expanded .todo-progress,
+.todo-widget-dead-compact.todo-widget-dead-expanded .todo-items {
+  display: block;
+}
+
 .todo-header {
   display: flex;
   align-items: center;
