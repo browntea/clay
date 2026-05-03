@@ -1,3 +1,10 @@
+## [2.36.2-beta.1](https://github.com/chadbyte/clay/compare/v2.36.1...v2.36.2-beta.1) (2026-05-03)
+
+
+### Performance Improvements
+
+* **resume:** batch syntax highlight, compact dead-session todos, lower initial page ([182c6ca](https://github.com/chadbyte/clay/commit/182c6cacae1d7fd73fae6734f8e3fd1f09038c2a)), closes [#342](https://github.com/chadbyte/clay/issues/342) [#345](https://github.com/chadbyte/clay/issues/345)
+
 ## [2.36.1](https://github.com/chadbyte/clay/compare/v2.36.0...v2.36.1) (2026-05-03)
 
 
