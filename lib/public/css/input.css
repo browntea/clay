@@ -573,36 +573,6 @@
   display: flex;
   gap: 8px;
 }
-.email-setup-email-wrap {
-  display: flex;
-  align-items: center;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
-  overflow: hidden;
-}
-.email-setup-email-wrap .email-setup-input {
-  border: none;
-  background: transparent;
-  border-radius: 0;
-  flex: 1;
-  min-width: 0;
-}
-.email-setup-email-wrap .email-setup-input:focus {
-  outline: none;
-  border: none;
-}
-.email-setup-email-wrap:focus-within {
-  border-color: var(--accent);
-}
-.email-setup-domain {
-  padding: 8px 10px 8px 0;
-  font-size: 14px;
-  color: var(--text-dimmer);
-  white-space: nowrap;
-  user-select: none;
-  pointer-events: none;
-}
 .email-setup-password-wrap {
   position: relative;
 }
