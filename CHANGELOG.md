@@ -1,3 +1,11 @@
+## [2.36.2-beta.2](https://github.com/chadbyte/clay/compare/v2.36.2-beta.1...v2.36.2-beta.2) (2026-05-03)
+
+
+### Bug Fixes
+
+* **context:** show correct model name and 1M window for [1m] beta models ([f145c9f](https://github.com/chadbyte/clay/commit/f145c9f7b2af97f5567232ebc588357b0fe763e2))
+* **model:** resolve shorthand model names against vendor model list ([d8d11c6](https://github.com/chadbyte/clay/commit/d8d11c6ff229dad1fa806f1c90ae290cd4c8d721))
+
 ## [2.36.2-beta.1](https://github.com/chadbyte/clay/compare/v2.36.1...v2.36.2-beta.1) (2026-05-03)
 
 
