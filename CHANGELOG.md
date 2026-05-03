@@ -1,3 +1,10 @@
+## [2.36.1-beta.5](https://github.com/chadbyte/clay/compare/v2.36.1-beta.4...v2.36.1-beta.5) (2026-05-03)
+
+
+### Bug Fixes
+
+* **email:** allow full email entry for all providers ([0adf66a](https://github.com/chadbyte/clay/commit/0adf66a01610f18c147baee99708828b9e58b9c2))
+
 ## [2.36.1-beta.4](https://github.com/chadbyte/clay/compare/v2.36.1-beta.3...v2.36.1-beta.4) (2026-05-03)
 
 
