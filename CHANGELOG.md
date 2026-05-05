@@ -1,3 +1,10 @@
+## [2.36.2-beta.4](https://github.com/chadbyte/clay/compare/v2.36.2-beta.3...v2.36.2-beta.4) (2026-05-05)
+
+
+### Bug Fixes
+
+* **pin:** mirror login PIN UI on temp PIN setup overlay ([c2af16d](https://github.com/chadbyte/clay/commit/c2af16da37f46144beabae5d44dffbbd662184af))
+
 ## [2.36.2-beta.3](https://github.com/chadbyte/clay/compare/v2.36.2-beta.2...v2.36.2-beta.3) (2026-05-05)
 
 
