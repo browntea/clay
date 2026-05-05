@@ -1,3 +1,10 @@
+## [2.36.2-beta.7](https://github.com/chadbyte/clay/compare/v2.36.2-beta.6...v2.36.2-beta.7) (2026-05-05)
+
+
+### Bug Fixes
+
+* **rewind:** expose rewindFiles on worker QueryHandle ([a684fa8](https://github.com/chadbyte/clay/commit/a684fa8bfa32cf02897727741b40ce1be3033ddb))
+
 ## [2.36.2-beta.6](https://github.com/chadbyte/clay/compare/v2.36.2-beta.5...v2.36.2-beta.6) (2026-05-05)
 
 
