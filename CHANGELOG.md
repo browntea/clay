@@ -1,3 +1,10 @@
+## [2.36.2-beta.3](https://github.com/chadbyte/clay/compare/v2.36.2-beta.2...v2.36.2-beta.3) (2026-05-05)
+
+
+### Bug Fixes
+
+* **pin:** show focus indicator and reliable digit capture on temp PIN setup ([77e6b88](https://github.com/chadbyte/clay/commit/77e6b88dfd07b85785a2edcd2b74792bac53bfeb))
+
 ## [2.36.2-beta.2](https://github.com/chadbyte/clay/compare/v2.36.2-beta.1...v2.36.2-beta.2) (2026-05-03)
 
 
