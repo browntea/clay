@@ -1,3 +1,10 @@
+## [2.36.2-beta.5](https://github.com/chadbyte/clay/compare/v2.36.2-beta.4...v2.36.2-beta.5) (2026-05-05)
+
+
+### Bug Fixes
+
+* **pin:** allow forced PIN change without re-entering temp PIN, add logout ([fb04677](https://github.com/chadbyte/clay/commit/fb04677024df95349c61cf117dff3abd96f4b516))
+
 ## [2.36.2-beta.4](https://github.com/chadbyte/clay/compare/v2.36.2-beta.3...v2.36.2-beta.4) (2026-05-05)
 
 
