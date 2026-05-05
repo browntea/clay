@@ -1,3 +1,10 @@
+## [2.36.2-beta.6](https://github.com/chadbyte/clay/compare/v2.36.2-beta.5...v2.36.2-beta.6) (2026-05-05)
+
+
+### Bug Fixes
+
+* **pin:** unify forced-PIN-change UI through main app overlay ([a5f37dc](https://github.com/chadbyte/clay/commit/a5f37dcd326c05c5be045b8260fb19f550925b85))
+
 ## [2.36.2-beta.5](https://github.com/chadbyte/clay/compare/v2.36.2-beta.4...v2.36.2-beta.5) (2026-05-05)
 
 
