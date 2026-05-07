@@ -1,3 +1,10 @@
+# [2.38.0-beta.5](https://github.com/chadbyte/clay/compare/v2.38.0-beta.4...v2.38.0-beta.5) (2026-05-07)
+
+
+### Features
+
+* **clay:** smaller FAB-popover and draggable FAB position ([fda4a0f](https://github.com/chadbyte/clay/commit/fda4a0f225b482b10f7b01594143b5a66c98e1e5))
+
 # [2.38.0-beta.4](https://github.com/chadbyte/clay/compare/v2.38.0-beta.3...v2.38.0-beta.4) (2026-05-07)
 
 
