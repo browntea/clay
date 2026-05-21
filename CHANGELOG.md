@@ -1,3 +1,11 @@
+# [2.39.0-beta.2](https://github.com/chadbyte/clay/compare/v2.39.0-beta.1...v2.39.0-beta.2) (2026-05-21)
+
+
+### Features
+
+* **tui:** notification pipeline, auto-approve allow-list, inline modal, jsonl watcher ([a012413](https://github.com/chadbyte/clay/commit/a0124133f12f39d950e3c6a95fc07b25ea84e7c5))
+* **tui:** policy explainer modal, Go-to-session secondary CTA, restart persistence ([584beac](https://github.com/chadbyte/clay/commit/584beac4a99a0ada55005290942c8dc626fc0e50))
+
 # [2.39.0-beta.1](https://github.com/chadbyte/clay/compare/v2.38.0...v2.39.0-beta.1) (2026-05-19)
 
 
