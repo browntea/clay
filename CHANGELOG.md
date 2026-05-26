@@ -1,3 +1,10 @@
+# [2.40.0-beta.3](https://github.com/chadbyte/clay/compare/v2.40.0-beta.2...v2.40.0-beta.3) (2026-05-26)
+
+
+### Bug Fixes
+
+* **terminal:** rebuild WebGL glyph atlas on font change and resize ([ebfe3e1](https://github.com/chadbyte/clay/commit/ebfe3e19d6246eaf3a8f90e01416a7c7bc569fb7))
+
 # [2.40.0-beta.2](https://github.com/chadbyte/clay/compare/v2.40.0-beta.1...v2.40.0-beta.2) (2026-05-26)
 
 
