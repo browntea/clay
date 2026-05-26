@@ -1,3 +1,15 @@
+# [2.40.0-beta.2](https://github.com/chadbyte/clay/compare/v2.40.0-beta.1...v2.40.0-beta.2) (2026-05-26)
+
+
+### Bug Fixes
+
+* **claude-hook:** migrate Bash allow-list to space-wildcard form ([a5d52c3](https://github.com/chadbyte/clay/commit/a5d52c3e3e61a32ffd46b9fba28038dbc08a4cc8))
+* **codex:** restore model picker, lock it after first message ([d9d8176](https://github.com/chadbyte/clay/commit/d9d8176fa3e0d0a59105c1f7a1815a174ac86c49)), closes [#361](https://github.com/chadbyte/clay/issues/361)
+* **mobile:** let new-session row pick Codex vs Claude ([2d71f18](https://github.com/chadbyte/clay/commit/2d71f18254e4e85df36b9b2b9a0a2a869559d762)), closes [#361](https://github.com/chadbyte/clay/issues/361)
+* **tui:** clear screen after fit dimensions change ([deaeb49](https://github.com/chadbyte/clay/commit/deaeb496f456c44ea1dbf2d811228bbc4456d5df))
+* **tui:** hydrate terminal font prefs on boot ([43b3416](https://github.com/chadbyte/clay/commit/43b3416d25df64b5dbc7f74e8dccff6808cd074c)), closes [user-settings.js#populateAccount](https://github.com/user-settings.js/issues/populateAccount)
+* **vendor:** stop duplicating the active-vendor avatar ([0943097](https://github.com/chadbyte/clay/commit/0943097908effe08bb449cf03902b8b0e2c07229)), closes [#vendor-toggle-wrap](https://github.com/chadbyte/clay/issues/vendor-toggle-wrap)
+
 # [2.40.0-beta.1](https://github.com/chadbyte/clay/compare/v2.39.0...v2.40.0-beta.1) (2026-05-26)
 
 
