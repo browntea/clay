@@ -8,6 +8,47 @@
   border-left: 1px solid var(--border-subtle);
 }
 
+/* Lazy-resume bar: shown in place of the composer when a born-TUI session is
+   displayed read-only (no live PTY). Clicking Resume spawns claude --resume.
+   Toggled by body.tui-suspended (set in session-tui-view.js). */
+#tui-resume-bar { display: none; }
+body.tui-suspended #input-area { display: none !important; }
+body.tui-suspended #tui-resume-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+  border-top: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.tui-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.tui-resume-btn:hover { filter: brightness(1.08); }
+.tui-resume-btn:active { filter: brightness(0.95); }
+.tui-resume-btn .lucide { width: 16px; height: 16px; }
+.tui-resume-hint {
+  font-size: 12px;
+  color: var(--text-dimmer);
+}
+@media (max-width: 768px) {
+  .tui-resume-hint { display: none; }
+}
+
 /* Policy notice that sits above the embedded xterm in fullscreen TUI
    sessions, explaining why this mode exists (post-2026-06-15 Agent SDK
    billing split). Thin so it doesn't eat terminal real estate. */
