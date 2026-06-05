@@ -511,7 +511,7 @@
   outline: none;
 }
 
-/* --- PIN input --- */
+/* --- Passphrase input --- */
 .settings-pin-input-row {
   display: flex;
   align-items: center;
@@ -520,16 +520,14 @@
 }
 
 #settings-pin-input {
-  width: 120px;
+  width: 200px;
   padding: 6px 10px;
   border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--bg);
   color: var(--text);
-  font-family: "Roboto Mono", monospace;
-  font-size: 16px;
-  letter-spacing: 0.15em;
-  text-align: center;
+  font-family: inherit;
+  font-size: 14px;
   outline: none;
   transition: border-color 0.15s;
 }
@@ -540,7 +538,6 @@
 
 #settings-pin-input::placeholder {
   color: var(--text-dimmer);
-  letter-spacing: 0.15em;
 }
 
 .settings-pin-error {
@@ -905,5 +902,123 @@
   color: var(--text-muted);
   line-height: 1.45;
   margin-top: 2px;
+}
+
+/* --- Security: hidden rules (Clay has no global .hidden) --- */
+.settings-pin-error.hidden { display: none; }
+.settings-btn-sm.hidden { display: none; }
+.settings-btn-danger.hidden { display: none; }
+#settings-pin-form.hidden { display: none; }
+#settings-totp-qr-area.hidden { display: none; }
+.settings-totp-verify-error.hidden { display: none; }
+.settings-totp-verify-ok.hidden { display: none; }
+.settings-auth-mode-error.hidden { display: none; }
+
+/* --- TOTP QR code area --- */
+.settings-totp-qr-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.settings-totp-qr-wrap canvas {
+  border-radius: 8px;
+  background: #fff;
+  padding: 8px;
+}
+
+.settings-totp-secret-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.settings-totp-secret-row code {
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  user-select: all;
+}
+
+/* TOTP verify input */
+#settings-totp-verify-input {
+  width: 100px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Roboto Mono", monospace;
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+#settings-totp-verify-input:focus {
+  border-color: var(--accent);
+}
+
+#settings-totp-verify-input::placeholder {
+  color: var(--text-dimmer);
+  letter-spacing: 0.15em;
+}
+
+.settings-totp-verify-error {
+  color: var(--error) !important;
+  margin-top: 6px;
+}
+
+.settings-totp-verify-ok {
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* --- Auth Mode radio group --- */
+.settings-auth-mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.settings-radio-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.settings-radio-row:hover {
+  background: rgba(var(--overlay-rgb), 0.04);
+}
+
+.settings-radio-row input[type="radio"] {
+  accent-color: var(--accent);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.settings-radio-row.settings-radio-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.settings-auth-mode-error {
+  color: var(--error) !important;
+  margin-top: 6px;
 }
 

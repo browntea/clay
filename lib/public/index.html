@@ -30,7 +30,7 @@
 (function(){try{var k="clay-theme-vars",v=localStorage.getItem(k),r=document.documentElement;if(v){var o=JSON.parse(v),p;for(p in o)r.style.setProperty(p,o[p]);var vt=localStorage.getItem(k.replace("-vars","-variant"));if(vt==="light"){r.classList.add("light-theme");r.classList.remove("dark-theme")}else{r.classList.add("dark-theme");r.classList.remove("light-theme")}var m=document.querySelector('meta[name="theme-color"]');if(m&&o["--bg"])m.setAttribute("content",o["--bg"])}else{var sl=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches;if(sl){r.classList.add("light-theme");r.classList.remove("dark-theme")}}}catch(e){}})();
 </script>
 <script>if(window.navigator.standalone||window.matchMedia("(display-mode:standalone)").matches){document.documentElement.classList.add("pwa-standalone")}</script>
-<link rel="stylesheet" href="style.css?v=20260407">
+<link rel="stylesheet" href="style.css?v=20260412">
 <style>
 @media(max-width:768px){
   /* User messages: vertical stack, avatar on top, right-aligned */
@@ -1308,33 +1308,91 @@
         </div>
         <div class="server-settings-section" data-section="security">
           <h2>Security</h2>
+
+          <!-- Passphrase card -->
           <div class="settings-card">
             <div class="settings-field-row">
               <div>
-                <label class="settings-label">PIN Status</label>
-                <div class="settings-hint">Require a 6-digit PIN to access the web UI.</div>
+                <label class="settings-label">Passphrase</label>
+                <div class="settings-hint">Protect access with a passphrase.</div>
               </div>
               <span class="settings-value settings-badge" id="settings-pin-status">-</span>
             </div>
             <div class="settings-field-row" id="settings-pin-actions">
               <div>
-                <label class="settings-label" id="settings-pin-action-label">Set PIN</label>
-                <div class="settings-hint">Protect access to the web interface with a PIN code.</div>
+                <label class="settings-label" id="settings-pin-action-label">Set Passphrase</label>
+                <div class="settings-hint">Minimum 4 characters. Any text allowed.</div>
               </div>
               <div class="settings-pin-btns">
-                <button class="settings-btn-sm" id="settings-pin-set-btn">Set PIN</button>
+                <button class="settings-btn-sm" id="settings-pin-set-btn">Set</button>
                 <button class="settings-btn-sm settings-btn-danger hidden" id="settings-pin-remove-btn">Remove</button>
               </div>
             </div>
             <div class="settings-field hidden" id="settings-pin-form">
-              <label class="settings-label">Enter 6-digit PIN</label>
+              <label class="settings-label">Enter passphrase</label>
               <div class="settings-pin-input-row">
-                <input type="text" id="settings-pin-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="000000" autocomplete="off" spellcheck="false">
+                <input type="password" id="settings-pin-input" placeholder="Enter passphrase" autocomplete="off" spellcheck="false">
                 <button class="settings-btn-sm" id="settings-pin-save-btn">Save</button>
                 <button class="settings-btn-sm settings-btn-ghost" id="settings-pin-cancel-btn">Cancel</button>
               </div>
-              <div class="settings-hint settings-pin-error hidden" id="settings-pin-error">PIN must be exactly 6 digits.</div>
+              <div class="settings-hint settings-pin-error hidden" id="settings-pin-error">Passphrase must be at least 4 characters.</div>
             </div>
+          </div>
+
+          <!-- TOTP Authenticator card -->
+          <div class="settings-card" id="settings-totp-card">
+            <div class="settings-field-row">
+              <div>
+                <label class="settings-label">Authenticator (TOTP)</label>
+                <div class="settings-hint">Use Google Authenticator, 1Password, or Authy for 2FA.</div>
+              </div>
+              <span class="settings-value settings-badge" id="settings-totp-status">Disabled</span>
+            </div>
+            <div class="settings-field-row" id="settings-totp-actions">
+              <div>
+                <label class="settings-label" id="settings-totp-action-label">Enable TOTP</label>
+              </div>
+              <div class="settings-pin-btns">
+                <button class="settings-btn-sm" id="settings-totp-setup-btn">Setup</button>
+                <button class="settings-btn-sm settings-btn-danger hidden" id="settings-totp-disable-btn">Disable</button>
+              </div>
+            </div>
+            <!-- QR code area (shown after setup) -->
+            <div class="settings-field hidden" id="settings-totp-qr-area">
+              <label class="settings-label">Scan with your authenticator app</label>
+              <div class="settings-totp-qr-wrap">
+                <canvas id="settings-totp-qr-canvas" width="200" height="200"></canvas>
+              </div>
+              <div class="settings-totp-secret-row">
+                <span class="settings-hint">Manual entry:</span>
+                <code id="settings-totp-secret-text"></code>
+                <button class="settings-btn-sm settings-btn-ghost" id="settings-totp-copy-btn">Copy</button>
+              </div>
+              <div class="settings-hint" style="margin-top:10px">After scanning, enter a 6-digit code to verify:</div>
+              <div class="settings-pin-input-row">
+                <input type="tel" id="settings-totp-verify-input" maxlength="6" inputmode="numeric" placeholder="000000" autocomplete="off">
+                <button class="settings-btn-sm" id="settings-totp-verify-btn">Verify</button>
+              </div>
+              <div class="settings-hint settings-totp-verify-error hidden" id="settings-totp-verify-error">Invalid code. Try again.</div>
+              <div class="settings-hint settings-totp-verify-ok hidden" id="settings-totp-verify-ok" style="color:#3fb950">TOTP verified and enabled!</div>
+            </div>
+          </div>
+
+          <!-- Auth Mode card -->
+          <div class="settings-card" id="settings-auth-mode-card">
+            <div class="settings-field-row">
+              <div>
+                <label class="settings-label">Authentication Mode</label>
+                <div class="settings-hint">How passphrase and authenticator are combined for login.</div>
+              </div>
+            </div>
+            <div class="settings-auth-mode-options" id="settings-auth-mode-options">
+              <label class="settings-radio-row"><input type="radio" name="auth-mode" value="pin"> <span>Passphrase only</span></label>
+              <label class="settings-radio-row"><input type="radio" name="auth-mode" value="either" checked> <span>Either one (passphrase OR authenticator)</span></label>
+              <label class="settings-radio-row"><input type="radio" name="auth-mode" value="totp"> <span>Authenticator only</span></label>
+              <label class="settings-radio-row"><input type="radio" name="auth-mode" value="both"> <span>Both required (passphrase AND authenticator)</span></label>
+            </div>
+            <div class="settings-hint settings-auth-mode-error hidden" id="settings-auth-mode-error"></div>
           </div>
         </div>
         <div class="server-settings-section" data-section="notifications">
@@ -2298,7 +2356,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0/lib/addon-fit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-web-links@0/lib/addon-web-links.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-webgl@0/lib/addon-webgl.min.js"></script>
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=20260412"></script>
 <div id="pwa-install-modal" class="pwa-modal hidden">
   <div class="pwa-modal-backdrop"></div>
   <div class="pwa-modal-card">
